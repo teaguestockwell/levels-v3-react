@@ -1,0 +1,19 @@
+aircraft provider as root of dashboard
+validation will not be nested ex: dashboard/cargo/configcargo/weight
+validation will be flat ex: aircraft/valid forum and forum field validation will not be visible by the aircraft context
+
+IAircraftContext {
+  aircrafts: Aircraft[]
+  selectedAircraft: number
+  cargos: Cargo[]
+  isValid: boolean
+
+  setAircrafts: async () => Promise<void>
+  setSelectedAircraft (id: number) => void
+  removeCargo: (id: string) => void
+  putCargo: (cargo: Cargo) => void
+  setIsValid(isValid: boolean) => void
+}
+
+export const 
+
