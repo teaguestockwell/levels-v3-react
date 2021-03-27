@@ -5,3 +5,9 @@ export interface ICargo {
   fs: number
   qty: number
 }
+export interface ICargoString {
+  name: string
+  weight: string
+  fs: string
+  qty: string
+}
