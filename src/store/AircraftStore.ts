@@ -2,37 +2,31 @@ import create, {State} from 'zustand'
 import {IAircraft} from '../types/IAircraft'
 
 interface IStore extends State {
-  setSelectedAircraft: (id: number) => void
+  aircraftsMap: Map<number,IAircraft>
   fetchAircrafts: () => Promise<void>
-  aircrafts: IAircraft[]
-  selectedAircraft: IAircraft | undefined
+  selectedAirId: number | undefined
+  setSelectedAircraft: (id: number) => void
 }
 
 export const AircraftStore = create<IStore>((set) => ({
-  aircrafts: [],
-  selectedAircraft: undefined,
-  setSelectedAircraft: async (id) =>
+  aircraftsMap: new Map(),
+  selectedAirId: undefined,
+  setSelectedAircraft: (id) => 
     set((state) => {
-      state.selectedAircraft = setSelectedAircraftHandler(state.aircrafts, id)
+      state.selectedAirId = id
     }),
   fetchAircrafts: async () => {
     const newAircrafts = await getAircrafts()
     set((state) => {
-      state.aircrafts = newAircrafts
+      state.aircraftsMap = newAircrafts
     })
   },
 }))
 
-function setSelectedAircraftHandler(
-  aircrafts: IAircraft[],
-  selectId: number
-): IAircraft {
-  return aircrafts.filter((x) => x.id === selectId)[0]
-}
 
-async function getAircrafts(): Promise<IAircraft[]> {
-  return [
-    {
+async function getAircrafts(): Promise<Map<number,IAircraft>> {
+  return new Map([
+    [1,{
       id: 1,
       name: 'C-17A-ER',
       fs0: 80.5,
@@ -45,9 +39,9 @@ async function getAircrafts(): Promise<IAircraft[]> {
       lemac: 793.6,
       mac: 309.5,
       mommultiplyer: 10000,
-    },
-    {
-      id: 2,
+    }],
+    [2,{
+      id: 1,
       name: 'C-17A',
       fs0: 80.5,
       fs1: 2168,
@@ -59,6 +53,6 @@ async function getAircrafts(): Promise<IAircraft[]> {
       lemac: 793.6,
       mac: 309.5,
       mommultiplyer: 10000,
-    },
-  ]
+    }]
+  ])
 }

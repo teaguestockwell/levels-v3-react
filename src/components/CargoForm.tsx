@@ -10,7 +10,9 @@ import { IAircraft } from '../types/IAircraft'
 
 export function CargoForm(props: ICargo) {
   const deleteCargo = CargoStore((state) => state.deleteCargo)
-  const aircraft = AircraftStore((state) => state.selectedAircraft as IAircraft)
+  const selectedAirId = AircraftStore((state) => state.selectedAirId as number)
+  const aircraftMap = AircraftStore((state) => state.aircraftsMap)
+  const selectedAir = aircraftMap.get(selectedAirId) as IAircraft
 
   interface IFormField {
     name: string
@@ -71,8 +73,8 @@ export function CargoForm(props: ICargo) {
     }
 
     else {
-      if (parseFloat(values.weight) > aircraft.cargoweight1) {
-        errors.weight = `Must be <= ${aircraft.cargoweight1}`
+      if (parseFloat(values.weight) > selectedAir.cargoweight1) {
+        errors.weight = `Must be <= ${selectedAir.cargoweight1}`
       }
     }
 
@@ -83,13 +85,13 @@ export function CargoForm(props: ICargo) {
       errors.fs = 'Must be a number'
     }
 
-    else if (parseFloat(values.fs) < aircraft.fs0) {
-      errors.fs = `Must be >= ${aircraft.fs0}`
+    else if (parseFloat(values.fs) < selectedAir.fs0) {
+      errors.fs = `Must be >= ${selectedAir.fs0}`
     }
 
     else {
-      if (parseFloat(values.fs) > aircraft.fs1 ) {
-        errors.fs = `Must be <= ${aircraft.fs1}`
+      if (parseFloat(values.fs) > selectedAir.fs1 ) {
+        errors.fs = `Must be <= ${selectedAir.fs1}`
       }
     }
 
