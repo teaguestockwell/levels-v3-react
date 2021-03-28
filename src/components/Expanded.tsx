@@ -1,19 +1,22 @@
-import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@material-ui/core'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Typography,
+} from '@material-ui/core'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 interface Props {
-  title:string
-  child:JSX.Element
+  title: string
+  child: JSX.Element
 }
-export function Expanded(props:Props) {
+export function Expanded(props: Props) {
   return (
-      <Accordion>
-        <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
-          <Typography>{props.title}</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          {props.child}
-        </AccordionDetails>
-      </Accordion>
+    <Accordion>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+        <Typography>{props.title}</Typography>
+      </AccordionSummary>
+      <AccordionDetails>{props.child}</AccordionDetails>
+    </Accordion>
   )
 }
