@@ -4,13 +4,13 @@ export interface CargoStoreState extends State {
   putCargo: (cargo: Cargo) => void
   deleteCargo: (id: string) => void
   putCargosIsValid: (valid: boolean, cargoId: string) => void
-  cargosValidMap: Map<string,boolean>
+  cargosValidMap: Map<string, boolean>
   cargosMap: Map<string, Cargo>
 }
 
 export const CargoStore = create<CargoStoreState>((set) => ({
   cargosValidMap: new Map(),
-  putCargosIsValid: (valid:boolean, cargoId:string) =>
+  putCargosIsValid: (valid: boolean, cargoId: string) =>
     set((state) => {
       state.cargosValidMap.set(cargoId, valid)
     }),

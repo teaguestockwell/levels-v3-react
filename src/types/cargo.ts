@@ -3,7 +3,7 @@ export enum CargoCategory {
   Emergency,
   Extra,
 }
-/** shape inde the api */
+/** shape in the the api */
 export interface Cargo {
   cargoId: string
   name: string
@@ -20,4 +20,3 @@ export interface CargoString {
   fs: string
   qty: string
 }
-

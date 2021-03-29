@@ -1,3 +1,3 @@
 export const Const = {
-  maxFormLength: 16
+  maxFormLength: 16,
 }

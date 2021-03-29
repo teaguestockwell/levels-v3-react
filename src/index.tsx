@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { CargoList } from './components/cargoList'
+import {CargoList} from './components/cargoList'
 
 ReactDOM.render(
   <React.StrictMode>

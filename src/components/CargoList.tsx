@@ -4,7 +4,7 @@ import {useEffect, useRef} from 'react'
 import {CargoCategory, Cargo} from '../types/cargo'
 import {AircraftStore} from '../store/aircraftStore'
 import {Util} from '../util'
-import { CargoForm } from './cargoForm'
+import {CargoForm} from './cargoForm'
 
 export function CargoList() {
   // subscribe to state changes with deepScriptEquals
@@ -12,16 +12,15 @@ export function CargoList() {
   const putCargo = CargoStore((state) => state.putCargo)
   const cargoMapKeys = CargoStore((state) => state.cargosMap.keys())
 
-  //initiablize a mutabale ref to state
+  //initialize a mutable ref to state
   const cargosRef = useRef(CargoStore.getState().cargosMap)
 
   // TODO: remove this and put it in dropdown
   const fetchAircrafts = AircraftStore((state) => state.fetchAircrafts)
   const setAircraft = AircraftStore((state) => state.setSelectedAircraft)
 
-
   useEffect(() => {
-    //subscibe that mutable ref to changes during life of component
+    //subscribe that mutable ref to changes during life of component
     CargoStore.subscribe(
       (cargosMap) => (cargosRef.current = cargosMap as Map<string, Cargo>),
       // pick a specific part of that state
@@ -58,13 +57,17 @@ export function CargoList() {
   function getItems(): JSX.Element[] {
     return Array.from(cargoMapKeys).map((id) => {
       const cargo = cargosRef.current.get(id) as Cargo
-      return (<CargoForm {...{
-        cargoId: cargo.cargoId,
-        name: Util.cut(cargo.name),
-        weight: Util.cut(cargo.weight),
-        fs: Util.cut(cargo.fs),
-        qty: Util.cut(cargo.qty),
-      }} />)
+      return (
+        <CargoForm
+          {...{
+            cargoId: cargo.cargoId,
+            name: Util.cut(cargo.name),
+            weight: Util.cut(cargo.weight),
+            fs: Util.cut(cargo.fs),
+            qty: Util.cut(cargo.qty),
+          }}
+        />
+      )
     })
   }
 
