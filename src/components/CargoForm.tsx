@@ -1,11 +1,11 @@
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Form, Input } from 'antd';
 import { CargoString } from '../types/cargo'
 import 'antd/dist/antd.css';
 import { Const } from '../const'
 import { AircraftStore} from '../store/aircraftStore'
 import { Aircraft } from '../types/aircraft';
-import { CargoStore } from '../store/cargoStore';
+import { CargoStore, CargoStoreState} from '../store/cargoStore';
 
 export const CargoForm = (props: CargoString) => {
   const [form] = Form.useForm();
@@ -13,26 +13,29 @@ export const CargoForm = (props: CargoString) => {
   // subscribe to state changes with deepScriptEquals
   // on change re-render
   const putCargosIsValid = CargoStore((state) => state.putCargosIsValid)
+  const putCargo = CargoStore((state) => state.putCargo)
   
   const validate = () => {
     form.validateFields()
     .then((vals) => {
-      console.log('form is valid')
-      console.log(vals)
+      console.log('form valid')
       putCargosIsValid(true, props.cargoId)
+      // only update valid cargo because invalid cargo because:
+      // invalid cargo will not be used,
+      // invalid cargo is not type safe
+      putCargo({...vals, cargoId: props.cargoId})
     }) 
     .catch((errorInfo) => {
-      console.log(errorInfo)
       console.log('form is not valid')
-      console.log(errorInfo.values)
       putCargosIsValid(false, props.cargoId)
+    }).finally(() => {
+      console.log(cargosValidMapRef.current)
     })
-    console.log(cargosValidMapRef.current)
   }
   
   // sub to store state, do not cause re draws
   const currentAirRef = useRef(AircraftStore.getState().selectedAir)
-  const cargosValidMapRef = useRef(CargoStore.getState().cargosValidMap)
+  const cargosValidMapRef = useRef(CargoStore.getState())
   useEffect(() => {
     //subscibe that mutable ref to ALL changes during life of component
     AircraftStore.subscribe(
@@ -42,7 +45,7 @@ export const CargoForm = (props: CargoString) => {
     )
 
     CargoStore.subscribe(
-      (state) => (cargosValidMapRef.current = state as Map<string,boolean>),
+      (state) => (cargosValidMapRef.current = state as CargoStoreState),
       (state) => state.cargosValidMap
     )
 
@@ -124,15 +127,14 @@ export const CargoForm = (props: CargoString) => {
     else if(value === '0'){throw new Error()}
   }
 
-  const onFinsh = (vals:any) => {
-    console.log('form in valid')
-  }
+
 
   return (
-    <Form 
+    <Form
+      key={props.cargoId + '_form'} 
       form={form}
-      onValuesChange={()=> validate()}
-      onFinish={onFinsh}
+      // do not use onValuesChange() here because is run before form validation
+      // solution is touse onChnage of inputs
     >
       <Form.Item
         {...formItemLayout}
@@ -141,7 +143,7 @@ export const CargoForm = (props: CargoString) => {
         hasFeedback
         rules={nameRules}
       > 
-        <Input placeholder="Please input cargo name" />
+        <Input placeholder="Please input cargo name" onChange={validate}/>
       </Form.Item>
 
       <Form.Item
@@ -157,7 +159,7 @@ export const CargoForm = (props: CargoString) => {
           }
         ]}
       >
-        <Input placeholder="Please input cargo weight"/>
+        <Input placeholder="Please input cargo weight" onChange={validate}/>
       </Form.Item>
 
       <Form.Item
@@ -177,7 +179,7 @@ export const CargoForm = (props: CargoString) => {
           }
         ]}
       >
-        <Input placeholder="Please input fs"/>
+        <Input placeholder="Please input fs" onChange={validate}/> 
       </Form.Item>
 
       <Form.Item
@@ -193,7 +195,7 @@ export const CargoForm = (props: CargoString) => {
           }
         ]}
       >
-        <Input placeholder="Please input amount of cargo"/>
+        <Input placeholder="Please input amount of cargo" onChange={validate}/>
       </Form.Item>
     </Form>
   );

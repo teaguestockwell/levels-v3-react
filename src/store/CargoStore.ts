@@ -18,6 +18,7 @@ export const CargoStore = create<CargoStoreState>((set) => ({
   deleteCargo: (id) =>
     set((state) => {
       state.cargosMap.delete(id)
+      state.cargosValidMap.delete(id)
     }),
   putCargo: (cargo) =>
     set((state) => {
