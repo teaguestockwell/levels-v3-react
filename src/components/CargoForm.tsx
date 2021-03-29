@@ -149,7 +149,7 @@ export const CargoForm = (props: CargoString) => {
         hasFeedback
         rules={nameRules}
       >
-        <Input placeholder="Please input cargo name" onChange={validate} />
+        <Input size="large" placeholder="Please input cargo name" onChange={validate} />
       </Form.Item>
 
       <Form.Item
@@ -167,7 +167,7 @@ export const CargoForm = (props: CargoString) => {
           },
         ]}
       >
-        <Input placeholder="Please input cargo weight" onChange={validate} />
+        <Input size="large" placeholder="Please input cargo weight" onChange={validate} />
       </Form.Item>
 
       <Form.Item
@@ -191,7 +191,7 @@ export const CargoForm = (props: CargoString) => {
           },
         ]}
       >
-        <Input placeholder="Please input fs" onChange={validate} />
+        <Input size="large" placeholder="Please input fs" onChange={validate} />
       </Form.Item>
 
       <Form.Item
@@ -207,7 +207,7 @@ export const CargoForm = (props: CargoString) => {
           },
         ]}
       >
-        <Input placeholder="Please input amount of cargo" onChange={validate} />
+        <Input size="large" placeholder="Please input amount of cargo" onChange={validate} />
       </Form.Item>
     </Form>
   )
