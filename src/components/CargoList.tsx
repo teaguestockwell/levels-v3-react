@@ -19,10 +19,12 @@ export function CargoList() {
   const fetchAircrafts = AircraftStore((state) => state.fetchAircrafts)
   const setAircraft = AircraftStore((state) => state.setSelectedAircraft)
 
+
   useEffect(() => {
     //subscibe that mutable ref to changes during life of component
     CargoStore.subscribe(
       (cargosMap) => (cargosRef.current = cargosMap as Map<string, Cargo>),
+      // pick a specific part of that state
       (state) => state.cargosMap
     )
 
