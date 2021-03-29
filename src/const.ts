@@ -1,3 +1,3 @@
 export const Const = {
-  initFormDeicmalPrecision: 2,
+  maxFormLength: 16
 }

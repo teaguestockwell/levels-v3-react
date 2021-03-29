@@ -1,9 +1,9 @@
 import create, {State} from 'zustand'
-import {ICargo} from '../types/ICargo'
+import {Cargo} from '../types/cargo'
 interface IStore extends State {
-  putCargo: (cargo: ICargo) => void
+  putCargo: (cargo: Cargo) => void
   deleteCargo: (id: string) => void
-  cargosMap: Map<string, ICargo>
+  cargosMap: Map<string, Cargo>
 }
 
 export const CargoStore = create<IStore>((set) => ({
@@ -16,6 +16,6 @@ export const CargoStore = create<IStore>((set) => ({
     }),
   putCargo: (cargo) =>
     set((state) => {
-      state.cargosMap.set(cargo.id, cargo)
+      state.cargosMap.set(cargo.cargoId, cargo)
     }),
 }))

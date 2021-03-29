@@ -4,8 +4,8 @@ export enum CargoCategory {
   Extra,
 }
 /** shape inde the api */
-export interface ICargo {
-  id: string
+export interface Cargo {
+  cargoId: string
   name: string
   weight: number
   fs: number
@@ -13,9 +13,11 @@ export interface ICargo {
   category: CargoCategory
 }
 /** shape inside of a form where every field in a string */
-export interface ICargoString {
+export interface CargoString {
+  cargoId: string
   name: string
   weight: string
   fs: string
   qty: string
 }
+

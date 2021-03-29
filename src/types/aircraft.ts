@@ -1,4 +1,4 @@
-export interface IAircraft {
+export interface Aircraft {
   id: number
   name: string
   fs0: number

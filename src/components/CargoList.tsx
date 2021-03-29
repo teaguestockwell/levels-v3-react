@@ -1,11 +1,10 @@
-import {CargoStore} from '../store/CargoStore'
-import {CargoForm} from './CargoForm'
-import {Expanded} from './Expanded'
+import {CargoStore} from '../store/cargoStore'
 import {v4} from 'uuid'
 import {useEffect, useRef} from 'react'
-import {CargoCategory, ICargo} from '../types/ICargo'
-import {AircraftStore} from '../store/AircraftStore'
-import shallow from 'zustand/shallow'
+import {CargoCategory, Cargo} from '../types/cargo'
+import {AircraftStore} from '../store/aircraftStore'
+import {Util} from '../util'
+import { CargoForm } from './cargoForm'
 
 export function CargoList() {
   // subscribe to state changes with deepScriptEquals
@@ -23,7 +22,7 @@ export function CargoList() {
   useEffect(() => {
     //subscibe that mutable ref to changes during life of component
     CargoStore.subscribe(
-      (cargosMap) => (cargosRef.current = cargosMap as Map<string, ICargo>),
+      (cargosMap) => (cargosRef.current = cargosMap as Map<string, Cargo>),
       (state) => state.cargosMap
     )
 
@@ -35,7 +34,7 @@ export function CargoList() {
   function onAdd() {
     const id = v4()
     putCargo({
-      id: id,
+      cargoId: id,
       name: `cargo ${id}`,
       weight: 1,
       fs: 1,
@@ -56,14 +55,14 @@ export function CargoList() {
 
   function getItems(): JSX.Element[] {
     return Array.from(cargoMapKeys).map((id) => {
-      const cargo = cargosRef.current.get(id) as ICargo
-      return (
-        <Expanded
-          title={cargo.name}
-          key={cargo.id + '-li'}
-          child={<CargoForm {...cargo} />}
-        />
-      )
+      const cargo = cargosRef.current.get(id) as Cargo
+      return (<CargoForm {...{
+        cargoId: cargo.cargoId,
+        name: Util.cut(cargo.name),
+        weight: Util.cut(cargo.weight),
+        fs: Util.cut(cargo.fs),
+        qty: Util.cut(cargo.qty),
+      }} />)
     })
   }
 
