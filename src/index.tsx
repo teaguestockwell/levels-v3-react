@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {CargoList} from './components/cargoList'
+import { InitLoadingWrapper } from './layout/initLoadingWrapper'
 
 ReactDOM.render(
   <React.StrictMode>
-    <CargoList />
+    <InitLoadingWrapper />
   </React.StrictMode>,
   document.getElementById('root')
 )

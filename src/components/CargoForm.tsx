@@ -1,5 +1,5 @@
 import {useEffect, useRef} from 'react'
-import {Form, Input} from 'antd'
+import {Form, Input, Button} from 'antd'
 import {CargoString} from '../types/cargo'
 import 'antd/dist/antd.css'
 import {Const} from '../const'
@@ -10,17 +10,22 @@ import {CargoStore, CargoStoreState} from '../store/cargoStore'
 export const CargoForm = (props: CargoString) => {
   const [form] = Form.useForm()
 
-  // subscribe to state changes with deepScriptEquals
-  // on change re-render
-  const putCargosIsValid = CargoStore((state) => state.putCargosIsValid)
-  const putCargo = CargoStore((state) => state.putCargo)
+  // this state will never cause re-render because they are actions (functions)
+  // array pick 
+  const [deleteCargo, deleteCargoIsValid, putCargo, putCargoIsValid] = 
+  CargoStore((state) => [
+    state.deleteCargo,
+    state.deleteCargoIsValid,
+    state.putCargo,
+    state.putCargoIsValid
+  ])
 
   const validate = () => {
     form
       .validateFields()
       .then((vals) => {
         console.log('form valid')
-        putCargosIsValid(true, props.cargoId)
+        putCargoIsValid(true, props.cargoId)
         // only update valid cargo because invalid cargo because:
         // invalid cargo will not be used,
         // invalid cargo is not type safe
@@ -28,16 +33,19 @@ export const CargoForm = (props: CargoString) => {
       })
       .catch((errorInfo) => {
         console.log('form is not valid')
-        putCargosIsValid(false, props.cargoId)
+        putCargoIsValid(false, props.cargoId)
       })
       .finally(() => {
         console.log(cargosValidMapRef.current)
       })
   }
 
-  // sub to store state, do not cause re draws
+  // used to dynamically validate fs and weight
   const currentAirRef = useRef(AircraftStore.getState().selectedAir)
+
+  //used to log cargoStore state on change
   const cargosValidMapRef = useRef(CargoStore.getState())
+
   useEffect(() => {
     //subscribe that mutable ref to ALL changes during life of component
     AircraftStore.subscribe(
@@ -48,7 +56,7 @@ export const CargoForm = (props: CargoString) => {
 
     CargoStore.subscribe(
       (state) => (cargosValidMapRef.current = state as CargoStoreState),
-      (state) => state.cargosValidMap
+      (state) => state.cargoValidMap
     )
 
     form.setFieldsValue(props)
@@ -135,7 +143,13 @@ export const CargoForm = (props: CargoString) => {
     }
   }
 
+  const deleteCargoAndValid = () => {
+    deleteCargo(props.cargoId)
+    deleteCargoIsValid(props.cargoId)
+  }
+
   return (
+    <>
     <Form
       key={props.cargoId + '_form'}
       form={form}
@@ -210,5 +224,7 @@ export const CargoForm = (props: CargoString) => {
         <Input size="large" placeholder="Please input amount of cargo" onChange={validate} />
       </Form.Item>
     </Form>
+    <Button danger onClick={deleteCargoAndValid}>Delete</Button>
+    </>
   )
 }

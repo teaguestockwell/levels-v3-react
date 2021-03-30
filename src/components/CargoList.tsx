@@ -10,10 +10,10 @@ export function CargoList() {
   // subscribe to state changes with deepScriptEquals
   // on change re-render
   const putCargo = CargoStore((state) => state.putCargo)
-  const cargoMapKeys = CargoStore((state) => state.cargosMap.keys())
+  const cargoMapKeys = CargoStore((state) => state.cargoMap.keys())
 
   //initialize a mutable ref to state
-  const cargosRef = useRef(CargoStore.getState().cargosMap)
+  const cargosRef = useRef(CargoStore.getState().cargoMap)
 
   // TODO: remove this and put it in dropdown
   const fetchAircrafts = AircraftStore((state) => state.fetchAircrafts)
@@ -24,7 +24,7 @@ export function CargoList() {
     CargoStore.subscribe(
       (cargosMap) => (cargosRef.current = cargosMap as Map<string, Cargo>),
       // pick a specific part of that state
-      (state) => state.cargosMap
+      (state) => state.cargoMap
     )
 
     // TODO: remove this and put it in dropdown
