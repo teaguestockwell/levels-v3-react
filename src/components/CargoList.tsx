@@ -17,7 +17,7 @@ export function CargoList() {
 
   // TODO: remove this and put it in dropdown
   const fetchAircrafts = AircraftStore((state) => state.fetchAircrafts)
-  const setAircraft = AircraftStore((state) => state.setSelectedAircraft)
+  const setAircraft = AircraftStore((state) => state.setSelectedAir)
 
   useEffect(() => {
     //subscribe that mutable ref to changes during life of component
