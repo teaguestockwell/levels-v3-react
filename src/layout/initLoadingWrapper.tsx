@@ -5,12 +5,12 @@ import {Offline} from '../pages/offline'
 import {Dashboard} from './dashboard'
 
 export const InitLoadingWrapper = () => {
-  const {status, data, hasRoles} = useUser()
+  const {status, data: airMap } = useUser()
 
-  if (data && hasRoles) {
-    return <Dashboard />
+  if (airMap && airMap.size > 0) {
+    return <Dashboard airMap={airMap}/>
   }
-  if (data && !hasRoles) {
+  if (airMap && airMap.size) {
     return <AccessDenied />
   }
   if (status === 'loading') {
@@ -19,4 +19,5 @@ export const InitLoadingWrapper = () => {
   if (status === 'error') {
     return <Offline />
   }
+  return (<div>Unhandled State</div>)
 }

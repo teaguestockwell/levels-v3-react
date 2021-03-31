@@ -2,24 +2,24 @@ import create, {State} from 'zustand'
 import {Aircraft} from '../types/aircraft'
 
 export interface AirStoreState extends State {
-  airs: Map<number, Aircraft>
+  //airs: Map<number, Aircraft>
   selectedAir: Aircraft | undefined
-  setSelectedAir: (id: number) => void
-  setAirs: (airs: Map<number, Aircraft>) => void
+  setSelectedAir: (air: Aircraft) => void
+  // setAirs: (airs: Map<number, Aircraft>) => void
   //fetchAircrafts: () => Promise<void>
 }
 
-export const AircraftStore = create<AirStoreState>((set, get) => ({
-  airs: new Map(),
+export const AirStore = create<AirStoreState>((set) => ({
+  // airs: new Map(),
   selectedAir: undefined,
-  setSelectedAir: (id) =>
+  setSelectedAir: (air) =>
     set((state) => {
-      state.selectedAir = get().airs.get(id)
+      state.selectedAir = air
     }),
-  setAirs: (airs) =>
-    set((state) => {
-      state.airs = airs
-    }),
+  // setAirs: (airs) =>
+  //   set((state) => {
+  //     state.airs = airs
+  //   }),
   // fetchAircrafts: async () => {
   //   const newAircrafts = await UserService.getNAircraft()
   //   set((state) => {

@@ -2,7 +2,6 @@ import {CargoStore} from '../store/cargoStore'
 import {v4} from 'uuid'
 import {useEffect, useRef} from 'react'
 import {CargoCategory, Cargo} from '../types/cargo'
-import {AircraftStore} from '../store/aircraftStore'
 import {Util} from '../util'
 import {CargoForm} from './cargoForm'
 
@@ -15,9 +14,6 @@ export function CargoList() {
   //initialize a mutable ref to state
   const cargosRef = useRef(CargoStore.getState().cargoMap)
 
-  // TODO: remove this and put it in dropdown
-  // const fetchAircrafts = AircraftStore((state) => state.fetchAircrafts)
-  // const setAircraft = AircraftStore((state) => state.setSelectedAir)
 
   useEffect(() => {
     //subscribe that mutable ref to changes during life of component
@@ -26,9 +22,6 @@ export function CargoList() {
       // pick a specific part of that state
       (state) => state.cargoMap
     )
-
-    // TODO: remove this and put it in dropdown
-    // fetchAircrafts().then(() => setAircraft(1))
   }, [])
 
   // adding new cargo

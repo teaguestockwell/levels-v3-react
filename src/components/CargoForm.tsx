@@ -3,7 +3,7 @@ import {Form, Input, Button} from 'antd'
 import {CargoString} from '../types/cargo'
 import 'antd/dist/antd.css'
 import {Const} from '../const'
-import {AircraftStore} from '../store/aircraftStore'
+import {AirStore} from '../store/aircraftStore'
 import {Aircraft} from '../types/aircraft'
 import {CargoStore, CargoStoreState} from '../store/cargoStore'
 
@@ -45,14 +45,14 @@ export const CargoForm = (props: CargoString) => {
   }
 
   // used to dynamically validate fs and weight
-  const currentAirRef = useRef(AircraftStore.getState().selectedAir)
+  const currentAirRef = useRef(AirStore.getState().selectedAir)
 
   //used to log cargoStore state on change
   const cargosValidMapRef = useRef(CargoStore.getState())
 
   useEffect(() => {
     //subscribe that mutable ref to ALL changes during life of component
-    AircraftStore.subscribe(
+    AirStore.subscribe(
       (state) => (currentAirRef.current = state as Aircraft),
       // pick a specific part of that state
       (state) => state.selectedAir

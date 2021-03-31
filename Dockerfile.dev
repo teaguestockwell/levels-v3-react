@@ -2,10 +2,12 @@ FROM node:14.15.4
 
 WORKDIR /app
 
+RUN npm i -g serve
+
 COPY . .
 
-RUN npm install
+RUN npx react-scripts build
 
 EXPOSE 8080
 
-CMD ["/bin/bash", "/app/entrypointDev.sh"]
+CMD ["serve", "-s", "build", "-l", "8080"]

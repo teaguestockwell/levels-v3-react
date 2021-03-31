@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {QueryClientProvider} from 'react-query'
+import {QueryClient, QueryClientProvider} from 'react-query'
 import {InitLoadingWrapper} from './layout/initLoadingWrapper'
 
 // Create a client

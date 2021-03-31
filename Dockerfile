@@ -11,8 +11,12 @@ USER 950
 # COPY without dev env
 COPY --chown=950:950 [^.env]* .
 
-RUN npm install
+RUN npm i -g serve
+
+COPY . .
+
+RUN npx react-scripts build
 
 EXPOSE 8080
 
-CMD ["/bin/bash", "/app/entrypoint.sh"]
+CMD ["serve", "-s", "build", "-l", "8080"]
