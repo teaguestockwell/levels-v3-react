@@ -16,8 +16,8 @@ export function CargoList() {
   const cargosRef = useRef(CargoStore.getState().cargoMap)
 
   // TODO: remove this and put it in dropdown
-  const fetchAircrafts = AircraftStore((state) => state.fetchAircrafts)
-  const setAircraft = AircraftStore((state) => state.setSelectedAir)
+  // const fetchAircrafts = AircraftStore((state) => state.fetchAircrafts)
+  // const setAircraft = AircraftStore((state) => state.setSelectedAir)
 
   useEffect(() => {
     //subscribe that mutable ref to changes during life of component
@@ -28,8 +28,8 @@ export function CargoList() {
     )
 
     // TODO: remove this and put it in dropdown
-    fetchAircrafts().then(() => setAircraft(1))
-  }, [fetchAircrafts, setAircraft])
+    // fetchAircrafts().then(() => setAircraft(1))
+  }, [])
 
   // adding new cargo
   function onAdd() {

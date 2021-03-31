@@ -1,3 +1,4 @@
 export const Const = {
-  maxFormLength: 16,
+  MAX_FORM_LENGTH: 16,
+  USE_AIRS_KEY: 'useAirs',
 }

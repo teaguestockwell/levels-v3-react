@@ -1,6 +1,5 @@
 import create, {State} from 'zustand'
 import {Aircraft} from '../types/aircraft'
-import {UserService} from '../services/userService'
 
 export interface AirStoreState extends State {
   airs: Map<number, Aircraft>
@@ -20,7 +19,7 @@ export const AircraftStore = create<AirStoreState>((set, get) => ({
   setAirs: (airs) =>
     set((state) => {
       state.airs = airs
-    })
+    }),
   // fetchAircrafts: async () => {
   //   const newAircrafts = await UserService.getNAircraft()
   //   set((state) => {

@@ -8,8 +8,5 @@ import {CargoList} from '../components/cargoList'
 // if pages are components rendered from selected page state: how can their individual state be persisted
 
 export const Dashboard = () => {
-
-  return(
-    <CargoList/>
-  )
+  return <CargoList />
 }

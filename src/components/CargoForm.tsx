@@ -11,13 +11,17 @@ export const CargoForm = (props: CargoString) => {
   const [form] = Form.useForm()
 
   // this state will never cause re-render because they are actions (functions)
-  // array pick 
-  const [deleteCargo, deleteCargoIsValid, putCargo, putCargoIsValid] = 
-  CargoStore((state) => [
+  // array pick
+  const [
+    deleteCargo,
+    deleteCargoIsValid,
+    putCargo,
+    putCargoIsValid,
+  ] = CargoStore((state) => [
     state.deleteCargo,
     state.deleteCargoIsValid,
     state.putCargo,
-    state.putCargoIsValid
+    state.putCargoIsValid,
   ])
 
   const validate = () => {
@@ -75,7 +79,7 @@ export const CargoForm = (props: CargoString) => {
 
   const nameRules = [
     {
-      max: Const.maxFormLength,
+      max: Const.MAX_FORM_LENGTH,
     },
     {
       required: true,
@@ -87,7 +91,7 @@ export const CargoForm = (props: CargoString) => {
 
   const numericRules = [
     {
-      max: Const.maxFormLength,
+      max: Const.MAX_FORM_LENGTH,
     },
     {
       required: true,
@@ -100,7 +104,7 @@ export const CargoForm = (props: CargoString) => {
 
   const intRules = [
     {
-      max: Const.maxFormLength,
+      max: Const.MAX_FORM_LENGTH,
     },
     {
       required: true,
@@ -150,81 +154,99 @@ export const CargoForm = (props: CargoString) => {
 
   return (
     <>
-    <Form
-      key={props.cargoId + '_form'}
-      form={form}
-      // do not use onValuesChange() here because is run before form validation
-      // solution is to use onChange of inputs
-    >
-      <Form.Item
-        {...formItemLayout}
-        name="name"
-        label="Name"
-        hasFeedback
-        rules={nameRules}
+      <Form
+        key={props.cargoId + '_form'}
+        form={form}
+        // do not use onValuesChange() here because is run before form validation
+        // solution is to use onChange of inputs
       >
-        <Input size="large" placeholder="Please input cargo name" onChange={validate} />
-      </Form.Item>
+        <Form.Item
+          {...formItemLayout}
+          name="name"
+          label="Name"
+          hasFeedback
+          rules={nameRules}
+        >
+          <Input
+            size="large"
+            placeholder="Please input cargo name"
+            onChange={validate}
+          />
+        </Form.Item>
 
-      <Form.Item
-        {...formItemLayout}
-        name="weight"
-        label="Weight"
-        hasFeedback
-        rules={[
-          ...numericRules,
-          {
-            validator: isWeightLessThan,
-            message: `must be less than ${
-              (currentAirRef.current as Aircraft).cargoweight1
-            }`,
-          },
-        ]}
-      >
-        <Input size="large" placeholder="Please input cargo weight" onChange={validate} />
-      </Form.Item>
+        <Form.Item
+          {...formItemLayout}
+          name="weight"
+          label="Weight"
+          hasFeedback
+          rules={[
+            ...numericRules,
+            {
+              validator: isWeightLessThan,
+              message: `must be less than ${
+                (currentAirRef.current as Aircraft).cargoweight1
+              }`,
+            },
+          ]}
+        >
+          <Input
+            size="large"
+            placeholder="Please input cargo weight"
+            onChange={validate}
+          />
+        </Form.Item>
 
-      <Form.Item
-        {...formItemLayout}
-        name="fs"
-        label="Fuselage Station"
-        hasFeedback
-        rules={[
-          ...numericRules,
-          {
-            validator: isFSLessThan,
-            message: `must be greater than ${
-              (currentAirRef.current as Aircraft).fs0
-            }`,
-          },
-          {
-            validator: isFSGreaterThan,
-            message: `must be less than ${
-              (currentAirRef.current as Aircraft).fs1
-            }`,
-          },
-        ]}
-      >
-        <Input size="large" placeholder="Please input fs" onChange={validate} />
-      </Form.Item>
+        <Form.Item
+          {...formItemLayout}
+          name="fs"
+          label="Fuselage Station"
+          hasFeedback
+          rules={[
+            ...numericRules,
+            {
+              validator: isFSLessThan,
+              message: `must be greater than ${
+                (currentAirRef.current as Aircraft).fs0
+              }`,
+            },
+            {
+              validator: isFSGreaterThan,
+              message: `must be less than ${
+                (currentAirRef.current as Aircraft).fs1
+              }`,
+            },
+          ]}
+        >
+          <Input
+            size="large"
+            placeholder="Please input fs"
+            onChange={validate}
+          />
+        </Form.Item>
 
-      <Form.Item
-        {...formItemLayout}
-        name="qty"
-        label="Quantity"
-        hasFeedback
-        rules={[
-          ...intRules,
-          {
-            validator: isZero,
-            message: 'must not be 0',
-          },
-        ]}
-      >
-        <Input size="large" placeholder="Please input amount of cargo" onChange={validate} />
-      </Form.Item>
-    </Form>
-    <Button danger onClick={deleteCargoAndValid}>Delete</Button>
+        <Form.Item
+          {...formItemLayout}
+          name="qty"
+          label="Quantity"
+          hasFeedback
+          rules={[
+            ...intRules,
+            {
+              validator: isZero,
+              message: 'must not be 0',
+            },
+          ]}
+        >
+          <Input
+            size="large"
+            placeholder="Please input amount of cargo"
+            onChange={validate}
+          />
+        </Form.Item>
+      </Form>
+      <Button danger onClick={deleteCargoAndValid}>
+        Delete
+      </Button>
     </>
   )
 }
