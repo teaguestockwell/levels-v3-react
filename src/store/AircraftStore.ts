@@ -2,67 +2,14 @@ import create, {State} from 'zustand'
 import {Aircraft} from '../types/aircraft'
 
 export interface AirStoreState extends State {
-  //airs: Map<number, Aircraft>
   selectedAir: Aircraft | undefined
   setSelectedAir: (air: Aircraft) => void
-  // setAirs: (airs: Map<number, Aircraft>) => void
-  //fetchAircrafts: () => Promise<void>
 }
 
 export const AirStore = create<AirStoreState>((set) => ({
-  // airs: new Map(),
   selectedAir: undefined,
   setSelectedAir: (air) =>
     set((state) => {
       state.selectedAir = air
     }),
-  // setAirs: (airs) =>
-  //   set((state) => {
-  //     state.airs = airs
-  //   }),
-  // fetchAircrafts: async () => {
-  //   const newAircrafts = await UserService.getNAircraft()
-  //   set((state) => {
-  //     state.aircraftsMap = newAircrafts
-  //   })
-  // },
 }))
-
-// async function getAircrafts(): Promise<Map<number, Aircraft>> {
-//   return new Map([
-//     [
-//       1,
-//       {
-//         id: 1,
-//         name: 'C-17A-ER',
-//         fs0: 80.5,
-//         fs1: 2168,
-//         mom0: 9999,
-//         mom1: 50000,
-//         weight0: 260000,
-//         weight1: 300000,
-//         cargoweight1: 300000,
-//         lemac: 793.6,
-//         mac: 309.5,
-//         mommultiplyer: 10000,
-//       },
-//     ],
-//     [
-//       2,
-//       {
-//         id: 1,
-//         name: 'C-17A',
-//         fs0: 80.5,
-//         fs1: 2168,
-//         mom0: 9999,
-//         mom1: 50000,
-//         weight0: 260000,
-//         weight1: 300000,
-//         cargoweight1: 300000,
-//         lemac: 793.6,
-//         mac: 309.5,
-//         mommultiplyer: 10000,
-//       },
-//     ],
-//   ])
-// }

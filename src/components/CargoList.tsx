@@ -14,7 +14,6 @@ export function CargoList() {
   //initialize a mutable ref to state
   const cargosRef = useRef(CargoStore.getState().cargoMap)
 
-
   useEffect(() => {
     //subscribe that mutable ref to changes during life of component
     CargoStore.subscribe(
