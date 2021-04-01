@@ -17,7 +17,7 @@ const getNAircraft = async () => {
   ).data
 
   const ret = new Map<number, AircraftDeep>()
-  aircrafts.forEach((air) => ret.set(air.id, air))
+  aircrafts.forEach((air) => ret.set(air.aircraftId, air))
 
   return ret
 

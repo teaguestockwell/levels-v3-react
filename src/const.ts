@@ -1,5 +1,5 @@
 export const Const = {
-  MAX_FORM_LENGTH: 16,
+  MAX_FORM_LENGTH: 48,
   INT_RULES: [
     {
       max: 16,
@@ -26,7 +26,7 @@ export const Const = {
   ],
   NAME_RULES: [
     {
-      max: 16,
+      max: 48,
     },
     {
       required: true,
@@ -34,6 +34,5 @@ export const Const = {
     {
       whitespace: true,
     },
-  ]
-
+  ],
 }

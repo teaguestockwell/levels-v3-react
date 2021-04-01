@@ -1,8 +1,8 @@
-import {CargoList} from '../components/cargoList'
 import {AirStore} from '../store/aircraftStore'
-import {useEffect} from 'react'
 import {AircraftDeep} from '../types/aircraftDeep'
-import { Util } from '../util'
+import {formatDate} from '../util'
+import {ConsoleLogger} from './consoleLogger'
+import { UserCargo } from '../components/userCargo'
 
 // page navigation with sidebar / hamburger
 // aircrafts state: global read, local update
@@ -15,14 +15,11 @@ interface Props {
 }
 
 export const Dashboard = (props: Props) => {
-  const setSelectedAir = AirStore((state) => state.setSelectedAir)
-  const lastUpdated = Util.formatDate(new Date(Date.now()))
-  
-  // init the selected air in global state to be first in airMap
-  useEffect(() => {
-    setSelectedAir(props.airMap.values().next().value)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const lastUpdated = formatDate(new Date(Date.now()))
+  const selectedAir = AirStore(state => state.selectedAir)
 
-  return <CargoList />
+  return <>
+    <ConsoleLogger/>
+    <UserCargo/>
+  </>
 }

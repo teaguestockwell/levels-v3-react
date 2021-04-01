@@ -21,7 +21,7 @@ export interface Cargo {
   aircraftId: number;
   cargoId:    number;
   updated:    Date;
-  updatedBy:  UpdatedBy;
+  updatedBy:  string;
   name:       string;
   weight:     number;
   fs:         number;
@@ -32,10 +32,7 @@ export enum Category {
   Emergency = "Emergency",
   Extra = "Extra",
   Steward = "Steward",
-}
-
-export enum UpdatedBy {
-  Unknown = "unknown",
+  User = 'User'
 }
 
 export interface Config {

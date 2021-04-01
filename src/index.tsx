@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {QueryClient, QueryClientProvider} from 'react-query'
 import {InitLoadingWrapper} from './layout/initLoadingWrapper'
+import 'antd/dist/antd.css'
 
 // Create a client
 const queryClient = new QueryClient()

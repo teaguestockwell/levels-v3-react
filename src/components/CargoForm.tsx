@@ -1,14 +1,16 @@
-import {useEffect, useRef} from 'react'
+import {useEffect, } from 'react'
 import {Form, Input, Button} from 'antd'
-import 'antd/dist/antd.css'
 import {Const} from '../const'
 import {AirStore} from '../store/aircraftStore'
-import {AircraftDeep, Cargo} from '../types/aircraftDeep'
-import {CargoStore, CargoStoreState} from '../store/cargoStore'
-import { Util } from '../util'
+import {AircraftDeep } from '../types/aircraftDeep'
+import {CargoStore } from '../store/cargoStore'
+import {isLessThan, isGreaterThan } from '../util'
+import { CargoString } from '../types/cargoString'
 
-export const CargoForm = (props: Cargo) => {
+export const CargoForm = (props: CargoString) => {
   const [form] = Form.useForm()
+  // non reactive state because parent component will remove on air change
+  const air = AirStore.getState().selectedAir as AircraftDeep
 
   // this state will never cause re-render because they are actions (functions)
   // array pick
@@ -25,45 +27,27 @@ export const CargoForm = (props: Cargo) => {
   ])
 
   const validate = () => {
-    form
-      .validateFields()
+    form.validateFields()
+
+      // valid
       .then((vals) => {
-        console.log('form valid')
         putCargoIsValid(true, props.cargoId)
-        // only update valid cargo because invalid cargo because:
-        // invalid cargo will not be used,
-        // invalid cargo is not type safe
-        putCargo({...vals, cargoId: props.cargoId})
+        putCargo({...props, ...vals})
       })
+
+      // invalid
       .catch((errorInfo) => {
-        console.log('form is not valid')
         putCargoIsValid(false, props.cargoId)
-      })
-      .finally(() => {
-        console.log(cargosValidMapRef.current)
+        putCargo({...props, ...errorInfo.values})
       })
   }
 
-  // used to dynamically validate fs and weight
-  const airRef = useRef(AirStore.getState().selectedAir as AircraftDeep)
-  //used to log cargoStore state on change
-  const cargosValidMapRef = useRef(CargoStore.getState())
-
   useEffect(() => {
-    //subscribe that mutable ref to ALL changes during life of component
-    AirStore.subscribe(
-      (state) => (airRef.current = state as AircraftDeep),
-      // pick a specific part of that state
-      (state) => state.selectedAir
-    )
-
-    CargoStore.subscribe(
-      (state) => (cargosValidMapRef.current = state as CargoStoreState),
-      (state) => state.cargoValidMap
-    )
-
+    // pass props to form fields
     form.setFieldsValue(props)
-    validate()
+
+    // validate them fields
+    form.validateFields()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -111,8 +95,8 @@ export const CargoForm = (props: Cargo) => {
           rules={[
             ...Const.NUMERIC_RULES,
             {
-              validator: (rule,value) => Util.isLessThan(value, airRef.current.cargoWeight1),
-              message: `must be less than ${airRef.current.cargoWeight1}`,
+              validator: (rule,value) => isLessThan(value, air.cargoWeight1),
+              message: `must be less than ${air.cargoWeight1}`,
             },
           ]}
         >
@@ -131,12 +115,12 @@ export const CargoForm = (props: Cargo) => {
           rules={[
             ...Const.NUMERIC_RULES,
             {
-              validator: (rule,value) => Util.isGreaterThan(value, airRef.current.fs0),
-              message: `must be greater than ${airRef.current.fs0}`,
+              validator: (rule,value) => isGreaterThan(value, air.fs0),
+              message: `must be greater than ${air.fs0}`,
             },
             {
-              validator: (rule,value) => Util.isLessThan(value, airRef.current.fs1),
-              message: `must be less than ${airRef.current.fs1}`,
+              validator: (rule,value) => isLessThan(value, air.fs1),
+              message: `must be less than ${air.fs1}`,
             },
           ]}
         >
@@ -155,7 +139,7 @@ export const CargoForm = (props: Cargo) => {
           rules={[
             ...Const.INT_RULES,
             {
-              validator: (rule,value) => Util.isGreaterThan(value, 1),
+              validator: (rule,value) => isGreaterThan(value, 1),
               message: 'must be greater than 0',
             },
           ]}
