@@ -1,12 +1,12 @@
 import create, {State} from 'zustand'
-import {Cargo} from '../types/cargo'
+import { ConfigCargo } from '../types/aircraftDeep'
 export interface CargoStoreState extends State {
-  putCargo: (cargo: Cargo) => void
-  deleteCargo: (cargoId: string) => void
-  deleteCargoIsValid: (cargoId: string) => void
-  putCargoIsValid: (valid: boolean, cargoId: string) => void
-  cargoValidMap: Map<string, boolean>
-  cargoMap: Map<string, Cargo>
+  putCargo: (cargo: ConfigCargo) => void
+  deleteCargo: (cargoId: number) => void
+  deleteCargoIsValid: (cargoId: number) => void
+  putCargoIsValid: (valid: boolean, cargoId: number) => void
+  cargoValidMap: Map<number, boolean>
+  cargoMap: Map<number, ConfigCargo>
 }
 
 export const CargoStore = create<CargoStoreState>((set) => ({
@@ -15,7 +15,7 @@ export const CargoStore = create<CargoStoreState>((set) => ({
     set((state) => {
       state.cargoValidMap.set(cargoId, valid)
     }),
-  deleteCargoIsValid: (cargoId: string) =>
+  deleteCargoIsValid: (cargoId) =>
     set((state) => {
       state.cargoValidMap.delete(cargoId)
     }),

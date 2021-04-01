@@ -1,19 +1,16 @@
-export enum CargoCategory {
-  Steward,
-  Emergency,
-  Extra,
-}
-/** shape in the the api */
-export interface Cargo {
+import {Category} from './aircraftDeep'
+
+export interface ClientCargo {
   cargoId: string
   name: string
   weight: number
   fs: number
   qty: number
-  category: CargoCategory
+  category: Category
 }
+
 /** shape inside of a form where every field in a string */
-export interface CargoString {
+export interface ClientCargoString {
   cargoId: string
   name: string
   weight: string

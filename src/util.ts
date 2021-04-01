@@ -34,5 +34,5 @@ export const Util = {
     const hour = get2SignificantDigits(date.getUTCHours())
     const min = get2SignificantDigits(date.getUTCMinutes())
     return `${year}-${month}-${day} ${hour}:${min} Zulu`
-  }
+  },
 }

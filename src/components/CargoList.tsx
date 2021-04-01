@@ -1,5 +1,4 @@
 import {CargoStore} from '../store/cargoStore'
-import {v4} from 'uuid'
 import {useEffect, useRef} from 'react'
 import {CargoCategory, Cargo} from '../types/cargo'
 import {Util} from '../util'
@@ -17,7 +16,7 @@ export function CargoList() {
   useEffect(() => {
     //subscribe that mutable ref to changes during life of component
     CargoStore.subscribe(
-      (cargosMap) => (cargosRef.current = cargosMap as Map<string, Cargo>),
+      (cargosMap) => (cargosRef.current = cargosMap as Map<number, Cargo>),
       // pick a specific part of that state
       (state) => state.cargoMap
     )
@@ -25,10 +24,9 @@ export function CargoList() {
 
   // adding new cargo
   function onAdd() {
-    const id = v4()
     putCargo({
-      cargoId: id,
-      name: `cargo ${id}`,
+      cargoId: new Date().valueOf(),
+      name: `custom cargo`,
       weight: 1,
       fs: 1,
       qty: 1,

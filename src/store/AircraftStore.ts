@@ -1,9 +1,9 @@
 import create, {State} from 'zustand'
-import {Aircraft} from '../types/aircraft'
+import {AircraftDeep} from '../types/aircraftDeep'
 
 export interface AirStoreState extends State {
-  selectedAir: Aircraft | undefined
-  setSelectedAir: (air: Aircraft) => void
+  selectedAir: AircraftDeep | undefined
+  setSelectedAir: (air: AircraftDeep) => void
 }
 
 export const AirStore = create<AirStoreState>((set) => ({

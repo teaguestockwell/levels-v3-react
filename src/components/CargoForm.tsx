@@ -1,14 +1,13 @@
 import {useEffect, useRef} from 'react'
 import {Form, Input, Button} from 'antd'
-import {CargoString} from '../types/cargo'
 import 'antd/dist/antd.css'
 import {Const} from '../const'
 import {AirStore} from '../store/aircraftStore'
-import {Aircraft} from '../types/aircraft'
+import {AircraftDeep, Cargo} from '../types/aircraftDeep'
 import {CargoStore, CargoStoreState} from '../store/cargoStore'
 import { Util } from '../util'
 
-export const CargoForm = (props: CargoString) => {
+export const CargoForm = (props: Cargo) => {
   const [form] = Form.useForm()
 
   // this state will never cause re-render because they are actions (functions)
@@ -46,14 +45,14 @@ export const CargoForm = (props: CargoString) => {
   }
 
   // used to dynamically validate fs and weight
-  const airRef = useRef(AirStore.getState().selectedAir as Aircraft)
+  const airRef = useRef(AirStore.getState().selectedAir as AircraftDeep)
   //used to log cargoStore state on change
   const cargosValidMapRef = useRef(CargoStore.getState())
 
   useEffect(() => {
     //subscribe that mutable ref to ALL changes during life of component
     AirStore.subscribe(
-      (state) => (airRef.current = state as Aircraft),
+      (state) => (airRef.current = state as AircraftDeep),
       // pick a specific part of that state
       (state) => state.selectedAir
     )
@@ -112,8 +111,8 @@ export const CargoForm = (props: CargoString) => {
           rules={[
             ...Const.NUMERIC_RULES,
             {
-              validator: (rule,value) => Util.isLessThan(value, airRef.current.cargoweight1),
-              message: `must be less than ${airRef.current.cargoweight1}`,
+              validator: (rule,value) => Util.isLessThan(value, airRef.current.cargoWeight1),
+              message: `must be less than ${airRef.current.cargoWeight1}`,
             },
           ]}
         >
