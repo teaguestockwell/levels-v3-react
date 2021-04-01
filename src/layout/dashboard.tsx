@@ -2,7 +2,7 @@ import {AirStore} from '../store/aircraftStore'
 import {AircraftDeep} from '../types/aircraftDeep'
 import {formatDate} from '../util'
 import {ConsoleLogger} from './consoleLogger'
-import { UserCargo } from '../components/userCargo'
+import {UserCargo} from '../components/userCargo'
 
 // page navigation with sidebar / hamburger
 // aircrafts state: global read, local update
@@ -16,10 +16,12 @@ interface Props {
 
 export const Dashboard = (props: Props) => {
   const lastUpdated = formatDate(new Date(Date.now()))
-  const selectedAir = AirStore(state => state.selectedAir)
+  const selectedAir = AirStore((state) => state.selectedAir)
 
-  return <>
-    <ConsoleLogger/>
-    <UserCargo/>
-  </>
+  return (
+    <>
+      <ConsoleLogger />
+      <UserCargo />
+    </>
+  )
 }

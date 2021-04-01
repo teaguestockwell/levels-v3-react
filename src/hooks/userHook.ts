@@ -3,12 +3,14 @@ import {useQuery} from 'react-query'
 import {AircraftDeep} from '../types/aircraftDeep'
 
 export const useUser = () => {
-  let hasRoles =  false
+  let hasRoles = false
   const query = useQuery('user', getNAircraft, {
     staleTime: Infinity,
   })
-  if(query.data && query.data.size > 0){hasRoles = true}
-  return {...query, hasRoles} 
+  if (query.data && query.data.size > 0) {
+    hasRoles = true
+  }
+  return {...query, hasRoles}
 }
 
 const getNAircraft = async () => {

@@ -1,11 +1,11 @@
-import {useEffect, } from 'react'
+import {useEffect} from 'react'
 import {Form, Input, Button} from 'antd'
 import {Const} from '../const'
 import {AirStore} from '../store/aircraftStore'
-import {AircraftDeep } from '../types/aircraftDeep'
-import {CargoStore } from '../store/cargoStore'
-import {isLessThan, isGreaterThan } from '../util'
-import { CargoString } from '../types/cargoString'
+import {AircraftDeep} from '../types/aircraftDeep'
+import {CargoStore} from '../store/cargoStore'
+import {isLessThan, isGreaterThan} from '../util'
+import {CargoString} from '../types/cargoString'
 
 export const CargoForm = (props: CargoString) => {
   const [form] = Form.useForm()
@@ -27,7 +27,8 @@ export const CargoForm = (props: CargoString) => {
   ])
 
   const validate = () => {
-    form.validateFields()
+    form
+      .validateFields()
 
       // valid
       .then((vals) => {
@@ -95,7 +96,7 @@ export const CargoForm = (props: CargoString) => {
           rules={[
             ...Const.NUMERIC_RULES,
             {
-              validator: (rule,value) => isLessThan(value, air.cargoWeight1),
+              validator: (rule, value) => isLessThan(value, air.cargoWeight1),
               message: `must be less than ${air.cargoWeight1}`,
             },
           ]}
@@ -115,11 +116,11 @@ export const CargoForm = (props: CargoString) => {
           rules={[
             ...Const.NUMERIC_RULES,
             {
-              validator: (rule,value) => isGreaterThan(value, air.fs0),
+              validator: (rule, value) => isGreaterThan(value, air.fs0),
               message: `must be greater than ${air.fs0}`,
             },
             {
-              validator: (rule,value) => isLessThan(value, air.fs1),
+              validator: (rule, value) => isLessThan(value, air.fs1),
               message: `must be less than ${air.fs1}`,
             },
           ]}
@@ -139,7 +140,7 @@ export const CargoForm = (props: CargoString) => {
           rules={[
             ...Const.INT_RULES,
             {
-              validator: (rule,value) => isGreaterThan(value, 1),
+              validator: (rule, value) => isGreaterThan(value, 1),
               message: 'must be greater than 0',
             },
           ]}

@@ -1,5 +1,5 @@
 import create, {State} from 'zustand'
-import { CargoString } from '../types/cargoString'
+import {CargoString} from '../types/cargoString'
 export interface CargoStoreState extends State {
   putCargo: (cargo: CargoString) => void
   deleteCargo: (cargoId: number) => void

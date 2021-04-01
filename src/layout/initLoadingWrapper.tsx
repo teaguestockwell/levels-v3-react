@@ -2,7 +2,7 @@ import {useUser} from '../hooks/userHook'
 import {AccessDenied} from '../pages/accessDenied'
 import {Loading} from '../pages/loading'
 import {Offline} from '../pages/offline'
-import { AirStore } from '../store/aircraftStore'
+import {AirStore} from '../store/aircraftStore'
 import {Dashboard} from './dashboard'
 
 export const InitLoadingWrapper = () => {
