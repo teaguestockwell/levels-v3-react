@@ -5,12 +5,12 @@ import {Offline} from '../pages/offline'
 import {Dashboard} from './dashboard'
 
 export const InitLoadingWrapper = () => {
-  const {status, data: airMap} = useUser()
+  const {status, data, hasRoles} = useUser()
 
-  if (airMap && airMap.size > 0) {
-    return <Dashboard airMap={airMap} />
+  if (data && hasRoles) {
+    return <Dashboard airMap={data} />
   }
-  if (airMap && airMap.size === 0) {
+  if (data && !hasRoles) {
     return <AccessDenied />
   }
   if (status === 'loading') {

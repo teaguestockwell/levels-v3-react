@@ -3,10 +3,12 @@ import {useQuery} from 'react-query'
 import {Aircraft} from '../types/aircraft'
 
 export const useUser = () => {
+  let hasRoles =  false
   const query = useQuery('user', getNAircraft, {
     staleTime: Infinity,
   })
-  return {...query}
+  if(query.data && query.data.size > 0){hasRoles = true}
+  return {...query, hasRoles} 
 }
 
 const getNAircraft = async () => {

@@ -6,6 +6,7 @@ import {Const} from '../const'
 import {AirStore} from '../store/aircraftStore'
 import {Aircraft} from '../types/aircraft'
 import {CargoStore, CargoStoreState} from '../store/cargoStore'
+import { Util } from '../util'
 
 export const CargoForm = (props: CargoString) => {
   const [form] = Form.useForm()
@@ -45,15 +46,14 @@ export const CargoForm = (props: CargoString) => {
   }
 
   // used to dynamically validate fs and weight
-  const currentAirRef = useRef(AirStore.getState().selectedAir)
-
+  const airRef = useRef(AirStore.getState().selectedAir as Aircraft)
   //used to log cargoStore state on change
   const cargosValidMapRef = useRef(CargoStore.getState())
 
   useEffect(() => {
     //subscribe that mutable ref to ALL changes during life of component
     AirStore.subscribe(
-      (state) => (currentAirRef.current = state as Aircraft),
+      (state) => (airRef.current = state as Aircraft),
       // pick a specific part of that state
       (state) => state.selectedAir
     )
@@ -77,77 +77,7 @@ export const CargoForm = (props: CargoString) => {
     // },
   }
 
-  const nameRules = [
-    {
-      max: Const.MAX_FORM_LENGTH,
-    },
-    {
-      required: true,
-    },
-    {
-      whitespace: true,
-    },
-  ]
-
-  const numericRules = [
-    {
-      max: Const.MAX_FORM_LENGTH,
-    },
-    {
-      required: true,
-    },
-    {
-      pattern: new RegExp(/^\d*(\.\d+)?$/),
-      message: 'must be a positive number',
-    },
-  ]
-
-  const intRules = [
-    {
-      max: Const.MAX_FORM_LENGTH,
-    },
-    {
-      required: true,
-    },
-    {
-      pattern: new RegExp(/^\d+$/),
-      message: 'must be a positive whole number',
-    },
-  ]
-
-  const isWeightLessThan = async (rule: any, value: any) => {
-    if (!value) {
-    } // let other rules handle empty string case
-    else if (value > (currentAirRef.current as Aircraft).cargoweight1) {
-      throw new Error()
-    }
-  }
-
-  const isFSLessThan = async (rule: any, value: any) => {
-    if (!value) {
-    } // let other rules handle empty string case
-    else if (value < (currentAirRef.current as Aircraft).fs0) {
-      throw new Error()
-    }
-  }
-
-  const isFSGreaterThan = async (rule: any, value: any) => {
-    if (!value) {
-    } // let other rules handle empty string case
-    else if (value > (currentAirRef.current as Aircraft).fs1) {
-      throw new Error()
-    }
-  }
-
-  const isZero = async (rule: any, value: any) => {
-    if (!value) {
-    } // let other rules handle empty string case
-    else if (value === '0') {
-      throw new Error()
-    }
-  }
-
-  const deleteCargoAndValid = () => {
+  const onDelete = () => {
     deleteCargo(props.cargoId)
     deleteCargoIsValid(props.cargoId)
   }
@@ -165,7 +95,7 @@ export const CargoForm = (props: CargoString) => {
           name="name"
           label="Name"
           hasFeedback
-          rules={nameRules}
+          rules={Const.NAME_RULES}
         >
           <Input
             size="large"
@@ -180,12 +110,10 @@ export const CargoForm = (props: CargoString) => {
           label="Weight"
           hasFeedback
           rules={[
-            ...numericRules,
+            ...Const.NUMERIC_RULES,
             {
-              validator: isWeightLessThan,
-              message: `must be less than ${
-                (currentAirRef.current as Aircraft).cargoweight1
-              }`,
+              validator: (rule,value) => Util.isLessThan(value, airRef.current.cargoweight1),
+              message: `must be less than ${airRef.current.cargoweight1}`,
             },
           ]}
         >
@@ -202,18 +130,14 @@ export const CargoForm = (props: CargoString) => {
           label="Fuselage Station"
           hasFeedback
           rules={[
-            ...numericRules,
+            ...Const.NUMERIC_RULES,
             {
-              validator: isFSLessThan,
-              message: `must be greater than ${
-                (currentAirRef.current as Aircraft).fs0
-              }`,
+              validator: (rule,value) => Util.isGreaterThan(value, airRef.current.fs0),
+              message: `must be greater than ${airRef.current.fs0}`,
             },
             {
-              validator: isFSGreaterThan,
-              message: `must be less than ${
-                (currentAirRef.current as Aircraft).fs1
-              }`,
+              validator: (rule,value) => Util.isLessThan(value, airRef.current.fs1),
+              message: `must be less than ${airRef.current.fs1}`,
             },
           ]}
         >
@@ -230,10 +154,10 @@ export const CargoForm = (props: CargoString) => {
           label="Quantity"
           hasFeedback
           rules={[
-            ...intRules,
+            ...Const.INT_RULES,
             {
-              validator: isZero,
-              message: 'must not be 0',
+              validator: (rule,value) => Util.isGreaterThan(value, 1),
+              message: 'must be greater than 0',
             },
           ]}
         >
@@ -244,7 +168,7 @@ export const CargoForm = (props: CargoString) => {
           />
         </Form.Item>
       </Form>
-      <Button danger onClick={deleteCargoAndValid}>
+      <Button danger onClick={onDelete}>
         Delete
       </Button>
     </>
