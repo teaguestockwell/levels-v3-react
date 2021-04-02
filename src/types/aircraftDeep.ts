@@ -33,7 +33,7 @@ export enum Category {
   Extra = 'Extra',
   Steward = 'Steward',
   User = 'User',
-  Tank = 'Tank'
+  Tank = 'Tank',
 }
 
 export interface Config {

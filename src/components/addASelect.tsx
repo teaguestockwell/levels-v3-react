@@ -3,8 +3,8 @@ import {CargoStore} from '../store/cargoStore'
 import {AircraftDeep, Cargo, Category} from '../types/aircraftDeep'
 import {DownOutlined} from '@ant-design/icons'
 import {AirStore} from '../store/airStore'
-import { MenuInfo } from 'rc-menu/lib/interface'
-import {cargoToNewCustomCargo,getYupSchema} from '../util'
+import {MenuInfo} from 'rc-menu/lib/interface'
+import {cargoToNewCustomCargo, getYupSchema} from '../util'
 
 export const AddASelect = () => {
   const [putCargo, putCargoIsValid] = CargoStore((state) => [
@@ -14,8 +14,10 @@ export const AddASelect = () => {
 
   const air = AirStore.getState().selectedAir as AircraftDeep
 
-  const stewardCargo = air.cargos.filter(x => x.category === Category.Steward)
-  const emergencyCargo = air.cargos.filter(x => x.category === Category.Emergency)
+  const stewardCargo = air.cargos.filter((x) => x.category === Category.Steward)
+  const emergencyCargo = air.cargos.filter(
+    (x) => x.category === Category.Emergency
+  )
   const extraCargo = air.cargos.filter((x) => x.category === Category.Extra)
 
   const schema = getYupSchema(air)
@@ -49,13 +51,12 @@ export const AddASelect = () => {
     </Menu>
   )
 
-  return <Dropdown 
-        overlay={menu}
-        trigger={['click']}
-        >
-        <Button >
-          Add AddA
-          <DownOutlined />
-        </Button>
-      </Dropdown>
+  return (
+    <Dropdown overlay={menu} trigger={['click']}>
+      <Button>
+        Add AddA
+        <DownOutlined />
+      </Button>
+    </Dropdown>
+  )
 }

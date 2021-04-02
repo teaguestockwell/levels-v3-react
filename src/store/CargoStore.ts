@@ -7,7 +7,7 @@ export interface CargoStoreState extends State {
   putCargoIsValid: (valid: boolean, cargoId: number) => void
   cargoValidMap: Map<number, boolean>
   cargoMap: Map<number, CargoString>
-  resetCargoStore : () => void
+  resetCargoStore: () => void
 }
 
 export const CargoStore = create<CargoStoreState>((set) => ({
@@ -33,5 +33,5 @@ export const CargoStore = create<CargoStoreState>((set) => ({
     set((state) => {
       state.cargoMap.clear()
       state.cargoValidMap.clear()
-    })
+    }),
 }))

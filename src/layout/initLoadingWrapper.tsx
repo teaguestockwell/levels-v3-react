@@ -11,7 +11,7 @@ export const InitLoadingWrapper = () => {
 
   if (data && hasRoles) {
     setSelectedAir(data.values().next().value)
-    return <Dashboard/>
+    return <Dashboard />
   }
   if (data && !hasRoles) {
     return <AccessDenied />
