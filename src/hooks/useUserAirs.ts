@@ -2,7 +2,7 @@ import axios from 'axios'
 import {useQuery} from 'react-query'
 import {AircraftDeep} from '../types/aircraftDeep'
 
-export const useUser = () => {
+export const useUserAirs = () => {
   let hasRoles = false
   const query = useQuery('user', getNAircraft, {
     staleTime: Infinity,

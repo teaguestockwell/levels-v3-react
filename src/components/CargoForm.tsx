@@ -1,7 +1,7 @@
 import {useEffect} from 'react'
 import {Form, Input, Button} from 'antd'
 import {Const} from '../const'
-import {AirStore} from '../store/aircraftStore'
+import {AirStore} from '../store/airStore'
 import {AircraftDeep} from '../types/aircraftDeep'
 import {CargoStore} from '../store/cargoStore'
 import {isLessThan, isGreaterThan} from '../util'

@@ -12,7 +12,7 @@ export function CargoList({category}: {category: Category}) {
       .filter((x) => x.category === category)
       .map((cargo) => {
         return (
-          <CargoForm
+          <CargoForm key={cargo.cargoId + 'form'}
             {...{
               cargoId: cargo.cargoId,
               name: cut(cargo.name),
