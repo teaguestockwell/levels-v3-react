@@ -63,14 +63,15 @@ export const UserCargo = () => {
   return (
     <>
       <Button
-        type="primary"
+        //type="primary"
         icon={<PlusCircleOutlined />}
         onClick={onAddCustomCargoClick}
+        block
       >
         Add Custom
       </Button>
       <Dropdown overlay={menu} trigger={['click']}>
-        <Button>
+        <Button block>
           Add AddA
           <DownOutlined />
         </Button>

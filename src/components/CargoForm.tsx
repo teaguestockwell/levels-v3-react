@@ -152,7 +152,7 @@ export const CargoForm = (props: CargoString) => {
           />
         </Form.Item>
       </Form>
-      <Button danger onClick={onDelete}>
+      <Button danger onClick={onDelete} block>
         Delete
       </Button>
     </>
