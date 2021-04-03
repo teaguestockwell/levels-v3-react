@@ -26,7 +26,7 @@ export const AddASelect = () => {
     const oldCargo = selectedAir.cargos.find((x) => x.cargoId === selectedId) as Cargo
     const newCargo = cargoToNewCargoString(oldCargo, 1)
     const isValid = schema.isValidSync(newCargo)
-    putCargoIsValid(isValid, newCargo.cargoId)
+    putCargoIsValid(isValid, newCargo.uuid)
     putCargo(newCargo)
   }
 

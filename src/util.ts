@@ -2,6 +2,7 @@ import {Const} from './const'
 import * as yup from 'yup'
 import {AircraftDeep, Cargo, Category, Config, ConfigCargo} from './types/aircraftDeep'
 import {CargoString} from './types/cargoString'
+import { v4 } from 'uuid'
 /** if string is > max length cut it and add ... */
 export const cut = (x: any): string => {
   return x.toString().length > Const.MAX_FORM_LENGTH
@@ -49,7 +50,7 @@ export const cargoToNewCargoString = (
   qty: number
 ): CargoString => {
   return {
-    cargoId: Date.now().valueOf(),
+    uuid: v4(),
     name: cargo.name,
     weight: cargo.weight.toString(),
     fs: cargo.fs.toString(),
@@ -60,7 +61,7 @@ export const cargoToNewCargoString = (
 
 export const configToNewCargoStrings = (config : Config): CargoString[] => {
   return config.configCargos.map(cc => ({
-    cargoId: new Date().valueOf(),
+    uuid: v4(),
     name: cc.cargo.name,
     weight: cc.cargo.weight.toString(),
     fs: cc.fs.toString(),
@@ -70,7 +71,7 @@ export const configToNewCargoStrings = (config : Config): CargoString[] => {
 }
 export const getNewCustomCargoString = (): CargoString => {
   return {
-    cargoId: new Date().valueOf(),
+    uuid: v4(),
     name: `custom cargo`,
     weight: '',
     fs: '',

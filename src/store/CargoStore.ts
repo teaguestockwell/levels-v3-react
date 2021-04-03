@@ -1,30 +1,40 @@
 import create, {State} from 'zustand'
+import { Const } from '../const'
+import { Config } from '../types/aircraftDeep'
 import {CargoString} from '../types/cargoString'
 export interface CargoStoreState extends State {
   // create | update 1
   putCargo: (cargo: CargoString) => void
-  putCargoIsValid: (valid: boolean, cargoId:number) => void
+  putCargoIsValid: (valid: boolean, uuid:string) => void
+  putConfig: (config: Config) => void
+  putConfigUuids: (uuids: string[]) => void
 
   // create | update n
   putCargos: (cargos : CargoString[]) => void
-  putCargosIsValid: (cargoIdValidMap: Map<number,boolean>) => void
+  putCargosIsValid: (cargoIdValidMap: Map<string,boolean>) => void
 
   // read 1 | n
-  cargoValidMap: Map<number, boolean>
-  cargoMap: Map<number, CargoString>
+  cargoValidMap: Map<string, boolean>
+  cargoMap: Map<string, CargoString>
+  config: Config
+  configUuids : string[]
 
   // delete 1
-  deleteCargo: (cargoId: number) => void
-  deleteCargoIsValid: (cargoId: number) => void
+  deleteCargo: (cargoId: string) => void
+  deleteCargoIsValid: (cargoId: string) => void
 
   // delete n
-  deleteCargos: (cargoIds: number[]) => void
-  deleteCargosIsValid: (cargoIds: number[]) => void
+  deleteCargos: (cargoIds: string[]) => void
+  deleteCargosIsValid: (cargoIds: string[]) => void
 
   resetCargoStore: () => void
 }
 
 export const CargoStore = create<CargoStoreState>((set) => ({
+  config: Const.noConfig,
+  configUuids: [],
+  putConfigUuids: (uuids) => set((state) => {state.configUuids =uuids}),
+  putConfig: (config) => set((state)=> {state.config = config}),
   putCargosIsValid: (cargoIdValidMap) => 
     set((state) => {
       Array.from(cargoIdValidMap.entries())
@@ -50,11 +60,11 @@ export const CargoStore = create<CargoStoreState>((set) => ({
     }),
   putCargo: (cargo) =>
     set((state) => {
-      state.cargoMap.set(cargo.cargoId, cargo)
+      state.cargoMap.set(cargo.uuid, cargo)
     }),
   putCargos: (cargos) => 
     set((state) => {
-      cargos.forEach(c => state.cargoMap.set(c.cargoId, c))
+      cargos.forEach(c => state.cargoMap.set(c.uuid, c))
     }),
   deleteCargos: (cargoIds) => 
     set((state) => {  

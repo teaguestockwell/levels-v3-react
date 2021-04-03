@@ -1,3 +1,4 @@
+import {Config} from './types/aircraftDeep'
 export const Const = {
   MAX_FORM_LENGTH: 48,
   INT_RULES: [
@@ -35,4 +36,5 @@ export const Const = {
       whitespace: true,
     },
   ],
+  noConfig: {configId: 0, configCargos: [], name: 'No Config', aircraftId: 0}
 }

@@ -11,7 +11,7 @@ export const AddCustomCargo = () => {
 
   const onAddCustomCargoClick = () => {
     const newCargo = getNewCustomCargoString()
-    putCargoIsValid(false, newCargo.cargoId)
+    putCargoIsValid(false, newCargo.uuid)
     putCargo(newCargo)
   }
 

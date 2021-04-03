@@ -4,58 +4,65 @@ import { CargoStore } from "../store/cargoStore"
 import {DownOutlined} from '@ant-design/icons'
 import {MenuInfo} from 'rc-menu/lib/interface'
 import { AircraftDeep, Config } from "../types/aircraftDeep"
-import { useState } from "react"
-import { buildMap, configToNewCargoStrings, getYupSchema } from "../util"
+import { configToNewCargoStrings, getYupSchema as getYupCargoSchema } from "../util"
+import { Const } from "../const"
 
 export const ConfigSelect = () => {
   const [
+    config,
     deleteCargos,
     deleteCargosIsValid,
     putCargos,
-    putCargosIsValid
+    putCargosIsValid,
+    putConfigUuids,
+    putConfig,
   ] = CargoStore(state => [
+    state.config,
     state.deleteCargos,
     state.deleteCargosIsValid,
     state.putCargos,
-    state.putCargosIsValid
+    state.putCargosIsValid,
+    state.putConfigUuids,
+    state.putConfig,
   ])
   const selectedAir = AirStore(state => state.selectedAir) as AircraftDeep
-  const configs = selectedAir.configs
-  const schema = getYupSchema(selectedAir)
-  const noConfig = {configId: 0, configCargos: [], name: 'No Config', aircraftId: selectedAir.aircraftId}
-  const [config, setConfig] = useState<Config>(noConfig)
+  const schema = getYupCargoSchema(selectedAir)
 
   const onConfigChange = (menuInfo: MenuInfo) => {
+    // get config from selection
     const newConfigId = Number(menuInfo.key)
     let newConfig: Config
-    if(newConfigId === 0){newConfig = noConfig}
-    else{newConfig = configs.find(c => c.configId === newConfigId) as Config}
-    console.log(newConfig.name)
+    if(newConfigId === 0){newConfig = Const.noConfig}
+    else{newConfig = selectedAir.configs.find(c => c.configId === newConfigId) as Config}
+    
+    // get an array of cargoStrings from that config
     const newCargos = configToNewCargoStrings(newConfig)
 
-    // new map where k: cargoId, v: isValid
-    const newIsValids = newCargos.map(c => schema.isValidSync(c))
-    const newCargoIds = newCargos.map(c => c.cargoId)
-    const newCargoIsValidMap = buildMap(newCargoIds, newIsValids)
+    // k: uuid, v: isValid
+    const newCargoMap = new Map<string,boolean>()
+    newCargos.forEach(c => {
+      newCargoMap.set(c.uuid, schema.isValidSync(c))
+    })
 
     // remove old config from cargo store
-    const oldConfigIds = config.configCargos.map(cc => cc.cargoId)
-    deleteCargosIsValid(oldConfigIds)
-    deleteCargos(oldConfigIds)
-
+    const oldUuids = CargoStore.getState().configUuids
+    deleteCargosIsValid(oldUuids)
+    deleteCargos(oldUuids)
+    
     // add new configs
-    putCargosIsValid(newCargoIsValidMap)
+    putCargosIsValid(newCargoMap)
     putCargos(newCargos)
+    putConfigUuids(Array.from(newCargoMap.keys()))
 
     // update selected
-    setConfig(newConfig)
+    putConfig(newConfig)
   }
 
   const menu = (
     <Menu onClick={onConfigChange}>
       {[
         <Menu.Item key={0}>No Config</Menu.Item>,
-        ...configs.map((c) => (
+        ...selectedAir.configs.map((c) => (
         <Menu.Item key={c.configId}>{c.name}</Menu.Item>
         ))
       ]}
@@ -70,5 +77,4 @@ export const ConfigSelect = () => {
       </Button>
     </Dropdown>
   )
-
 }

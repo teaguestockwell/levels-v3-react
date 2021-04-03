@@ -32,13 +32,13 @@ export const CargoForm = (props: CargoString) => {
 
       // valid
       .then((vals) => {
-        putCargoIsValid(true, props.cargoId)
+        putCargoIsValid(true, props.uuid)
         putCargo({...props, ...vals})
       })
 
       // invalid
       .catch((errorInfo) => {
-        putCargoIsValid(false, props.cargoId)
+        putCargoIsValid(false, props.uuid)
         putCargo({...props, ...errorInfo.values})
       })
   }
@@ -62,14 +62,14 @@ export const CargoForm = (props: CargoString) => {
   }
 
   const onDelete = () => {
-    deleteCargo(props.cargoId)
-    deleteCargoIsValid(props.cargoId)
+    deleteCargo(props.uuid)
+    deleteCargoIsValid(props.uuid)
   }
 
   return (
     <>
       <Form
-        key={props.cargoId + '_form'}
+        key={props.uuid + '_form'}
         form={form}
         // do not use onValuesChange() here because is run before form validation
         // solution is to use onChange of inputs

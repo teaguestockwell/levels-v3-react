@@ -13,9 +13,9 @@ export function CargoList({category}: {category: Category[]}) {
       .map((cargo) => {
         return (
           <CargoForm
-            key={cargo.cargoId + 'form'}
+            key={cargo.uuid + 'form'}
             {...{
-              cargoId: cargo.cargoId,
+              uuid: cargo.uuid,
               name: cut(cargo.name),
               weight: cut(cargo.weight),
               fs: cut(cargo.fs),
