@@ -4,28 +4,27 @@ import {AircraftDeep, Cargo, Category} from '../types/aircraftDeep'
 import {DownOutlined} from '@ant-design/icons'
 import {AirStore} from '../store/airStore'
 import {MenuInfo} from 'rc-menu/lib/interface'
-import {cargoToNewCustomCargo, getYupSchema} from '../util'
+import {cargoToNewCargoString, getYupSchema} from '../util'
 
 export const AddASelect = () => {
   const [putCargo, putCargoIsValid] = CargoStore((state) => [
     state.putCargo,
     state.putCargoIsValid,
   ])
+  const selectedAir = AirStore(state => state.selectedAir) as AircraftDeep
 
-  const air = AirStore.getState().selectedAir as AircraftDeep
-
-  const stewardCargo = air.cargos.filter((x) => x.category === Category.Steward)
-  const emergencyCargo = air.cargos.filter(
+  const stewardCargo = selectedAir.cargos.filter((x) => x.category === Category.Steward)
+  const emergencyCargo = selectedAir.cargos.filter(
     (x) => x.category === Category.Emergency
   )
-  const extraCargo = air.cargos.filter((x) => x.category === Category.Extra)
+  const extraCargo = selectedAir.cargos.filter((x) => x.category === Category.Extra)
 
-  const schema = getYupSchema(air)
+  const schema = getYupSchema(selectedAir)
 
   const onAddAddACargoClick = (menuInfo: MenuInfo) => {
     const selectedId = Number(menuInfo.key)
-    const oldCargo = air.cargos.find((x) => x.cargoId === selectedId) as Cargo
-    const newCargo = cargoToNewCustomCargo(oldCargo, 1)
+    const oldCargo = selectedAir.cargos.find((x) => x.cargoId === selectedId) as Cargo
+    const newCargo = cargoToNewCargoString(oldCargo, 1)
     const isValid = schema.isValidSync(newCargo)
     putCargoIsValid(isValid, newCargo.cargoId)
     putCargo(newCargo)

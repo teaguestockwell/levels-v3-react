@@ -8,7 +8,7 @@ export const UserCargo = () => {
     <>
       <AddCustomCargo />
       <AddASelect />
-      <CargoList category={Category.User} />
+      <CargoList category={[Category.User]} />
     </>
   )
 }

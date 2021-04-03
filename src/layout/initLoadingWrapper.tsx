@@ -3,7 +3,7 @@ import {AccessDenied} from '../pages/accessDenied'
 import {Loading} from '../pages/loading'
 import {Offline} from '../pages/offline'
 import {AirStore} from '../store/airStore'
-import {Dashboard} from './dashboard'
+import {Dashboard} from '../pages/dashboard'
 
 export const InitLoadingWrapper = () => {
   const {status, data, hasRoles} = useUserAirs()

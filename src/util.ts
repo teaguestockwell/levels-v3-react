@@ -1,6 +1,6 @@
 import {Const} from './const'
 import * as yup from 'yup'
-import {AircraftDeep, Cargo, Category} from './types/aircraftDeep'
+import {AircraftDeep, Cargo, Category, Config, ConfigCargo} from './types/aircraftDeep'
 import {CargoString} from './types/cargoString'
 /** if string is > max length cut it and add ... */
 export const cut = (x: any): string => {
@@ -44,7 +44,7 @@ export const getYupSchema = (air: AircraftDeep) => {
     qty: yup.number().required().positive().integer(),
   })
 }
-export const cargoToNewCustomCargo = (
+export const cargoToNewCargoString = (
   cargo: Cargo,
   qty: number
 ): CargoString => {
@@ -57,6 +57,17 @@ export const cargoToNewCustomCargo = (
     category: Category.User,
   }
 }
+
+export const configToNewCargoStrings = (config : Config): CargoString[] => {
+  return config.configCargos.map(cc => ({
+    cargoId: new Date().valueOf(),
+    name: cc.cargo.name,
+    weight: cc.cargo.weight.toString(),
+    fs: cc.fs.toString(),
+    qty: cc.qty.toString(),
+    category: cc.cargo.category,
+  }))
+}
 export const getNewCustomCargoString = (): CargoString => {
   return {
     cargoId: new Date().valueOf(),
@@ -67,3 +78,11 @@ export const getNewCustomCargoString = (): CargoString => {
     category: Category.User,
   }
 }
+
+export const buildMap = <K,V>(keys:K[], values:V[]): Map<K,V> => {
+  const map = new Map<K,V>();
+  for(let i = 0; i < keys.length; i++){
+     map.set(keys[i], values[i]);
+  };
+  return map;
+};

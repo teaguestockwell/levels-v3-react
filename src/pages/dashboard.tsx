@@ -1,9 +1,9 @@
 import {AirStore} from '../store/airStore'
-import {AircraftDeep} from '../types/aircraftDeep'
 import {formatDate} from '../util'
-import {ConsoleLogger} from './consoleLogger'
+import {ConsoleLogger} from '../layout/consoleLogger'
 import {UserCargo} from '../components/userCargo'
 import {AirSelect} from '../components/airSelect'
+import { ConfigCargo } from '../components/configCargo'
 
 // page navigation with sidebar / hamburger
 // aircrafts state: global read, local update
@@ -20,6 +20,7 @@ export const Dashboard = () => {
       <AirSelect />
       <ConsoleLogger />
       <UserCargo />
+      <ConfigCargo/>
     </>
   )
 }
