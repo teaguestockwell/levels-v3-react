@@ -15,15 +15,15 @@ export const CargoForm = (props: CargoString) => {
   // this state will never cause re-render because they are actions (functions)
   // array pick
   const [
-    deleteCargo,
-    deleteCargoIsValid,
-    putCargo,
+    deleteCargos,
+    deleteCargosIsValid,
+    putCargos,
     putCargoIsValid,
   ] = CargoStore((state) => [
-    state.deleteCargo,
-    state.deleteCargoIsValid,
-    state.putCargo,
-    state.putCargoIsValid,
+    state.deleteCargos,
+    state.deleteCargosIsValid,
+    state.putCargos,
+    state.putCargosIsValid,
   ])
 
   const validate = () => {
@@ -32,14 +32,14 @@ export const CargoForm = (props: CargoString) => {
 
       // valid
       .then((vals) => {
-        putCargoIsValid(true, props.uuid)
-        putCargo({...props, ...vals})
+        putCargoIsValid(new Map([ [ props.uuid, true] ]))
+        putCargos({...props, ...vals})
       })
 
       // invalid
       .catch((errorInfo) => {
-        putCargoIsValid(false, props.uuid)
-        putCargo({...props, ...errorInfo.values})
+        putCargoIsValid(new Map([ [ props.uuid, false] ]))
+        putCargos([{...props, ...errorInfo.values}])
       })
   }
 
@@ -62,8 +62,8 @@ export const CargoForm = (props: CargoString) => {
   }
 
   const onDelete = () => {
-    deleteCargo(props.uuid)
-    deleteCargoIsValid(props.uuid)
+    deleteCargos([props.uuid])
+    deleteCargosIsValid([props.uuid])
   }
 
   return (

@@ -7,9 +7,9 @@ import {MenuInfo} from 'rc-menu/lib/interface'
 import {cargoToNewCargoString, getYupSchema} from '../util'
 
 export const AddASelect = () => {
-  const [putCargo, putCargoIsValid] = CargoStore((state) => [
-    state.putCargo,
-    state.putCargoIsValid,
+  const [putCargos, putCargosIsValid] = CargoStore((state) => [
+    state.putCargos,
+    state.putCargosIsValid,
   ])
   const selectedAir = AirStore(state => state.selectedAir) as AircraftDeep
 
@@ -26,8 +26,8 @@ export const AddASelect = () => {
     const oldCargo = selectedAir.cargos.find((x) => x.cargoId === selectedId) as Cargo
     const newCargo = cargoToNewCargoString(oldCargo, 1)
     const isValid = schema.isValidSync(newCargo)
-    putCargoIsValid(isValid, newCargo.uuid)
-    putCargo(newCargo)
+    putCargosIsValid(new Map([ [ newCargo.uuid, isValid] ]))
+    putCargos([newCargo])
   }
 
   const menu = (

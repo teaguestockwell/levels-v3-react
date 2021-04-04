@@ -3,76 +3,63 @@ import { Const } from '../const'
 import { Config } from '../types/aircraftDeep'
 import {CargoString} from '../types/cargoString'
 export interface CargoStoreState extends State {
-  // create | update 1
-  putCargo: (cargo: CargoString) => void
-  putCargoIsValid: (valid: boolean, uuid:string) => void
-  putConfig: (config: Config) => void
-  putConfigUuids: (uuids: string[]) => void
-
-  // create | update n
-  putCargos: (cargos : CargoString[]) => void
-  putCargosIsValid: (cargoIdValidMap: Map<string,boolean>) => void
-
-  // read 1 | n
+  // read 
   cargoValidMap: Map<string, boolean>
   cargoMap: Map<string, CargoString>
   config: Config
   configUuids : string[]
-
-  // delete 1
-  deleteCargo: (cargoId: string) => void
-  deleteCargoIsValid: (cargoId: string) => void
-
+  
+  // update 1 config
+  putConfig: (config: Config) => void
+  putConfigUuids: (uuids: string[]) => void
+  
+  // create | update n cargo
+  putCargos: (cargos : CargoString[]) => void
+  putCargosIsValid: (cargoIdValidMap: Map<string,boolean>) => void
+  
   // delete n
-  deleteCargos: (cargoIds: string[]) => void
   deleteCargosIsValid: (cargoIds: string[]) => void
-
+  deleteCargos: (cargoIds: string[]) => void
+  // when a new air is selected, reset all state
   resetCargoStore: () => void
 }
 
 export const CargoStore = create<CargoStoreState>((set) => ({
+  // read 
+  cargoValidMap: new Map(),
+  cargoMap: new Map(),
   config: Const.noConfig,
   configUuids: [],
-  putConfigUuids: (uuids) => set((state) => {state.configUuids =uuids}),
+
+  // update 1 config
   putConfig: (config) => set((state)=> {state.config = config}),
+  putConfigUuids: (uuids) => set((state) => {state.configUuids =uuids}),
+  
+  // create | update n cargo
+  putCargos: (cargos) => 
+    set((state) => {
+      cargos.forEach(c => state.cargoMap.set(c.uuid, c))
+    }),
   putCargosIsValid: (cargoIdValidMap) => 
     set((state) => {
       Array.from(cargoIdValidMap.entries())
       .forEach(entry => state.cargoValidMap.set(entry[0],entry[1]))
     }),
+
+  // delete n
   deleteCargosIsValid: (cargoIds) =>
-    set((state) => {
-      cargoIds.forEach(id => state.cargoValidMap.delete(id))
+  set((state) => {
+    cargoIds.forEach(id => state.cargoValidMap.delete(id))
     }),
-  cargoValidMap: new Map(),
-  putCargoIsValid: (valid, cargoId) =>
-    set((state) => {
-      state.cargoValidMap.set(cargoId, valid)
-    }),
-  deleteCargoIsValid: (cargoId) =>
-    set((state) => {
-      state.cargoValidMap.delete(cargoId)
-    }),
-  cargoMap: new Map(),
-  deleteCargo: (cargoId) =>
-    set((state) => {
-      state.cargoMap.delete(cargoId)
-    }),
-  putCargo: (cargo) =>
-    set((state) => {
-      state.cargoMap.set(cargo.uuid, cargo)
-    }),
-  putCargos: (cargos) => 
-    set((state) => {
-      cargos.forEach(c => state.cargoMap.set(c.uuid, c))
-    }),
-  deleteCargos: (cargoIds) => 
+    deleteCargos: (cargoIds) => 
     set((state) => {  
       cargoIds.forEach(id => state.cargoMap.delete(id))
     }),
-  resetCargoStore: () =>
-    set((state) => {
-      state.cargoMap.clear()
-      state.cargoValidMap.clear()
-    }),
-}))
+    // when a new air is selected, reset all state
+    resetCargoStore: () =>
+      set((state) => {
+        state.cargoMap.clear()
+        state.cargoValidMap.clear()
+        state.config = Const.noConfig
+      }),
+  }))
