@@ -11,10 +11,10 @@ export interface AirStoreState extends State {
 export const AirStore = create<AirStoreState>((set) => ({
   selectedAir: undefined,
   cargoSchema: undefined,
-  setCargoSchema: (cargoSchema) => 
+  setCargoSchema: (cargoSchema) =>
     set((state) => {
-    state.cargoSchema = cargoSchema
-  }),
+      state.cargoSchema = cargoSchema
+    }),
   setSelectedAir: (air) =>
     set((state) => {
       state.selectedAir = air

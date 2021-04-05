@@ -11,7 +11,7 @@ export const AddCustomCargo = () => {
 
   const onAddCustomCargoClick = () => {
     const newCargo = getNewCustomCargoString()
-    putCargosIsValid(new Map([ [ newCargo.uuid, false] ]))
+    putCargosIsValid(new Map([[newCargo.uuid, false]]))
     putCargos([newCargo])
   }
 

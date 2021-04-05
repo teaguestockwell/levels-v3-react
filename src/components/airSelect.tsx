@@ -5,13 +5,13 @@ import {AircraftDeep} from '../types/aircraftDeep'
 import {DownOutlined} from '@ant-design/icons'
 import {MenuInfo} from 'rc-menu/lib/interface'
 import {CargoStore} from '../store/cargoStore'
-import { getCargoSchema } from '../util'
+import {getCargoSchema} from '../util'
 
 export const AirSelect = () => {
   const [selectedAir, setSelectedAir, setCargoSchema] = AirStore((state) => [
     state.selectedAir,
     state.setSelectedAir,
-    state.setCargoSchema
+    state.setCargoSchema,
   ])
   const {data} = useUserAirs()
   const [resetCargoStore] = CargoStore((state) => [state.resetCargoStore])

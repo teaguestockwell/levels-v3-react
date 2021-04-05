@@ -1,9 +1,9 @@
-import {useUserAirs } from '../hooks/useUserAirs'
+import {useUserAirs} from '../hooks/useUserAirs'
 import {AccessDenied} from '../pages/accessDenied'
 import {Loading} from '../pages/loading'
 import {Offline} from '../pages/offline'
 import {AirStore} from '../store/airStore'
-import { getCargoSchema } from '../util'
+import {getCargoSchema} from '../util'
 import {Dashboard} from './dashboard'
 
 export const InitLoadingWrapper = () => {

@@ -1,8 +1,8 @@
 import {useEffect} from 'react'
-import {Form, Input, Button } from 'antd'
+import {Form, Input, Button} from 'antd'
 import {AirStore} from '../store/airStore'
 import {CargoStore} from '../store/cargoStore'
-import {capitalizeFirst } from '../util'
+import {capitalizeFirst} from '../util'
 import {CargoString} from '../types/cargoString'
 import debounce from 'lodash/debounce'
 
@@ -26,24 +26,21 @@ export const CargoForm = (props: CargoString) => {
     state.putCargosIsValid,
   ])
 
-  // set init values and errors. 
+  // set init values and errors.
   // init value and validation inside store is handled in the methods that expose this form
   useEffect(() => {
     form.setFieldsValue(props)
     form.validateFields()
-  }, [props,form])
+  }, [props, form])
 
-  const onChange = (_: any, values:any) => {
+  const onChange = (_: any, values: any) => {
     const isFormValid = schema.fullObjSchema.isValidSync(values)
-  
+
     putCargosIsValid(
-      new Map<string,boolean>([[
-        props.uuid,
-        isFormValid
-      ]])
+      new Map<string, boolean>([[props.uuid, isFormValid]])
     )
-      
-    putCargos([{...props,...values}])
+
+    putCargos([{...props, ...values}])
   }
 
   const onDelete = () => {
@@ -51,16 +48,18 @@ export const CargoForm = (props: CargoString) => {
     deleteCargosIsValid([props.uuid])
   }
 
-  const rulesYupWrapper = (fieldSchema:any):any[] =>{
-    return [{
-      validator(_:any, value:any) {
-        try{
-          return fieldSchema.validate(value)
-        }catch(e){
-          return Promise.reject(new Error(`${e.errors[0]}`));
-        }
+  const rulesYupWrapper = (fieldSchema: any): any[] => {
+    return [
+      {
+        validator(_: any, value: any) {
+          try {
+            return fieldSchema.validate(value)
+          } catch (e) {
+            return Promise.reject(new Error(`${e.errors[0]}`))
+          }
+        },
       },
-    }]
+    ]
   }
 
   return (
@@ -68,29 +67,24 @@ export const CargoForm = (props: CargoString) => {
       <Form
         key={props.uuid + '_form'}
         form={form}
-        onValuesChange={debounce(onChange,300)}
+        onValuesChange={debounce(onChange, 300)}
       >
-        {
-          Object.keys({
-            name: props.name,
-            weight: props.weight,
-            fs: props.fs,
-            qty: props.qty
-          }).map(k => (
-            <Form.Item
+        {Object.keys({
+          name: props.name,
+          weight: props.weight,
+          fs: props.fs,
+          qty: props.qty,
+        }).map((k) => (
+          <Form.Item
             name={`${k}`}
             label={`${capitalizeFirst(k)}`}
             colon={false}
             rules={rulesYupWrapper(schema[k])}
             hasFeedback
           >
-            <Input
-              size="large"
-              placeholder={`Please input cargo ${k}`}
-            />
-            </Form.Item>
-          ))
-        }
+            <Input size="large" placeholder={`Please input cargo ${k}`} />
+          </Form.Item>
+        ))}
       </Form>
       <Button danger onClick={onDelete} block>
         Delete

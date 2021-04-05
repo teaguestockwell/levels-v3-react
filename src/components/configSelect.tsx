@@ -1,11 +1,11 @@
-import { Button, Dropdown, Menu } from "antd"
-import { AirStore } from "../store/airStore"
-import { CargoStore } from "../store/cargoStore"
+import {Button, Dropdown, Menu} from 'antd'
+import {AirStore} from '../store/airStore'
+import {CargoStore} from '../store/cargoStore'
 import {DownOutlined} from '@ant-design/icons'
 import {MenuInfo} from 'rc-menu/lib/interface'
-import { AircraftDeep, Config } from "../types/aircraftDeep"
-import { CargoSchema, configToNewCargoStrings } from "../util"
-import { Const } from "../const"
+import {AircraftDeep, Config} from '../types/aircraftDeep'
+import {CargoSchema, configToNewCargoStrings} from '../util'
+import {Const} from '../const'
 
 export const ConfigSelect = () => {
   const [
@@ -16,7 +16,7 @@ export const ConfigSelect = () => {
     putCargosIsValid,
     putConfigUuids,
     putConfig,
-  ] = CargoStore(state => [
+  ] = CargoStore((state) => [
     state.config,
     state.deleteCargos,
     state.deleteCargosIsValid,
@@ -25,31 +25,38 @@ export const ConfigSelect = () => {
     state.putConfigUuids,
     state.putConfig,
   ])
-  const selectedAir = AirStore(state => state.selectedAir) as AircraftDeep
+  const selectedAir = AirStore((state) => state.selectedAir) as AircraftDeep
   const schema = (AirStore.getState().cargoSchema as CargoSchema).fullObjSchema
 
   const onConfigChange = async (menuInfo: MenuInfo) => {
     // get config from selection
     const newConfigId = Number(menuInfo.key)
     let newConfig: Config
-    if(newConfigId === 0){newConfig = Const.noConfig}
-    else{newConfig = selectedAir.configs.find(c => c.configId === newConfigId) as Config}
-    
+    if (newConfigId === 0) {
+      newConfig = Const.noConfig
+    } else {
+      newConfig = selectedAir.configs.find(
+        (c) => c.configId === newConfigId
+      ) as Config
+    }
+
     // get an array of cargoStrings from that config
     const newCargos = configToNewCargoStrings(newConfig)
 
     // k: uuid, v: isValid
-    const newCargoMap = new Map<string,boolean>()
+    const newCargoMap = new Map<string, boolean>()
 
     // parallel promises
-    const promises: Promise<any>[] = newCargos.map(async (c) => newCargoMap.set(c.uuid, (await schema.isValid(c))))
+    const promises: Promise<any>[] = newCargos.map(async (c) =>
+      newCargoMap.set(c.uuid, await schema.isValid(c))
+    )
     await Promise.all(promises)
 
     // remove old config from cargo store
     const oldUuids = CargoStore.getState().configUuids
     deleteCargosIsValid(oldUuids)
     deleteCargos(oldUuids)
-    
+
     // add new configs
     putCargosIsValid(newCargoMap)
     putCargos(newCargos)
@@ -64,8 +71,8 @@ export const ConfigSelect = () => {
       {[
         <Menu.Item key={0}>No Config</Menu.Item>,
         ...selectedAir.configs.map((c) => (
-        <Menu.Item key={c.configId}>{c.name}</Menu.Item>
-        ))
+          <Menu.Item key={c.configId}>{c.name}</Menu.Item>
+        )),
       ]}
     </Menu>
   )

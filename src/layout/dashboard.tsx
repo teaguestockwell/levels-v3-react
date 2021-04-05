@@ -1,6 +1,6 @@
 import {formatDate} from '../util'
 import {ConsoleLogger} from './consoleLogger'
-import { Mac } from '../pages/mac'
+import {Mac} from '../pages/mac'
 
 // page navigation with sidebar / hamburger
 // aircrafts state: global read, local update
@@ -14,7 +14,7 @@ export const Dashboard = () => {
     <>
       <h1>{`Last updated ${lastUpdated}`}</h1>
       <ConsoleLogger />
-      <Mac/>
+      <Mac />
     </>
   )
 }
