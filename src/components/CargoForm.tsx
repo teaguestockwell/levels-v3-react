@@ -2,16 +2,16 @@ import {useEffect} from 'react'
 import {Form, Input, Button } from 'antd'
 import {AirStore} from '../store/airStore'
 import {CargoStore} from '../store/cargoStore'
-import {CargoSchema } from '../util'
+import {capitalizeFirst } from '../util'
 import {CargoString} from '../types/cargoString'
-import {debounce} from 'lodash'
+import debounce from 'lodash/debounce'
 
 export const CargoForm = (props: CargoString) => {
   // ref to form instance for initial validation
   const [form] = Form.useForm()
 
   // non reactive state because parent component will remove on air change
-  const schema = AirStore.getState().cargoSchema as CargoSchema
+  const schema = AirStore.getState().cargoSchema as any
 
   // this state will never cause re-render because they are actions (functions)
   const [
@@ -31,20 +31,24 @@ export const CargoForm = (props: CargoString) => {
   useEffect(() => {
     form.setFieldsValue(props)
     form.validateFields()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [props,form])
 
-  const addToCargoStore = (_: any, values:any) => {
-      const isFormValid = schema.fullObjSchema.isValidSync(values)
+  const onChange = (_: any, values:any) => {
+    const isFormValid = schema.fullObjSchema.isValidSync(values)
   
-      putCargosIsValid(
-        new Map<string,boolean>([[
-          props.uuid,
-          isFormValid
-        ]])
-      )
+    putCargosIsValid(
+      new Map<string,boolean>([[
+        props.uuid,
+        isFormValid
+      ]])
+    )
       
-      putCargos([{...props,...values}])
+    putCargos([{...props,...values}])
+  }
+
+  const onDelete = () => {
+    deleteCargos([props.uuid])
+    deleteCargosIsValid([props.uuid])
   }
 
   const rulesYupWrapper = (fieldSchema:any):any[] =>{
@@ -59,80 +63,34 @@ export const CargoForm = (props: CargoString) => {
     }]
   }
 
-
-  const formItemLayout = {
-    // labelCol: {
-    //   span: 4,
-    // },
-    // wrapperCol: {
-    //   span: 8,
-    // },
-  }
-
-  const onDelete = () => {
-    deleteCargos([props.uuid])
-    deleteCargosIsValid([props.uuid])
-  }
-
   return (
     <>
       <Form
         key={props.uuid + '_form'}
         form={form}
-        onValuesChange={debounce(addToCargoStore,300)}
-        //initialValues={props}
+        onValuesChange={debounce(onChange,300)}
       >
-        <Form.Item
-          {...formItemLayout}
-          name="name"
-          label="Name"
-          hasFeedback
-          rules={rulesYupWrapper(schema.name)}
-        >
-          <Input
-            size="large"
-            placeholder="Please input cargo name"
-          />
-        </Form.Item>
-
-        <Form.Item
-          {...formItemLayout}
-          name="weight"
-          label="Weight"
-          hasFeedback
-          rules={rulesYupWrapper(schema.weight)}
-        >
-          <Input
-            size="large"
-            placeholder="Please input cargo weight"
-          />
-        </Form.Item>
-
-        <Form.Item
-          {...formItemLayout}
-          name="fs"
-          label="Fuselage Station"
-          hasFeedback
-          rules={rulesYupWrapper(schema.fs)}
-        >
-          <Input
-            size="large"
-            placeholder="Please input fs"
-          />
-        </Form.Item>
-
-        <Form.Item
-          {...formItemLayout}
-          name="qty"
-          label="Quantity"
-          hasFeedback
-          rules={rulesYupWrapper(schema.qty)}
-        >
-          <Input
-            size="large"
-            placeholder="Please input amount of cargo"
-          />
-        </Form.Item>
+        {
+          Object.keys({
+            name: props.name,
+            weight: props.weight,
+            fs: props.fs,
+            qty: props.qty
+          }).map(k => (
+            <Form.Item
+            name={`${k}`}
+            label={`${capitalizeFirst(k)}`}
+            colon={false}
+            rules={rulesYupWrapper(schema[k])}
+            hasFeedback
+          >
+            <Input
+              size="large"
+              placeholder={`Please input cargo ${k}`}
+            />
+            </Form.Item>
+          ))
+        }
       </Form>
       <Button danger onClick={onDelete} block>
         Delete

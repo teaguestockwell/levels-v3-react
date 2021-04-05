@@ -86,5 +86,8 @@ export const getNewCustomCargoString = (): CargoString => {
     category: Category.User,
   }
 }
+export const capitalizeFirst = (str:string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
 
