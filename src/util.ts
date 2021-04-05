@@ -80,10 +80,3 @@ export const getNewCustomCargoString = (): CargoString => {
   }
 }
 
-export const buildMap = <K,V>(keys:K[], values:V[]): Map<K,V> => {
-  const map = new Map<K,V>();
-  for(let i = 0; i < keys.length; i++){
-     map.set(keys[i], values[i]);
-  };
-  return map;
-};
