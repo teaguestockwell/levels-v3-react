@@ -1,7 +1,7 @@
 import {useEffect} from 'react'
 import {Form, Input, Button} from 'antd'
-import {AirStore} from '../store/airStore'
-import {CargoStore} from '../store/cargoStore'
+import {AirStore} from '../hooks/airStore'
+import {CargoStore} from '../hooks/cargoStore'
 import {capitalizeFirst} from '../util'
 import {CargoString} from '../types/cargoString'
 import debounce from 'lodash/debounce'
@@ -76,6 +76,7 @@ export const CargoForm = (props: CargoString) => {
           qty: props.qty,
         }).map((k) => (
           <Form.Item
+            key={k + 'form item'}
             name={`${k}`}
             label={`${capitalizeFirst(k)}`}
             colon={false}

@@ -9,3 +9,8 @@ export interface CargoString {
   qty: string
   category: Category
 }
+
+
+export interface PerMacCargo {
+
+}

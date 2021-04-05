@@ -1,4 +1,4 @@
-import {CargoStore} from '../store/cargoStore'
+import {CargoStore} from '../hooks/cargoStore'
 import {cut} from '../util'
 import {CargoForm} from './cargoForm'
 import {Category} from '../types/aircraftDeep'

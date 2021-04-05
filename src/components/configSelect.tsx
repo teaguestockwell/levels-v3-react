@@ -1,6 +1,6 @@
 import {Button, Dropdown, Menu} from 'antd'
-import {AirStore} from '../store/airStore'
-import {CargoStore} from '../store/cargoStore'
+import {AirStore} from '../hooks/airStore'
+import {CargoStore} from '../hooks/cargoStore'
 import {DownOutlined} from '@ant-design/icons'
 import {MenuInfo} from 'rc-menu/lib/interface'
 import {AircraftDeep, Config} from '../types/aircraftDeep'
