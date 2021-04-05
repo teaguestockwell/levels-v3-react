@@ -1,10 +1,8 @@
 import {useEffect} from 'react'
 import {Form, Input, Button } from 'antd'
-import {Const} from '../const'
 import {AirStore} from '../store/airStore'
-import {AircraftDeep} from '../types/aircraftDeep'
 import {CargoStore} from '../store/cargoStore'
-import {isLessThan, isGreaterThan, CargoSchema } from '../util'
+import {CargoSchema } from '../util'
 import {CargoString} from '../types/cargoString'
 
   interface Value {
@@ -20,9 +18,7 @@ export const CargoForm = (props: CargoString) => {
   const [form] = Form.useForm()
 
   // non reactive state because parent component will remove on air change
-  const airState = AirStore.getState()
-  const air = airState.selectedAir as AircraftDeep
-  const schema = airState.cargoSchema as CargoSchema
+  const schema = AirStore.getState().cargoSchema as CargoSchema
 
   // this state will never cause re-render because they are actions (functions)
   const [
@@ -100,6 +96,7 @@ export const CargoForm = (props: CargoString) => {
         key={props.uuid + '_form'}
         form={form}
         onFieldsChange={addToCargoStore}
+        //initialValues={props}
       >
         <Form.Item
           {...formItemLayout}

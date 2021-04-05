@@ -11,22 +11,6 @@ export const cut = (x: any): string => {
     ? x.toString().substring(0, Const.MAX_FORM_LENGTH - 3) + '...'
     : x.toString()
 }
-/** validate that value < x */
-export const isLessThan = async (value: any, x: number) => {
-  if (!value) {
-  } // let other rules handle empty string case
-  else if (value > x) {
-    throw new Error()
-  }
-}
-/** validate that value > x */
-export const isGreaterThan = async (value: any, x: number) => {
-  if (!value) {
-  } // let other rules handle empty string case
-  else if (value < x) {
-    throw new Error()
-  }
-}
 export const formatDate = (date: Date) => {
   const get2SignificantDigits = (num: number): string => {
     return num.toString().length === 2 ? num.toString() : '0' + num.toString()
