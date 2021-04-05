@@ -28,7 +28,7 @@ export const ConfigSelect = () => {
   const selectedAir = AirStore(state => state.selectedAir) as AircraftDeep
   const schema = (AirStore.getState().cargoSchema as CargoSchema).fullObjSchema
 
-  const onConfigChange = (menuInfo: MenuInfo) => {
+  const onConfigChange = async (menuInfo: MenuInfo) => {
     // get config from selection
     const newConfigId = Number(menuInfo.key)
     let newConfig: Config
@@ -40,9 +40,10 @@ export const ConfigSelect = () => {
 
     // k: uuid, v: isValid
     const newCargoMap = new Map<string,boolean>()
-    newCargos.forEach(c => {
-      newCargoMap.set(c.uuid, schema.isValidSync(c))
-    })
+
+    // parallel promises
+    const promises: Promise<any>[] = newCargos.map(async (c) => newCargoMap.set(c.uuid, (await schema.isValid(c))))
+    await Promise.all(promises)
 
     // remove old config from cargo store
     const oldUuids = CargoStore.getState().configUuids

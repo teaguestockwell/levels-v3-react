@@ -4,14 +4,7 @@ import {AirStore} from '../store/airStore'
 import {CargoStore} from '../store/cargoStore'
 import {CargoSchema } from '../util'
 import {CargoString} from '../types/cargoString'
-
-  interface Value {
-    touched: boolean
-    validating: boolean
-    errors: Array<string>
-    name: Array<string>
-    value: string
-  }
+import {debounce} from 'lodash'
 
 export const CargoForm = (props: CargoString) => {
   // ref to form instance for initial validation
@@ -41,33 +34,24 @@ export const CargoForm = (props: CargoString) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const addToCargoStore = (changedFields: any, allFields: any) => {
-    const allFieldsTyped = allFields as  & Value[]
-    const isFormValid = allFieldsTyped.every(v => v.errors.length === 0)
-
-    putCargosIsValid(
-      new Map<string,boolean>([[
-        props.uuid,
-        isFormValid
-      ]])
-    )
-
-    putCargos([{
-      uuid: props.uuid,
-      category: props.category,
-      name: allFieldsTyped[0].value,
-      weight: allFieldsTyped[1].value,
-      fs: allFieldsTyped[2].value,
-      qty: allFieldsTyped[3].value,
-    }])
+  const addToCargoStore = (_: any, values:any) => {
+      const isFormValid = schema.fullObjSchema.isValidSync(values)
+  
+      putCargosIsValid(
+        new Map<string,boolean>([[
+          props.uuid,
+          isFormValid
+        ]])
+      )
+      
+      putCargos([{...props,...values}])
   }
 
   const rulesYupWrapper = (fieldSchema:any):any[] =>{
     return [{
       validator(_:any, value:any) {
         try{
-          fieldSchema.validateSync(value)
-          return Promise.resolve();
+          return fieldSchema.validate(value)
         }catch(e){
           return Promise.reject(new Error(`${e.errors[0]}`));
         }
@@ -95,7 +79,7 @@ export const CargoForm = (props: CargoString) => {
       <Form
         key={props.uuid + '_form'}
         form={form}
-        onFieldsChange={addToCargoStore}
+        onValuesChange={debounce(addToCargoStore,300)}
         //initialValues={props}
       >
         <Form.Item

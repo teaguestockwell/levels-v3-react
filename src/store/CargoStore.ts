@@ -43,7 +43,7 @@ export const CargoStore = create<CargoStoreState>((set) => ({
   putCargosIsValid: (cargoIdValidMap) => 
     set((state) => {
       Array.from(cargoIdValidMap.entries())
-      .forEach(entry => state.cargoValidMap.set(entry[0],entry[1]))
+      .forEach((entry) => state.cargoValidMap.set(entry[0],entry[1]))
     }),
 
   // delete n
