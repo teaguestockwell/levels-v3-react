@@ -4,7 +4,7 @@ import {AircraftDeep, Cargo, Category} from '../types/aircraftDeep'
 import {DownOutlined} from '@ant-design/icons'
 import {AirStore} from '../store/airStore'
 import {MenuInfo} from 'rc-menu/lib/interface'
-import {cargoToNewCargoString, getYupSchema} from '../util'
+import {CargoSchema, cargoToNewCargoString } from '../util'
 
 export const AddASelect = () => {
   const [putCargos, putCargosIsValid] = CargoStore((state) => [
@@ -19,7 +19,7 @@ export const AddASelect = () => {
   )
   const extraCargo = selectedAir.cargos.filter((x) => x.category === Category.Extra)
 
-  const schema = getYupSchema(selectedAir)
+  const schema = (AirStore.getState().cargoSchema as CargoSchema).fullObjSchema
 
   const onAddAddACargoClick = (menuInfo: MenuInfo) => {
     const selectedId = Number(menuInfo.key)

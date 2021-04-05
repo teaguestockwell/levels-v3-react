@@ -4,7 +4,7 @@ import { CargoStore } from "../store/cargoStore"
 import {DownOutlined} from '@ant-design/icons'
 import {MenuInfo} from 'rc-menu/lib/interface'
 import { AircraftDeep, Config } from "../types/aircraftDeep"
-import { configToNewCargoStrings, getYupSchema as getYupCargoSchema } from "../util"
+import { CargoSchema, configToNewCargoStrings } from "../util"
 import { Const } from "../const"
 
 export const ConfigSelect = () => {
@@ -26,7 +26,7 @@ export const ConfigSelect = () => {
     state.putConfig,
   ])
   const selectedAir = AirStore(state => state.selectedAir) as AircraftDeep
-  const schema = getYupCargoSchema(selectedAir)
+  const schema = (AirStore.getState().cargoSchema as CargoSchema).fullObjSchema
 
   const onConfigChange = (menuInfo: MenuInfo) => {
     // get config from selection

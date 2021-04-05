@@ -1,8 +1,10 @@
 import {Const} from './const'
 import * as yup from 'yup'
-import {AircraftDeep, Cargo, Category, Config, ConfigCargo} from './types/aircraftDeep'
+import {AircraftDeep, Cargo, Category, Config } from './types/aircraftDeep'
 import {CargoString} from './types/cargoString'
 import { v4 } from 'uuid'
+import { RequiredStringSchema } from 'yup/lib/string'
+import { RequiredNumberSchema } from 'yup/lib/number'
 /** if string is > max length cut it and add ... */
 export const cut = (x: any): string => {
   return x.toString().length > Const.MAX_FORM_LENGTH
@@ -37,14 +39,35 @@ export const formatDate = (date: Date) => {
   const min = get2SignificantDigits(date.getUTCMinutes())
   return `${year}-${month}-${day} ${hour}:${min} Zulu`
 }
-export const getYupSchema = (air: AircraftDeep) => {
-  return yup.object().shape({
-    name: yup.string().required(),
-    weight: yup.number().required().positive().max(air.cargoWeight1),
-    fs: yup.number().required().positive().min(air.fs0).max(air.fs1),
-    qty: yup.number().required().positive().integer(),
-  })
+
+export interface CargoSchema {
+  name: RequiredStringSchema<string | undefined, Record<string, any>>;
+  weight: RequiredNumberSchema<number | undefined, Record<string, any>>;
+  fs: RequiredNumberSchema<number | undefined, Record<string, any>>;
+  qty: RequiredNumberSchema<number | undefined, Record<string, any>>;
+  fullObjSchema: any;
 }
+
+export const getCargoSchema = (air: AircraftDeep): CargoSchema => {
+  const getNameSchema = () => yup.string().required()
+  const getWeightSchema = () => yup.number().typeError('this must be a number').required().positive().max(air.cargoWeight1)
+  const getFsSchema = () => yup.number().typeError('this must be a number').required().positive().min(air.fs0).max(air.fs1)
+  const getQtySchema = () => yup.number().typeError('this must be an integer').required().positive().integer()
+  
+  return {
+    name: getNameSchema(),
+    weight: getWeightSchema(),
+    fs: getFsSchema(),
+    qty: getQtySchema(),
+    fullObjSchema: yup.object().shape({
+      name: getNameSchema(),
+      weight: getWeightSchema(),
+      fs: getFsSchema(),
+      qty: getQtySchema(),
+    })
+  }
+}
+
 export const cargoToNewCargoString = (
   cargo: Cargo,
   qty: number
@@ -79,4 +102,5 @@ export const getNewCustomCargoString = (): CargoString => {
     category: Category.User,
   }
 }
+
 

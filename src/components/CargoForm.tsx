@@ -4,7 +4,7 @@ import {Const} from '../const'
 import {AirStore} from '../store/airStore'
 import {AircraftDeep} from '../types/aircraftDeep'
 import {CargoStore} from '../store/cargoStore'
-import {isLessThan, isGreaterThan} from '../util'
+import {isLessThan, isGreaterThan, CargoSchema } from '../util'
 import {CargoString} from '../types/cargoString'
 
   interface Value {
@@ -20,7 +20,9 @@ export const CargoForm = (props: CargoString) => {
   const [form] = Form.useForm()
 
   // non reactive state because parent component will remove on air change
-  const air = AirStore.getState().selectedAir as AircraftDeep
+  const airState = AirStore.getState()
+  const air = airState.selectedAir as AircraftDeep
+  const schema = airState.cargoSchema as CargoSchema
 
   // this state will never cause re-render because they are actions (functions)
   const [
@@ -64,6 +66,19 @@ export const CargoForm = (props: CargoString) => {
     }])
   }
 
+  const rulesYupWrapper = (fieldSchema:any):any[] =>{
+    return [{
+      validator(_:any, value:any) {
+        try{
+          fieldSchema.validateSync(value)
+          return Promise.resolve();
+        }catch(e){
+          return Promise.reject(new Error(`${e.errors[0]}`));
+        }
+      },
+    }]
+  }
+
 
   const formItemLayout = {
     // labelCol: {
@@ -91,7 +106,7 @@ export const CargoForm = (props: CargoString) => {
           name="name"
           label="Name"
           hasFeedback
-          rules={Const.NAME_RULES}
+          rules={rulesYupWrapper(schema.name)}
         >
           <Input
             size="large"
@@ -104,13 +119,7 @@ export const CargoForm = (props: CargoString) => {
           name="weight"
           label="Weight"
           hasFeedback
-          rules={[
-            ...Const.NUMERIC_RULES,
-            {
-              validator: (rule, value) => isLessThan(value, air.cargoWeight1),
-              message: `must be less than ${air.cargoWeight1}`,
-            },
-          ]}
+          rules={rulesYupWrapper(schema.weight)}
         >
           <Input
             size="large"
@@ -123,17 +132,7 @@ export const CargoForm = (props: CargoString) => {
           name="fs"
           label="Fuselage Station"
           hasFeedback
-          rules={[
-            ...Const.NUMERIC_RULES,
-            {
-              validator: (rule, value) => isGreaterThan(value, air.fs0),
-              message: `must be greater than ${air.fs0}`,
-            },
-            {
-              validator: (rule, value) => isLessThan(value, air.fs1),
-              message: `must be less than ${air.fs1}`,
-            },
-          ]}
+          rules={rulesYupWrapper(schema.fs)}
         >
           <Input
             size="large"
@@ -146,13 +145,7 @@ export const CargoForm = (props: CargoString) => {
           name="qty"
           label="Quantity"
           hasFeedback
-          rules={[
-            ...Const.INT_RULES,
-            {
-              validator: (rule, value) => isGreaterThan(value, 1),
-              message: 'must be greater than 0',
-            },
-          ]}
+          rules={rulesYupWrapper(schema.qty)}
         >
           <Input
             size="large"

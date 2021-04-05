@@ -5,19 +5,23 @@ import {AircraftDeep} from '../types/aircraftDeep'
 import {DownOutlined} from '@ant-design/icons'
 import {MenuInfo} from 'rc-menu/lib/interface'
 import {CargoStore} from '../store/cargoStore'
+import { getCargoSchema } from '../util'
 
 export const AirSelect = () => {
-  const [selectedAir, setSelectedAir] = AirStore((state) => [
+  const [selectedAir, setSelectedAir, setCargoSchema] = AirStore((state) => [
     state.selectedAir,
     state.setSelectedAir,
+    state.setCargoSchema
   ])
   const {data} = useUserAirs()
   const [resetCargoStore] = CargoStore((state) => [state.resetCargoStore])
   const airMap = data as Map<number, AircraftDeep>
 
   const onAirChange = (menuInfo: MenuInfo) => {
+    const newAir = airMap.get(Number(menuInfo.key)) as AircraftDeep
     resetCargoStore()
-    setSelectedAir(airMap.get(Number(menuInfo.key)) as AircraftDeep)
+    setCargoSchema(getCargoSchema(newAir))
+    setSelectedAir(newAir)
   }
 
   const menu = (
