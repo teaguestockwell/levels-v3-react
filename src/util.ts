@@ -111,12 +111,11 @@ export const capitalizeFirst = (str: string) => {
 }
 
 export const getPerMac = (air: AircraftDeep, cargoStrings: CargoString[]):PerMac => {
-  const items: Array<CargoString & CargoCalculated> = []
   let weightTotalAccum = 0
   let momentTotalAccum = 0
   let qtyAccum = 0
 
-  cargoStrings.forEach(c => {
+  const items = cargoStrings.map<CargoString & CargoCalculated>(c => {
     const fs = Number(c.fs)
     const qty = Number(c.qty)
     const weightEach = Number(c.weightEach)
@@ -133,20 +132,22 @@ export const getPerMac = (air: AircraftDeep, cargoStrings: CargoString[]):PerMac
     qtyAccum += qty
     momentTotalAccum += momentTotal
 
-    items.push({
+    return{
+      // CargoString
       uuid: c.uuid,
       name: cut(c.name),
       weightEach: Number(c.weightEach).toFixed(Const.PERMAC_DECIMAL),
       fs: c.fs,
       qty: c.qty,
       category: c.category,
-      
+
+      // CargoCalculated
       momentEach: momentEach.toFixed(Const.PERMAC_DECIMAL),
       simpleMomentEach: simpleMomentEach.toFixed(Const.PERMAC_DECIMAL),
       weightTotal: weightTotal.toFixed(Const.PERMAC_DECIMAL),
       momentTotal: momentTotal.toFixed(Const.PERMAC_DECIMAL),
       simpleMomentTotal: simpleMomentTotal.toFixed(Const.PERMAC_DECIMAL)
-    })
+    }
   })
 
   const balArm = momentTotalAccum / weightTotalAccum
