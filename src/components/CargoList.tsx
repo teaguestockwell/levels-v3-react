@@ -17,7 +17,7 @@ export function CargoList({category}: {category: Category[]}) {
             {...{
               uuid: cargo.uuid,
               name: cut(cargo.name),
-              weight: cut(cargo.weight),
+              weightEach: cut(cargo.weightEach),
               fs: cut(cargo.fs),
               qty: cut(cargo.qty),
               category: cargo.category,

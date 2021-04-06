@@ -33,7 +33,7 @@ export const ConfigSelect = () => {
     const newConfigId = Number(menuInfo.key)
     let newConfig: Config
     if (newConfigId === 0) {
-      newConfig = Const.noConfig
+      newConfig = Const.NO_CONFIG
     } else {
       newConfig = selectedAir.configs.find(
         (c) => c.configId === newConfigId

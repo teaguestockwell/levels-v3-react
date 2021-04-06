@@ -28,7 +28,7 @@ export const CargoStore = create<CargoStoreState>((set) => ({
   // read
   cargoValidMap: new Map(),
   cargoMap: new Map(),
-  config: Const.noConfig,
+  config: Const.NO_CONFIG,
   configUuids: [],
 
   // update 1 config
@@ -67,6 +67,6 @@ export const CargoStore = create<CargoStoreState>((set) => ({
     set((state) => {
       state.cargoMap.clear()
       state.cargoValidMap.clear()
-      state.config = Const.noConfig
+      state.config = Const.NO_CONFIG
     }),
 }))

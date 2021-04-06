@@ -71,7 +71,7 @@ export const CargoForm = (props: CargoString) => {
       >
         {Object.keys({
           name: props.name,
-          weight: props.weight,
+          weight: props.weightEach,
           fs: props.fs,
           qty: props.qty,
         }).map((k) => (
