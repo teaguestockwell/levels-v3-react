@@ -5,17 +5,21 @@ import {AircraftDeep} from '../types/aircraftDeep'
 export const useUserAirs = () => {
   let hasRoles = false
   const query = useQuery('user', getNAircraft, {
+    retry: 5,
     staleTime: Infinity,
   })
   if (query.data && query.data.size > 0) {
     hasRoles = true
   }
+
   return {...query, hasRoles}
 }
 
 const getNAircraft = async () => {
+
   const aircrafts: AircraftDeep[] = (
     await axios.get(process.env.REACT_APP_API_BASE_URL + 'aircraft')
+    //await axios.get('http//')
   ).data
 
   const ret = new Map<number, AircraftDeep>()

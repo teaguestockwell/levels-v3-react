@@ -3,12 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@testing-library/dom": "^7.30.3",
     "@testing-library/jest-dom": "^5.11.10",
-    "@testing-library/react": "^11.2.5",
-    "@testing-library/user-event": "^12.8.3",
     "@types/antd": "^1.0.0",
     "@types/axios": "^0.14.0",
-    "@types/jest": "^26.0.22",
     "@types/node": "^12.20.6",
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.3",
@@ -30,6 +28,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "coverage": "npm test -- --coverage",
     "eject": "react-scripts eject",
     "pretty": "npx prettier --write ."
   },
@@ -52,6 +51,12 @@
     ]
   },
   "devDependencies": {
-    "@types/yup": "^0.29.11"
+    "@testing-library/react": "^11.2.6",
+    "@testing-library/react-hooks": "^5.1.1",
+    "@testing-library/user-event": "^12.8.3",
+    "@types/jest": "^26.0.22",
+    "@types/yup": "^0.29.11",
+    "jest-dom": "^4.0.0",
+    "msw": "^0.28.1"
   }
 }
