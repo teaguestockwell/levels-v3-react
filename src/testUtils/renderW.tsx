@@ -38,7 +38,7 @@ const Wrapper: React.FC<WrapperProps> = (props) => {
  *  init useUser with data from msw,
  *  init AirStore with data from useUser
  */
-const renderWrapped = (
+export const renderWrapped = (
   component: JSX.Element,
   {
     ...options
@@ -53,4 +53,3 @@ const renderWrapped = (
 
 
 export * from '@testing-library/react';
-export {renderWrapped as renderW}

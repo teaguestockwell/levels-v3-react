@@ -8,7 +8,7 @@ describe('AddCustomCargo', () => {
      expect(getByRole('button')).toBeTruthy()
   })
 
-  it('will add cargo to CargoStore when clicked', () => {
+  it('will add cargo', () => {
     expect(CargoStore.getState().cargoMap.size).toBe(0)
     const {getByRole} = render(<AddCustomCargo/>)
      fireEvent.click(getByRole('button'))

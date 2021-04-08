@@ -1,6 +1,6 @@
 import { setupServer } from 'msw/node'
 import { rest } from 'msw'
-import {mockAircraftDeepString} from './mockAircraftDeep'
+import {mockAircraftDeepString} from './mockAircraftsDeep'
 
 const handlers = [
   rest.get('http://localhost:8080/fl-api/aircraft', (req, res, ctx)=>{

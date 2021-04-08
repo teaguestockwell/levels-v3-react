@@ -1,20 +1,30 @@
-import {render, fireEvent, waitFor } from '@testing-library/react'
+import {fireEvent, waitFor } from '@testing-library/react'
 import {AirSelect} from './airSelect'
-import {CargoStore} from '../hooks/cargoStore'
-import {renderW} from '../testUtils/renderW'
+import {renderWrapped} from '../testUtils/renderW'
+import { AirStore } from '../hooks/airStore'
 
 
 describe('AirSelect', () => {
 
   it('will render', async () => { 
-    const {getByText} = renderW(<AirSelect/>)
-    await waitFor(() => expect(getByText('C-17A')).toBeInTheDocument())
+    const {getByText} = renderWrapped(<AirSelect/>)
+    await waitFor(() => expect(getByText('C-17A-ER')).toBeInTheDocument())
   })
 
-  // it('will add cargo to CargoStore when clicked', () => {
-  //   expect(CargoStore.getState().cargoMap.size).toBe(0)
-  //   const {getByRole} = render(<AddCustomCargo/>)
-  //    fireEvent.click(getByRole('button'))
-  //    expect(CargoStore.getState().cargoMap.size).toBe(1)
-  // })
+  it('will change air and cargo schema', async () => {
+    expect(AirStore.getState().selectedAir?.name).toBe('C-17A-ER')
+    const oldSchema = AirStore.getState().cargoSchema
+
+    const {getByText, queryAllByText} = renderWrapped(<AirSelect/>)
+    await waitFor(() => expect(getByText('C-17A-ER')).toBeInTheDocument())
+
+    fireEvent.click(getByText('C-17A-ER'))
+    await waitFor(() => expect(queryAllByText('C-17A-ER').length).toBe(2))
+    fireEvent.click(getByText('C-17A'))
+    // button text will change
+    await waitFor(() => expect(queryAllByText('C-17A-ER').length).toBe(1))
+
+    expect(oldSchema).not.toEqual(AirStore.getState().cargoSchema)
+    expect(AirStore.getState().selectedAir?.name).toBe('C-17A')
+  })
 })
