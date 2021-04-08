@@ -6,7 +6,7 @@ import {capitalizeFirst} from '../util'
 import {CargoString} from '../types/cargoString'
 import debounce from 'lodash/debounce'
 
-export const CargoForm = ({cargo} :  {cargo: CargoString}) => {
+export const CargoForm = ({cargo}: {cargo: CargoString}) => {
   // ref to form instance for initial validation
   const [form] = Form.useForm()
 
@@ -70,18 +70,20 @@ export const CargoForm = ({cargo} :  {cargo: CargoString}) => {
         form={form}
         onValuesChange={debounce(onChange, 300)}
       >
-        {Object.keys(cargo).filter(k => k!== 'uuid' && k !== 'category').map((k) => (
-          <Form.Item
-            key={k + 'form item'}
-            name={`${k}`}
-            label={`${capitalizeFirst(k)}`}
-            colon={false}
-            rules={rulesYupWrapper(schema[k])}
-            hasFeedback
-          >
-            <Input size="large" placeholder={`Please input cargo ${k}`} />
-          </Form.Item>
-        ))}
+        {Object.keys(cargo)
+          .filter((k) => k !== 'uuid' && k !== 'category')
+          .map((k) => (
+            <Form.Item
+              key={k + 'form item'}
+              name={`${k}`}
+              label={`${capitalizeFirst(k)}`}
+              colon={false}
+              rules={rulesYupWrapper(schema[k])}
+              hasFeedback
+            >
+              <Input size="large" placeholder={`Please input cargo ${k}`} />
+            </Form.Item>
+          ))}
       </Form>
       <Button danger onClick={onDelete} block>
         Delete

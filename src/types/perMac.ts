@@ -1,4 +1,4 @@
-import { CargoString} from "./cargoString"
+import {CargoString} from './cargoString'
 
 export interface PerMac {
   /** used to build rows of all cargo */

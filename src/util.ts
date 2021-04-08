@@ -5,7 +5,7 @@ import {CargoString} from './types/cargoString'
 import {v4} from 'uuid'
 import {RequiredStringSchema} from 'yup/lib/string'
 import {RequiredNumberSchema} from 'yup/lib/number'
-import { CargoCalculated, PerMac } from './types/perMac'
+import {CargoCalculated, PerMac} from './types/perMac'
 /** if string is > max length cut it and add ... */
 export const cut = (x: any): string => {
   return x.toString().length > Const.MAX_FORM_LENGTH
@@ -110,12 +110,15 @@ export const capitalizeFirst = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
-export const getPerMac = (air: AircraftDeep, cargoStrings: CargoString[]):PerMac => {
+export const getPerMac = (
+  air: AircraftDeep,
+  cargoStrings: CargoString[]
+): PerMac => {
   let weightTotalAccum = 0
   let momentTotalAccum = 0
   let qtyAccum = 0
 
-  const items = cargoStrings.map<CargoString & CargoCalculated>(c => {
+  const items = cargoStrings.map<CargoString & CargoCalculated>((c) => {
     const fs = Number(c.fs)
     const qty = Number(c.qty)
     const weightEach = Number(c.weightEA)
@@ -126,13 +129,12 @@ export const getPerMac = (air: AircraftDeep, cargoStrings: CargoString[]):PerMac
     const weightTotal = weightEach * qty
     const momentTotal = momentEach * qty
     const simpleMomentTotal = momentTotal / air.momMultiplyer
-    
 
     weightTotalAccum += weightTotal
     qtyAccum += qty
     momentTotalAccum += momentTotal
 
-    return{
+    return {
       // CargoString
       uuid: c.uuid,
       name: cut(c.name),
@@ -146,7 +148,7 @@ export const getPerMac = (air: AircraftDeep, cargoStrings: CargoString[]):PerMac
       simpleMomentEach: simpleMomentEach.toFixed(Const.PERMAC_DECIMAL),
       weightTotal: weightTotal.toFixed(Const.PERMAC_DECIMAL),
       momentTotal: momentTotal.toFixed(Const.PERMAC_DECIMAL),
-      simpleMomentTotal: simpleMomentTotal.toFixed(Const.PERMAC_DECIMAL)
+      simpleMomentTotal: simpleMomentTotal.toFixed(Const.PERMAC_DECIMAL),
     }
   })
 
@@ -154,7 +156,8 @@ export const getPerMac = (air: AircraftDeep, cargoStrings: CargoString[]):PerMac
   const percentMacDecimal = (balArm - air.lemac) / air.mac
 
   const simpleMomentGrandTotal = momentTotalAccum / air.momMultiplyer
-  const percentMacPercent = (percentMacDecimal * 100).toFixed(Const.PERMAC_DECIMAL) + '%'
+  const percentMacPercent =
+    (percentMacDecimal * 100).toFixed(Const.PERMAC_DECIMAL) + '%'
 
   return {
     items,
@@ -164,7 +167,9 @@ export const getPerMac = (air: AircraftDeep, cargoStrings: CargoString[]):PerMac
     lemac: air.lemac.toFixed(Const.PERMAC_DECIMAL),
     balArm: balArm.toFixed(Const.PERMAC_DECIMAL),
     momentGrandTotal: momentTotalAccum.toFixed(Const.PERMAC_DECIMAL),
-    simpleMomentGrandTotal: simpleMomentGrandTotal.toFixed(Const.PERMAC_DECIMAL),
+    simpleMomentGrandTotal: simpleMomentGrandTotal.toFixed(
+      Const.PERMAC_DECIMAL
+    ),
     weightGrandTotal: weightTotalAccum.toFixed(Const.PERMAC_DECIMAL),
     percentMacDecimal: percentMacDecimal.toFixed(Const.PERMAC_DECIMAL),
     percentMacPercent,

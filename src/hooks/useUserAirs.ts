@@ -16,11 +16,9 @@ export const useUserAirs = () => {
 }
 
 const getNAircraft = async () => {
-
-  const aircrafts: AircraftDeep[] = (
-    await axios.get(process.env.REACT_APP_API_BASE_URL + 'aircraft')
+  const aircrafts: AircraftDeep[] =
     //await axios.get('http//')
-  ).data
+    (await axios.get(process.env.REACT_APP_API_BASE_URL + 'aircraft')).data
 
   const ret = new Map<number, AircraftDeep>()
   aircrafts.forEach((air) => ret.set(air.aircraftId, air))

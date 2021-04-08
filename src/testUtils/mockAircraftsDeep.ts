@@ -1,4 +1,4 @@
-import { AircraftDeep } from "../types/aircraftDeep";
+import {AircraftDeep} from '../types/aircraftDeep'
 
 export const mockAircraftDeepString = `
 [
@@ -16566,4 +16566,6 @@ export const mockAircraftDeepString = `
   }
 ]`
 
-export const mockAircraftsDeep: AircraftDeep = JSON.parse(mockAircraftDeepString)
+export const mockAircraftsDeep: AircraftDeep[] = JSON.parse(
+  mockAircraftDeepString
+)

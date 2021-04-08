@@ -1,13 +1,10 @@
-import { setupServer } from 'msw/node'
-import { rest } from 'msw'
+import {setupServer} from 'msw/node'
+import {rest} from 'msw'
 import {mockAircraftDeepString} from './mockAircraftsDeep'
 
 const handlers = [
-  rest.get('http://localhost:8080/fl-api/aircraft', (req, res, ctx)=>{
-    return res(
-      ctx.status(200),
-      ctx.body(mockAircraftDeepString)
-    )
+  rest.get('http://localhost:8080/fl-api/aircraft', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.body(mockAircraftDeepString))
   }),
 ]
 // Establish API mocking before all tests.

@@ -4,16 +4,15 @@ import {CargoStore} from '../hooks/cargoStore'
 import {renderWrapped} from '../testUtils/renderW'
 
 describe('AddASelect', () => {
-
   it('will render', async () => {
-    const { getByText, queryAllByText } = renderWrapped(<AddASelect/>)
+    const {getByText, queryAllByText} = renderWrapped(<AddASelect />)
     await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
     expect(getByText('Add AddA')).toBeInTheDocument()
   })
 
   it('will add cargo', async () => {
     expect(CargoStore.getState().cargoMap.size).toBe(0)
-    const {getByRole, getByText, queryAllByText} = renderWrapped(<AddASelect/>)
+    const {getByRole, getByText, queryAllByText} = renderWrapped(<AddASelect />)
     await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
 
     fireEvent.click(getByRole('button'))

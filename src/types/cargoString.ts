@@ -10,7 +10,4 @@ export interface CargoString {
   category: Category
 }
 
-
-export interface PerMacCargo {
-
-}
+export interface PerMacCargo {}

@@ -3,6 +3,6 @@ import {Card} from './card'
 
 describe('Card', () => {
   it('will render', () => {
-    render(<Card/>)
+    render(<Card />)
   })
-}) 
+})

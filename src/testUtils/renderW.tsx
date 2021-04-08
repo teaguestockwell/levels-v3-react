@@ -1,25 +1,25 @@
-import { QueryClient, QueryClientProvider } from "react-query";
-import { render } from '@testing-library/react';
-import { useUserAirs } from "../hooks/useUserAirs";
-import { getCargoSchema } from "../util";
-import { AirStore } from "../hooks/airStore";
-import React from "react";
+import {QueryClient, QueryClientProvider} from 'react-query'
+import {render} from '@testing-library/react'
+import {useUserAirs} from '../hooks/useUserAirs'
+import {getCargoSchema} from '../util'
+import {AirStore} from '../hooks/airStore'
+import React from 'react'
 
-const IsLoaded  = ({children} : {children: React.ReactNode}) => {
+const IsLoaded = ({children}: {children: React.ReactNode}) => {
   const {data, hasRoles} = useUserAirs()
 
   if (data && hasRoles) {
     const initAir = data.values().next().value
     AirStore.getState().setSelectedAir(initAir)
     AirStore.getState().setCargoSchema(getCargoSchema(initAir))
-    
+
     return <>{children}</>
   }
 
   return <div>Loading Test</div>
 }
 
-const queryClientInit = new QueryClient();
+const queryClientInit = new QueryClient()
 
 interface WrapperProps {
   children?: React.ReactNode
@@ -27,29 +27,20 @@ interface WrapperProps {
 const Wrapper: React.FC<WrapperProps> = (props) => {
   return (
     <QueryClientProvider client={queryClientInit}>
-      <IsLoaded>
-        {props.children}
-      </IsLoaded>
+      <IsLoaded>{props.children}</IsLoaded>
     </QueryClientProvider>
-  );
-};
+  )
+}
 
 /** wrap with QueryClientProvider,
  *  init useUser with data from msw,
  *  init AirStore with data from useUser
  */
-export const renderWrapped = (
-  component: JSX.Element,
-  {
-    ...options
-  } = {}
-) => {
-
+export const renderWrapped = (component: JSX.Element, {...options} = {}) => {
   return render(component, {
-    wrapper: (props) => <Wrapper {...props}/>,
+    wrapper: (props) => <Wrapper {...props} />,
     ...options,
-  });
-};
+  })
+}
 
-
-export * from '@testing-library/react';
+export * from '@testing-library/react'
