@@ -7,14 +7,15 @@ import { CargoStore } from '../hooks/cargoStore'
 describe('AirSelect', () => {
 
   it('will render', async () => { 
-    const {getByText} = renderWrapped(<ConfigSelect/>)
-    await waitFor(() => expect(getByText('No Config')).toBeInTheDocument())
+    const {getByText, queryAllByText} = renderWrapped(<ConfigSelect/>)
+    await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
+    expect(getByText('No Config')).toBeInTheDocument()
   })
 
   it('will change config', async () => {
     // given
     const { getByText, queryAllByText} = renderWrapped(<ConfigSelect/>)
-    await waitFor(() => expect(getByText('No Config')).toBeInTheDocument())
+    await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
 
     expect(CargoStore.getState().config.name).toBe('No Config')
     expect(CargoStore.getState().configUuids.length).toBe(0)

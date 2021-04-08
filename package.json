@@ -57,6 +57,7 @@
     "@types/jest": "^26.0.22",
     "@types/yup": "^0.29.11",
     "jest-dom": "^4.0.0",
+    "jest-matchmedia-mock": "^1.1.0",
     "msw": "^0.28.1"
   }
 }

@@ -6,7 +6,7 @@ import {capitalizeFirst} from '../util'
 import {CargoString} from '../types/cargoString'
 import debounce from 'lodash/debounce'
 
-export const CargoForm = (props: CargoString) => {
+export const CargoForm = ({cargo} :  {cargo: CargoString}) => {
   // ref to form instance for initial validation
   const [form] = Form.useForm()
 
@@ -29,23 +29,24 @@ export const CargoForm = (props: CargoString) => {
   // set init values and errors.
   // init value and validation inside store is handled in the methods that expose this form
   useEffect(() => {
-    form.setFieldsValue(props)
+    form.setFieldsValue(cargo)
     form.validateFields()
-  }, [props, form])
+  }, [cargo, form])
 
   const onChange = (_: any, values: any) => {
     const isFormValid = schema.fullObjSchema.isValidSync(values)
-
+    console.log(isFormValid)
+    console.log(values)
     putCargosIsValid(
-      new Map<string, boolean>([[props.uuid, isFormValid]])
+      new Map<string, boolean>([[cargo.uuid, isFormValid]])
     )
 
-    putCargos([{...props, ...values}])
+    putCargos([{...cargo, ...values}])
   }
 
   const onDelete = () => {
-    deleteCargos([props.uuid])
-    deleteCargosIsValid([props.uuid])
+    deleteCargos([cargo.uuid])
+    deleteCargosIsValid([cargo.uuid])
   }
 
   const rulesYupWrapper = (fieldSchema: any): any[] => {
@@ -65,16 +66,11 @@ export const CargoForm = (props: CargoString) => {
   return (
     <>
       <Form
-        key={props.uuid + '_form'}
+        key={cargo.uuid + '_form'}
         form={form}
         onValuesChange={debounce(onChange, 300)}
       >
-        {Object.keys({
-          name: props.name,
-          weight: props.weightEach,
-          fs: props.fs,
-          qty: props.qty,
-        }).map((k) => (
+        {Object.keys(cargo).filter(k => k!== 'uuid' && k !== 'category').map((k) => (
           <Form.Item
             key={k + 'form item'}
             name={`${k}`}

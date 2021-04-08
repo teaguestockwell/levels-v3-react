@@ -7,8 +7,9 @@ import { AirStore } from '../hooks/airStore'
 describe('AirSelect', () => {
 
   it('will render', async () => { 
-    const {getByText} = renderWrapped(<AirSelect/>)
-    await waitFor(() => expect(getByText('C-17A-ER')).toBeInTheDocument())
+    const {getByText, queryAllByText} = renderWrapped(<AirSelect/>)
+    await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
+    expect(getByText('C-17A-ER')).toBeInTheDocument()
   })
 
   it('will change air and cargo schema', async () => {
@@ -16,7 +17,7 @@ describe('AirSelect', () => {
     const oldSchema = AirStore.getState().cargoSchema
 
     const {getByText, queryAllByText} = renderWrapped(<AirSelect/>)
-    await waitFor(() => expect(getByText('C-17A-ER')).toBeInTheDocument())
+    await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
 
     fireEvent.click(getByText('C-17A-ER'))
     await waitFor(() => expect(queryAllByText('C-17A-ER').length).toBe(2))

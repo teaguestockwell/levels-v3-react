@@ -14,10 +14,10 @@ export function CargoList({category}: {category: Category[]}) {
         return (
           <CargoForm
             key={cargo.uuid + 'form'}
-            {...{
+            cargo={{
               uuid: cargo.uuid,
               name: cut(cargo.name),
-              weightEach: cut(cargo.weightEach),
+              weightEA: cut(cargo.weightEA),
               fs: cut(cargo.fs),
               qty: cut(cargo.qty),
               category: cargo.category,

@@ -27,7 +27,7 @@ export const formatDate = (date: Date) => {
 
 export interface CargoSchema {
   name: RequiredStringSchema<string | undefined, Record<string, any>>
-  weight: RequiredNumberSchema<number | undefined, Record<string, any>>
+  weightEA: RequiredNumberSchema<number | undefined, Record<string, any>>
   fs: RequiredNumberSchema<number | undefined, Record<string, any>>
   qty: RequiredNumberSchema<number | undefined, Record<string, any>>
   fullObjSchema: any
@@ -60,12 +60,12 @@ export const getCargoSchema = (air: AircraftDeep): CargoSchema => {
 
   return {
     name: getNameSchema(),
-    weight: getWeightSchema(),
+    weightEA: getWeightSchema(),
     fs: getFsSchema(),
     qty: getQtySchema(),
     fullObjSchema: yup.object().shape({
       name: getNameSchema(),
-      weight: getWeightSchema(),
+      weightEA: getWeightSchema(),
       fs: getFsSchema(),
       qty: getQtySchema(),
     }),
@@ -79,7 +79,7 @@ export const cargoToNewCargoString = (
   return {
     uuid: v4(),
     name: cargo.name,
-    weightEach: cargo.weight.toString(),
+    weightEA: cargo.weight.toString(),
     fs: cargo.fs.toString(),
     qty: qty.toString(),
     category: Category.User,
@@ -90,7 +90,7 @@ export const configToNewCargoStrings = (config: Config): CargoString[] => {
   return config.configCargos.map((cc) => ({
     uuid: v4(),
     name: cc.cargo.name,
-    weightEach: cc.cargo.weight.toString(),
+    weightEA: cc.cargo.weight.toString(),
     fs: cc.fs.toString(),
     qty: cc.qty.toString(),
     category: cc.cargo.category,
@@ -100,7 +100,7 @@ export const getNewCustomCargoString = (): CargoString => {
   return {
     uuid: v4(),
     name: `custom cargo`,
-    weightEach: '',
+    weightEA: '',
     fs: '',
     qty: '1',
     category: Category.User,
@@ -118,7 +118,7 @@ export const getPerMac = (air: AircraftDeep, cargoStrings: CargoString[]):PerMac
   const items = cargoStrings.map<CargoString & CargoCalculated>(c => {
     const fs = Number(c.fs)
     const qty = Number(c.qty)
-    const weightEach = Number(c.weightEach)
+    const weightEach = Number(c.weightEA)
 
     const momentEach = fs * weightEach
     const simpleMomentEach = momentEach / air.momMultiplyer
@@ -136,7 +136,7 @@ export const getPerMac = (air: AircraftDeep, cargoStrings: CargoString[]):PerMac
       // CargoString
       uuid: c.uuid,
       name: cut(c.name),
-      weightEach: Number(c.weightEach).toFixed(Const.PERMAC_DECIMAL),
+      weightEA: Number(c.weightEA).toFixed(Const.PERMAC_DECIMAL),
       fs: c.fs,
       qty: c.qty,
       category: c.category,

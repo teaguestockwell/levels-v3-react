@@ -4,7 +4,7 @@ import {Category} from './aircraftDeep'
 export interface CargoString {
   uuid: string
   name: string
-  weightEach: string
+  weightEA: string
   fs: string
   qty: string
   category: Category
