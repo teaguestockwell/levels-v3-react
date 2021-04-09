@@ -1,5 +1,5 @@
 import {formatDate} from '../util'
-import {ConsoleLogger} from './consoleLogger'
+//import {ConsoleLogger} from './consoleLogger'
 import {Mac} from '../pages/mac'
 
 // page navigation with sidebar / hamburger

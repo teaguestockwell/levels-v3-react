@@ -38,6 +38,7 @@ const Wrapper: React.FC<WrapperProps> = (props) => {
  */
 export const renderWrapped = (component: JSX.Element, {...options} = {}) => {
   return render(component, {
+    // eslint-disable-next-line react/display-name
     wrapper: (props) => <Wrapper {...props} />,
     ...options,
   })

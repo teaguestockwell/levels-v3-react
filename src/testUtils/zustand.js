@@ -13,6 +13,7 @@ const create = (createState) => {
 }
 
 // Reset all stores after each test run
+// eslint-disable-next-line no-undef
 afterEach(() => {
   act(() => storeResetFns.forEach((resetFn) => resetFn()))
 })
