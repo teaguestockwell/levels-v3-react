@@ -35,8 +35,6 @@ export const CargoForm = ({cargo}: {cargo: CargoString}) => {
 
   const onChange = (_: any, values: any) => {
     const isFormValid = schema.fullObjSchema.isValidSync(values)
-    console.log(isFormValid)
-    console.log(values)
     putCargosIsValid(
       new Map<string, boolean>([[cargo.uuid, isFormValid]])
     )

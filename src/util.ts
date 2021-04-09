@@ -3,8 +3,6 @@ import * as yup from 'yup'
 import {AircraftDeep, Cargo, Category, Config} from './types/aircraftDeep'
 import {CargoString} from './types/cargoString'
 import {v4} from 'uuid'
-import {RequiredStringSchema} from 'yup/lib/string'
-import {RequiredNumberSchema} from 'yup/lib/number'
 import {CargoCalculated, PerMac} from './types/perMac'
 /** if string is > max length cut it and add ... */
 export const cut = (x: any): string => {
@@ -25,11 +23,14 @@ export const formatDate = (date: Date) => {
   return `${year}-${month}-${day} ${hour}:${min} Zulu`
 }
 
+export const capitalizeFirst = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}
 export interface CargoSchema {
-  name: RequiredStringSchema<string | undefined, Record<string, any>>
-  weightEA: RequiredNumberSchema<number | undefined, Record<string, any>>
-  fs: RequiredNumberSchema<number | undefined, Record<string, any>>
-  qty: RequiredNumberSchema<number | undefined, Record<string, any>>
+  name: any
+  weightEA: any
+  fs: any
+  qty: any
   fullObjSchema: any
 }
 
@@ -72,7 +73,7 @@ export const getCargoSchema = (air: AircraftDeep): CargoSchema => {
   }
 }
 
-export const cargoToNewCargoString = (
+export const getCargoStringFromCargo = (
   cargo: Cargo,
   qty: number
 ): CargoString => {
@@ -86,7 +87,7 @@ export const cargoToNewCargoString = (
   }
 }
 
-export const configToNewCargoStrings = (config: Config): CargoString[] => {
+export const getCargoStringsFromConfig = (config: Config): CargoString[] => {
   return config.configCargos.map((cc) => ({
     uuid: v4(),
     name: cc.cargo.name,
@@ -96,7 +97,7 @@ export const configToNewCargoStrings = (config: Config): CargoString[] => {
     category: cc.cargo.category,
   }))
 }
-export const getNewCustomCargoString = (): CargoString => {
+export const getCargoString = (): CargoString => {
   return {
     uuid: v4(),
     name: `custom cargo`,
@@ -106,8 +107,34 @@ export const getNewCustomCargoString = (): CargoString => {
     category: Category.User,
   }
 }
-export const capitalizeFirst = (str: string) => {
-  return str.charAt(0).toUpperCase() + str.slice(1)
+
+export const getFSofSimpleMoment = (props: {
+  simpleMom: number
+  momMultiplier: number
+  weightEA: number
+  qty: number
+}) => {
+  return (props.simpleMom * props.momMultiplier) / (props.weightEA * props.qty)
+}
+
+export const getCargoStringFromTank = (props: {tanksIDX:number, tankWeightsIDX:number, air:AircraftDeep}):CargoString => {
+  const tank = props.air.tanks[props.tanksIDX]
+  const simpleMom = Number(tank.simpleMomsCSV.split(',')[props.tankWeightsIDX])
+  const weightEA = Number(tank.weightsCSV.split(',')[props.tankWeightsIDX])
+  const fs = getFSofSimpleMoment({
+    simpleMom,
+    weightEA,
+    momMultiplier: Number(props.air.momMultiplyer),
+    qty: 1
+  })
+  return {
+    uuid: v4(),
+    name: tank.name,
+    weightEA: weightEA.toString(),
+    fs: fs.toString(),
+    qty: '1',
+    category: Category.Tank,
+  }
 }
 
 export const getPerMac = (
@@ -160,7 +187,6 @@ export const getPerMac = (
     (percentMacDecimal * 100).toFixed(Const.PERMAC_DECIMAL) + '%'
 
   return {
-    items,
     qtyGrandTotal: qtyAccum.toFixed(Const.PERMAC_DECIMAL),
     momentMultiplier: air.momMultiplyer.toFixed(Const.PERMAC_DECIMAL),
     mac: air.mac.toFixed(Const.PERMAC_DECIMAL),
@@ -171,7 +197,8 @@ export const getPerMac = (
       Const.PERMAC_DECIMAL
     ),
     weightGrandTotal: weightTotalAccum.toFixed(Const.PERMAC_DECIMAL),
-    percentMacDecimal: percentMacDecimal.toFixed(Const.PERMAC_DECIMAL),
+    percentMacDecimal: percentMacDecimal.toFixed(Const.PERMAC_DECIMAL + 2),
     percentMacPercent,
+    items,
   }
 }

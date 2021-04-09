@@ -13,7 +13,7 @@ export const Dashboard = () => {
   return (
     <>
       <h1>{`Last updated ${lastUpdated}`}</h1>
-      <ConsoleLogger />
+
       <Mac />
     </>
   )

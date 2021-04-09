@@ -4,7 +4,7 @@ import {CargoStore} from '../hooks/cargoStore'
 import {DownOutlined} from '@ant-design/icons'
 import {MenuInfo} from 'rc-menu/lib/interface'
 import {AircraftDeep, Config} from '../types/aircraftDeep'
-import {CargoSchema, configToNewCargoStrings} from '../util'
+import {CargoSchema, getCargoStringsFromConfig} from '../util'
 import {Const} from '../const'
 
 export const ConfigSelect = () => {
@@ -41,7 +41,7 @@ export const ConfigSelect = () => {
     }
 
     // get an array of cargoStrings from that config
-    const newCargos = configToNewCargoStrings(newConfig)
+    const newCargos = getCargoStringsFromConfig(newConfig)
 
     // k: uuid, v: isValid
     const newCargoMap = new Map<string, boolean>()

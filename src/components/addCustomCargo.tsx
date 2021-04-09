@@ -1,6 +1,6 @@
 import {Button} from 'antd'
 import {CargoStore} from '../hooks/cargoStore'
-import {getNewCustomCargoString} from '../util'
+import {getCargoString} from '../util'
 import {PlusCircleOutlined} from '@ant-design/icons'
 
 export const AddCustomCargo = () => {
@@ -10,7 +10,7 @@ export const AddCustomCargo = () => {
   ])
 
   const onAddCustomCargoClick = () => {
-    const newCargo = getNewCustomCargoString()
+    const newCargo = getCargoString()
     putCargosIsValid(new Map([[newCargo.uuid, false]]))
     putCargos([newCargo])
   }

@@ -34,6 +34,7 @@ export enum Category {
   Steward = 'Steward',
   User = 'User',
   Tank = 'Tank',
+  BasicAircraft = 'BasicAircraft',
 }
 
 export interface Config {

@@ -4,7 +4,7 @@ import {AircraftDeep, Cargo, Category} from '../types/aircraftDeep'
 import {DownOutlined} from '@ant-design/icons'
 import {AirStore} from '../hooks/airStore'
 import {MenuInfo} from 'rc-menu/lib/interface'
-import {CargoSchema, cargoToNewCargoString} from '../util'
+import {CargoSchema, getCargoStringFromCargo} from '../util'
 
 export const AddASelect = () => {
   const [putCargos, putCargosIsValid] = CargoStore((state) => [
@@ -30,7 +30,7 @@ export const AddASelect = () => {
     const oldCargo = selectedAir.cargos.find(
       (x) => x.cargoId === selectedId
     ) as Cargo
-    const newCargo = cargoToNewCargoString(oldCargo, 1)
+    const newCargo = getCargoStringFromCargo(oldCargo, 1)
     const isValid = schema.isValidSync(newCargo)
     putCargosIsValid(new Map([[newCargo.uuid, isValid]]))
     putCargos([newCargo])
