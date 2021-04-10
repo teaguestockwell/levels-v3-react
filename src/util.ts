@@ -1,6 +1,6 @@
 import {Const} from './const'
 import * as yup from 'yup'
-import {AircraftDeep, Cargo, Category, Config} from './types/aircraftDeep'
+import {AircraftDeep, Cargo, Category, Config, Tank} from './types/aircraftDeep'
 import {CargoString} from './types/cargoString'
 import {v4} from 'uuid'
 import {CargoCalculated, PerMac} from './types/perMac'
@@ -117,25 +117,26 @@ export const getFSofSimpleMoment = (props: {
   return (props.simpleMom * props.momMultiplier) / (props.weightEA * props.qty)
 }
 
-export const getCargoStringFromTank = (props: {tanksIDX:number, tankWeightsIDX:number, air:AircraftDeep}):CargoString => {
-  const tank = props.air.tanks[props.tanksIDX]
-  const simpleMom = Number(tank.simpleMomsCSV.split(',')[props.tankWeightsIDX])
-  const weightEA = Number(tank.weightsCSV.split(',')[props.tankWeightsIDX])
+export const getCargoStringFromTank = (props: {momMultiplyer:number,tankWeightsIDX:number, tank: Tank}):CargoString => {
+  const simpleMom = Number(props.tank.simpleMomsCSV.split(',')[props.tankWeightsIDX])
+  const weightEA = Number(props.tank.weightsCSV.split(',')[props.tankWeightsIDX])
   const fs = getFSofSimpleMoment({
     simpleMom,
     weightEA,
-    momMultiplier: Number(props.air.momMultiplyer),
+    momMultiplier: props.momMultiplyer,
     qty: 1
   })
   return {
     uuid: v4(),
-    name: tank.name,
+    name: props.tank.name,
     weightEA: weightEA.toString(),
     fs: fs.toString(),
     qty: '1',
     category: Category.Tank,
   }
 }
+
+
 
 export const getPerMac = (
   air: AircraftDeep,
