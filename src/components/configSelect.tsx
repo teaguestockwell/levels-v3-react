@@ -8,6 +8,7 @@ import {CargoSchema, getCargoStringsFromConfig} from '../util'
 import {Const} from '../const'
 
 export const ConfigSelect = () => {
+  console.log('ConfigSelect')
   const [
     config,
     deleteCargos,
@@ -29,6 +30,7 @@ export const ConfigSelect = () => {
   const schema = (AirStore.getState().cargoSchema as CargoSchema).fullObjSchema
 
   const onConfigChange = async (menuInfo: MenuInfo) => {
+    console.log('onConfigChange')
     // get config from selection
     const newConfigId = Number(menuInfo.key)
     let newConfig: Config
@@ -44,25 +46,23 @@ export const ConfigSelect = () => {
     const newCargos = getCargoStringsFromConfig(newConfig)
 
     // k: uuid, v: isValid
-    const newCargoMap = new Map<string, boolean>()
-
-    // parallel promises
-    const promises: Promise<any>[] = newCargos.map(async (c) =>
-      newCargoMap.set(c.uuid, await schema.isValid(c))
+    const newCargoMap = new Map<string, boolean>(
+      newCargos.map<[string, boolean]>(c => 
+        [c.uuid, schema.isValidSync]
+      )
     )
-    await Promise.all(promises)
 
     // remove old config from cargo store
     const oldUuids = CargoStore.getState().configUuids
     deleteCargosIsValid(oldUuids)
     deleteCargos(oldUuids)
 
-    // add new configs
+    // add new config
     putCargosIsValid(newCargoMap)
     putCargos(newCargos)
-    putConfigUuids(Array.from(newCargoMap.keys()))
-
+    
     // update selected
+    putConfigUuids(Array.from(newCargoMap.keys()))
     putConfig(newConfig)
   }
 
