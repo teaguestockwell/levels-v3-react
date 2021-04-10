@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {useEffect} from 'react'
 import {Form, Input, Button} from 'antd'
 import {AirStore} from '../hooks/airStore'
@@ -9,15 +10,12 @@ import debounce from 'lodash/debounce'
 const rulesYupWrapper = (fieldSchema: any): any[] => {
   return [
     {
-      validator(_: any, value: any) {
-        console.log('validating')
-        try {
-          return fieldSchema.validate(value)
-        } catch (e) {
-          return Promise.reject(new Error(`${e.errors[0]}`))
-        }
-      },
-    },
+      validator: debounce((rule: any, value: any, callback: any) => {
+        fieldSchema.validate(value)
+        .then(() => callback())
+        .catch((e: any) => callback(e))
+      },200)
+    }
   ]
 }
 
@@ -33,28 +31,27 @@ export const CargoForm = ({cargo}: {cargo: CargoString}) => {
   // init value and validation inside store is handled in the methods that expose this form
   useEffect(() => {
     form.setFieldsValue(cargo)
-    setTimeout(() => form.validateFields(),500)
+    setTimeout(() => form.validateFields(),100)
   }, [])
 
-  const onChange = (changedFields: any, allFields: any) => {
-    console.log('on change')
-    const isFormValid = allFields.every((v: any) => v.errors.length === 0)
+  // TODO: change this to on submit or on close of modal form is inside of
+  const onChange = () => {
+      //console.log('onChange')
+      const newCargo = {...cargo, ...form.getFieldsValue()}
+      //console.log(newCargo)
 
-    cs.putCargosIsValid(
-      new Map<string,boolean>([[
-        cargo.uuid,
-        isFormValid
-      ]])
-    )
+      const isFormValid = form.getFieldsError().every((v: any) => v.errors.length === 0)
+      //console.log(isFormValid)
 
-    cs.putCargos([{
-      uuid: cargo.uuid,
-      category: cargo.category,
-      name: allFields[0].value,
-      weightEA: allFields[1].value,
-      fs: allFields[2].value,
-      qty: allFields[3].value,
-    }])
+      cs.putCargosIsValid(
+        new Map<string,boolean>([[
+          cargo.uuid,
+          isFormValid
+        ]])
+      )
+
+      cs.putCargos([newCargo])
+
   }
 
   const onDelete = () => {
@@ -67,7 +64,6 @@ export const CargoForm = ({cargo}: {cargo: CargoString}) => {
       <Form
         key={cargo.uuid + '_form'}
         form={form}
-        onFieldsChange={debounce(onChange, 300)}
       >
         {Object.keys(cargo)
           .filter((k) => k !== 'uuid' && k !== 'category')
@@ -80,7 +76,7 @@ export const CargoForm = ({cargo}: {cargo: CargoString}) => {
               rules={rulesYupWrapper(schema[k])}
               hasFeedback
             >
-              <Input size="large" placeholder={`Please input cargo ${k}`} />
+              <Input size="large" placeholder={`Please input cargo ${k}`} onChange={debounce(onChange,500)}/>
             </Form.Item>
           ))}
       </Form>
