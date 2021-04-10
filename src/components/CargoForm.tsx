@@ -2,7 +2,7 @@
 import {useEffect} from 'react'
 import {Form, Input, Button} from 'antd'
 import {AirStore} from '../hooks/airStore'
-import {CargoStore, selectActionsCS} from '../hooks/cargoStore'
+import {CargoStore, getActionsCS} from '../hooks/cargoStore'
 import {capitalizeFirst} from '../util'
 import {CargoString} from '../types/cargoString'
 import debounce from 'lodash/debounce'
@@ -25,13 +25,13 @@ export const CargoForm = ({cargo}: {cargo: CargoString}) => {
   // non reactive state because parent component will remove on air change
   const schema = AirStore.getState().cargoSchema as any
   // this state will never cause re-render because they are actions (functions)
-  const cs = CargoStore(selectActionsCS)
+  const cs = CargoStore(getActionsCS)
 
   // set init values and errors.
   // init value and validation inside store is handled in the methods that expose this form
   useEffect(() => {
     form.setFieldsValue(cargo)
-    setTimeout(() => form.validateFields(),100)
+    setTimeout(() => form.validateFields(),1)
   }, [])
 
   // TODO: change this to on submit or on close of modal form is inside of

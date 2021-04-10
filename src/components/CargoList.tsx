@@ -7,7 +7,6 @@ export function CargoList({category}: {category: Category[]}) {
   CargoStore(selectCargoMapKeys)
   return (
     <>
-      {' '}
       {Array.from(selectCargoMap(CargoStore.getState()).values())
         .filter((x) => category.includes(x.category))
         .map((cargo) => {

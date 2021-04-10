@@ -4,11 +4,11 @@ import {useUserAirs} from '../hooks/useUserAirs'
 import {AircraftDeep} from '../types/aircraftDeep'
 import {DownOutlined} from '@ant-design/icons'
 import {MenuInfo} from 'rc-menu/lib/interface'
-import {CargoStore, selectActionsCS} from '../hooks/cargoStore'
+import {getActionsCS} from '../hooks/cargoStore'
 import {getCargoSchema} from '../util'
 
 const onAirChange = (menuInfo: MenuInfo, airMap: Map<number, AircraftDeep>) => {
-  const cs = selectActionsCS(CargoStore.getState())
+  const cs = getActionsCS()
   const as = selectActionsAS(AirStore.getState())
   const newAir = airMap.get(Number(menuInfo.key)) as AircraftDeep
   cs.resetCargoStore()

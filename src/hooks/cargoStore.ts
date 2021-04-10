@@ -34,15 +34,7 @@ export const selectConfig = (state:CargoStoreState) => state.config
 export const selectConfigUuids = (state:CargoStoreState) => state.configUuids
 export const selectCargoMapKeys = (state:CargoStoreState) => state.cargoMap.keys()
 
-export const selectActionsCS = (state:CargoStoreState) => ({
-  putConfig: state.putConfig,
-  putConfigUuids: state.putConfigUuids,
-  putCargos: state.putCargos,
-  putCargosIsValid: state.putCargosIsValid,
-  deleteCargosIsValid: state.deleteCargosIsValid,
-  deleteCargos: state.deleteCargos,
-  resetCargoStore: state.resetCargoStore,
-})
+
 
 
 export const CargoStore = create<CargoStoreState>((set) => ({
@@ -99,3 +91,17 @@ export const CargoStore = create<CargoStoreState>((set) => ({
       state.tankUuids = []
     }),
 }))
+
+export const getActionsCS = () => {
+  const state = CargoStore.getState()
+  return {
+    putTankUuids: state.putTankUuids,
+    putConfig: state.putConfig,
+    putConfigUuids: state.putConfigUuids,
+    putCargos: state.putCargos,
+    putCargosIsValid: state.putCargosIsValid,
+    deleteCargosIsValid: state.deleteCargosIsValid,
+    deleteCargos: state.deleteCargos,
+    resetCargoStore: state.resetCargoStore,
+  }
+}

@@ -1,27 +1,38 @@
-import { AirStore } from "../hooks/airStore"
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { AirStore, getAir, selectSelectedAir } from "../hooks/airStore"
 import { TankRow } from "./tank"
-//import { v4 } from "uuid"
-import { AircraftDeep } from "../types/aircraftDeep"
-import { CargoStore } from "../hooks/cargoStore"
-import { getCargoStringFromTank } from "../util"
+import { CargoStore, getActionsCS } from "../hooks/cargoStore"
+import { getCargoStringsFromAirTanks } from "../util"
+import { useEffect, useState } from "react"
+import { CargoString } from "../types/cargoString"
+
 
 export const TankList = () => {
   console.log('TankList')
-  // re render on air change
-  const air = AirStore(x => x.selectedAir) as AircraftDeep
-  const [putTankUuids, putCargos, deleteCargos] = CargoStore(x => [x.putTankUuids, x.putCargos, x.deleteCargos])
+  const air = getAir()
+  const cs = getActionsCS()
+  const [cargoStrings, setCargoStrings] = useState< CargoString[] | undefined >()
 
-  // rm old tanks if any
-  deleteCargos(CargoStore.getState().tankUuids)
-  
-  // put new tanks
-  const newCargoStrings = air.tanks.map(t => getCargoStringFromTank({momMultiplyer: air.momMultiplyer, tank: t, tankWeightsIDX: 0}))
-  putTankUuids(newCargoStrings.map(x => x.uuid))
-  putCargos(newCargoStrings)
+  useEffect(() => {
+    console.log('setting new tank uuids')
+    // create new cs from new air
+    const newCargoStrings = getCargoStringsFromAirTanks(air)
+
+    // rm old tanks if any
+    cs.deleteCargos(CargoStore.getState().tankUuids)
+    
+    // put new tanks
+    cs.putTankUuids(newCargoStrings.map(x => x.uuid))
+    cs.putCargos(newCargoStrings)
+
+    setCargoStrings(newCargoStrings)
+  },[air.name])
 
   return <>
     {
-    air.tanks.map((t, idx) => <TankRow tank={t} cargoString={newCargoStrings[idx]} key={newCargoStrings[idx].uuid}/>)
+    cargoStrings ?
+      air.tanks.map((t, idx) => <TankRow tank={t} cargoString={cargoStrings[idx]} key={cargoStrings[idx].uuid}/>)
+    : <div></div>
     }
   </>
 }

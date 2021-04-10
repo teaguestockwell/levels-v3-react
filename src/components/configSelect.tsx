@@ -1,6 +1,6 @@
 import {Button, Dropdown, Menu} from 'antd'
 import {AirStore, selectCargoSchema, selectSelectedAir} from '../hooks/airStore'
-import {CargoStore, selectActionsCS, selectConfig} from '../hooks/cargoStore'
+import {CargoStore, getActionsCS, selectConfig} from '../hooks/cargoStore'
 import {DownOutlined} from '@ant-design/icons'
 import {MenuInfo} from 'rc-menu/lib/interface'
 import {Config} from '../types/aircraftDeep'
@@ -8,7 +8,7 @@ import {getCargoStringsFromConfig} from '../util'
 import {Const} from '../const'
 
 export const ConfigSelect = () => {
-  const cs = CargoStore(selectActionsCS)
+  const cs = CargoStore(getActionsCS)
   const config = CargoStore(selectConfig)
   const selectedAir = AirStore(selectSelectedAir)
   const schema = selectCargoSchema(AirStore.getState()).fullObjSchema

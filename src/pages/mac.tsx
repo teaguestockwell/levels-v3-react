@@ -3,6 +3,7 @@ import {AddCustomCargo} from '../components/addCustomCargo'
 import {AirSelect} from '../components/airSelect'
 import {CargoList} from '../components/cargoList'
 import {ConfigSelect} from '../components/configSelect'
+import { TankList } from '../components/tankList'
 import {Category} from '../types/aircraftDeep'
 
 export const Mac = () => {
@@ -12,6 +13,7 @@ export const Mac = () => {
       <AddASelect />
       <AddCustomCargo />
       <ConfigSelect />
+      <TankList/>
       <CargoList
         category={[
           Category.Emergency,

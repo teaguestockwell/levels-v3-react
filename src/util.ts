@@ -136,6 +136,14 @@ export const getCargoStringFromTank = (props: {momMultiplyer:number,tankWeightsI
   }
 }
 
+export const getCargoStringsFromAirTanks = (air: AircraftDeep) => 
+  air.tanks.map(t => 
+    getCargoStringFromTank({
+      momMultiplyer: air.momMultiplyer,
+      tank: t,
+      tankWeightsIDX: 0
+    }))
+
 
 
 export const getPerMac = (

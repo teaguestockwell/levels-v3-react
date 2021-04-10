@@ -8,8 +8,6 @@ export interface AirStoreState extends State {
   setSelectedAir: (air: AircraftDeep) => void
 }
 
-export const selectSelectedAir = (state:AirStoreState) => state.selectedAir as AircraftDeep
-export const selectCargoSchema = (state:AirStoreState) => state.cargoSchema as CargoSchema
 
 export const selectActionsAS = (state:AirStoreState) => ({
   setCargoSchema: state.setCargoSchema,
@@ -20,11 +18,15 @@ export const AirStore = create<AirStoreState>((set) => ({
   selectedAir: undefined,
   cargoSchema: undefined,
   setCargoSchema: (cargoSchema) =>
-    set((state) => {
-      state.cargoSchema = cargoSchema
-    }),
+  set((state) => {
+    state.cargoSchema = cargoSchema
+  }),
   setSelectedAir: (air) =>
-    set((state) => {
-      state.selectedAir = air
-    }),
+  set((state) => {
+    state.selectedAir = air
+  }),
 }))
+
+export const selectSelectedAir = (state:AirStoreState) => state.selectedAir as AircraftDeep
+export const selectCargoSchema = (state:AirStoreState) => state.cargoSchema as CargoSchema
+export const getAir = () => AirStore.getState().selectedAir as AircraftDeep
