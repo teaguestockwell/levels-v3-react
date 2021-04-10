@@ -1,17 +1,16 @@
 import {Button, Dropdown, Menu} from 'antd'
-import {CargoStore} from '../hooks/cargoStore'
-import {AircraftDeep, Cargo, Category} from '../types/aircraftDeep'
+import {CargoStore, selectActionsCS} from '../hooks/cargoStore'
+import {Cargo, Category} from '../types/aircraftDeep'
 import {DownOutlined} from '@ant-design/icons'
-import {AirStore} from '../hooks/airStore'
+import {AirStore, selectSelectedAir} from '../hooks/airStore'
 import {MenuInfo} from 'rc-menu/lib/interface'
 import {CargoSchema, getCargoStringFromCargo} from '../util'
 
+
+
 export const AddASelect = () => {
-  const [putCargos, putCargosIsValid] = CargoStore((state) => [
-    state.putCargos,
-    state.putCargosIsValid,
-  ])
-  const selectedAir = AirStore((state) => state.selectedAir) as AircraftDeep
+  const cs = CargoStore(selectActionsCS)
+  const selectedAir = AirStore(selectSelectedAir)
 
   const stewardCargo = selectedAir.cargos.filter(
     (x) => x.category === Category.Steward
@@ -32,8 +31,8 @@ export const AddASelect = () => {
     ) as Cargo
     const newCargo = getCargoStringFromCargo(oldCargo, 1)
     const isValid = schema.isValidSync(newCargo)
-    putCargosIsValid(new Map([[newCargo.uuid, isValid]]))
-    putCargos([newCargo])
+    cs.putCargosIsValid(new Map([[newCargo.uuid, isValid]]))
+    cs.putCargos([newCargo])
   }
 
   const menu = (

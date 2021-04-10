@@ -1,33 +1,17 @@
 import {Button, Dropdown, Menu} from 'antd'
-import {AirStore} from '../hooks/airStore'
-import {CargoStore} from '../hooks/cargoStore'
+import {AirStore, selectCargoSchema, selectSelectedAir} from '../hooks/airStore'
+import {CargoStore, selectActionsCS, selectConfig} from '../hooks/cargoStore'
 import {DownOutlined} from '@ant-design/icons'
 import {MenuInfo} from 'rc-menu/lib/interface'
-import {AircraftDeep, Config} from '../types/aircraftDeep'
-import {CargoSchema, getCargoStringsFromConfig} from '../util'
+import {Config} from '../types/aircraftDeep'
+import {getCargoStringsFromConfig} from '../util'
 import {Const} from '../const'
 
 export const ConfigSelect = () => {
-  console.log('ConfigSelect')
-  const [
-    config,
-    deleteCargos,
-    deleteCargosIsValid,
-    putCargos,
-    putCargosIsValid,
-    putConfigUuids,
-    putConfig,
-  ] = CargoStore((state) => [
-    state.config,
-    state.deleteCargos,
-    state.deleteCargosIsValid,
-    state.putCargos,
-    state.putCargosIsValid,
-    state.putConfigUuids,
-    state.putConfig,
-  ])
-  const selectedAir = AirStore((state) => state.selectedAir) as AircraftDeep
-  const schema = (AirStore.getState().cargoSchema as CargoSchema).fullObjSchema
+  const cs = CargoStore(selectActionsCS)
+  const config = CargoStore(selectConfig)
+  const selectedAir = AirStore(selectSelectedAir)
+  const schema = selectCargoSchema(AirStore.getState()).fullObjSchema
 
   const onConfigChange = async (menuInfo: MenuInfo) => {
     console.log('onConfigChange')
@@ -54,16 +38,16 @@ export const ConfigSelect = () => {
 
     // remove old config from cargo store
     const oldUuids = CargoStore.getState().configUuids
-    deleteCargosIsValid(oldUuids)
-    deleteCargos(oldUuids)
+    cs.deleteCargosIsValid(oldUuids)
+    cs.deleteCargos(oldUuids)
 
     // add new config
-    putCargosIsValid(newCargoMap)
-    putCargos(newCargos)
+    cs.putCargosIsValid(newCargoMap)
+    cs.putCargos(newCargos)
     
     // update selected
-    putConfigUuids(Array.from(newCargoMap.keys()))
-    putConfig(newConfig)
+    cs.putConfigUuids(Array.from(newCargoMap.keys()))
+    cs.putConfig(newConfig)
   }
 
   const menu = (
