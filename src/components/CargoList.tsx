@@ -1,16 +1,14 @@
-import {CargoStore} from '../hooks/cargoStore'
+import {CargoStore, selectCargoMap, selectCargoMapKeys} from '../hooks/cargoStore'
 import {cut} from '../util'
 import {CargoForm} from './cargoForm'
 import {Category} from '../types/aircraftDeep'
-export function CargoList({category}: {category: Category[]}) {
-  // repaint when cargoMap.keys() changes
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const cargoMapKeys = CargoStore((state) => state.cargoMap.keys())
 
+export function CargoList({category}: {category: Category[]}) {
+  CargoStore(selectCargoMapKeys)
   return (
     <>
       {' '}
-      {Array.from(CargoStore.getState().cargoMap.values())
+      {Array.from(selectCargoMap(CargoStore.getState()).values())
         .filter((x) => category.includes(x.category))
         .map((cargo) => {
           return (

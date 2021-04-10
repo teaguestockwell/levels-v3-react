@@ -24,6 +24,23 @@ export interface CargoStoreState extends State {
   resetCargoStore: () => void
 }
 
+export const selectCargoValidMap = (state:CargoStoreState) => state.cargoValidMap
+export const selectCargoMap = (state:CargoStoreState) => state.cargoMap
+export const selectConfig = (state:CargoStoreState) => state.config
+export const selectConfigUuids = (state:CargoStoreState) => state.configUuids
+export const selectCargoMapKeys = (state:CargoStoreState) => state.cargoMap.keys()
+
+export const selectActionsCS = (state:CargoStoreState) => ({
+  putConfig: state.putConfig,
+  putConfigUuids: state.putConfigUuids,
+  putCargos: state.putCargos,
+  putCargosIsValid: state.putCargosIsValid,
+  deleteCargosIsValid: state.deleteCargosIsValid,
+  deleteCargos: state.deleteCargos,
+  resetCargoStore: state.resetCargoStore,
+})
+
+
 export const CargoStore = create<CargoStoreState>((set) => ({
   // read
   cargoValidMap: new Map(),
