@@ -117,14 +117,18 @@ export const getFSofSimpleMoment = (props: {
   return (props.simpleMom * props.momMultiplier) / (props.weightEA * props.qty)
 }
 
-export const getCargoStringFromTank = (props: {momMultiplyer:number,idx:number, tank: Tank}):CargoString => {
+export const getCargoStringFromTank = (props: {
+  momMultiplyer: number
+  idx: number
+  tank: Tank
+}): CargoString => {
   const simpleMom = Number(props.tank.simpleMomsCSV.split(',')[props.idx])
   const weightEA = Number(props.tank.weightsCSV.split(',')[props.idx])
   const fs = getFSofSimpleMoment({
     simpleMom,
     weightEA,
     momMultiplier: props.momMultiplyer,
-    qty: 1
+    qty: 1,
   })
   return {
     uuid: v4(),
@@ -136,15 +140,14 @@ export const getCargoStringFromTank = (props: {momMultiplyer:number,idx:number, 
   }
 }
 
-export const getCargoStringsFromAirTanks = (air: AircraftDeep) => 
-  air.tanks.map(t => 
+export const getCargoStringsFromAirTanks = (air: AircraftDeep) =>
+  air.tanks.map((t) =>
     getCargoStringFromTank({
       momMultiplyer: air.momMultiplyer,
       tank: t,
-      idx: 0
-    }))
-
-
+      idx: 0,
+    })
+  )
 
 export const getPerMac = (
   air: AircraftDeep,

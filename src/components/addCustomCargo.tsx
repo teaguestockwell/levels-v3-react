@@ -3,8 +3,6 @@ import {getActionsCS} from '../hooks/cargoStore'
 import {getCargoString} from '../util'
 import {PlusCircleOutlined} from '@ant-design/icons'
 
-
-
 export const AddCustomCargo = () => {
   const cs = getActionsCS()
 

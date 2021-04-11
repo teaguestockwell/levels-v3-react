@@ -1,13 +1,11 @@
 import {Button, Dropdown, Menu} from 'antd'
-import {getActionsAS, getAir } from '../hooks/airStore'
+import {getActionsAS, getAir} from '../hooks/airStore'
 import {useUserAirs} from '../hooks/useUserAirs'
 import {AircraftDeep} from '../types/aircraftDeep'
 import {DownOutlined} from '@ant-design/icons'
 import {MenuInfo} from 'rc-menu/lib/interface'
 import {getActionsCS} from '../hooks/cargoStore'
 import {getCargoSchema} from '../util'
-
-
 
 export const AirSelect = () => {
   const selectedAir = getAir()

@@ -1,5 +1,5 @@
 import {Button, Dropdown, Menu} from 'antd'
-import {getAir, getSchema } from '../hooks/airStore'
+import {getAir, getSchema} from '../hooks/airStore'
 import {getActionsCS, getConfigUuids, useConfig} from '../hooks/cargoStore'
 import {DownOutlined} from '@ant-design/icons'
 import {MenuInfo} from 'rc-menu/lib/interface'
@@ -32,9 +32,7 @@ export const ConfigSelect = () => {
 
     // k: uuid, v: isValid
     const newCargoMap = new Map<string, boolean>(
-      newCargos.map<[string, boolean]>(c => 
-        [c.uuid, objSchema.isValidSync]
-      )
+      newCargos.map<[string, boolean]>((c) => [c.uuid, objSchema.isValidSync])
     )
 
     // remove old config from cargo store
@@ -45,7 +43,7 @@ export const ConfigSelect = () => {
     // add new config
     cs.putCargosIsValid(newCargoMap)
     cs.putCargos(newCargos)
-    
+
     // update selected
     cs.putConfigUuids(Array.from(newCargoMap.keys()))
     cs.putConfig(newConfig)

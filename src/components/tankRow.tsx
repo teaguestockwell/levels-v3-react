@@ -1,17 +1,23 @@
-import { Button, Dropdown, Menu } from 'antd'
+import {Button, Dropdown, Menu} from 'antd'
 import {Tank} from '../types/aircraftDeep'
 import {DownOutlined} from '@ant-design/icons'
 import {MenuInfo} from 'rc-menu/lib/interface'
-import { getActionsCS } from '../hooks/cargoStore'
-import { CargoString } from '../types/cargoString'
-import { useMemo, useState } from 'react'
-import { getCargoStringFromTank } from '../util'
-import { getAir } from '../hooks/airStore'
+import {getActionsCS} from '../hooks/cargoStore'
+import {CargoString} from '../types/cargoString'
+import {useMemo, useState} from 'react'
+import {getCargoStringFromTank} from '../util'
+import {getAir} from '../hooks/airStore'
 
 const cs = getActionsCS()
 
-export const TankRow = ({tank, cargoString}: {tank:Tank, cargoString: CargoString}) => {
-  const weights = useMemo(()=> tank.weightsCSV.split(','),[tank])
+export const TankRow = ({
+  tank,
+  cargoString,
+}: {
+  tank: Tank
+  cargoString: CargoString
+}) => {
+  const weights = useMemo(() => tank.weightsCSV.split(','), [tank])
   const [weight, setWeight] = useState(weights[0])
 
   const onClick = (menuInfo: MenuInfo) => {
@@ -33,17 +39,23 @@ export const TankRow = ({tank, cargoString}: {tank:Tank, cargoString: CargoStrin
     setWeight(newCargoString.weightEA)
   }
 
-  const menu = useMemo(() => (
-    <Menu onClick={onClick}>
-      {
-      weights.map((lb,i) => <Menu.Item key={i}>{lb}</Menu.Item>)
-      }
-    </Menu>
-  ),[])
+  const menu = useMemo(
+    () => (
+      <Menu onClick={onClick}>
+        {weights.map((lb, i) => (
+          <Menu.Item key={i}>{lb}</Menu.Item>
+        ))}
+      </Menu>
+    ),
+    []
+  )
 
   return (
     <Dropdown overlay={menu} trigger={['click']}>
-      <Button>{`${tank.name}: ${weight}`}<DownOutlined/></Button>
+      <Button>
+        {`${tank.name}: ${weight}`}
+        <DownOutlined />
+      </Button>
     </Dropdown>
   )
 }

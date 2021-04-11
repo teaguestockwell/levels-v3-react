@@ -28,4 +28,3 @@ export const useUserAirs = () => {
 
   return {...query, hasRoles}
 }
-

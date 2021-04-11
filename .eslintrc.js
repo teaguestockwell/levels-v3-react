@@ -17,7 +17,7 @@ const lintTS = {
     '@typescript-eslint/prefer-ts-expect-error': 'error',
     '@typescript-eslint/no-var-requires': 'off', // turning off because we do not care if we import using es6 or common js... stupid lint
     '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-use-before-define': ['error', { variables: true }],
+    '@typescript-eslint/no-use-before-define': ['error', {variables: true}],
     // '@typescript-eslint/naming-convention': [
     //   'error',
     //   {
@@ -27,7 +27,7 @@ const lintTS = {
     //   },
     // ],
   },
-};
+}
 
 const lintReact = {
   plugins: ['react'],
@@ -35,16 +35,16 @@ const lintReact = {
   // React Rules: https://www.npmjs.com/package/eslint-plugin-react
   rules: {
     'react/react-in-jsx-scope': 'off', // from react: Prevent missing React when using JSX -- turned off for next.js
-    'react/jsx-filename-extension': ['warn', { extensions: ['.tsx'] }], // from react: Restrict file extensions that may contain JSX
+    'react/jsx-filename-extension': ['warn', {extensions: ['.tsx']}], // from react: Restrict file extensions that may contain JSX
     'react/prop-types': 'off', // from react: Prevent missing props validation in a React component definition
-    'react/jsx-props-no-spreading': ['error', { custom: 'ignore' }], // from react: Prevent JSX prop spreading
+    'react/jsx-props-no-spreading': ['error', {custom: 'ignore'}], // from react: Prevent JSX prop spreading
     'react/no-unescaped-entities': 'warn', // Turning on to catch possible mistakes
   },
   settings: {
     pragma: 'React',
     version: 'detect',
   },
-};
+}
 
 module.exports = {
   root: true,
@@ -58,7 +58,7 @@ module.exports = {
   plugins: [...lintTS.plugins, ...lintReact.plugins],
   extends: ['eslint:recommended', ...lintTS.extends, ...lintReact.extends],
   rules: {
-    "@typescript-eslint/no-explicit-any": "off",
+    '@typescript-eslint/no-explicit-any': 'off',
     // eslint rules: https://eslint.org/docs/rules/
     'prefer-const': 'warn', // from eslint: require `const` declarations for variables that are never reassigned after declared
     // needed because of https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-use-before-define.md#how-to-use & https://stackoverflow.com/questions/63818415/react-was-used-before-it-was-defined
@@ -78,4 +78,4 @@ module.exports = {
       },
     },
   },
-};
+}

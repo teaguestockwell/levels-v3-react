@@ -2,9 +2,9 @@ import {Button, Dropdown, Menu} from 'antd'
 import {getActionsCS} from '../hooks/cargoStore'
 import {Cargo, Category} from '../types/aircraftDeep'
 import {DownOutlined} from '@ant-design/icons'
-import {AirStore, getAir } from '../hooks/airStore'
+import {getAir, getSchema} from '../hooks/airStore'
 import {MenuInfo} from 'rc-menu/lib/interface'
-import {CargoSchema, getCargoStringFromCargo} from '../util'
+import {getCargoStringFromCargo} from '../util'
 
 export const AddASelect = () => {
   const cs = getActionsCS()
@@ -20,7 +20,7 @@ export const AddASelect = () => {
     (x) => x.category === Category.Extra
   )
 
-  const schema = (AirStore.getState().cargoSchema as CargoSchema).fullObjSchema
+  const schema = getSchema().fullObjSchema
 
   const onAddAddACargoClick = (menuInfo: MenuInfo) => {
     const selectedId = Number(menuInfo.key)

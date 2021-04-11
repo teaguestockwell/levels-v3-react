@@ -2,7 +2,7 @@ import {useUserAirs} from '../hooks/useUserAirs'
 import {AccessDenied} from '../pages/accessDenied'
 import {Loading} from '../pages/loading'
 import {Offline} from '../pages/offline'
-import {AirStore} from '../hooks/airStore'
+import {getActionsAS} from '../hooks/airStore'
 import {getCargoSchema} from '../util'
 import {Dashboard} from './dashboard'
 
@@ -11,8 +11,9 @@ export const InitLoadingWrapper = () => {
 
   if (data && hasRoles) {
     const initAir = data.values().next().value
-    AirStore.getState().setSelectedAir(initAir)
-    AirStore.getState().setCargoSchema(getCargoSchema(initAir))
+    const as = getActionsAS()
+    as.setSelectedAir(initAir)
+    as.setCargoSchema(getCargoSchema(initAir))
     return <Dashboard />
   }
   if (data && !hasRoles) {

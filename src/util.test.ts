@@ -4,7 +4,12 @@ import {mockAircraftsDeep} from './testUtils/mockAircraftsDeep'
 import {Cargo, Category} from './types/aircraftDeep'
 import {CargoString} from './types/cargoString'
 import {v4} from 'uuid'
-import {getCargoStringFromTank, getFSofSimpleMoment, getCargoString, getPerMac} from './util'
+import {
+  getCargoStringFromTank,
+  getFSofSimpleMoment,
+  getCargoString,
+  getPerMac,
+} from './util'
 
 describe('cut()', () =>
   it('will cut long strings', () => {
@@ -79,9 +84,7 @@ describe('getCargoStringsFromConfig()', () =>
 
 describe('getCargoString()', () =>
   it('will construct unique CargoStrings with category.user', () => {
-    expect(getCargoString()).not.toStrictEqual(
-      util.getCargoString()
-    )
+    expect(getCargoString()).not.toStrictEqual(util.getCargoString())
   }))
 
 describe('capitalizeFirst()', () =>
@@ -106,17 +109,16 @@ describe('getCargoStringFromTank()', () =>
     const momMultiplyer = air.momMultiplyer
     const tank = air.tanks[0]
 
-    const test = getCargoStringFromTank({tank,momMultiplyer,idx,})
+    const test = getCargoStringFromTank({tank, momMultiplyer, idx})
     expect({...test, uuid: '0'}).toStrictEqual({
       name: 'Tank 1',
       weightEA: '250',
       fs: '1120',
       qty: '1',
       uuid: '0',
-      category: Category.Tank
+      category: Category.Tank,
     })
-  })
-)
+  }))
 
 describe('getPerMac', () => {
   it('will calculate and format cargoStrings into a new PerMac', () => {
@@ -163,7 +165,7 @@ describe('getPerMac', () => {
         category: Category.Tank,
       },
     ]
-    
+
     expect(getPerMac(c17aER, cargoStrings)).toStrictEqual({
       qtyGrandTotal: '5.00',
       momentMultiplier: '10000.00',
