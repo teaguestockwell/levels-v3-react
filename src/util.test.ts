@@ -105,7 +105,7 @@ describe('getCargoStringFromTank()', () =>
     const tanksIDX = 0
     const tankWeightsIDX = 0
 
-    const test = getCargoStringFromTank({tanksIDX, tankWeightsIDX, air})
+    const test = getCargoStringFromTank({tanksIDX, idx: tankWeightsIDX, air})
     expect({...test, uuid: '0'}).toStrictEqual({
       name: 'Tank 1',
       weightEA: '250',

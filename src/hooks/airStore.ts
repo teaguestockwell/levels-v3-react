@@ -30,3 +30,11 @@ export const AirStore = create<AirStoreState>((set) => ({
 export const selectSelectedAir = (state:AirStoreState) => state.selectedAir as AircraftDeep
 export const selectCargoSchema = (state:AirStoreState) => state.cargoSchema as CargoSchema
 export const getAir = () => AirStore.getState().selectedAir as AircraftDeep
+export const getSchema = () => AirStore.getState().cargoSchema as CargoSchema
+export const getActionsAS = () => {
+  const state = AirStore.getState()
+  return {
+    setCargoSchema: state.setCargoSchema,
+    setSelectedAir: state.setSelectedAir
+  }
+}

@@ -1,5 +1,5 @@
 import {Button, Dropdown, Menu} from 'antd'
-import {AirStore, selectCargoSchema, selectSelectedAir} from '../hooks/airStore'
+import {getAir, getSchema } from '../hooks/airStore'
 import {CargoStore, getActionsCS, selectConfig} from '../hooks/cargoStore'
 import {DownOutlined} from '@ant-design/icons'
 import {MenuInfo} from 'rc-menu/lib/interface'
@@ -8,10 +8,11 @@ import {getCargoStringsFromConfig} from '../util'
 import {Const} from '../const'
 
 export const ConfigSelect = () => {
-  const cs = CargoStore(getActionsCS)
   const config = CargoStore(selectConfig)
-  const selectedAir = AirStore(selectSelectedAir)
-  const schema = selectCargoSchema(AirStore.getState()).fullObjSchema
+
+  const cs = getActionsCS()
+  const selectedAir = getAir()
+  const objSchema = getSchema().fullObjSchema
 
   const onConfigChange = async (menuInfo: MenuInfo) => {
     console.log('onConfigChange')
@@ -32,7 +33,7 @@ export const ConfigSelect = () => {
     // k: uuid, v: isValid
     const newCargoMap = new Map<string, boolean>(
       newCargos.map<[string, boolean]>(c => 
-        [c.uuid, schema.isValidSync]
+        [c.uuid, objSchema.isValidSync]
       )
     )
 

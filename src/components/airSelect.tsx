@@ -1,5 +1,5 @@
 import {Button, Dropdown, Menu} from 'antd'
-import {AirStore, selectActionsAS, selectSelectedAir} from '../hooks/airStore'
+import {getActionsAS, getAir } from '../hooks/airStore'
 import {useUserAirs} from '../hooks/useUserAirs'
 import {AircraftDeep} from '../types/aircraftDeep'
 import {DownOutlined} from '@ant-design/icons'
@@ -7,22 +7,25 @@ import {MenuInfo} from 'rc-menu/lib/interface'
 import {getActionsCS} from '../hooks/cargoStore'
 import {getCargoSchema} from '../util'
 
-const onAirChange = (menuInfo: MenuInfo, airMap: Map<number, AircraftDeep>) => {
-  const cs = getActionsCS()
-  const as = selectActionsAS(AirStore.getState())
-  const newAir = airMap.get(Number(menuInfo.key)) as AircraftDeep
-  cs.resetCargoStore()
-  as.setCargoSchema(getCargoSchema(newAir))
-  as.setSelectedAir(newAir)
-}
+
 
 export const AirSelect = () => {
-  const selectedAir = AirStore(selectSelectedAir)
+  const selectedAir = getAir()
+  const cs = getActionsCS()
+  const as = getActionsAS()
+
   const {data} = useUserAirs()
   const airMap = data as Map<number, AircraftDeep>
 
+  const onAirChange = (menuInfo: MenuInfo) => {
+    const newAir = airMap.get(Number(menuInfo.key)) as AircraftDeep
+    cs.resetCargoStore()
+    as.setCargoSchema(getCargoSchema(newAir))
+    as.setSelectedAir(newAir)
+  }
+
   const menu = (
-    <Menu onClick={(x) => onAirChange(x,airMap)}>
+    <Menu onClick={(x) => onAirChange(x)}>
       {Array.from(airMap.values()).map((a) => (
         <Menu.Item key={a.aircraftId}>{a.name}</Menu.Item>
       ))}

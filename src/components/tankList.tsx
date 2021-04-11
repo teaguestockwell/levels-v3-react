@@ -8,13 +8,11 @@ import { CargoString } from "../types/cargoString"
 
 
 export const TankList = () => {
-  console.log('TankList')
   const air = getAir()
   const cs = getActionsCS()
   const [cargoStrings, setCargoStrings] = useState< CargoString[] | undefined >()
 
   useEffect(() => {
-    console.log('setting new tank uuids')
     // create new cs from new air
     const newCargoStrings = getCargoStringsFromAirTanks(air)
 

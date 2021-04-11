@@ -5,17 +5,31 @@ import {MenuInfo} from 'rc-menu/lib/interface'
 import { getActionsCS } from '../hooks/cargoStore'
 import { CargoString } from '../types/cargoString'
 import { useMemo, useState } from 'react'
+import { getCargoStringFromTank } from '../util'
+import { getAir } from '../hooks/airStore'
 
 export const TankRow = ({tank, cargoString}: {tank:Tank, cargoString: CargoString}) => {
-  console.log('Tank ' + cargoString.uuid)
   const cs = getActionsCS()
   const weights = useMemo(()=> tank.weightsCSV.split(','),[tank])
   const [weight, setWeight] = useState(weights[0])
 
   const onClick = (menuInfo: MenuInfo) => {
-    const weightEA = weights[Number(menuInfo.key)]
-    cs.putCargos([{...cargoString, weightEA}])
-    setWeight(weightEA)
+    // get new cargo string from tank with new index
+    // to update fs && weightEA
+    // override uuid
+    const newCargoString = {
+      ...getCargoStringFromTank({
+        idx: Number(menuInfo.key),
+        tank,
+        momMultiplyer: getAir().momMultiplyer,
+      }),
+      uuid: cargoString.uuid,
+    }
+
+    cs.putCargos([newCargoString])
+
+    // set state to display new fuel weight
+    setWeight(newCargoString.weightEA)
   }
 
   const menu = useMemo(() => (

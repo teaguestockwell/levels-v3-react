@@ -1,12 +1,12 @@
 import {Button} from 'antd'
-import {CargoStore, getActionsCS} from '../hooks/cargoStore'
+import {getActionsCS} from '../hooks/cargoStore'
 import {getCargoString} from '../util'
 import {PlusCircleOutlined} from '@ant-design/icons'
 
 
 
 export const AddCustomCargo = () => {
-  const cs = CargoStore(getActionsCS)
+  const cs = getActionsCS()
 
   const onAddCustomCargoClick = () => {
     const newCargo = getCargoString()

@@ -1,16 +1,14 @@
 import {Button, Dropdown, Menu} from 'antd'
-import {CargoStore, getActionsCS} from '../hooks/cargoStore'
+import {getActionsCS} from '../hooks/cargoStore'
 import {Cargo, Category} from '../types/aircraftDeep'
 import {DownOutlined} from '@ant-design/icons'
-import {AirStore, selectSelectedAir} from '../hooks/airStore'
+import {AirStore, getAir } from '../hooks/airStore'
 import {MenuInfo} from 'rc-menu/lib/interface'
 import {CargoSchema, getCargoStringFromCargo} from '../util'
 
-
-
 export const AddASelect = () => {
-  const cs = CargoStore(getActionsCS)
-  const selectedAir = AirStore(selectSelectedAir)
+  const cs = getActionsCS()
+  const selectedAir = getAir()
 
   const stewardCargo = selectedAir.cargos.filter(
     (x) => x.category === Category.Steward
