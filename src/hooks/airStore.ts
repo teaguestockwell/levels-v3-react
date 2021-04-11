@@ -26,7 +26,7 @@ export const AirStore = create<AirStoreState>((set) => ({
     state.selectedAir = air
   }),
 }))
-
+export const useSelectedAir = () => AirStore(state => state.selectedAir) as AircraftDeep
 export const selectSelectedAir = (state:AirStoreState) => state.selectedAir as AircraftDeep
 export const selectCargoSchema = (state:AirStoreState) => state.cargoSchema as CargoSchema
 export const getAir = () => AirStore.getState().selectedAir as AircraftDeep

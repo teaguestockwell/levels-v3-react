@@ -20,8 +20,6 @@ describe('AirSelect', () => {
     fireEvent.click(getByText('C-17A-ER'))
     await waitFor(() => expect(queryAllByText('C-17A-ER').length).toBe(2))
     fireEvent.click(getByText('C-17A'))
-    // button text will change
-    await waitFor(() => expect(queryAllByText('C-17A-ER').length).toBe(1))
 
     expect(oldSchema).not.toEqual(AirStore.getState().cargoSchema)
     expect(AirStore.getState().selectedAir?.name).toBe('C-17A')

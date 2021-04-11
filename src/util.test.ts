@@ -102,10 +102,11 @@ describe('getFSofSimpleMoment()', () =>
 describe('getCargoStringFromTank()', () =>
   it('will return new CargoString from a tank', () => {
     const air = mockAircraftsDeep[0]
-    const tanksIDX = 0
-    const tankWeightsIDX = 0
+    const idx = 0 // selected 250lbs
+    const momMultiplyer = air.momMultiplyer
+    const tank = air.tanks[0]
 
-    const test = getCargoStringFromTank({tanksIDX, idx: tankWeightsIDX, air})
+    const test = getCargoStringFromTank({tank,momMultiplyer,idx,})
     expect({...test, uuid: '0'}).toStrictEqual({
       name: 'Tank 1',
       weightEA: '250',

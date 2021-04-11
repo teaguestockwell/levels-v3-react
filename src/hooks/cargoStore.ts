@@ -8,14 +8,10 @@ export interface CargoStoreState extends State {
   cargoMap: Map<string, CargoString>
   config: Config
   configUuids: string[]
-  tankUuids: string[]
 
   // update 1 config
   putConfig: (config: Config) => void
   putConfigUuids: (uuids: string[]) => void
-
-  // update n tank
-  putTankUuids: (uuids: string[]) => void
 
   // create | update n cargo
   putCargos: (cargos: CargoString[]) => void
@@ -43,7 +39,6 @@ export const CargoStore = create<CargoStoreState>((set) => ({
   cargoMap: new Map(),
   config: Const.NO_CONFIG,
   configUuids: [],
-  tankUuids: [],
 
   // update 1 config
   putConfig: (config) =>
@@ -53,11 +48,6 @@ export const CargoStore = create<CargoStoreState>((set) => ({
   putConfigUuids: (uuids) =>
     set((state) => {
       state.configUuids = uuids
-    }),
-
-  putTankUuids: (uuids) =>
-    set((state) => {
-      state.tankUuids = uuids
     }),
 
   // create | update n cargo
@@ -95,7 +85,6 @@ export const CargoStore = create<CargoStoreState>((set) => ({
 export const getActionsCS = () => {
   const state = CargoStore.getState()
   return {
-    putTankUuids: state.putTankUuids,
     putConfig: state.putConfig,
     putConfigUuids: state.putConfigUuids,
     putCargos: state.putCargos,

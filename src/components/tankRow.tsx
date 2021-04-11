@@ -8,8 +8,9 @@ import { useMemo, useState } from 'react'
 import { getCargoStringFromTank } from '../util'
 import { getAir } from '../hooks/airStore'
 
+const cs = getActionsCS()
+
 export const TankRow = ({tank, cargoString}: {tank:Tank, cargoString: CargoString}) => {
-  const cs = getActionsCS()
   const weights = useMemo(()=> tank.weightsCSV.split(','),[tank])
   const [weight, setWeight] = useState(weights[0])
 
@@ -38,7 +39,7 @@ export const TankRow = ({tank, cargoString}: {tank:Tank, cargoString: CargoStrin
       weights.map((lb,i) => <Menu.Item key={i}>{lb}</Menu.Item>)
       }
     </Menu>
-  ),[tank])
+  ),[])
 
   return (
     <Dropdown overlay={menu} trigger={['click']}>
