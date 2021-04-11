@@ -1,6 +1,6 @@
 import {Button, Dropdown, Menu} from 'antd'
 import {getAir, getSchema } from '../hooks/airStore'
-import {CargoStore, getActionsCS, selectConfig} from '../hooks/cargoStore'
+import {getActionsCS, getConfigUuids, useConfig} from '../hooks/cargoStore'
 import {DownOutlined} from '@ant-design/icons'
 import {MenuInfo} from 'rc-menu/lib/interface'
 import {Config} from '../types/aircraftDeep'
@@ -8,7 +8,7 @@ import {getCargoStringsFromConfig} from '../util'
 import {Const} from '../const'
 
 export const ConfigSelect = () => {
-  const config = CargoStore(selectConfig)
+  const config = useConfig()
 
   const cs = getActionsCS()
   const selectedAir = getAir()
@@ -38,7 +38,7 @@ export const ConfigSelect = () => {
     )
 
     // remove old config from cargo store
-    const oldUuids = CargoStore.getState().configUuids
+    const oldUuids = getConfigUuids()
     cs.deleteCargosIsValid(oldUuids)
     cs.deleteCargos(oldUuids)
 

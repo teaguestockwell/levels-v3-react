@@ -3,7 +3,7 @@ import {ConfigSelect} from './configSelect'
 import {renderWrapped} from '../testUtils/renderW'
 import {CargoStore} from '../hooks/cargoStore'
 
-describe('AirSelect', () => {
+describe('ConfigSelect', () => {
   it('will render', async () => {
     const {getByText, queryAllByText} = renderWrapped(<ConfigSelect />)
     await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))

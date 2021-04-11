@@ -1,13 +1,13 @@
-import {CargoStore, selectCargoMapKeys} from '../hooks/cargoStore'
+import {getCargoMap, useCargoMapKeys } from '../hooks/cargoStore'
 import {cut} from '../util'
 import {CargoForm} from './cargoForm'
 import {Category} from '../types/aircraftDeep'
 
 export function CargoList({category}: {category: Category[]}) {
-  CargoStore(selectCargoMapKeys)
-  return (
+  useCargoMapKeys()
+  return ( 
     <>
-      {Array.from(CargoStore.getState().cargoMap.values())
+      {Array.from(getCargoMap().values())
         .filter((x) => category.includes(x.category))
         .map((cargo) => {
           return (

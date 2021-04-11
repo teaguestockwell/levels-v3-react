@@ -24,12 +24,6 @@ export interface CargoStoreState extends State {
   resetCargoStore: () => void
 }
 
-export const selectCargoValidMap = (state:CargoStoreState) => state.cargoValidMap
-export const selectCargoMap = (state:CargoStoreState) => state.cargoMap
-export const selectConfig = (state:CargoStoreState) => state.config
-export const selectConfigUuids = (state:CargoStoreState) => state.configUuids
-export const selectCargoMapKeys = (state:CargoStoreState) => state.cargoMap.keys()
-
 
 
 
@@ -42,20 +36,20 @@ export const CargoStore = create<CargoStoreState>((set) => ({
 
   // update 1 config
   putConfig: (config) =>
-    set((state) => {
+  set((state) => {
       state.config = config
     }),
   putConfigUuids: (uuids) =>
-    set((state) => {
-      state.configUuids = uuids
-    }),
-
+  set((state) => {
+    state.configUuids = uuids
+  }),
+  
   // create | update n cargo
   putCargos: (cargos) =>
-    set((state) => {
+  set((state) => {
       cargos.forEach((c) => state.cargoMap.set(c.uuid, c))
     }),
-  putCargosIsValid: (cargoIdValidMap) =>
+    putCargosIsValid: (cargoIdValidMap) =>
     set((state) => {
       Array.from(cargoIdValidMap.entries()).forEach((entry) =>
         state.cargoValidMap.set(entry[0], entry[1])
@@ -64,15 +58,15 @@ export const CargoStore = create<CargoStoreState>((set) => ({
 
   // delete n
   deleteCargosIsValid: (cargoIds) =>
-    set((state) => {
-      cargoIds.forEach((id) => state.cargoValidMap.delete(id))
-    }),
+  set((state) => {
+    cargoIds.forEach((id) => state.cargoValidMap.delete(id))
+  }),
   deleteCargos: (cargoIds) =>
-    set((state) => {
+  set((state) => {
       cargoIds.forEach((id) => state.cargoMap.delete(id))
     }),
-  // when a new air is selected, reset all state
-  resetCargoStore: () =>
+    // when a new air is selected, reset all state
+    resetCargoStore: () =>
     set((state) => {
       state.cargoMap.clear()
       state.cargoValidMap.clear()
@@ -80,7 +74,15 @@ export const CargoStore = create<CargoStoreState>((set) => ({
       state.configUuids = []
       state.tankUuids = []
     }),
-}))
+  }))
+  
+export const useCargoMapKeys = () => CargoStore(state => state.cargoMap.keys())
+export const useConfig = () => CargoStore(state => state.config)
+  
+export const getCargoValidMap = () => CargoStore.getState().cargoValidMap
+export const getCargoMap = () => CargoStore.getState().cargoMap
+export const getConfig = () => CargoStore.getState().config
+export const getConfigUuids = () => CargoStore.getState().configUuids
 
 export const getActionsCS = () => {
   const state = CargoStore.getState()
