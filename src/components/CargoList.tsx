@@ -1,28 +1,17 @@
-import {getCargoMap, useCargoMapKeys} from '../hooks/cargoStore'
-import {cut} from '../util'
-import {CargoForm} from './cargoForm'
+import { v4 } from 'uuid'
+import {getCargoMap, useCargoMapSize} from '../hooks/cargoStore'
 import {Category} from '../types/aircraftDeep'
+import { FormModal } from './formModal'
 
 export function CargoList({category}: {category: Category[]}) {
-  useCargoMapKeys()
+  console.log('cargo list')
+  useCargoMapSize()
   return (
     <>
       {Array.from(getCargoMap().values())
         .filter((x) => category.includes(x.category))
         .map((cargo) => {
-          return (
-            <CargoForm
-              key={cargo.uuid + 'form'}
-              cargo={{
-                uuid: cargo.uuid,
-                name: cut(cargo.name),
-                weightEA: cut(cargo.weightEA),
-                fs: cut(cargo.fs),
-                qty: cut(cargo.qty),
-                category: cargo.category,
-              }}
-            />
-          )
+          return <FormModal key={v4()} uuid={cargo.uuid}/>
         })}
     </>
   )

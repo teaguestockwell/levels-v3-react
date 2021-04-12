@@ -14,6 +14,7 @@ const cargoString: CargoString = {
   fs: '900',
   qty: '1',
   category: Category.Tank,
+  isValid: true
 }
 
 describe('TankRow', () => {

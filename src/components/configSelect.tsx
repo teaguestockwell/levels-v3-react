@@ -1,6 +1,6 @@
 import {Button, Dropdown, Menu} from 'antd'
 import {getAir, getSchema} from '../hooks/airStore'
-import {getActionsCS, getConfigUuids, useConfig} from '../hooks/cargoStore'
+import {getActionsCS, getConfigUuids, useConfigName} from '../hooks/cargoStore'
 import {DownOutlined} from '@ant-design/icons'
 import {MenuInfo} from 'rc-menu/lib/interface'
 import {Config} from '../types/aircraftDeep'
@@ -8,14 +8,15 @@ import {getCargoStringsFromConfig} from '../util'
 import {Const} from '../const'
 
 export const ConfigSelect = () => {
-  const config = useConfig()
+  const configName = useConfigName()
 
   const cs = getActionsCS()
   const selectedAir = getAir()
   const objSchema = getSchema().fullObjSchema
 
   const onConfigChange = async (menuInfo: MenuInfo) => {
-    console.log('onConfigChange')
+    //console.log('onConfigChange')
+
     // get config from selection
     const newConfigId = Number(menuInfo.key)
     let newConfig: Config
@@ -29,23 +30,17 @@ export const ConfigSelect = () => {
 
     // get an array of cargoStrings from that config
     const newCargos = getCargoStringsFromConfig(newConfig)
-
-    // k: uuid, v: isValid
-    const newCargoMap = new Map<string, boolean>(
-      newCargos.map<[string, boolean]>((c) => [c.uuid, objSchema.isValidSync])
-    )
+      // validate em
+      .map(c => ({...c, isValid: objSchema.isValidSync(c)}))
 
     // remove old config from cargo store
-    const oldUuids = getConfigUuids()
-    cs.deleteCargosIsValid(oldUuids)
-    cs.deleteCargos(oldUuids)
+    cs.deleteCargos(getConfigUuids())
 
     // add new config
-    cs.putCargosIsValid(newCargoMap)
     cs.putCargos(newCargos)
 
     // update selected
-    cs.putConfigUuids(Array.from(newCargoMap.keys()))
+    cs.putConfigUuids(newCargos.map(c => c.uuid))
     cs.putConfig(newConfig)
   }
 
@@ -63,7 +58,7 @@ export const ConfigSelect = () => {
   return (
     <Dropdown overlay={menu} trigger={['click']}>
       <Button>
-        {config.name}
+        {configName}
         <DownOutlined />
       </Button>
     </Dropdown>

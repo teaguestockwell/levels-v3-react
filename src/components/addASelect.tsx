@@ -29,8 +29,8 @@ export const AddASelect = () => {
     ) as Cargo
     const newCargo = getCargoStringFromCargo(oldCargo, 1)
     const isValid = schema.isValidSync(newCargo)
-    cs.putCargosIsValid(new Map([[newCargo.uuid, isValid]]))
-    cs.putCargos([newCargo])
+    //cs.putCargosIsValid(new Map([[newCargo.uuid, isValid]]))
+    cs.putCargos([{...newCargo, isValid}])
   }
 
   const menu = (

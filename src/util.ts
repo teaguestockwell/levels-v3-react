@@ -84,6 +84,7 @@ export const getCargoStringFromCargo = (
     fs: cargo.fs.toString(),
     qty: qty.toString(),
     category: Category.User,
+    isValid: false,
   }
 }
 
@@ -95,6 +96,8 @@ export const getCargoStringsFromConfig = (config: Config): CargoString[] => {
     fs: cc.fs.toString(),
     qty: cc.qty.toString(),
     category: cc.cargo.category,
+    isValid: false,
+    isOpen: false
   }))
 }
 export const getCargoString = (): CargoString => {
@@ -105,6 +108,7 @@ export const getCargoString = (): CargoString => {
     fs: '',
     qty: '1',
     category: Category.User,
+    isValid: false,
   }
 }
 
@@ -137,6 +141,7 @@ export const getCargoStringFromTank = (props: {
     fs: fs.toString(),
     qty: '1',
     category: Category.Tank,
+    isValid: true,
   }
 }
 
@@ -181,6 +186,7 @@ export const getPerMac = (
       fs: c.fs,
       qty: c.qty,
       category: c.category,
+      isValid: c.isValid,
 
       // CargoCalculated
       momentEach: momentEach.toFixed(Const.PERMAC_DECIMAL),

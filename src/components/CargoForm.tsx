@@ -2,7 +2,7 @@
 import {useEffect} from 'react'
 import {Form, Input, Button} from 'antd'
 import {getSchema} from '../hooks/airStore'
-import {getActionsCS} from '../hooks/cargoStore'
+import {getActionsCS, getCargoAtUuid} from '../hooks/cargoStore'
 import {capitalizeFirst} from '../util'
 import {CargoString} from '../types/cargoString'
 import debounce from 'lodash/debounce'
@@ -20,7 +20,8 @@ const rulesYupWrapper = (fieldSchema: any): any[] => {
   ]
 }
 
-export const CargoForm = ({cargo}: {cargo: CargoString}) => {
+export const CargoForm = ({uuid}: {uuid: string}) => {
+  const cargo = getCargoAtUuid(uuid)
   // ref to form instance for initial validation
   const [form] = Form.useForm()
   // non reactive state because parent component will remove on air change
@@ -38,31 +39,29 @@ export const CargoForm = ({cargo}: {cargo: CargoString}) => {
   // TODO: change this to on submit or on close of modal form is inside of
   const onChange = () => {
     //console.log('onChange')
-    const newCargo = {...cargo, ...form.getFieldsValue()}
     //console.log(newCargo)
-
-    const isFormValid = form
-      .getFieldsError()
-      .every((v: any) => v.errors.length === 0)
+    
+    const isValid = form
+    .getFieldsError()
+    .every((v: any) => v.errors.length === 0)
     //console.log(isFormValid)
 
-    cs.putCargosIsValid(
-      new Map<string, boolean>([[cargo.uuid, isFormValid]])
-    )
-
+    const newCargo = {...cargo, ...form.getFieldsValue(), isValid}
+    
     cs.putCargos([newCargo])
   }
 
   const onDelete = () => {
     cs.deleteCargos([cargo.uuid])
-    cs.deleteCargosIsValid([cargo.uuid])
   }
+
+  const filterKeys:string[] = ['uuid','category','isValid','isOpen']
 
   return (
     <>
       <Form key={cargo.uuid + '_form'} form={form}>
         {Object.keys(cargo)
-          .filter((k) => k !== 'uuid' && k !== 'category')
+          .filter((k) => !filterKeys.includes(k))
           .map((k) => (
             <Form.Item
               key={k + 'form item'}

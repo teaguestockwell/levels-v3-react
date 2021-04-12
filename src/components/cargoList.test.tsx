@@ -16,6 +16,7 @@ const getMockCargo = (name: string): CargoString => {
     fs: '12',
     qty: '1',
     category: Category.User,
+    isValid: false,
   }
 }
 describe('CargoList', () => {
@@ -24,29 +25,23 @@ describe('CargoList', () => {
 
   it('will render', async () => {
     const cargo = getMockCargo('cargo0')
-    CargoStore.getState().putCargosIsValid(
-      new Map<string, boolean>([[cargo.uuid, false]])
-    )
     CargoStore.getState().putCargos([cargo])
     const {getByText, queryAllByText} = renderWrapped(
       <CargoList category={Object.values(Category)} />
     )
     await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
 
-    expect(getByText('Name')).toBeInTheDocument()
+    expect(getByText('1 EA cargo0')).toBeInTheDocument()
   })
 
   it('will only render the given category s', async () => {
     const cargo = getMockCargo('cargo0')
-    CargoStore.getState().putCargosIsValid(
-      new Map<string, boolean>([[cargo.uuid, false]])
-    )
     CargoStore.getState().putCargos([cargo])
     const {queryAllByText} = renderWrapped(
       <CargoList category={[Category.Extra]} />
     )
     await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
 
-    expect(queryAllByText('Name').length).toBe(0)
+    expect(queryAllByText('1 EA cargo0').length).toBe(0)
   })
 })

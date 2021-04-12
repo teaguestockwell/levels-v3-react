@@ -18,7 +18,6 @@ describe('ConfigSelect', () => {
     expect(CargoStore.getState().config.name).toBe('No Config')
     expect(CargoStore.getState().configUuids.length).toBe(0)
     expect(CargoStore.getState().cargoMap.size).toBe(0)
-    expect(CargoStore.getState().cargoValidMap.size).toBe(0)
 
     // when config is changed
     fireEvent.click(getByText('No Config'))
@@ -32,7 +31,6 @@ describe('ConfigSelect', () => {
       expect(CargoStore.getState().config.name).toBe('AE-1')
       expect(CargoStore.getState().configUuids.length).not.toBe(0)
       expect(CargoStore.getState().cargoMap.size).not.toBe(0)
-      expect(CargoStore.getState().cargoValidMap.size).not.toBe(0)
     })
   })
 })

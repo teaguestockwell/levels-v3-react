@@ -16,6 +16,7 @@ const getMockCargo = (name: string): CargoString => {
     fs: '12',
     qty: '1',
     category: Category.User,
+    isValid: false,
   }
 }
 
@@ -27,12 +28,9 @@ describe('CargoForm', () => {
 
   it('will render', async () => {
     const cargo = getMockCargo('cargo0')
-    CargoStore.getState().putCargosIsValid(
-      new Map<string, boolean>([[cargo.uuid, false]])
-    )
     CargoStore.getState().putCargos([cargo])
     const {getByText, queryAllByText} = renderWrapped(
-      <CargoForm cargo={cargo} />
+      <CargoForm uuid={cargo.uuid} />
     )
     await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
 
@@ -42,11 +40,9 @@ describe('CargoForm', () => {
   it('will update CargoStore', async () => {
     // given
     const cargo = getMockCargo('cargo0')
-    CargoStore.getState().putCargosIsValid(
-      new Map<string, boolean>([[cargo.uuid, false]])
-    )
+
     CargoStore.getState().putCargos([cargo])
-    const ct = renderWrapped(<CargoForm cargo={cargo} />)
+    const ct = renderWrapped(<CargoForm uuid={cargo.uuid} />)
     await waitFor(() =>
       expect(ct.queryAllByText('Loading Test').length).toBe(0)
     )
@@ -65,9 +61,10 @@ describe('CargoForm', () => {
         weightEA: '100',
         fs: '100',
         qty: '1',
+        isValid: true
       })
 
-      expect(CargoStore.getState().cargoValidMap.get(cargo.uuid)).toBe(true)
+      expect((CargoStore.getState().cargoMap.get(cargo.uuid) as CargoString).isValid).toBe(true)
     })
   })
 })

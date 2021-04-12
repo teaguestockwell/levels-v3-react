@@ -37,6 +37,7 @@ describe('getCargoSchema()', () =>
       fs: '100',
       qty: '1',
       category: Category.User,
+      isValid: true
     }
 
     const inValidCargo: CargoString = {
@@ -46,6 +47,7 @@ describe('getCargoSchema()', () =>
       fs: '100',
       qty: '1',
       category: Category.Emergency,
+      isValid: false
     }
 
     expect(schema.fullObjSchema.isValidSync(validCargo)).toBe(true)
@@ -117,6 +119,7 @@ describe('getCargoStringFromTank()', () =>
       qty: '1',
       uuid: '0',
       category: Category.Tank,
+      isValid: true
     })
   }))
 
@@ -131,6 +134,7 @@ describe('getPerMac', () => {
         fs: '922',
         qty: '1',
         category: Category.BasicAircraft,
+        isValid: true
       },
       {
         uuid: '1',
@@ -139,6 +143,7 @@ describe('getPerMac', () => {
         fs: '1120', // = 28 simple mom * 10,000 simple moment modifier / 250
         qty: '1',
         category: Category.Tank,
+        isValid: true
       },
       {
         uuid: '2',
@@ -147,6 +152,7 @@ describe('getPerMac', () => {
         fs: '797.281553398', // = 2053 simple mom * 10,000 simple moment modifier / 25750
         qty: '1',
         category: Category.Tank,
+        isValid: true
       },
       {
         uuid: '3',
@@ -155,6 +161,7 @@ describe('getPerMac', () => {
         fs: '844.44444444444444', // = 380 simple mom * 10,000 simple moment modifier / 4500
         qty: '1',
         category: Category.Tank,
+        isValid: true
       },
       {
         uuid: '4',
@@ -163,6 +170,7 @@ describe('getPerMac', () => {
         fs: '989.387755102', // = 3,636 simple mom * 10,000 simple moment modifier / 36750
         qty: '1',
         category: Category.Tank,
+        isValid: true
       },
     ]
 
@@ -190,6 +198,7 @@ describe('getPerMac', () => {
           weightTotal: '282000.00',
           momentTotal: '260004000.00',
           simpleMomentTotal: '26000.40',
+          isValid: true
         },
         {
           uuid: '1',
@@ -203,6 +212,7 @@ describe('getPerMac', () => {
           weightTotal: '250.00',
           momentTotal: '280000.00',
           simpleMomentTotal: '28.00',
+          isValid: true
         },
         {
           uuid: '2',
@@ -216,6 +226,7 @@ describe('getPerMac', () => {
           weightTotal: '25750.00',
           momentTotal: '20530000.00',
           simpleMomentTotal: '2053.00',
+          isValid: true
         },
         {
           uuid: '3',
@@ -229,6 +240,7 @@ describe('getPerMac', () => {
           weightTotal: '4500.00',
           momentTotal: '3800000.00',
           simpleMomentTotal: '380.00',
+          isValid: true
         },
         {
           uuid: '4',
@@ -242,6 +254,7 @@ describe('getPerMac', () => {
           weightTotal: '36750.00',
           momentTotal: '36360000.00',
           simpleMomentTotal: '3636.00',
+          isValid: true
         },
       ],
     })

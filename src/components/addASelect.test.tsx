@@ -20,3 +20,4 @@ describe('AddASelect', () => {
     expect(CargoStore.getState().cargoMap.size).toBe(1)
   })
 })
+ 

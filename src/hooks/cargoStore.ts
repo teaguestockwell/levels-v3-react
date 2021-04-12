@@ -4,7 +4,6 @@ import {Config} from '../types/aircraftDeep'
 import {CargoString} from '../types/cargoString'
 export interface CargoStoreState extends State {
   // read
-  cargoValidMap: Map<string, boolean>
   cargoMap: Map<string, CargoString>
   config: Config
   configUuids: string[]
@@ -15,10 +14,8 @@ export interface CargoStoreState extends State {
 
   // create | update n cargo
   putCargos: (cargos: CargoString[]) => void
-  putCargosIsValid: (cargoIdValidMap: Map<string, boolean>) => void
 
   // delete n
-  deleteCargosIsValid: (cargoIds: string[]) => void
   deleteCargos: (cargoIds: string[]) => void
   // when a new air is selected, reset all state
   resetCargoStore: () => void
@@ -46,18 +43,8 @@ export const CargoStore = create<CargoStoreState>((set) => ({
     set((state) => {
       cargos.forEach((c) => state.cargoMap.set(c.uuid, c))
     }),
-  putCargosIsValid: (cargoIdValidMap) =>
-    set((state) => {
-      Array.from(cargoIdValidMap.entries()).forEach((entry) =>
-        state.cargoValidMap.set(entry[0], entry[1])
-      )
-    }),
 
   // delete n
-  deleteCargosIsValid: (cargoIds) =>
-    set((state) => {
-      cargoIds.forEach((id) => state.cargoValidMap.delete(id))
-    }),
   deleteCargos: (cargoIds) =>
     set((state) => {
       cargoIds.forEach((id) => state.cargoMap.delete(id))
@@ -66,19 +53,21 @@ export const CargoStore = create<CargoStoreState>((set) => ({
   resetCargoStore: () =>
     set((state) => {
       state.cargoMap.clear()
-      state.cargoValidMap.clear()
       state.config = Const.NO_CONFIG
       state.configUuids = []
       state.tankUuids = []
     }),
 }))
 
-export const useCargoMapKeys = () =>
-  CargoStore((state) => state.cargoMap.keys())
-export const useConfig = () => CargoStore((state) => state.config)
+// return cargoMap.size, render on size change
+export const useCargoMapSize = () => CargoStore((state) => state.cargoMap.size)
+export const useConfigName = () => CargoStore((state) => state.config.name)
+// return cargoMap.get(uuid) as CargoString, re render on cargo quality change.
+export const useCargo = (uuid:string) => CargoStore(s => s.cargoMap.get(uuid), (s1,s2) => JSON.stringify(s1) === JSON.stringify(s2)) as CargoString
 
 export const getCargoValidMap = () => CargoStore.getState().cargoValidMap
 export const getCargoMap = () => CargoStore.getState().cargoMap
+export const getCargoAtUuid = (uuid:string) => CargoStore.getState().cargoMap.get(uuid) as CargoString
 export const getConfig = () => CargoStore.getState().config
 export const getConfigUuids = () => CargoStore.getState().configUuids
 
@@ -88,8 +77,8 @@ export const getActionsCS = () => {
     putConfig: state.putConfig,
     putConfigUuids: state.putConfigUuids,
     putCargos: state.putCargos,
-    putCargosIsValid: state.putCargosIsValid,
-    deleteCargosIsValid: state.deleteCargosIsValid,
+    //putCargosIsValid: state.putCargosIsValid,
+    //deleteCargosIsValid: state.deleteCargosIsValid,
     deleteCargos: state.deleteCargos,
     resetCargoStore: state.resetCargoStore,
   }

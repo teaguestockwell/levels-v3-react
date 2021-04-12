@@ -8,4 +8,5 @@ export interface CargoString {
   fs: string
   qty: string
   category: Category
+  isValid: boolean
 }
