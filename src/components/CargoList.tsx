@@ -4,7 +4,6 @@ import {Category} from '../types/aircraftDeep'
 import { FormModal } from './formModal'
 
 export function CargoList({category}: {category: Category[]}) {
-  console.log('cargo list')
   useCargoMapSize()
   return (
     <>
