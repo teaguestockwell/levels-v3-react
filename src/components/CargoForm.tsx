@@ -4,7 +4,6 @@ import {Form, Input, Button} from 'antd'
 import {getSchema} from '../hooks/airStore'
 import {getActionsCS, getCargoAtUuid} from '../hooks/cargoStore'
 import {capitalizeFirst} from '../util'
-import {CargoString} from '../types/cargoString'
 import debounce from 'lodash/debounce'
 
 const rulesYupWrapper = (fieldSchema: any): any[] => {
