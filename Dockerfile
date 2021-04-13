@@ -13,7 +13,7 @@ USER 950
 # # COPY without dev env
 COPY --chown=950:950 [^.env]* .
 
-# RUN npm i -g serve
+RUN npm i
 
 # COPY . .
 
