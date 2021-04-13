@@ -1,10 +1,10 @@
-import {useUserAirs} from '../hooks/useUserAirs'
-import {AccessDenied} from '../pages/accessDenied'
-import {Loading} from '../pages/loading'
-import {Offline} from '../pages/offline'
-import {getActionsAS} from '../hooks/airStore'
+import {useUserAirs} from '../hooks/UseUserAirs'
+import {AccessDenied} from '../pages/AccessDenied'
+import {Loading} from '../pages/Loading'
+import {Offline} from '../pages/Offline'
+import {getActionsAS} from '../hooks/AirStore'
 import {getCargoSchema} from '../util'
-import {Dashboard} from './dashboard'
+import {Dashboard} from './Dashboard'
 
 export const InitLoadingWrapper = () => {
   const {status, data, hasRoles} = useUserAirs()

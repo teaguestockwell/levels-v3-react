@@ -1,8 +1,8 @@
 import {QueryClient, QueryClientProvider} from 'react-query'
 import {render} from '@testing-library/react'
-import {useUserAirs} from '../hooks/useUserAirs'
+import {useUserAirs} from '../hooks/UseUserAirs'
 import {getCargoSchema} from '../util'
-import {AirStore} from '../hooks/airStore'
+import {AirStore} from '../hooks/AirStore'
 import React from 'react'
 
 const IsLoaded = ({children}: {children: React.ReactNode}) => {

@@ -1,7 +1,7 @@
 import {fireEvent, waitFor} from '@testing-library/react'
-import {AddASelect} from './addASelect'
-import {CargoStore} from '../hooks/cargoStore'
-import {renderWrapped} from '../testUtils/renderW'
+import {AddASelect} from './AddASelect'
+import {CargoStore} from '../hooks/CargoStore'
+import {renderWrapped} from '../testUtils/RenderW'
 
 describe('AddASelect', () => {
   it('will render', async () => {

@@ -1,8 +1,8 @@
 import {Button, Dropdown, Menu} from 'antd'
-import {getActionsCS} from '../hooks/cargoStore'
+import {getActionsCS} from '../hooks/CargoStore'
 import {Cargo, Category} from '../types/aircraftDeep'
 import {DownOutlined} from '@ant-design/icons'
-import {getAir, getSchema} from '../hooks/airStore'
+import {getAir, getSchema} from '../hooks/AirStore'
 import {MenuInfo} from 'rc-menu/lib/interface'
 import {getCargoStringFromCargo} from '../util'
 

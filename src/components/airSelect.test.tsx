@@ -1,7 +1,7 @@
 import {fireEvent, waitFor} from '@testing-library/react'
-import {AirSelect} from './airSelect'
-import {renderWrapped} from '../testUtils/renderW'
-import {AirStore} from '../hooks/airStore'
+import {AirSelect} from './AirSelect'
+import {renderWrapped} from '../testUtils/RenderW'
+import {AirStore} from '../hooks/AirStore'
 
 describe('AirSelect', () => {
   it('will render', async () => {

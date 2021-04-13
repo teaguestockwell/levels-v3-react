@@ -1,6 +1,6 @@
 import {formatDate} from '../util'
 //import {ConsoleLogger} from './consoleLogger'
-import {Mac} from '../pages/mac'
+import {Mac} from '../pages/Mac'
 
 // page navigation with sidebar / hamburger
 // aircrafts state: global read, local update

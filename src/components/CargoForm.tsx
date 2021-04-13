@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {useEffect} from 'react'
 import {Form, Input, Button} from 'antd'
-import {getSchema} from '../hooks/airStore'
-import {getActionsCS, getCargoAtUuid} from '../hooks/cargoStore'
+import {getSchema} from '../hooks/AirStore'
+import {getActionsCS, getCargoAtUuid} from '../hooks/CargoStore'
 import {capitalizeFirst, rulesYupWrapper} from '../util'
 import debounce from 'lodash/debounce'
 

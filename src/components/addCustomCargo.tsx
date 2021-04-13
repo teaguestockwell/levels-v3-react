@@ -1,5 +1,5 @@
 import {Button} from 'antd'
-import {getActionsCS} from '../hooks/cargoStore'
+import {getActionsCS} from '../hooks/CargoStore'
 import {getCargoString} from '../util'
 import {PlusCircleOutlined} from '@ant-design/icons'
 

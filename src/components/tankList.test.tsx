@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {fireEvent, waitFor} from '@testing-library/react'
-import {TankList} from './tankList'
-import {renderWrapped} from '../testUtils/renderW'
-import {CargoStore} from '../hooks/cargoStore'
+import {TankList} from './TankList'
+import {renderWrapped} from '../testUtils/RenderW'
+import {CargoStore} from '../hooks/CargoStore'
 import {mockAircraftsDeep} from '../testUtils/mockAircraftsDeep'
 import {Category} from '../types/aircraftDeep'
 import {CargoString} from '../types/cargoString'
-import {getActionsAS} from '../hooks/airStore'
+import {getActionsAS} from '../hooks/AirStore'
 
 const air = mockAircraftsDeep[0]
 const cargoString: CargoString = {

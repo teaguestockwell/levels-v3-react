@@ -1,7 +1,7 @@
 import { Button, Modal } from "antd"
-import { useCargo } from "../hooks/cargoStore"
+import { useCargo } from "../hooks/CargoStore"
 import {CheckCircleFilled, CloseCircleFilled} from '@ant-design/icons'
-import { CargoForm } from "./cargoForm"
+import { CargoForm } from "./CargoForm"
 import { useState } from "react"
 
 
