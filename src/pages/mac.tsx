@@ -5,7 +5,7 @@ import {CargoList} from '../components/cargo_list'
 import {ConfigSelect} from '../components/config_select'
 import {TankList} from '../components/tank_list'
 import {AirStore} from '../hooks/air_store'
-import {ConsoleLogger} from '../navigation/console_logger'
+import {Logger} from '../nav/logger'
 import {Category} from '../types/aircraftDeep'
 
 export const Mac = () => {
@@ -17,7 +17,7 @@ export const Mac = () => {
       <AddCustomCargo />
       <ConfigSelect />
       <TankList />
-      <ConsoleLogger />
+      <Logger />
       <CargoList
         category={[
           Category.Emergency,

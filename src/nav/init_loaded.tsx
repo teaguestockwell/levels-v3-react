@@ -4,9 +4,9 @@ import {Loading} from '../pages/loading'
 import {Offline} from '../pages/offline'
 import {getActionsAS} from '../hooks/air_store'
 import {getCargoSchema} from '../util'
-import {Dashboard} from './dashboard'
+import {SideNav} from './side_nav'
 
-export const InitLoadingWrapper = () => {
+export const InitLoaded = () => {
   const {status, data, hasRoles} = useUserAirs()
 
   if (data && hasRoles) {
@@ -14,7 +14,7 @@ export const InitLoadingWrapper = () => {
     const as = getActionsAS()
     as.setSelectedAir(initAir)
     as.setCargoSchema(getCargoSchema(initAir))
-    return <Dashboard />
+    return <SideNav />
   }
   if (data && !hasRoles) {
     return <AccessDenied />

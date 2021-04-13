@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {QueryClient, QueryClientProvider} from 'react-query'
-import {InitLoadingWrapper} from './navigation/init_loading_wrapper'
+import {InitLoaded} from './nav/init_loaded'
 import 'antd/dist/antd.css'
 
 // Create a client
@@ -10,7 +10,7 @@ const queryClient = new QueryClient()
 ReactDOM.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <InitLoadingWrapper />
+      <InitLoaded />
     </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById('root')

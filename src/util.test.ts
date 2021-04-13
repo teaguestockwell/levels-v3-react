@@ -21,8 +21,8 @@ describe('cut()', () =>
 
 describe('formatDate()', () =>
   it('will format dates', () => {
-    expect(util.formatDate(new Date('1995-12-17T03:24:00'))).toBe(
-      '1995-12-17 11:24 Zulu'
+    expect(util.formatDate(new Date('2020-04-13T00:00:00.000+08:00'))).toBe(
+      '2020-04-12 16:00 Zulu'
     )
   }))
 

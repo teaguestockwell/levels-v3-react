@@ -1,12 +1,14 @@
-FROM node:14.15.4
+FROM node:14.16.0
+
+ENV NODE_ENV production
 
 WORKDIR /app
-
-RUN npm i -g serve
 
 COPY . .
 
 RUN npx react-scripts build
+
+RUN npm i -g serve
 
 EXPOSE 8080
 

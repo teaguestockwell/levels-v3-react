@@ -8,7 +8,7 @@ import {Mac} from '../pages/mac'
 // last updated datetime display & complete refresh button
 // if pages are components rendered from selected page state: how can their individual state be persisted
 
-export const Dashboard = () => {
+export const SideNav = () => {
   const lastUpdated = formatDate(new Date(Date.now()))
   return (
     <>
