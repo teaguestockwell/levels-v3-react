@@ -3,21 +3,8 @@ import {useEffect} from 'react'
 import {Form, Input, Button} from 'antd'
 import {getSchema} from '../hooks/airStore'
 import {getActionsCS, getCargoAtUuid} from '../hooks/cargoStore'
-import {capitalizeFirst} from '../util'
+import {capitalizeFirst, rulesYupWrapper} from '../util'
 import debounce from 'lodash/debounce'
-
-const rulesYupWrapper = (fieldSchema: any): any[] => {
-  return [
-    {
-      validator: debounce((rule: any, value: any, callback: any) => {
-        fieldSchema
-          .validate(value)
-          .then(() => callback())
-          .catch((e: any) => callback(e))
-      }, 200),
-    },
-  ]
-}
 
 export const CargoForm = ({uuid}: {uuid: string}) => {
   const cargo = getCargoAtUuid(uuid)

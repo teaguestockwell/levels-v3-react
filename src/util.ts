@@ -4,6 +4,7 @@ import {AircraftDeep, Cargo, Category, Config, Tank} from './types/aircraftDeep'
 import {CargoString} from './types/cargoString'
 import {v4} from 'uuid'
 import {CargoCalculated, PerMac} from './types/perMac'
+import { debounce } from 'lodash'
 /** if string is > max length cut it and add ... */
 export const cut = (x: any): string => {
   return x.toString().length > Const.MAX_FORM_LENGTH
@@ -71,6 +72,19 @@ export const getCargoSchema = (air: AircraftDeep): CargoSchema => {
       qty: getQtySchema(),
     }),
   }
+}
+
+export const rulesYupWrapper = (fieldSchema: any): any[] => {
+  return [
+    {
+      validator: debounce((rule: any, value: any, callback: any) => {
+        fieldSchema
+          .validate(value)
+          .then(() => callback())
+          .catch((e: any) => callback(e))
+      }, 200),
+    },
+  ]
 }
 
 export const getCargoStringFromCargo = (
