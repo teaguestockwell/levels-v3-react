@@ -1,6 +1,6 @@
 import {render, fireEvent} from '@testing-library/react'
-import {AddCustomCargo} from './AddCustomCargo'
-import {CargoStore} from '../hooks/CargoStore'
+import {AddCustomCargo} from './add_custom_cargo'
+import {CargoStore} from '../hooks/cargo_store'
 
 describe('AddCustomCargo', () => {
   it('will render', () => {

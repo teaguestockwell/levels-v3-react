@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {mockAircraftsDeep} from './mockAircraftsDeep'
+import {mockAircraftsDeep} from './mock_aircrafts_deep'
 
 describe('Server', () => {
   it('should mock res from http://localhost:8080/fl-api/aircraft', async () => {

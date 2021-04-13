@@ -2,11 +2,11 @@ import {Button, Dropdown, Menu} from 'antd'
 import {Tank} from '../types/aircraftDeep'
 import {DownOutlined} from '@ant-design/icons'
 import {MenuInfo} from 'rc-menu/lib/interface'
-import {getActionsCS} from '../hooks/CargoStore'
+import {getActionsCS} from '../hooks/cargo_store'
 import {CargoString} from '../types/cargoString'
 import {useMemo, useState} from 'react'
 import {getCargoStringFromTank} from '../util'
-import {getAir} from '../hooks/AirStore'
+import {getAir} from '../hooks/air_store'
 
 const cs = getActionsCS()
 

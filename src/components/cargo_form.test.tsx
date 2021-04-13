@@ -1,9 +1,9 @@
 import {v4} from 'uuid'
-import {CargoStore} from '../hooks/CargoStore'
-import {renderWrapped, waitFor, fireEvent} from '../testUtils/RenderW'
+import {CargoStore} from '../hooks/cargo_store'
+import {renderWrapped, waitFor, fireEvent} from '../testUtils/render_wrapped'
 import {Category} from '../types/aircraftDeep'
 import {CargoString} from '../types/cargoString'
-import {CargoForm} from './CargoForm'
+import {CargoForm} from './cargo_form'
 import MatchMediaMock from 'jest-matchmedia-mock'
 
 let matchMedia
