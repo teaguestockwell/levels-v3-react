@@ -33,6 +33,8 @@ export const AddASelect = () => {
     cs.putCargos([{...newCargo, isValid}])
   }
 
+  //
+
   const menu = (
     <Menu onClick={onAddAddACargoClick}>
       <Menu.ItemGroup title="Steward">
