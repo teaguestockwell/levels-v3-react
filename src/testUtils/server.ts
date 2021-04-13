@@ -1,6 +1,6 @@
 import {setupServer} from 'msw/node'
 import {rest} from 'msw'
-import {mockAircraftDeepString} from './mockAircraftsDeep'
+import {mockAircraftDeepString} from './mock_aircrafts_deep'
 
 const endPoints = [
   rest.get('http://localhost:8080/fl-api/aircraft', (req, res, ctx) => {
