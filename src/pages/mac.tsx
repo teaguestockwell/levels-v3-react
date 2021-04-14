@@ -5,7 +5,7 @@ import {CargoList} from '../components/cargo_list'
 import {ConfigSelect} from '../components/config_select'
 import {TankList} from '../components/tank_list'
 import {AirStore} from '../hooks/air_store'
-import {Logger} from '../nav/logger'
+import {Logger} from '../testUtils/logger'
 import {Category} from '../types/aircraftDeep'
 
 export const Mac = () => {
