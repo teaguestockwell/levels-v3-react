@@ -69,6 +69,7 @@
     "npm-force-resolutions": "0.0.10"
   },
   "resolutions": {
-    "cssnano": "5.0.1"
+    "cssnano": "5.0.1",
+    "ssri": "8.0.1"
   }
 }
