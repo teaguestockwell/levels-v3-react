@@ -16,10 +16,11 @@
     "zustand": "^3.3.3"
   },
   "scripts": {
+    "preinstall": "npx npm-force-resolutions",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "test:unit": "react-scripts test",
+    "test": "react-scripts test --silent --coverage",
+    "test:unit": "react-scripts test --silent --coverage",
     "lint": "eslint . --ext js,jsx,ts,tsx",
     "coverage": "npm test -- --coverage",
     "eject": "react-scripts eject",
@@ -64,6 +65,10 @@
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "jest-matchmedia-mock": "^1.1.0",
-    "msw": "^0.28.1"
+    "msw": "^0.28.1",
+    "npm-force-resolutions": "0.0.10"
+  },
+  "resolutions": {
+    "cssnano": "5.0.1"
   }
 }
