@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {useEffect} from 'react'
+import {useEffect, useRef} from 'react'
 import {Form, Input, Button} from 'antd'
 import {getSchema} from '../hooks/air_store'
 import {getActionsCS, getCargoAtUuid} from '../hooks/cargo_store'
 import {capitalizeFirst, rulesYupWrapper} from '../util'
 import debounce from 'lodash/debounce'
 
+const cs = getActionsCS()
+
 export const CargoForm = ({uuid}: {uuid: string}) => {
-  const cargo = getCargoAtUuid(uuid)
-  // ref to form instance for initial validation
   const [form] = Form.useForm()
-  // non reactive state because parent component will remove on air change
-  const schema = getSchema() as any
-  // this state will never cause re-render because they are actions (functions)
-  const cs = getActionsCS()
+
+  // grab constant values from initial cargo => uuid, category, ok to use ref because form hook state overrides other vals
+  const cargo = useRef(getCargoAtUuid(uuid)).current
+  const schema = useRef(getSchema()).current as any
 
   // set init values and errors.
   // init value and validation inside store is handled in the methods that expose this form
@@ -22,26 +22,19 @@ export const CargoForm = ({uuid}: {uuid: string}) => {
     setTimeout(() => form.validateFields(), 1)
   }, [])
 
-  // TODO: change this to on submit or on close of modal form is inside of
   const onChange = () => {
-    //console.log('onChange')
-    //console.log(newCargo)
-    
-    const isValid = form
-    .getFieldsError()
-    .every((v: any) => v.errors.length === 0)
-    //console.log(isFormValid)
 
+    const isValid = form.getFieldsError().every((v: any) => v.errors.length === 0)
     const newCargo = {...cargo, ...form.getFieldsValue(), isValid}
     
     cs.putCargos([newCargo])
   }
 
-  const onDelete = () => {
+  const onDelete = () => { 
     cs.deleteCargos([cargo.uuid])
   }
 
-  const filterKeys:string[] = ['uuid','category','isValid','isOpen']
+  const filterKeys:string[] = ['uuid','category','isValid']
 
   return (
     <>
