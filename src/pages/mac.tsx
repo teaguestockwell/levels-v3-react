@@ -2,6 +2,7 @@ import {AddASelect} from '../components/add_a_select'
 import {AddCustomCargo} from '../components/add_custom_cargo'
 import {AirSelect} from '../components/air_select'
 import {CargoList} from '../components/cargo_list'
+import { ChartC } from '../components/chartC'
 import {ConfigSelect} from '../components/config_select'
 import {TankList} from '../components/tank_list'
 import {AirStore} from '../hooks/air_store'
@@ -12,6 +13,7 @@ export const Mac = () => {
   AirStore((s) => s.selectedAir)
   return (
     <>
+      <ChartC/>
       <AirSelect />
       <AddASelect />
       <AddCustomCargo />

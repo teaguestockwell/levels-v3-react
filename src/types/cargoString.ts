@@ -10,3 +10,9 @@ export interface CargoString {
   category: Category
   isValid: boolean
 }
+
+export interface ChartCCargoString {
+  weight: string
+  mom: string
+  isValid: boolean
+}

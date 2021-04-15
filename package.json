@@ -6,7 +6,7 @@
     "preinstall": "npx npm-force-resolutions",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test:unit": "react-scripts test --silent --coverage",
+    "test:unit": "react-scripts test --coverage",
     "lint": "eslint . --ext js,jsx,ts,tsx",
     "coverage": "npm test -- --coverage",
     "pretty": "npx prettier --write ."
@@ -56,6 +56,11 @@
       ">0.2%",
       "not dead",
       "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
     ]
   }
 }

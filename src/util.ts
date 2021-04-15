@@ -1,7 +1,7 @@
 import {Const} from './const'
 import * as yup from 'yup'
 import {AircraftDeep, Cargo, Category, Config, Tank} from './types/aircraftDeep'
-import {CargoString} from './types/cargoString'
+import {CargoString, ChartCCargoString} from './types/cargoString'
 import {v4} from 'uuid'
 import {CargoCalculated, PerMac} from './types/perMac'
 import { debounce } from 'lodash'
@@ -71,6 +71,33 @@ export const getCargoSchema = (air: AircraftDeep): CargoSchema => {
       fs: getFsSchema(),
       qty: getQtySchema(),
     }),
+  }
+}
+
+export const getChartCSchema = (air: AircraftDeep) => {
+  const getMom = () => yup
+  .number()
+  .typeError('this must be a number')
+  .required()
+  .positive()
+  .max(air.mom1)
+  .min(air.mom0)
+
+  const getWeight = () => yup
+  .number()
+  .typeError('this must be a number')
+  .required()
+  .positive()
+  .max(air.weight1)
+  .min(air.weight0)
+
+  return {
+    fullObjSchema: yup.object().shape({
+      mom: getMom(),
+      weight: getWeight(),
+    }),
+    mom: getMom(),
+    weight: getWeight(),
   }
 }
 
@@ -156,6 +183,31 @@ export const getCargoStringFromTank = (props: {
     qty: '1',
     category: Category.Tank,
     isValid: true,
+  }
+}
+
+export const getCargoStringFromChartC = (momMultiplier: number, chartC: ChartCCargoString, uuid:string): CargoString => {
+  let fs: string
+  
+  if(!chartC.isValid){
+    fs = '0'
+  }else{
+    fs = getFSofSimpleMoment({
+      simpleMom: Number(chartC.mom),
+      weightEA: Number(chartC.weight),
+      momMultiplier,
+      qty: 1,
+    }).toString()
+  }
+
+  return {
+    uuid,
+    name: 'Basic Aircraft',
+    weightEA: chartC.weight,
+    fs,
+    qty: '1',
+    category: Category.BasicAircraft,
+    isValid: chartC.isValid
   }
 }
 

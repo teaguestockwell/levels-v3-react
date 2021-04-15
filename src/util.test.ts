@@ -2,13 +2,14 @@ import {Const} from './const'
 import * as util from './util'
 import {mockAircraftsDeep} from './testUtils/mock_aircrafts_deep'
 import {Cargo, Category} from './types/aircraftDeep'
-import {CargoString} from './types/cargoString'
+import {CargoString, ChartCCargoString} from './types/cargoString'
 import {v4} from 'uuid'
 import {
   getCargoStringFromTank,
   getFSofSimpleMoment,
   getCargoString,
   getPerMac,
+  getCargoStringFromChartC,
 } from './util'
 
 describe('cut()', () =>
@@ -52,6 +53,61 @@ describe('getCargoSchema()', () =>
 
     expect(schema.fullObjSchema.isValidSync(validCargo)).toBe(true)
     expect(schema.fullObjSchema.isValidSync(inValidCargo)).toBe(false)
+  }))
+
+  describe('getChartCSchema()', () =>
+  it('will get schema from an aircraft', () => {
+    const schema = util.getChartCSchema(mockAircraftsDeep[0])
+
+    const valid = {
+      weight: '282000',
+      mom: '26000'
+    }
+
+    const inValid = {
+      weight: '1',
+      mom: '1'
+    }
+
+    expect(schema.fullObjSchema.isValidSync(valid)).toBe(true)
+    expect(schema.fullObjSchema.isValidSync(inValid)).toBe(false)
+  }))
+
+  describe('getCargoStringFromChartC()', () =>
+  it('will get cargo string', () => {
+    const momMultiplyer = 10000
+    const uuid = '0'
+
+    const valid:ChartCCargoString = {
+      weight: '282000',
+      mom: '26000',
+      isValid: true
+    }
+
+    const inValid:ChartCCargoString = {
+      weight: '1',
+      mom: '1',
+      isValid: false
+    }
+
+    expect(getCargoStringFromChartC(momMultiplyer,valid,uuid)).toStrictEqual({
+      category: "BasicAircraft",
+      fs: "921.9858156028369",
+      isValid: true,
+      name: "Basic Aircraft",
+      qty: "1",
+      uuid: "0",
+      weightEA: "282000",
+    })
+    expect(getCargoStringFromChartC(momMultiplyer,inValid,uuid)).toStrictEqual({
+      category: "BasicAircraft",
+      fs: "0",
+      isValid: false,
+      name: "Basic Aircraft",
+      qty: "1",
+      uuid: "0",
+      weightEA: "1",
+    })
   }))
 
 describe('getCargoStringFromCargo()', () =>
