@@ -9,19 +9,19 @@ import { debounce } from "lodash";
 import { CargoString } from "../types/cargoString";
 
 const cs = getActionsCS()
+const initCargo: CargoString = {
+  name: 'Basic Aircraft',
+  weightEA: '0',
+  fs: '0',
+  qty: '1',
+  isValid: false,
+  uuid: v4(),
+  category: Category.BasicAircraft 
+}
 
 export const ChartC = () => {
   const [form] = Form.useForm()
   
-  const initCargo: CargoString = useRef({
-    name: 'Basic Aircraft',
-    weightEA: '0',
-    fs: '0',
-    qty: '1',
-    isValid: false,
-    uuid: v4(),
-    category: Category.BasicAircraft 
-  }).current
   const schema = useRef(getChartCSchema(getAir())).current
   const air = useRef(getAir()).current
 
