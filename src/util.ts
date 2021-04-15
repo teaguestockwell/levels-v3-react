@@ -138,7 +138,6 @@ export const getCargoStringsFromConfig = (config: Config): CargoString[] => {
     qty: cc.qty.toString(),
     category: cc.cargo.category,
     isValid: false,
-    isOpen: false
   }))
 }
 export const getCargoString = (): CargoString => {

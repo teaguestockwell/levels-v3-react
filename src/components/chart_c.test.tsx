@@ -1,6 +1,6 @@
 import {CargoStore} from '../hooks/cargo_store'
 import {renderWrapped, waitFor, fireEvent} from '../testUtils/render_wrapped'
-import {ChartC} from './chartC'
+import {ChartC} from './chart_c'
 import MatchMediaMock from 'jest-matchmedia-mock'
 
 let matchMedia

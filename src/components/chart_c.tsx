@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Form, Input } from "antd";
 import { getAir } from "../hooks/air_store";
 import { useEffect, useRef } from 'react'
