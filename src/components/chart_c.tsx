@@ -6,6 +6,7 @@ import { getActionsCS } from "../hooks/cargo_store";
 import { Category } from "../types/aircraftDeep";
 import { debounce } from "lodash";
 import { CargoString } from "../types/cargoString";
+import { v4 } from "uuid";
 
 const cs = getActionsCS()
 const initCargo: CargoString = {
@@ -14,8 +15,7 @@ const initCargo: CargoString = {
   fs: '0',
   qty: '1',
   isValid: false,
-  // fortify flagging when using uuid?
-  uuid: 'ChartC',
+  uuid: v4(),
   category: Category.BasicAircraft 
 }
 
@@ -42,7 +42,7 @@ export const ChartC = () => {
 
   return (
       <>
-        <Form key={'chart c form'} form={form}>
+        <Form key={v4() + 'chart c form'} form={form}>
               <Form.Item
                 key={'chart c basic simple moment'}
                 name={'mom'}
