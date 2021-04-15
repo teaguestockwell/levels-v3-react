@@ -42,9 +42,8 @@ export const ChartC = () => {
 
   return (
       <>
-        <Form key={v4() + 'chart c form'} form={form}>
+        <Form key={air.aircraftId + '_chart_c_form'} form={form}>
               <Form.Item
-                key={'chart c basic simple moment'}
                 name={'mom'}
                 label={'Moment'}
                 colon={false}
@@ -58,7 +57,6 @@ export const ChartC = () => {
                 />
               </Form.Item>
               <Form.Item
-              key={'chart c weight'}
               name={`weight`}
               label={`Weight`}
               colon={false}

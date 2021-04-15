@@ -3,7 +3,6 @@ import {TankRow} from './tank_row'
 import {getActionsCS} from '../hooks/cargo_store'
 import {getCargoStringsFromAirTanks} from '../util'
 import {useEffect, useState} from 'react'
-import {v4} from 'uuid'
 import {CargoString} from '../types/cargoString'
 
 export const TankList = () => {
@@ -24,7 +23,7 @@ export const TankList = () => {
   return (
     <>
       {air.tanks.map((tank, i) => (
-        <TankRow tank={tank} cargoString={cargoStrings[i]} key={v4()} />
+        <TankRow tank={tank} cargoString={cargoStrings[i]} key={tank.tankId} />
       ))}
     </>
   )

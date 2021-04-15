@@ -26,7 +26,7 @@ export const TankRow = ({
     // override uuid
     const newCargoString = {
       ...getCargoStringFromTank({
-        idx: Number(menuInfo.key),
+        idx: Number(String(menuInfo.key).split(',')[0]),
         tank,
         momMultiplyer: getAir().momMultiplyer,
       }),
@@ -43,7 +43,7 @@ export const TankRow = ({
     () => (
       <Menu onClick={onClick}>
         {weights.map((lb, i) => (
-          <Menu.Item key={i}>{lb}</Menu.Item>
+          <Menu.Item key={i.toString() + ',' + tank.tankId}>{lb}</Menu.Item>
         ))}
       </Menu>
     ),

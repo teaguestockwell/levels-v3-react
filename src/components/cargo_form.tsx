@@ -43,7 +43,7 @@ export const CargoForm = ({uuid}: {uuid: string}) => {
           .filter((k) => !filterKeys.includes(k))
           .map((k) => (
             <Form.Item
-              key={k + 'form item'}
+              key={cargo.uuid + k + 'form_item'}
               name={`${k}`}
               label={`${capitalizeFirst(k)}`}
               colon={false}
