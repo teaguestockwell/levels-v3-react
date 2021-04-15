@@ -4,7 +4,6 @@ import { useEffect, useRef } from 'react'
 import { getCargoStringFromChartC, getChartCSchema, rulesYupWrapper } from "../util";
 import { getActionsCS } from "../hooks/cargo_store";
 import { Category } from "../types/aircraftDeep";
-import { v4 } from "uuid";
 import { debounce } from "lodash";
 import { CargoString } from "../types/cargoString";
 
@@ -15,7 +14,8 @@ const initCargo: CargoString = {
   fs: '0',
   qty: '1',
   isValid: false,
-  uuid: v4(),
+  // fortify flagging when using uuid?
+  uuid: 'ChartC',
   category: Category.BasicAircraft 
 }
 
