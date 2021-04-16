@@ -16,7 +16,6 @@ describe('ConfigSelect', () => {
     await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
 
     expect(CargoStore.getState().config.name).toBe('No Config')
-    expect(CargoStore.getState().configUuids.length).toBe(0)
     expect(CargoStore.getState().cargoMap.size).toBe(0)
 
     // when config is changed
@@ -29,7 +28,6 @@ describe('ConfigSelect', () => {
     // then
     await waitFor(() => {
       expect(CargoStore.getState().config.name).toBe('AE-1')
-      expect(CargoStore.getState().configUuids.length).not.toBe(0)
       expect(CargoStore.getState().cargoMap.size).not.toBe(0)
     })
   })
