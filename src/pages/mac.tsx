@@ -8,13 +8,13 @@ import { ChartC } from '../components/chart_c'
 import {ConfigSelect} from '../components/config_select'
 import { GetMacButton } from '../components/get_mac_button'
 import {TankList} from '../components/tank_list'
-import { useSelectedAirSideEffects } from '../hooks/air_store'
+import { useAirChangeStoreReset } from '../hooks/air_store'
 import {Logger} from '../testUtils/logger'
 import {Category} from '../types/aircraftDeep'
 
 
 export const Mac = () => {
- useSelectedAirSideEffects()
+ useAirChangeStoreReset()
 
   return (
     <>
