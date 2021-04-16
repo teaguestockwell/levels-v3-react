@@ -4,21 +4,15 @@ import {useUserAirs} from '../hooks/use_user_airs'
 import {AircraftDeep} from '../types/aircraftDeep'
 import {DownOutlined} from '@ant-design/icons'
 import {MenuInfo} from 'rc-menu/lib/interface'
-import {getActionsCS} from '../hooks/cargo_store'
-import {getCargoSchema} from '../util'
+
+const as = getActionsAS()
 
 export const AirSelect = () => {
-  const selectedAir = getAir()
-  const cs = getActionsCS()
-  const as = getActionsAS()
-
   const {data} = useUserAirs()
   const airMap = data as Map<number, AircraftDeep>
-
+  
   const onAirChange = (menuInfo: MenuInfo) => {
     const newAir = airMap.get(Number(menuInfo.key)) as AircraftDeep
-    cs.resetCargoStore()
-    as.setCargoSchema(getCargoSchema(newAir))
     as.setSelectedAir(newAir)
   }
 
@@ -33,7 +27,7 @@ export const AirSelect = () => {
   return (
     <Dropdown overlay={menu} trigger={['click']}>
       <Button>
-        {(selectedAir as AircraftDeep).name}
+        {getAir().name}
         <DownOutlined />
       </Button>
     </Dropdown>

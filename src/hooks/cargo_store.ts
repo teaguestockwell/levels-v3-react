@@ -6,11 +6,9 @@ export interface CargoStoreState extends State {
   // read
   cargoMap: Map<string, CargoString>
   config: Config
-  configUuids: string[]
 
   // update 1 config
   putConfig: (config: Config) => void
-  putConfigUuids: (uuids: string[]) => void
 
   // create | update n cargo
   putCargos: (cargos: CargoString[]) => void
@@ -33,10 +31,6 @@ export const CargoStore = create<CargoStoreState>((set) => ({
     set((state) => {
       state.config = config
     }),
-  putConfigUuids: (uuids) =>
-    set((state) => {
-      state.configUuids = uuids
-    }),
 
   // create | update n cargo
   putCargos: (cargos) =>
@@ -54,8 +48,6 @@ export const CargoStore = create<CargoStoreState>((set) => ({
     set((state) => {
       state.cargoMap.clear()
       state.config = Const.NO_CONFIG
-      state.configUuids = []
-      state.tankUuids = []
     }),
 }))
 
@@ -73,12 +65,11 @@ export const getCargoValidMap = () => CargoStore.getState().cargoValidMap
 export const getCargoMap = () => CargoStore.getState().cargoMap
 export const getCargoAtUuid = (uuid:string) => CargoStore.getState().cargoMap.get(uuid) as CargoString
 export const getConfig = () => CargoStore.getState().config
-export const getConfigUuids = () => CargoStore.getState().configUuids
 
 export const getActionsCS = () => {
   const state = CargoStore.getState()
   return {
-    putConfig: state.putConfig,
+    setConfig: state.putConfig,
     putConfigUuids: state.putConfigUuids,
     putCargos: state.putCargos,
     //putCargosIsValid: state.putCargosIsValid,

@@ -1,9 +1,9 @@
 import {Button, Dropdown, Menu} from 'antd'
 import {getAir, getSchema} from '../hooks/air_store'
-import {getActionsCS, getConfigUuids, useConfigName} from '../hooks/cargo_store'
+import {CargoStore, getActionsCS, useConfigName} from '../hooks/cargo_store'
 import {DownOutlined} from '@ant-design/icons'
 import {MenuInfo} from 'rc-menu/lib/interface'
-import {Config} from '../types/aircraftDeep'
+import {Category, Config} from '../types/aircraftDeep'
 import {getCargoStringsFromConfig} from '../util'
 import {Const} from '../const'
 
@@ -13,6 +13,7 @@ export const ConfigSelect = () => {
   const cs = getActionsCS()
   const selectedAir = getAir()
   const objSchema = getSchema().fullObjSchema
+  const configEnums = [Category.Emergency, Category.Extra, Category.Steward]
 
   const onConfigChange = async (menuInfo: MenuInfo) => {
     //console.log('onConfigChange')
@@ -34,14 +35,18 @@ export const ConfigSelect = () => {
       .map(c => ({...c, isValid: objSchema.isValidSync(c)}))
 
     // remove old config from cargo store
-    cs.deleteCargos(getConfigUuids())
+    cs.deleteCargos(
+      Array.from(
+        CargoStore.getState().cargoMap.values()).filter(
+          c => configEnums.includes(c.category)
+        ).map(c => c.uuid)
+    )
 
     // add new config
     cs.putCargos(newCargos)
 
     // update selected
-    cs.putConfigUuids(newCargos.map(c => c.uuid))
-    cs.putConfig(newConfig)
+    cs.setConfig(newConfig)
   }
 
   const menu = (

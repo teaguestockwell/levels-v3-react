@@ -2,31 +2,20 @@ import { Form, Input } from "antd";
 import { getAir } from "../hooks/air_store";
 import { useEffect, useRef } from 'react'
 import { getCargoStringFromChartC, getChartCSchema, rulesYupWrapper } from "../util";
-import { getActionsCS } from "../hooks/cargo_store";
+import { getActionsCS, getCargoMap } from "../hooks/cargo_store";
 import { Category } from "../types/aircraftDeep";
 import { debounce } from "lodash";
-import { CargoString } from "../types/cargoString";
-import { v4 } from "uuid";
 
 const cs = getActionsCS()
-const initCargo: CargoString = {
-  name: 'Basic Aircraft',
-  weightEA: '0',
-  fs: '0',
-  qty: '1',
-  isValid: false,
-  uuid: v4(),
-  category: Category.BasicAircraft 
-}
 
 export const ChartC = () => {
   const [form] = Form.useForm()
   
   const schema = useRef(getChartCSchema(getAir())).current
   const air = useRef(getAir()).current
+  const initCargo = useRef(Array.from(getCargoMap().values()).filter(c => c.category === Category.BasicAircraft)).current[0]
 
   useEffect(() => {
-    cs.putCargos([initCargo])
     form.setFieldsValue({mom: '', weight: ''})
     setTimeout(() => form.validateFields(), 1)
   }, [])

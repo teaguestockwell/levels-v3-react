@@ -3,7 +3,6 @@ import {AccessDenied} from '../pages/access_denied'
 import {Loading} from '../pages/loading'
 import {Offline} from '../pages/offline'
 import {getActionsAS} from '../hooks/air_store'
-import {getCargoSchema} from '../util'
 import {SideNav} from './side_nav'
 
 export const InitLoaded = () => {
@@ -15,9 +14,7 @@ export const InitLoaded = () => {
 
   if (data && hasRoles) {
     const initAir = data.values().next().value
-    const as = getActionsAS()
-    as.setSelectedAir(initAir)
-    as.setCargoSchema(getCargoSchema(initAir))
+    getActionsAS().setSelectedAir(initAir)
     return <SideNav />
   }
   

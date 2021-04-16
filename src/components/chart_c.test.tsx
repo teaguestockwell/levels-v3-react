@@ -2,8 +2,22 @@ import {CargoStore} from '../hooks/cargo_store'
 import {renderWrapped, waitFor, fireEvent} from '../testUtils/render_wrapped'
 import {ChartC} from './chart_c'
 import MatchMediaMock from 'jest-matchmedia-mock'
+import { v4 } from 'uuid'
+import { Category } from '../types/aircraftDeep'
 
 let matchMedia
+
+const putChartC = () => CargoStore.getState().putCargos([
+  {
+    name: 'Basic Aircraft',
+    weightEA: '0', 
+    fs: '0',
+    qty: '1',
+    isValid: false, 
+    uuid: v4(),
+    category: Category.BasicAircraft 
+  },
+])
 
 describe('ChartC', () => {
   beforeAll(() => {
@@ -12,18 +26,21 @@ describe('ChartC', () => {
   })
 
   it('will render', async () => {
+    putChartC()
     
     const {getByText, queryAllByText} = renderWrapped(
       <ChartC/>
     )
     await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
-
-    expect(getByText('Weight')).toBeInTheDocument()
-    expect(Array.from(CargoStore.getState().cargoMap.entries()).filter(x => x[1].name === 'Basic Aircraft').length).toBe(1)
+    
+    await waitFor(() => {
+      expect(getByText('Weight')).toBeInTheDocument()
+    })
     
   })
-
+ 
   it('will update CargoStore', async () => {
+    putChartC()
     // given
     const ct = renderWrapped(<ChartC/>)
     await waitFor(() =>

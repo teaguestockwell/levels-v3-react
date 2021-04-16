@@ -29,19 +29,4 @@ describe('TankList', () => {
     expect(getByText('Tank 3 ER: 250')).toBeInTheDocument()
     expect(getByText('Tank 4: 250')).toBeInTheDocument()
   })
-
-  it('will put all tanks into cargoStore on first render', async () => {
-    // given
-    getActionsAS().setSelectedAir(air)
-    CargoStore.getState().resetCargoStore()
-    expect(CargoStore.getState().cargoMap.size).toBe(0)
-    const {getByText, queryAllByText, debug} = renderWrapped(<TankList />)
-    await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
-
-    expect(
-      Array.from(CargoStore.getState().cargoMap.entries()).map<string>(
-        (x) => x[1].weightEA
-      )
-    ).toStrictEqual(['250', '250', '250', '250'])
-  })
 })

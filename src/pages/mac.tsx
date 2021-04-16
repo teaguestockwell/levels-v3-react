@@ -1,3 +1,5 @@
+//import { v4 } from 'uuv4()'
+import { v4 } from 'uuid'
 import {AddASelect} from '../components/add_a_select'
 import {AddCustomCargo} from '../components/add_custom_cargo'
 import {AirSelect} from '../components/air_select'
@@ -6,23 +8,29 @@ import { ChartC } from '../components/chart_c'
 import {ConfigSelect} from '../components/config_select'
 import { GetMacButton } from '../components/get_mac_button'
 import {TankList} from '../components/tank_list'
-import {AirStore} from '../hooks/air_store'
+import { useSelectedAirSideEffects } from '../hooks/air_store'
 import {Logger} from '../testUtils/logger'
 import {Category} from '../types/aircraftDeep'
 
+
 export const Mac = () => {
-  AirStore((s) => s.selectedAir)
+ useSelectedAirSideEffects()
+
   return (
     <>
-      <AirSelect />
-      <AddASelect />
-      <AddCustomCargo />
-      <ConfigSelect />
-      <GetMacButton />
-      <TankList />
       <Logger />
-      <ChartC/>
+
+      <AirSelect />
+      <AddASelect key={v4()} />
+      <AddCustomCargo key={v4()}/>
+      <ConfigSelect key={v4()}/>
+      <GetMacButton key={v4()}/>
+
+      <TankList key={v4()}/>
+      <ChartC key={v4()}/>
+
       <CargoList
+        key={v4()}
         category={[
           Category.Emergency,
           Category.Extra,

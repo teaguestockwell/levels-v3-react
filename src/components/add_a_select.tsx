@@ -6,17 +6,18 @@ import {getAir, getSchema} from '../hooks/air_store'
 import {MenuInfo} from 'rc-menu/lib/interface'
 import {getCargoStringFromCargo} from '../util'
 
-export const AddASelect = () => {
-  const cs = getActionsCS()
-  const selectedAir = getAir()
+const cs = getActionsCS()
 
-  const stewardCargo = selectedAir.cargos.filter(
+export const AddASelect = () => {
+  const air = getAir()
+
+  const stewardCargo = air.cargos.filter(
     (x) => x.category === Category.Steward
   )
-  const emergencyCargo = selectedAir.cargos.filter(
+  const emergencyCargo = air.cargos.filter(
     (x) => x.category === Category.Emergency
   )
-  const extraCargo = selectedAir.cargos.filter(
+  const extraCargo = air.cargos.filter(
     (x) => x.category === Category.Extra
   )
 
@@ -24,16 +25,13 @@ export const AddASelect = () => {
 
   const onAddAddACargoClick = (menuInfo: MenuInfo) => {
     const selectedId = Number(menuInfo.key)
-    const oldCargo = selectedAir.cargos.find(
+    const oldCargo = air.cargos.find(
       (x) => x.cargoId === selectedId
     ) as Cargo
     const newCargo = getCargoStringFromCargo(oldCargo, 1)
     const isValid = schema.isValidSync(newCargo)
-    //cs.putCargosIsValid(new Map([[newCargo.uuid, isValid]]))
     cs.putCargos([{...newCargo, isValid}])
   }
-
-  //
 
   const menu = (
     <Menu onClick={onAddAddACargoClick}>

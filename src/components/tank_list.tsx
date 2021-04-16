@@ -1,24 +1,11 @@
-import {getAir} from '../hooks/air_store'
 import {TankRow} from './tank_row'
-import {getActionsCS} from '../hooks/cargo_store'
-import {getCargoStringsFromAirTanks} from '../util'
-import {useEffect, useState} from 'react'
-import {CargoString} from '../types/cargoString'
+import {getCargoMap} from '../hooks/cargo_store'
+import { Category } from '../types/aircraftDeep'
+import { getAir } from '../hooks/air_store'
 
 export const TankList = () => {
   const air = getAir()
-  const cs = getActionsCS()
-  const [cargoStrings, setCargoStrings] = useState<CargoString[]>([])
-
-  useEffect(() => {
-    const newCargoStrings = getCargoStringsFromAirTanks(air)
-
-    // put new tanks
-    cs.putCargos(newCargoStrings)
-
-    // set state
-    setCargoStrings(newCargoStrings)
-  }, [air.name])
+  const cargoStrings = Array.from(getCargoMap().values()).filter(c => c.category === Category.Tank)
 
   return (
     <>
