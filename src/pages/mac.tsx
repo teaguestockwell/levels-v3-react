@@ -7,6 +7,7 @@ import {CargoList} from '../components/cargo_list'
 import { ChartC } from '../components/chart_c'
 import {ConfigSelect} from '../components/config_select'
 import { GetMacButton } from '../components/get_mac_button'
+import { PerMac } from '../components/per_mac'
 import {TankList} from '../components/tank_list'
 import { useAirChangeStoreReset } from '../hooks/air_store'
 import {Logger} from '../testUtils/logger'
@@ -19,6 +20,7 @@ export const Mac = () => {
   return (
     <>
       <Logger />
+      <PerMac/>
 
       <AirSelect />
       <AddASelect key={v4()} />
