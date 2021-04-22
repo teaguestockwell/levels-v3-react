@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import {QueryClient, QueryClientProvider} from 'react-query'
 import {InitLoaded} from './nav/init_loaded'
 import 'antd/dist/antd.css'
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 // Create a client
 const queryClient = new QueryClient()
@@ -15,3 +16,5 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 )
+
+serviceWorkerRegistration.register();
