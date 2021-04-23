@@ -4,7 +4,7 @@ import {AircraftDeep, Cargo, Category, Config, Tank} from './types/aircraftDeep'
 import {CargoString, ChartCCargoString} from './types/cargoString'
 import {v4} from 'uuid'
 import {CargoCalculated, PerMac} from './types/perMac'
-import { debounce } from 'lodash'
+import {debounce} from 'lodash'
 /** if string is > max length cut it and add ... */
 export const cut = (x: any): string => {
   return x.toString().length > Const.MAX_FORM_LENGTH
@@ -75,21 +75,23 @@ export const getCargoSchema = (air: AircraftDeep): CargoSchema => {
 }
 
 export const getChartCSchema = (air: AircraftDeep) => {
-  const getMom = () => yup
-  .number()
-  .typeError('this must be a number')
-  .required()
-  .positive()
-  .max(air.mom1)
-  .min(air.mom0)
+  const getMom = () =>
+    yup
+      .number()
+      .typeError('this must be a number')
+      .required()
+      .positive()
+      .max(air.mom1)
+      .min(air.mom0)
 
-  const getWeight = () => yup
-  .number()
-  .typeError('this must be a number')
-  .required()
-  .positive()
-  .max(air.weight1)
-  .min(air.weight0)
+  const getWeight = () =>
+    yup
+      .number()
+      .typeError('this must be a number')
+      .required()
+      .positive()
+      .max(air.weight1)
+      .min(air.weight0)
 
   return {
     fullObjSchema: yup.object().shape({
@@ -185,12 +187,16 @@ export const getCargoStringFromTank = (props: {
   }
 }
 
-export const getCargoStringFromChartC = (momMultiplier: number, chartC: ChartCCargoString, uuid:string): CargoString => {
+export const getCargoStringFromChartC = (
+  momMultiplier: number,
+  chartC: ChartCCargoString,
+  uuid: string
+): CargoString => {
   let fs: string
-  
-  if(!chartC.isValid){
+
+  if (!chartC.isValid) {
     fs = '0'
-  }else{
+  } else {
     fs = getFSofSimpleMoment({
       simpleMom: Number(chartC.mom),
       weightEA: Number(chartC.weight),
@@ -206,7 +212,7 @@ export const getCargoStringFromChartC = (momMultiplier: number, chartC: ChartCCa
     fs,
     qty: '1',
     category: Category.BasicAircraft,
-    isValid: chartC.isValid
+    isValid: chartC.isValid,
   }
 }
 
@@ -286,4 +292,8 @@ export const getPerMac = (
   }
 }
 
-export const getQueryString = (obj: any) => Object.keys(obj).filter(k => k.includes('Id')).map(k => `${k}=${obj[k]}`).join('&');
+export const getQueryString = (obj: any) =>
+  Object.keys(obj)
+    .filter((k) => k.includes('Id'))
+    .map((k) => `${k}=${obj[k]}`)
+    .join('&')

@@ -61,10 +61,12 @@ describe('CargoForm', () => {
         weightEA: '100',
         fs: '100',
         qty: '1',
-        isValid: true
+        isValid: true,
       })
 
-      expect((CargoStore.getState().cargoMap.get(cargo.uuid) as CargoString).isValid).toBe(true)
+      expect(
+        (CargoStore.getState().cargoMap.get(cargo.uuid) as CargoString).isValid
+      ).toBe(true)
     })
   })
 })

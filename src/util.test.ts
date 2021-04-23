@@ -39,7 +39,7 @@ describe('getCargoSchema()', () =>
       fs: '100',
       qty: '1',
       category: Category.User,
-      isValid: true
+      isValid: true,
     }
 
     const inValidCargo: CargoString = {
@@ -49,73 +49,74 @@ describe('getCargoSchema()', () =>
       fs: '100',
       qty: '1',
       category: Category.Emergency,
-      isValid: false
+      isValid: false,
     }
 
     expect(schema.fullObjSchema.isValidSync(validCargo)).toBe(true)
     expect(schema.fullObjSchema.isValidSync(inValidCargo)).toBe(false)
   }))
 
-  describe('getQueryString()', () => {
-    it('filters keys that contain id to make a query string', () => {
-      const config = mockAircraftsDeep[0].configs[0]
-      expect(getQueryString(config)).toBe('aircraftId=1&configId=1')
-
-    })
+describe('getQueryString()', () => {
+  it('filters keys that contain id to make a query string', () => {
+    const config = mockAircraftsDeep[0].configs[0]
+    expect(getQueryString(config)).toBe('aircraftId=1&configId=1')
   })
+})
 
-  describe('getChartCSchema()', () =>
+describe('getChartCSchema()', () =>
   it('will get schema from an aircraft', () => {
     const schema = util.getChartCSchema(mockAircraftsDeep[0])
 
     const valid = {
       weight: '282000',
-      mom: '26000'
+      mom: '26000',
     }
 
     const inValid = {
       weight: '1',
-      mom: '1'
+      mom: '1',
     }
 
     expect(schema.fullObjSchema.isValidSync(valid)).toBe(true)
     expect(schema.fullObjSchema.isValidSync(inValid)).toBe(false)
   }))
 
-  describe('getCargoStringFromChartC()', () =>
+describe('getCargoStringFromChartC()', () =>
   it('will get cargo string', () => {
     const momMultiplyer = 10000
     const uuid = '0'
 
-    const valid:ChartCCargoString = {
+    const valid: ChartCCargoString = {
       weight: '282000',
       mom: '26000',
-      isValid: true
+      isValid: true,
     }
 
-    const inValid:ChartCCargoString = {
+    const inValid: ChartCCargoString = {
       weight: '1',
       mom: '1',
-      isValid: false
+      isValid: false,
     }
 
-    expect(getCargoStringFromChartC(momMultiplyer,valid,uuid)).toStrictEqual({
-      category: "BasicAircraft",
-      fs: "921.9858156028369",
+    expect(getCargoStringFromChartC(momMultiplyer, valid, uuid)).toStrictEqual({
+      category: 'BasicAircraft',
+      fs: '921.9858156028369',
       isValid: true,
-      name: "Basic Aircraft",
-      qty: "1",
-      uuid: "0",
-      weightEA: "282000",
+      name: 'Basic Aircraft',
+      qty: '1',
+      uuid: '0',
+      weightEA: '282000',
     })
-    expect(getCargoStringFromChartC(momMultiplyer,inValid,uuid)).toStrictEqual({
-      category: "BasicAircraft",
-      fs: "0",
+    expect(
+      getCargoStringFromChartC(momMultiplyer, inValid, uuid)
+    ).toStrictEqual({
+      category: 'BasicAircraft',
+      fs: '0',
       isValid: false,
-      name: "Basic Aircraft",
-      qty: "1",
-      uuid: "0",
-      weightEA: "1",
+      name: 'Basic Aircraft',
+      qty: '1',
+      uuid: '0',
+      weightEA: '1',
     })
   }))
 
@@ -184,7 +185,7 @@ describe('getCargoStringFromTank()', () =>
       qty: '1',
       uuid: '0',
       category: Category.Tank,
-      isValid: true
+      isValid: true,
     })
   }))
 
@@ -199,7 +200,7 @@ describe('getPerMac', () => {
         fs: '922',
         qty: '1',
         category: Category.BasicAircraft,
-        isValid: true
+        isValid: true,
       },
       {
         uuid: '1',
@@ -208,7 +209,7 @@ describe('getPerMac', () => {
         fs: '1120', // = 28 simple mom * 10,000 simple moment modifier / 250
         qty: '1',
         category: Category.Tank,
-        isValid: true
+        isValid: true,
       },
       {
         uuid: '2',
@@ -217,7 +218,7 @@ describe('getPerMac', () => {
         fs: '797.281553398', // = 2053 simple mom * 10,000 simple moment modifier / 25750
         qty: '1',
         category: Category.Tank,
-        isValid: true
+        isValid: true,
       },
       {
         uuid: '3',
@@ -226,7 +227,7 @@ describe('getPerMac', () => {
         fs: '844.44444444444444', // = 380 simple mom * 10,000 simple moment modifier / 4500
         qty: '1',
         category: Category.Tank,
-        isValid: true
+        isValid: true,
       },
       {
         uuid: '4',
@@ -235,7 +236,7 @@ describe('getPerMac', () => {
         fs: '989.387755102', // = 3,636 simple mom * 10,000 simple moment modifier / 36750
         qty: '1',
         category: Category.Tank,
-        isValid: true
+        isValid: true,
       },
     ]
 
@@ -263,7 +264,7 @@ describe('getPerMac', () => {
           weightTotal: '282000.00',
           momentTotal: '260004000.00',
           simpleMomentTotal: '26000.40',
-          isValid: true
+          isValid: true,
         },
         {
           uuid: '1',
@@ -277,7 +278,7 @@ describe('getPerMac', () => {
           weightTotal: '250.00',
           momentTotal: '280000.00',
           simpleMomentTotal: '28.00',
-          isValid: true
+          isValid: true,
         },
         {
           uuid: '2',
@@ -291,7 +292,7 @@ describe('getPerMac', () => {
           weightTotal: '25750.00',
           momentTotal: '20530000.00',
           simpleMomentTotal: '2053.00',
-          isValid: true
+          isValid: true,
         },
         {
           uuid: '3',
@@ -305,7 +306,7 @@ describe('getPerMac', () => {
           weightTotal: '4500.00',
           momentTotal: '3800000.00',
           simpleMomentTotal: '380.00',
-          isValid: true
+          isValid: true,
         },
         {
           uuid: '4',
@@ -319,7 +320,7 @@ describe('getPerMac', () => {
           weightTotal: '36750.00',
           momentTotal: '36360000.00',
           simpleMomentTotal: '3636.00',
-          isValid: true
+          isValid: true,
         },
       ],
     })

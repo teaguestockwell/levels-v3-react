@@ -3,9 +3,12 @@ import {useQuery} from 'react-query'
 import {AircraftDeep} from '../types/aircraftDeep'
 
 const getNAircraft = async () => {
-  const aircrafts: AircraftDeep[] = (await axios.get(process.env.REACT_APP_API_BASE_URL + 'aircraft')).data
-  return new Map<number, AircraftDeep>(aircrafts.map(air => [air.aircraftId,air]))
-
+  const aircrafts: AircraftDeep[] = (
+    await axios.get(process.env.REACT_APP_API_BASE_URL + 'aircraft')
+  ).data
+  return new Map<number, AircraftDeep>(
+    aircrafts.map((air) => [air.aircraftId, air])
+  )
 
   // TODO: add call to /general to get highest role.
   // Put that into ret obj so dashboard can choose to display admin button

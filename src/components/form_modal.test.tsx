@@ -2,8 +2,8 @@ import {act, fireEvent, waitFor} from '@testing-library/react'
 import {FormModal} from './form_modal'
 import {renderWrapped} from '../testUtils/render_wrapped'
 import {CargoStore} from '../hooks/cargo_store'
-import { Category } from '../types/aircraftDeep'
-import { CargoString } from '../types/cargoString'
+import {Category} from '../types/aircraftDeep'
+import {CargoString} from '../types/cargoString'
 import MatchMediaMock from 'jest-matchmedia-mock'
 
 const cargo: CargoString = {
@@ -13,7 +13,7 @@ const cargo: CargoString = {
   uuid: '0',
   category: Category.User,
   fs: '1120',
-  isValid: true
+  isValid: true,
 }
 
 describe('ConfigSelect', () => {
@@ -26,7 +26,7 @@ describe('ConfigSelect', () => {
 
   it('will render', async () => {
     CargoStore.getState().putCargos([cargo])
-    const {getByText, queryAllByText} = renderWrapped(<FormModal uuid={'0'}/>)
+    const {getByText, queryAllByText} = renderWrapped(<FormModal uuid={'0'} />)
     await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
     expect(getByText('1 EA cargo')).toBeInTheDocument()
   })
@@ -34,8 +34,10 @@ describe('ConfigSelect', () => {
   it('will open a modal when clicked', async () => {
     // given
     CargoStore.getState().putCargos([cargo])
-    const ct = renderWrapped(<FormModal uuid={'0'}/>)
-    await waitFor(() => expect(ct.queryAllByText('Loading Test').length).toBe(0))
+    const ct = renderWrapped(<FormModal uuid={'0'} />)
+    await waitFor(() =>
+      expect(ct.queryAllByText('Loading Test').length).toBe(0)
+    )
 
     // when button is clicked
     fireEvent.click(ct.getByText('1 EA cargo'))
@@ -43,28 +45,33 @@ describe('ConfigSelect', () => {
   })
 
   it('will update button text on state change', async () => {
-      // given
-      CargoStore.getState().putCargos([cargo])
-      const ct = renderWrapped(<FormModal uuid={'0'}/>)
-      await waitFor(() => expect(ct.queryAllByText('Loading Test').length).toBe(0))
-      // valid icon on button
-      expect(ct.queryAllByLabelText('check-circle').length).toBe(1)
-      // invalid icon ! on button
-      expect(ct.queryAllByLabelText('close-circle').length).toBe(0)
-      
-  
-      // when form is changed
-      act(() => CargoStore.getState().putCargos([{...cargo, name: 'new name', qty: '0', isValid: false}]))
+    // given
+    CargoStore.getState().putCargos([cargo])
+    const ct = renderWrapped(<FormModal uuid={'0'} />)
+    await waitFor(() =>
+      expect(ct.queryAllByText('Loading Test').length).toBe(0)
+    )
+    // valid icon on button
+    expect(ct.queryAllByLabelText('check-circle').length).toBe(1)
+    // invalid icon ! on button
+    expect(ct.queryAllByLabelText('close-circle').length).toBe(0)
 
-      // then
-      await waitFor(() => {
-        // name and qty will update on button
-        expect(ct.queryAllByText('0 EA new name').length).toBe(1)
- 
-        // valid icon ! on button
-        expect(ct.queryAllByLabelText('check-circle').length).toBe(0)
-        // invalid icon on button
-        expect(ct.queryAllByLabelText('close-circle').length).toBe(1)
-      })
+    // when form is changed
+    act(() =>
+      CargoStore.getState().putCargos([
+        {...cargo, name: 'new name', qty: '0', isValid: false},
+      ])
+    )
+
+    // then
+    await waitFor(() => {
+      // name and qty will update on button
+      expect(ct.queryAllByText('0 EA new name').length).toBe(1)
+
+      // valid icon ! on button
+      expect(ct.queryAllByLabelText('check-circle').length).toBe(0)
+      // invalid icon on button
+      expect(ct.queryAllByLabelText('close-circle').length).toBe(1)
+    })
   })
 })

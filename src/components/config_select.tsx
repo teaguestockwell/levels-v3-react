@@ -32,14 +32,13 @@ export const ConfigSelect = () => {
     // get an array of cargoStrings from that config
     const newCargos = getCargoStringsFromConfig(newConfig)
       // validate em
-      .map(c => ({...c, isValid: objSchema.isValidSync(c)}))
+      .map((c) => ({...c, isValid: objSchema.isValidSync(c)}))
 
     // remove old config from cargo store
     cs.deleteCargos(
-      Array.from(
-        CargoStore.getState().cargoMap.values()).filter(
-          c => configEnums.includes(c.category)
-        ).map(c => c.uuid)
+      Array.from(CargoStore.getState().cargoMap.values())
+        .filter((c) => configEnums.includes(c.category))
+        .map((c) => c.uuid)
     )
 
     // add new config

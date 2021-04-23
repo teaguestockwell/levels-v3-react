@@ -23,18 +23,19 @@ export const CargoForm = ({uuid}: {uuid: string}) => {
   }, [])
 
   const onChange = () => {
-
-    const isValid = form.getFieldsError().every((v: any) => v.errors.length === 0)
+    const isValid = form
+      .getFieldsError()
+      .every((v: any) => v.errors.length === 0)
     const newCargo = {...cargo, ...form.getFieldsValue(), isValid}
-    
+
     cs.putCargos([newCargo])
   }
 
-  const onDelete = () => { 
+  const onDelete = () => {
     cs.deleteCargos([cargo.uuid])
   }
 
-  const filterKeys:string[] = ['uuid','category','isValid']
+  const filterKeys: string[] = ['uuid', 'category', 'isValid']
 
   return (
     <>

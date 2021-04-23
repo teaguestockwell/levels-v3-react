@@ -1,4 +1,4 @@
-import { QueryClient, QueryClientProvider } from 'react-query'
+import {QueryClient, QueryClientProvider} from 'react-query'
 import {render, waitFor} from '@testing-library/react'
 import {InitLoaded} from './init_loaded'
 import MatchMediaMock from 'jest-matchmedia-mock'
@@ -12,10 +12,12 @@ describe('InitLoaded', () => {
     const queryClient = new QueryClient()
     const ct = render(
       <QueryClientProvider client={queryClient}>
-        <InitLoaded/>
+        <InitLoaded />
       </QueryClientProvider>
-    ) 
-      await waitFor(() => expect(ct.queryAllByText('Loading Test').length).toBe(0))
-      await waitFor(() => expect(ct.getByText('Tank 1: 250')).toBeInTheDocument())
+    )
+    await waitFor(() =>
+      expect(ct.queryAllByText('Loading Test').length).toBe(0)
+    )
+    await waitFor(() => expect(ct.getByText('Tank 1: 250')).toBeInTheDocument())
   })
 })

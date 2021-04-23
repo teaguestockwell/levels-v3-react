@@ -11,23 +11,17 @@ const cs = getActionsCS()
 export const AddASelect = () => {
   const air = getAir()
 
-  const stewardCargo = air.cargos.filter(
-    (x) => x.category === Category.Steward
-  )
+  const stewardCargo = air.cargos.filter((x) => x.category === Category.Steward)
   const emergencyCargo = air.cargos.filter(
     (x) => x.category === Category.Emergency
   )
-  const extraCargo = air.cargos.filter(
-    (x) => x.category === Category.Extra
-  )
+  const extraCargo = air.cargos.filter((x) => x.category === Category.Extra)
 
   const schema = getSchema().fullObjSchema
 
   const onAddAddACargoClick = (menuInfo: MenuInfo) => {
     const selectedId = Number(menuInfo.key)
-    const oldCargo = air.cargos.find(
-      (x) => x.cargoId === selectedId
-    ) as Cargo
+    const oldCargo = air.cargos.find((x) => x.cargoId === selectedId) as Cargo
     const newCargo = getCargoStringFromCargo(oldCargo, 1)
     const isValid = schema.isValidSync(newCargo)
     cs.putCargos([{...newCargo, isValid}])

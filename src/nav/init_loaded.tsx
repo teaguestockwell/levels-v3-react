@@ -6,20 +6,22 @@ import {getActionsAS} from '../hooks/air_store'
 import {SideNav} from './side_nav'
 
 export const InitLoaded = () => {
-  const {
-    status,
-    data,
-    hasRoles
-  } = useUserAirs()
+  const {status, data, hasRoles} = useUserAirs()
 
   if (data && hasRoles) {
     const initAir = data.values().next().value
     getActionsAS().setSelectedAir(initAir)
     return <SideNav />
   }
-  
-  if (data && !hasRoles) {return <AccessDenied />}
-  if (status === 'loading') {return <Loading />}
-  if (status === 'error') {return <Offline />}
+
+  if (data && !hasRoles) {
+    return <AccessDenied />
+  }
+  if (status === 'loading') {
+    return <Loading />
+  }
+  if (status === 'error') {
+    return <Offline />
+  }
   return <div>Unhandled State</div>
 }

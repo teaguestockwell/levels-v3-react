@@ -10,7 +10,7 @@ const as = getActionsAS()
 export const AirSelect = () => {
   const {data} = useUserAirs()
   const airMap = data as Map<number, AircraftDeep>
-  
+
   const onAirChange = (menuInfo: MenuInfo) => {
     const newAir = airMap.get(Number(menuInfo.key)) as AircraftDeep
     as.setSelectedAir(newAir)

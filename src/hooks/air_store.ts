@@ -1,8 +1,8 @@
-import { v4 } from 'uuid'
+import {v4} from 'uuid'
 import create, {State} from 'zustand'
 import {AircraftDeep, Category} from '../types/aircraftDeep'
 import {CargoSchema, getCargoSchema, getCargoStringsFromAirTanks} from '../util'
-import { getActionsCS } from './cargo_store'
+import {getActionsCS} from './cargo_store'
 export interface AirStoreState extends State {
   selectedAir: AircraftDeep | undefined
   cargoSchema: CargoSchema | undefined
@@ -50,8 +50,11 @@ export const useAirChangeStoreReset = () => {
   const as = getActionsAS()
 
   // when a new aircraft is selected
-  const air = AirStore(s1 => s1.selectedAir, (s1,s2) => s1?.aircraftId === s2?.aircraftId) as AircraftDeep
-  
+  const air = AirStore(
+    (s1) => s1.selectedAir,
+    (s1, s2) => s1?.aircraftId === s2?.aircraftId
+  ) as AircraftDeep
+
   // then
   // clear all cargos and remove config
   cs.resetCargoStore()
@@ -69,12 +72,12 @@ export const useAirChangeStoreReset = () => {
       qty: '1',
       isValid: false,
       uuid: v4(),
-      category: Category.BasicAircraft 
+      category: Category.BasicAircraft,
     },
     // n tanks
-    ...getCargoStringsFromAirTanks(air), 
+    ...getCargoStringsFromAirTanks(air),
   ])
 
   // return the new aircraft + the hook that fires this func on air change.
-    return air
+  return air
 }

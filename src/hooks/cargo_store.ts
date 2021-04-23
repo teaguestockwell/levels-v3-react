@@ -52,20 +52,30 @@ export const CargoStore = create<CargoStoreState>((set) => ({
     }),
 }))
 
-const isCargoValid = (s: CargoStoreState) => Array.from(s.cargoMap.values()).every(c => c.isValid)
+const isCargoValid = (s: CargoStoreState) =>
+  Array.from(s.cargoMap.values()).every((c) => c.isValid)
 
 // return cargoMap.size, render on size change
 export const useCargoMapSize = () => CargoStore((state) => state.cargoMap.size)
 export const useConfigName = () => CargoStore((state) => state.config.name)
 // return cargoMap.get(uuid) as CargoString, re render on cargo quality change.
-export const useCargo = (uuid:string) => CargoStore(s => s.cargoMap.get(uuid), (s1,s2) => isEqual(s1,s2)) as CargoString
-export const useCargos = () => CargoStore(s => Array.from(s.cargoMap.values()), (s1,s2) => isEqual(s1,s2))
+export const useCargo = (uuid: string) =>
+  CargoStore(
+    (s) => s.cargoMap.get(uuid),
+    (s1, s2) => isEqual(s1, s2)
+  ) as CargoString
+export const useCargos = () =>
+  CargoStore(
+    (s) => Array.from(s.cargoMap.values()),
+    (s1, s2) => isEqual(s1, s2)
+  )
 
-export const useValidation = () => CargoStore(s => isCargoValid(s))
+export const useValidation = () => CargoStore((s) => isCargoValid(s))
 
 export const getCargoValidMap = () => CargoStore.getState().cargoValidMap
 export const getCargoMap = () => CargoStore.getState().cargoMap
-export const getCargoAtUuid = (uuid:string) => CargoStore.getState().cargoMap.get(uuid) as CargoString
+export const getCargoAtUuid = (uuid: string) =>
+  CargoStore.getState().cargoMap.get(uuid) as CargoString
 export const getConfig = () => CargoStore.getState().config
 
 export const getActionsCS = () => {
