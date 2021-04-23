@@ -285,3 +285,5 @@ export const getPerMac = (
     items,
   }
 }
+
+export const getQueryString = (obj: any) => Object.keys(obj).filter(k => k.includes('Id')).map(k => `${k}=${obj[k]}`).join('&');

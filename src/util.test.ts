@@ -10,6 +10,7 @@ import {
   getCargoString,
   getPerMac,
   getCargoStringFromChartC,
+  getQueryString,
 } from './util'
 
 describe('cut()', () =>
@@ -54,6 +55,14 @@ describe('getCargoSchema()', () =>
     expect(schema.fullObjSchema.isValidSync(validCargo)).toBe(true)
     expect(schema.fullObjSchema.isValidSync(inValidCargo)).toBe(false)
   }))
+
+  describe('getQueryString()', () => {
+    it('filters keys that contain id to make a query string', () => {
+      const config = mockAircraftsDeep[0].configs[0]
+      expect(getQueryString(config)).toBe('aircraftId=1&configId=1')
+
+    })
+  })
 
   describe('getChartCSchema()', () =>
   it('will get schema from an aircraft', () => {
