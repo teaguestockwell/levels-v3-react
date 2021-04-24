@@ -15,7 +15,9 @@ export const UseAdminQuery = (ep: string, reqParams: any) => {
         ? '?' + getQueryString(reqParams)
         : ''
       return (
-        await axios.get(process.env.REACT_APP_API_BASE_URL + ep + queryParams)
+        await axios.get(process.env.REACT_APP_API_BASE_URL + ep + queryParams,
+          //{timeout: 2}
+          )
       ).data
     },
     {

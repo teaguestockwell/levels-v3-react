@@ -1,3 +1,13 @@
+import { Const } from '../const'
+
+export enum Category {
+  Emergency = 'Emergency',
+  Extra = 'Extra',
+  Steward = 'Steward',
+  User = 'User',
+  Tank = 'Tank',
+  BasicAircraft = 'BasicAircraft',
+}
 export interface AircraftDeep {
   aircraftId: number
   name: string
@@ -16,26 +26,32 @@ export interface AircraftDeep {
   glossarys: Glossary[]
   configs: Config[]
 }
-
 export interface Cargo {
   aircraftId: number
   cargoId: number
   updated: Date
   updatedBy: string
+
   name: string
   weight: number
   fs: number
   category: Category
 }
 
-export enum Category {
-  Emergency = 'Emergency',
-  Extra = 'Extra',
-  Steward = 'Steward',
-  User = 'User',
-  Tank = 'Tank',
-  BasicAircraft = 'BasicAircraft',
+
+export const getSchemaOfEP = (ep:string) => {
+  switch (ep) {
+    case 'cargo': return {
+      name: Const.schema.stringSchema,
+      weight: Const.schema.numSchema,
+      fs: Const.schema.intPositiveSchema,
+      category: Const.schema.categorySchema
+    }
+    default: {throw new Error(`invalid ep => getSchemaOfEP(${ep})`)}
+  }
 }
+
+
 
 export interface Config {
   aircraftId: number
