@@ -44,9 +44,30 @@ export const getSchemaOfEP = (ep:string) => {
     case 'cargo': return {
       name: Const.schema.stringSchema,
       weight: Const.schema.numSchema,
-      fs: Const.schema.intPositiveSchema,
+      fs: Const.schema.numSchema,
       category: Const.schema.categorySchema
     }
+
+    case 'config': return {
+      name: Const.schema.stringSchema,
+    }
+
+    case 'configCargo': return {
+      fs: Const.schema.numSchema,
+      qty: Const.schema.intPositiveSchema
+    }
+
+    case 'glossary': return {
+      name: Const.schema.stringSchema,
+      body: Const.schema.stringSchema
+    }
+
+    case 'tank': return {
+      name: Const.schema.stringSchema,
+      weightsCSV: Const.schema.stringSchema,
+      simpleMomsCSV: Const.schema.stringSchema,
+    }
+
     default: {throw new Error(`invalid ep => getSchemaOfEP(${ep})`)}
   }
 }

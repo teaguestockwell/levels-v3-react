@@ -37,6 +37,7 @@ export const getActionsAS = () => {
     setSelectedAir: state.setSelectedAir,
   }
 }
+export const useAirId = () => AirStore(x => x.selectedAir?.aircraftId)
 
 /** hook that will cause re-renders on aircraft change.
   When aircraft is changed, it will update the initial state of 

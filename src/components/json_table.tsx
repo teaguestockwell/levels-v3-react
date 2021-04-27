@@ -6,17 +6,18 @@ import {UseAdminQuery} from '../hooks/use_admin_query'
 import {capitalizeFirst} from '../util'
 import {DeleteOutlined, EditOutlined} from '@ant-design/icons'
 import { AdminForm } from './admin_form'
-import { Console } from 'console'
 import { delete1 } from '../services/admin_service'
+import { getAir, useAirId } from '../hooks/air_store'
+import { keyBy } from 'lodash'
 
 const JTable = (
   {onEdit,onDelete,ep}:
   {
-    ep: string
+    ep: string,
     onEdit: (obj:Record<string,unknown>)=> void,
     onDelete: (obj:Record<string,unknown>) => void
   }) => {
-  const {data} = UseAdminQuery(ep, {aircraftId: 1})
+  const {data} = UseAdminQuery(ep, {})
 
   const table = useMemo(() => {
     console.log('updating table...')
@@ -32,13 +33,21 @@ const JTable = (
       return <div>empty state</div>
     }
 
+    console.log('json table data')
+    console.log(data)
+
     // table state
     const filteredKeys = [
       'name',
       ...Object.keys((data as Record<string, unknown>[])[0])
-        .filter((k) => !k.includes('Id') && k !== 'name')
+      .filter(k => typeof (data as Record<string, unknown>[])[0][k] !== 'object')
+        .filter(k => !k.includes('Id'))
+        .filter(k => k !== 'name')
         .sort((a, b) => a.localeCompare(b)),
     ]
+
+    console.log('Keysssssss')
+    console.log(filteredKeys)
 
     const columns = [
       ...filteredKeys.map((k) => ({
@@ -82,8 +91,7 @@ const JTable = (
   return table
 }
 
-export const JsonTable = () => {
-  const ep = 'cargo'
+export const JsonTable = ({ep} : {ep:string}) => {
   const [objEditState, setObjEditState] = useState<Record<string, unknown>>()
 
   const onDelete = (obj: Record<string,unknown>) => {
