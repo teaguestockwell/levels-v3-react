@@ -7,11 +7,9 @@ import { put1 } from '../services/admin_service'
 import { getSchemaOfEP } from '../types/aircraftDeep'
 import { debounce } from 'lodash'
 
-export const AdminForm = ({obj,ep} :{obj: Record<string,unknown>, ep:string}) => {
-  console.log('admin form')
-  console.log(obj)
+export const AdminForm = ({obj,ep, onSave} :{obj: Record<string,unknown>, ep:string, onSave: (obj:any)=>void}) => {
   const [form] = Form.useForm()
-  const schema = useRef(getSchemaOfEP(ep)).current as any
+  const schema = useRef(getSchemaOfEP(ep.includes('?') ? ep.split('?')[0] : ep)).current as any
   const [isValid, setIsValid] = useState(false)
   const formKey = useRef(v4()).current
 
@@ -32,19 +30,15 @@ export const AdminForm = ({obj,ep} :{obj: Record<string,unknown>, ep:string}) =>
       }
   }
 
-  const onSave = () => {
-    console.log('saved pressed')
-    const newModel = {...obj, ...form.getFieldsValue()}
-    console.log(newModel)
-    put1(ep,newModel)
-  }
+  const fields = Object.keys(obj)
+  .filter((k) => !k.includes('Id') && !k.includes('updated') && !k.includes('updatedBy') && typeof obj[k] !== 'object')
 
+  console.log(fields)
   return (
     <>
     <Form key={formKey + '_form'} form={form}>
-    {Object.keys(obj)
-      .filter((k) => !k.includes('Id') && !k.includes('updated') && !k.includes('updatedBy'))
-      .map((k) => (
+    {
+      fields.map((k) => (
         <Form.Item
           key={formKey + k + 'form_item'}
           name={`${k}`}
@@ -61,7 +55,7 @@ export const AdminForm = ({obj,ep} :{obj: Record<string,unknown>, ep:string}) =>
         </Form.Item>
       ))}
   </Form>
-      <Button onClick={onSave} block disabled={!isValid}>
+      <Button onClick={() => onSave({...obj, ...form.getFieldsValue()})} block disabled={!isValid}>
         Save
       </Button>
     </>

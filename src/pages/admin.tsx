@@ -1,41 +1,71 @@
-import {JsonTable} from '../components/json_table'
-import { Menu } from "antd"
-import { useState } from "react"
-import {MenuInfo} from 'rc-menu/lib/interface'
-import { v4 } from 'uuid'
-import SubMenu from 'antd/lib/menu/SubMenu'
-import { getAir } from '../hooks/air_store'
+//this component wraps all the state within the admin portal to poll the api
+// it is separate from mac air select because it syncs with server state
 
+import { Button, Dropdown, Menu } from "antd"
+import { useMemo, useState } from "react"
+import { UseAdminPolling } from "../hooks/use_admin_polling"
+import { AircraftDeep } from "../types/aircraftDeep"
+import {DownOutlined} from '@ant-design/icons'
+import {MenuInfo} from 'rc-menu/lib/interface'
+import { AdminNav } from "../components/admin_nav"
+import { useQueryClient } from "react-query"
+//import { v4 } from "uuid"
 
 export const Admin = () => {
-  const [ep, setEP] = useState('cargo')
+  const {data} = UseAdminPolling()
+  const [air, setAir] = useState<AircraftDeep>()
+  const queryClient = useQueryClient()
 
-  const onClick = (menuInfo: MenuInfo) => {
-    const newEP = String(menuInfo.key)
-    console.log('ep clicked: ' + newEP)
-    setEP(newEP)
+  const loading = <div>loading state</div>
+  const error = <div>error state</div>
+  const empty = <div>empty state</div>
+
+  const onAirChange = (menuInfo: MenuInfo) => {
+    const newKey = Number(menuInfo.key)
+    const newAir = data.find((x: any) => x.aircraftId === newKey) as AircraftDeep
+    console.log(newAir)
+    setAir(newAir)
   }
 
-  return <>
-    <Menu
-    mode="horizontal"
-    onClick={onClick}
-    selectedKeys={[ep]}
-  >
-    <Menu.Item key={'aircraft'}>{'Aircrafts'}</Menu.Item>
-    <Menu.Item key={'cargo'}>{'Cargos'}</Menu.Item>
-    <Menu.Item key={'tank'}>{'Tanks'}</Menu.Item>
-    <Menu.Item key={'user'}>{'Users'}</Menu.Item>
-    <Menu.Item key={'glossary'}>{'Glossarys'}</Menu.Item>
-    <Menu.Item key={'config'}>{'Configs'}</Menu.Item>
-    <SubMenu key={ep} title={'Cargo in Config'}>
-       {getAir().configs.map(c => <SubMenu key={'configCargo?'} title={'All Configs'}>)}
-    </SubMenu>
+  const airSelect = useMemo(()=>{
+    queryClient.invalidateQueries('get1')
 
+    console.log('rebuilding ')
 
-  </Menu>
+    if (!data){return loading}
+  
+    if (data.msg) {return error}
+  
+    if (data.length === 0) {return empty}
 
-  <JsonTable ep={ep} key={v4()}/>
+    if(!air){setAir(data[0]);return loading}
+
+    if(!data.find((a: any) => a.aircraftId === air?.aircraftId)){
+      setAir(data[0])
+      return loading
+    }
+
+    const menu = <Menu 
+    onClick={(x) => onAirChange(x)}>
+      {data.map((a: AircraftDeep) => (
+        <Menu.Item key={a.aircraftId}>{a.name}</Menu.Item>
+      ))}
+    </Menu>
+
+    return <>
+    <Dropdown 
+      overlay={menu} 
+      trigger={['click']}
+    >
+    <Button>
+      {(air as AircraftDeep).name}
+      <DownOutlined />
+    </Button>
+  </Dropdown>
+  <AdminNav air={air} key={air.aircraftId}/>
   </>
 
+  },[data,air?.aircraftId])
+
+  return airSelect
 }
