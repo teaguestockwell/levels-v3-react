@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {useEffect, useRef, useState} from 'react'
 import {Form, Input, Button} from 'antd'
-import {capitalizeFirst, rulesYupWrapper} from '../util'
+import {capitalizeFirst, getEditableKeysOfModel as getEditableKeysOfModelName, rulesYupWrapper} from '../util'
 import {v4} from 'uuid'
-import {getSchemaForEP} from '../types/aircraftDeep'
+import {getYupModelSchemas} from '../types/aircraftDeep'
 import {debounce} from 'lodash'
 
 export const AdminForm = ({
@@ -16,9 +16,9 @@ export const AdminForm = ({
   onSave: (obj: any) => void
 }) => {
   const [form] = Form.useForm()
-  const filteredEP: any = ep.includes('?') ? ep.split('?')[0] : ep
+  const modelName: any = ep.includes('?') ? ep.split('?')[0] : ep
 
-  const schema = useRef(getSchemaForEP()[filteredEP]).current as any
+  const schema = useRef(getYupModelSchemas()[modelName]).current as any
   const [isValid, setIsValid] = useState(false)
   const formKey = useRef(v4()).current
 
@@ -53,18 +53,10 @@ export const AdminForm = ({
     onSave(casted)
   }
 
-  const fields = Object.keys(obj).filter(
-    (k) =>
-      !k.includes('Id') &&
-      !k.includes('updated') &&
-      !k.includes('updatedBy') &&
-      typeof obj[k] !== 'object'
-  )
-
   return (
     <>
       <Form key={formKey + '_form'} form={form}>
-        {fields.map((k) => (
+        {getEditableKeysOfModelName(modelName).map((k) => (
           <Form.Item
             key={formKey + k + 'form_item'}
             name={`${k}`}

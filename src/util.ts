@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {Const} from './const'
 import * as yup from 'yup'
-import {AircraftDeep, Cargo, Category, Config, Tank} from './types/aircraftDeep'
+import {AircraftDeep, Cargo, Category, Config, getYupModelSchemas, Tank} from './types/aircraftDeep'
 import {CargoString, ChartCCargoString} from './types/cargoString'
 import {v4} from 'uuid'
 import {CargoCalculated, PerMac} from './types/perMac'
 import {debounce} from 'lodash'
+import queryString from 'query-string'
 /** if string is > max length cut it and add ... */
 export const cut = (x: any): string => {
   return x.toString().length > Const.MAX_FORM_LENGTH
@@ -297,3 +299,37 @@ export const getQueryString = (obj: any) =>
     .filter((k) => k.includes('Id'))
     .map((k) => `${k}=${obj[k]}`)
     .join('&')
+
+/* given a models name, look at the yup schema an return list keys that an admin may edit for that model
+*
+**/
+export const getEditableKeysOfModel = (model: string):string[] => {
+  return Object.keys(getYupModelSchemas()[model])
+    .filter((k: any) => k !== 'shallowObj')
+    .sort((a:any, b:any) => a.localeCompare(b))
+}
+
+/**
+ * @param ep the full endpoint after the base url
+ * @returns a new model with the correct pks and fks based on the context of the ep
+ */
+export const getNewModelFromEP = (ep:string):Record<string,unknown> => {
+  const params = ep.includes('?') ? ep.split('?')[1] : null
+  const model = ep.includes('?') ? ep.split('?')[0] : ep
+
+  // use the url params to make obj
+  const idModel = params ? queryString.parse(params,{parseNumbers: true}) : {}
+  
+  const baseModelKeys = Object.keys(getYupModelSchemas()[model]).filter(k => k !== 'shallowObj')
+  
+  const baseModelObj: {[key:string]: unknown} = {}
+  for(const k of baseModelKeys){
+    baseModelObj[k] = ''
+  }
+
+ return {
+  ...baseModelObj,
+  ...idModel,
+  ...{[`${model}Id`]: 0}
+  }
+}

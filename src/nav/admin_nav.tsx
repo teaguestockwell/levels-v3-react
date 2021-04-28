@@ -14,7 +14,7 @@ export const AdminNav = ({air}: {air: AircraftDeep}) => {
     setEp(String(menuInfo.key))
   }
 
-  const getFullEP = (newEP: string) => {
+  const getModelOfEP = (newEP: string) => {
     if (newEP === 'aircraft') {
       return newEP
     }
@@ -43,7 +43,7 @@ export const AdminNav = ({air}: {air: AircraftDeep}) => {
           ))}
         </SubMenu>
       </Menu>
-      <JsonTable ep={getFullEP(ep)} />
+      <JsonTable ep={getModelOfEP(ep)} />
     </>
   )
 }

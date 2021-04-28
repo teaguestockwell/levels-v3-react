@@ -70,7 +70,7 @@ export interface Tank {
   simpleMomsCSV: string
 }
 
-export const getSchemaForEP = (): {[key: string]: any} => {
+export const getYupModelSchemas = (): {[key: string]: any} => {
   return {
     aircraft: {
       name: Const.schema.stringSchema,
@@ -121,11 +121,9 @@ export const getSchemaForEP = (): {[key: string]: any} => {
     configCargo: {
       fs: Const.schema.numSchema,
       qty: Const.schema.intPositiveSchema,
-      name: Const.schema.stringSchema,
       shallowObj: yup.object().shape({
         fs: Const.schema.numSchema,
         qty: Const.schema.intPositiveSchema,
-        name: Const.schema.stringSchema,
       }),
     },
 

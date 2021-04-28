@@ -1,8 +1,8 @@
 /* eslint-disable react/display-name */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {Col, message, Modal, Row, Table} from 'antd'
+import {Button, Col, message, Modal, Row, Table} from 'antd'
 import {useMemo, useState} from 'react'
-import {capitalizeFirst} from '../util'
+import {capitalizeFirst, getNewModelFromEP} from '../util'
 import {DeleteOutlined, EditOutlined} from '@ant-design/icons'
 import {AdminForm} from './admin_form'
 import {v4} from 'uuid'
@@ -20,6 +20,7 @@ const JTable = ({
   const {data} = UsePollingAtEP(ep)
   console.log('fetching table')
 
+
   const table = useMemo(() => {
     console.log('redrawing table')
     if (!data) {
@@ -34,7 +35,7 @@ const JTable = ({
       return <div>empty state</div>
     }
 
-    const filteredKeys = [
+    const displayKeys = [
       'name',
       ...Object.keys((data as Record<string, unknown>[])[0])
         .filter(
@@ -46,7 +47,7 @@ const JTable = ({
     ]
 
     const columns = [
-      ...filteredKeys.map((k) => ({
+      ...displayKeys.map((k) => ({
         title: capitalizeFirst(k),
         dataIndex: k,
         key: k,
@@ -132,8 +133,15 @@ export const JsonTable = ({ep}: {ep: string}) => {
     setObjEditState(undefined)
   }
 
+  const onNewRow = () => {
+    setObjEditState(getNewModelFromEP(ep))
+  }
+
   const table = useMemo(() => {
-    return <JTable onDelete={onDelete} onEdit={onEdit} ep={ep} />
+    return <>
+     <Button onClick={onNewRow}>Add New</Button>
+    <JTable onDelete={onDelete} onEdit={onEdit} ep={ep} />
+    </>
   }, [ep])
 
   return (
