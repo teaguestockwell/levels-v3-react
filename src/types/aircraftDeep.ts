@@ -1,5 +1,5 @@
-import { Const } from '../const'
-import *  as yup from 'yup'
+import {Const} from '../const'
+import * as yup from 'yup'
 
 export enum Category {
   Emergency = 'Emergency',
@@ -70,7 +70,7 @@ export interface Tank {
   simpleMomsCSV: string
 }
 
-export const getSchemaForEP = (): {[key:string]: any} => {
+export const getSchemaForEP = (): {[key: string]: any} => {
   return {
     aircraft: {
       name: Const.schema.stringSchema,
@@ -96,7 +96,7 @@ export const getSchemaForEP = (): {[key:string]: any} => {
         lemac: Const.schema.numSchema,
         mac: Const.schema.numSchema,
         momMultiplyer: Const.schema.numSchema,
-      })
+      }),
     },
     cargo: {
       name: Const.schema.stringSchema,
@@ -107,15 +107,15 @@ export const getSchemaForEP = (): {[key:string]: any} => {
         name: Const.schema.stringSchema,
         weight: Const.schema.numSchema,
         fs: Const.schema.numSchema,
-        category: Const.schema.categorySchema
-      })
+        category: Const.schema.categorySchema,
+      }),
     },
 
     config: {
       name: Const.schema.stringSchema,
       shallowObj: yup.object().shape({
         name: Const.schema.stringSchema,
-      })
+      }),
     },
 
     configCargo: {
@@ -126,7 +126,7 @@ export const getSchemaForEP = (): {[key:string]: any} => {
         fs: Const.schema.numSchema,
         qty: Const.schema.intPositiveSchema,
         name: Const.schema.stringSchema,
-      })
+      }),
     },
 
     glossary: {
@@ -135,7 +135,7 @@ export const getSchemaForEP = (): {[key:string]: any} => {
       shallowObj: yup.object().shape({
         name: Const.schema.stringSchema,
         body: Const.schema.stringSchema,
-      })
+      }),
     },
 
     tank: {
@@ -146,7 +146,7 @@ export const getSchemaForEP = (): {[key:string]: any} => {
         name: Const.schema.stringSchema,
         weightsCSV: Const.schema.stringSchema,
         simpleMomsCSV: Const.schema.stringSchema,
-      })
+      }),
     },
 
     user: {
@@ -155,7 +155,7 @@ export const getSchemaForEP = (): {[key:string]: any} => {
       shallowObj: yup.object().shape({
         name: Const.schema.stringSchema,
         role: Const.schema.intSchema,
-      })
-    }
+      }),
+    },
   }
 }

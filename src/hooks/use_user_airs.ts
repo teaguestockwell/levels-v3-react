@@ -4,8 +4,9 @@ import {AircraftDeep} from '../types/aircraftDeep'
 
 const getNAircraft = async () => {
   const aircrafts: AircraftDeep[] = (
-    await axios.get(process.env.REACT_APP_API_BASE_URL + 'aircraft', 
-    //{timeout: 2}
+    await axios.get(
+      process.env.REACT_APP_API_BASE_URL + 'aircraft'
+      //{timeout: 2}
     )
   ).data
   return new Map<number, AircraftDeep>(
