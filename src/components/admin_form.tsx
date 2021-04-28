@@ -3,13 +3,14 @@ import {useEffect, useRef, useState} from 'react'
 import {Form, Input, Button} from 'antd'
 import {capitalizeFirst, rulesYupWrapper} from '../util'
 import { v4 } from 'uuid'
-import { put1 } from '../services/admin_service'
-import { getSchemaOfEP } from '../types/aircraftDeep'
+import { getSchemaForEP } from '../types/aircraftDeep'
 import { debounce } from 'lodash'
 
 export const AdminForm = ({obj,ep, onSave} :{obj: Record<string,unknown>, ep:string, onSave: (obj:any)=>void}) => {
   const [form] = Form.useForm()
-  const schema = useRef(getSchemaOfEP(ep.includes('?') ? ep.split('?')[0] : ep)).current as any
+  const filteredEP: any = ep.includes('?') ? ep.split('?')[0] : ep
+
+  const schema = useRef(getSchemaForEP()[filteredEP]).current as any
   const [isValid, setIsValid] = useState(false)
   const formKey = useRef(v4()).current
 
@@ -23,17 +24,24 @@ export const AdminForm = ({obj,ep, onSave} :{obj: Record<string,unknown>, ep:str
   }, [])
 
   const onChange = () => {
-      if(getIsValid()){
-        setIsValid(true)
-      } else {
-        setIsValid(false)
-      }
+    setIsValid(getIsValid())
+  }
+
+  const onSaveLocal = () => {
+    const newObj = {...obj, ...form.getFieldsValue()}
+    // remove values that are objects
+    const shallowKeys = Object.keys(newObj).filter(k => typeof obj[k] !== 'object')
+    const shallowObj = Object.fromEntries(shallowKeys.map(k => [k,newObj[k]]))
+
+    // cast it to the correct type
+    const casted = schema.shallowObj.cast(shallowObj)
+
+    onSave(casted)
   }
 
   const fields = Object.keys(obj)
   .filter((k) => !k.includes('Id') && !k.includes('updated') && !k.includes('updatedBy') && typeof obj[k] !== 'object')
 
-  console.log(fields)
   return (
     <>
     <Form key={formKey + '_form'} form={form}>
@@ -55,7 +63,7 @@ export const AdminForm = ({obj,ep, onSave} :{obj: Record<string,unknown>, ep:str
         </Form.Item>
       ))}
   </Form>
-      <Button onClick={() => onSave({...obj, ...form.getFieldsValue()})} block disabled={!isValid}>
+      <Button onClick={onSaveLocal} block disabled={!isValid}>
         Save
       </Button>
     </>

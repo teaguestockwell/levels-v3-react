@@ -3,8 +3,7 @@ import SubMenu from "antd/lib/menu/SubMenu"
 import { useState } from "react"
 import { AircraftDeep } from "../types/aircraftDeep"
 import {MenuInfo} from 'rc-menu/lib/interface'
-import { JsonTable } from "./json_table"
-import { v4 } from "uuid"
+import { JsonTable } from "../components/json_table"
 import {DownOutlined} from '@ant-design/icons'
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -48,6 +47,6 @@ export const AdminNav = ({air}:{air:AircraftDeep}) => {
     )}
   </SubMenu> 
   </Menu>
-  <JsonTable ep={getFullEP(ep)} key={v4()}/>
+  <JsonTable ep={getFullEP(ep)}/>
   </>
 }

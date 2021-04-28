@@ -1,4 +1,5 @@
 import { Const } from '../const'
+import *  as yup from 'yup'
 
 export enum Category {
   Emergency = 'Emergency',
@@ -37,49 +38,6 @@ export interface Cargo {
   fs: number
   category: Category
 }
-
-
-export const getSchemaOfEP = (ep:string) => {
-  switch (ep) {
-    case 'cargo': return {
-      name: Const.schema.stringSchema,
-      weight: Const.schema.numSchema,
-      fs: Const.schema.numSchema,
-      category: Const.schema.categorySchema
-    }
-
-    case 'config': return {
-      name: Const.schema.stringSchema,
-    }
-
-    case 'configCargo': return {
-      fs: Const.schema.numSchema,
-      qty: Const.schema.intPositiveSchema,
-      name: Const.schema.stringSchema
-    }
-
-    case 'glossary': return {
-      name: Const.schema.stringSchema,
-      body: Const.schema.stringSchema
-    }
-
-    case 'tank': return {
-      name: Const.schema.stringSchema,
-      weightsCSV: Const.schema.stringSchema,
-      simpleMomsCSV: Const.schema.stringSchema,
-    }
-
-    case 'user': return {
-      name: Const.schema.stringSchema,
-      role: Const.schema.intSchema
-    }
-
-    default: {throw new Error(`invalid ep => getSchemaOfEP(${ep})`)}
-  }
-}
-
-
-
 export interface Config {
   aircraftId: number
   configId: number
@@ -110,4 +68,94 @@ export interface Tank {
   tankId: number
   weightsCSV: string
   simpleMomsCSV: string
+}
+
+export const getSchemaForEP = (): {[key:string]: any} => {
+  return {
+    aircraft: {
+      name: Const.schema.stringSchema,
+      fs0: Const.schema.numSchema,
+      fs1: Const.schema.numSchema,
+      mom0: Const.schema.numSchema,
+      mom1: Const.schema.numSchema,
+      weight0: Const.schema.numSchema,
+      weight1: Const.schema.numSchema,
+      cargoWeight1: Const.schema.numSchema,
+      lemac: Const.schema.numSchema,
+      mac: Const.schema.numSchema,
+      momMultiplyer: Const.schema.numSchema,
+      shallowObj: yup.object().shape({
+        name: Const.schema.stringSchema,
+        fs0: Const.schema.numSchema,
+        fs1: Const.schema.numSchema,
+        mom0: Const.schema.numSchema,
+        mom1: Const.schema.numSchema,
+        weight0: Const.schema.numSchema,
+        weight1: Const.schema.numSchema,
+        cargoWeight1: Const.schema.numSchema,
+        lemac: Const.schema.numSchema,
+        mac: Const.schema.numSchema,
+        momMultiplyer: Const.schema.numSchema,
+      })
+    },
+    cargo: {
+      name: Const.schema.stringSchema,
+      weight: Const.schema.numSchema,
+      fs: Const.schema.numSchema,
+      category: Const.schema.categorySchema,
+      shallowObj: yup.object().shape({
+        name: Const.schema.stringSchema,
+        weight: Const.schema.numSchema,
+        fs: Const.schema.numSchema,
+        category: Const.schema.categorySchema
+      })
+    },
+
+    config: {
+      name: Const.schema.stringSchema,
+      shallowObj: yup.object().shape({
+        name: Const.schema.stringSchema,
+      })
+    },
+
+    configCargo: {
+      fs: Const.schema.numSchema,
+      qty: Const.schema.intPositiveSchema,
+      name: Const.schema.stringSchema,
+      shallowObj: yup.object().shape({
+        fs: Const.schema.numSchema,
+        qty: Const.schema.intPositiveSchema,
+        name: Const.schema.stringSchema,
+      })
+    },
+
+    glossary: {
+      name: Const.schema.stringSchema,
+      body: Const.schema.stringSchema,
+      shallowObj: yup.object().shape({
+        name: Const.schema.stringSchema,
+        body: Const.schema.stringSchema,
+      })
+    },
+
+    tank: {
+      name: Const.schema.stringSchema,
+      weightsCSV: Const.schema.stringSchema,
+      simpleMomsCSV: Const.schema.stringSchema,
+      shallowObj: yup.object().shape({
+        name: Const.schema.stringSchema,
+        weightsCSV: Const.schema.stringSchema,
+        simpleMomsCSV: Const.schema.stringSchema,
+      })
+    },
+
+    user: {
+      name: Const.schema.stringSchema,
+      role: Const.schema.intSchema,
+      shallowObj: yup.object().shape({
+        name: Const.schema.stringSchema,
+        role: Const.schema.intSchema,
+      })
+    }
+  }
 }

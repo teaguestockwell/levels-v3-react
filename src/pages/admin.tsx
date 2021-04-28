@@ -3,18 +3,15 @@
 
 import { Button, Dropdown, Menu } from "antd"
 import { useMemo, useState } from "react"
-import { UseAdminPolling } from "../hooks/use_admin_polling"
+import { UsePollingAtEP } from "../hooks/use_admin_polling"
 import { AircraftDeep } from "../types/aircraftDeep"
 import {DownOutlined} from '@ant-design/icons'
 import {MenuInfo} from 'rc-menu/lib/interface'
-import { AdminNav } from "../components/admin_nav"
-import { useQueryClient } from "react-query"
-//import { v4 } from "uuid"
+import { AdminNav } from "../nav/admin_nav"
 
 export const Admin = () => {
-  const {data} = UseAdminPolling()
+  const {data} = UsePollingAtEP('aircraft', 5000)
   const [air, setAir] = useState<AircraftDeep>()
-  const queryClient = useQueryClient()
 
   const loading = <div>loading state</div>
   const error = <div>error state</div>
@@ -23,15 +20,10 @@ export const Admin = () => {
   const onAirChange = (menuInfo: MenuInfo) => {
     const newKey = Number(menuInfo.key)
     const newAir = data.find((x: any) => x.aircraftId === newKey) as AircraftDeep
-    console.log(newAir)
     setAir(newAir)
   }
 
   const airSelect = useMemo(()=>{
-    queryClient.invalidateQueries('get1')
-
-    console.log('rebuilding ')
-
     if (!data){return loading}
   
     if (data.msg) {return error}
@@ -41,8 +33,7 @@ export const Admin = () => {
     if(!air){setAir(data[0]);return loading}
 
     if(!data.find((a: any) => a.aircraftId === air?.aircraftId)){
-      setAir(data[0])
-      return loading
+      setAir(data[0]); return loading
     }
 
     const menu = <Menu 
