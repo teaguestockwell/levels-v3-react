@@ -309,6 +309,15 @@ export const getEditableKeysOfModel = (model: string):string[] => {
     .sort((a:any, b:any) => a.localeCompare(b))
 }
 
+export const getModelFromEP = (ep:string):string => {
+  console.log(ep)
+  return ep.includes('?') ? ep.split('?')[0] : ep
+}
+
+export const getParamsFromEp = (ep:string): string | null => {
+  return ep.includes('?') ? ep.split('?')[1] : null
+}
+
 /**
  @param ep the full endpoint after the base url ex: config?aircraft=1
  @returns a new model with the correct pks and fks based on the context of the ep ex: 
@@ -318,11 +327,11 @@ export const getEditableKeysOfModel = (model: string):string[] => {
   name: "create"
 }
  */
-export const getNewModelFromEP = (ep:string):Record<string,unknown> => {
+export const getNewModelFromEP = (ep:string):Record<string,any> => {
   //TODO: handle cargo id of configcargo
 
-  const params = ep.includes('?') ? ep.split('?')[1] : null
-  const model = ep.includes('?') ? ep.split('?')[0] : ep
+  const params = getParamsFromEp(ep)
+  const model = getModelFromEP(ep)
 
   // use the url params to make obj
   const idModel = params ? queryString.parse(params,{parseNumbers: true}) : {}

@@ -1,73 +1,27 @@
-//this component wraps all the state within the admin portal to poll the api
-// it is separate from mac air select because it syncs with server state
+import { Button } from "antd"
+import { v4 } from "uuid"
+import { AdminAirSelect } from "../components/admin_air_select"
+import { AdminModal } from "../components/admin_modal"
+import { JsonTable } from "../components/json_table"
+import {adminStore, useAir} from "../hooks/admin_store"
+import { adminActions } from "../hooks/use_admin_polling"
+import { AdminNav as JsonTableSheetNav } from "../nav/json_table_sheet_nav"
 
-import {Button, Dropdown, Menu} from 'antd'
-import {useMemo, useState} from 'react'
-import {UsePollingAtEP} from '../hooks/use_admin_polling'
-import {AircraftDeep} from '../types/aircraftDeep'
-import {DownOutlined} from '@ant-design/icons'
-import {MenuInfo} from 'rc-menu/lib/interface'
-import {AdminNav} from '../nav/admin_nav'
+const AdminLogger = () => {
+  const store  = adminStore()
+  console.log(store)
+  return <div></div>
+}
 
 export const Admin = () => {
-  const {data} = UsePollingAtEP('aircraft', 5000)
-  const [air, setAir] = useState<AircraftDeep>()
-
-  const loading = <div>loading state</div>
-  const error = <div>error state</div>
-  const empty = <div>empty state</div>
-
-  const onAirChange = (menuInfo: MenuInfo) => {
-    const newKey = Number(menuInfo.key)
-    const newAir = data.find(
-      (x: any) => x.aircraftId === newKey
-    ) as AircraftDeep
-    setAir(newAir)
-  }
-
-  const airSelect = useMemo(() => {
-    if (!data) {
-      return loading
-    }
-
-    if (data.msg) {
-      return error
-    }
-
-    if (data.length === 0) {
-      return empty
-    }
-
-    if (!air) {
-      setAir(data[0])
-      return loading
-    }
-
-    if (!data.find((a: any) => a.aircraftId === air?.aircraftId)) {
-      setAir(data[0])
-      return loading
-    }
-
-    const menu = (
-      <Menu onClick={(x) => onAirChange(x)}>
-        {data.map((a: AircraftDeep) => (
-          <Menu.Item key={a.aircraftId}>{a.name}</Menu.Item>
-        ))}
-      </Menu>
-    )
-
-    return (
-      <>
-        <Dropdown overlay={menu} trigger={['click']}>
-          <Button>
-            {(air as AircraftDeep).name}
-            <DownOutlined />
-          </Button>
-        </Dropdown>
-        <AdminNav air={air} key={air.aircraftId} />
-      </>
-    )
-  }, [data, air?.aircraftId])
-
-  return airSelect
+  // if selected air is changed, re render all
+  useAir()
+  return <>
+    <AdminLogger/>
+    <AdminAirSelect key={v4()}/>
+    <Button key={v4()} onClick={() => adminActions().addNewRow()}>Add New</Button>
+    <JsonTableSheetNav key={v4()}/>
+    <JsonTable key={v4()}/>
+    <AdminModal key={v4()}/>
+  </>
 }

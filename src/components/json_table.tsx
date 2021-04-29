@@ -1,28 +1,21 @@
 /* eslint-disable react/display-name */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {Button, Col, message, Modal, Row, Table} from 'antd'
-import {useMemo, useState} from 'react'
-import {capitalizeFirst, getNewModelFromEP} from '../util'
+import {Col, Row, Table} from 'antd'
+import {useMemo } from 'react'
+import {capitalizeFirst } from '../util'
 import {DeleteOutlined, EditOutlined} from '@ant-design/icons'
-import {AdminForm} from './admin_form'
-import {v4} from 'uuid'
-import {UsePollingAtEP, delete1, put1} from '../hooks/use_admin_polling'
+import {UsePollingAtEP, adminActions} from '../hooks/use_admin_polling'
+import { adminStore, getAdminActions } from '../hooks/admin_store'
 
-const JTable = ({
-  onEdit,
-  onDelete,
-  ep,
-}: {
-  ep: string
-  onEdit: (obj: Record<string, unknown>) => void
-  onDelete: (obj: Record<string, unknown>) => void
-}) => {
+const as = getAdminActions()
+
+
+export const JsonTable = () => {
+  const ep = adminStore(s => s.ep)
   const {data} = UsePollingAtEP(ep)
-  console.log('fetching table')
 
 
   const table = useMemo(() => {
-    console.log('redrawing table')
     if (!data) {
       return <div>loading state</div>
     }
@@ -62,13 +55,13 @@ const JTable = ({
             <Col span={8}>
               <DeleteOutlined
                 style={{fontSize: '24px'}}
-                onClick={() => onDelete(row)}
+                onClick={() => adminActions().deleteRow(row)}
               />
             </Col>
             <Col span={8} offset={8}>
               <EditOutlined
                 style={{fontSize: '24px'}}
-                onClick={() => onEdit(row)}
+                onClick={() => adminActions().openEditModal(row)}
               />
             </Col>
           </Row>
@@ -84,80 +77,7 @@ const JTable = ({
         columns={columns}
       />
     )
-  }, [data])
+  }, [data,ep])
 
   return table
-}
-
-export const JsonTable = ({ep}: {ep: string}) => {
-  const [objEditState, setObjEditState] = useState<Record<string, unknown>>()
-
-  const afterAction = async (
-    apiRes: Promise<number>,
-    action: string,
-    name: string
-  ): Promise<boolean> => {
-    const key = v4()
-    let success = false
-
-    message.loading({content: `${action}ing ${name}...`, key})
-    try {
-      const result = await apiRes
-      message.success({content: `${name} ${action}ed`, key, duration: 5})
-      success = true
-    } catch (e) {
-      message.error({content: `${e}`, key, duration: 3})
-    }
-
-    return success
-  }
-
-  const onDelete = (obj: Record<string, unknown>) => {
-    afterAction(delete1(ep, obj), 'Delet', obj.name as string)
-  }
-
-  const onEditDone = (obj: any) => {
-    // if api return 200, and it saves, close the modal. Otherwise leave it open
-    afterAction(put1(ep, obj), 'Sav', obj.name as string).then((success) => {
-      if (success) {
-        setObjEditState(undefined)
-      }
-    })
-  }
-
-  const onEdit = (obj: Record<string, unknown>) => {
-    setObjEditState(obj)
-  }
-
-  const onCancel = (obj: any) => {
-    setObjEditState(undefined)
-  }
-
-  const onNewRow = () => {
-    setObjEditState(getNewModelFromEP(ep))
-  }
-
-  const table = useMemo(() => {
-    return <>
-     <Button onClick={onNewRow}>Add New</Button>
-    <JTable onDelete={onDelete} onEdit={onEdit} ep={ep} />
-    </>
-  }, [ep])
-
-  return (
-    <>
-      {table}
-      {objEditState ? (
-        <Modal
-          visible={true}
-          footer={null}
-          onCancel={onCancel}
-          centered
-          closable={false}
-        >
-          <AdminForm obj={objEditState} ep={ep} onSave={onEditDone} />
-        </Modal>
-      ) : null}
-    </>
-  )
 }

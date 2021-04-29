@@ -1,22 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {useEffect, useRef, useState} from 'react'
 import {Form, Input, Button} from 'antd'
-import {capitalizeFirst, getEditableKeysOfModel as getEditableKeysOfModelName, rulesYupWrapper} from '../util'
+import {capitalizeFirst, getEditableKeysOfModel as getEditableKeysOfModelName, getModelFromEP, rulesYupWrapper} from '../util'
 import {v4} from 'uuid'
 import {getYupModelSchemas} from '../types/aircraftDeep'
 import {debounce} from 'lodash'
+import { adminStore} from '../hooks/admin_store'
+import {adminActions} from '../hooks/use_admin_polling'
 
-export const AdminForm = ({
-  obj,
-  ep,
-  onSave,
-}: {
-  obj: Record<string, unknown>
-  ep: string
-  onSave: (obj: any) => void
-}) => {
+export const AdminForm = ({obj,ep}: {obj:any, ep:string}) => {
   const [form] = Form.useForm()
-  const modelName: any = ep.includes('?') ? ep.split('?')[0] : ep
+
+  const modelName = getModelFromEP(ep)
+
 
   const schema = useRef(getYupModelSchemas()[modelName]).current as any
   const [isValid, setIsValid] = useState(false)
@@ -37,7 +33,7 @@ export const AdminForm = ({
     setIsValid(getIsValid())
   }
 
-  const onSaveLocal = () => {
+  const onSave = () => {
     const newObj = {...obj, ...form.getFieldsValue()}
     // remove values that are objects
     const shallowKeys = Object.keys(newObj).filter(
@@ -50,7 +46,7 @@ export const AdminForm = ({
     // cast it to the correct type
     const casted = schema.shallowObj.cast(shallowObj)
 
-    onSave(casted)
+    adminActions().saveEditModal(casted)
   }
 
   return (
@@ -73,7 +69,7 @@ export const AdminForm = ({
           </Form.Item>
         ))}
       </Form>
-      <Button onClick={onSaveLocal} block disabled={!isValid}>
+      <Button onClick={onSave} block disabled={!isValid}>
         Save
       </Button>
     </>
