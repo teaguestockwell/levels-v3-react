@@ -310,10 +310,17 @@ export const getEditableKeysOfModel = (model: string):string[] => {
 }
 
 /**
- * @param ep the full endpoint after the base url
- * @returns a new model with the correct pks and fks based on the context of the ep
+ @param ep the full endpoint after the base url ex: config?aircraft=1
+ @returns a new model with the correct pks and fks based on the context of the ep ex: 
+{
+  configId: 0,
+  aircraftId: 2,
+  name: "create"
+}
  */
 export const getNewModelFromEP = (ep:string):Record<string,unknown> => {
+  //TODO: handle cargo id of configcargo
+
   const params = ep.includes('?') ? ep.split('?')[1] : null
   const model = ep.includes('?') ? ep.split('?')[0] : ep
 
