@@ -11,7 +11,7 @@ export interface AdminStoreState extends State {
 
   setAir: (air: AircraftDeep) => void
   setEp: (ep: string) => void
-  setEditObj: (editObj: Record<string, undefined> | undefined) => void
+  setEditObj: (editObj: Record<string, any> | undefined) => void
 }
 
 export const adminStore = create<AdminStoreState>((set, get) => ({
