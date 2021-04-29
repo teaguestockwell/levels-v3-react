@@ -4,14 +4,14 @@ import {Col, Row, Table} from 'antd'
 import {useMemo} from 'react'
 import {capitalizeFirst} from '../util'
 import {DeleteOutlined, EditOutlined} from '@ant-design/icons'
-import {UsePollingAtEP, adminActions} from '../hooks/use_admin_polling'
+import {usePolling, adminActions} from '../hooks/use_admin_polling'
 import {adminStore, getAdminStoreActions} from '../hooks/admin_store'
 
 const as = getAdminStoreActions()
 
 export const JsonTable = () => {
   const ep = adminStore((s) => s.ep)
-  const {data} = UsePollingAtEP(ep)
+  const {data} = usePolling(ep)
 
   const table = useMemo(() => {
     if (!data) {

@@ -1,6 +1,6 @@
 import {Button, Dropdown, Menu} from 'antd'
 import {useMemo} from 'react'
-import {UsePollingAtEP} from '../hooks/use_admin_polling'
+import {usePolling} from '../hooks/use_admin_polling'
 import {AircraftDeep} from '../types/aircraftDeep'
 import {DownOutlined} from '@ant-design/icons'
 import {MenuInfo} from 'rc-menu/lib/interface'
@@ -14,7 +14,7 @@ const as = getAdminStoreActions()
  implemented with short polling, zustand, and lodash equality
  */
 export const AdminAirSelect = () => {
-  const {data} = UsePollingAtEP('aircraft', 5000)
+  const {data} = usePolling('aircraft', 5000)
   const air = adminStore.getState().air
 
   const loading = <div>loading state</div>

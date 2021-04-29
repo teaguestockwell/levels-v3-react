@@ -326,3 +326,26 @@ describe('getPerMac', () => {
     })
   })
 })
+
+describe('removeNestedObj()', () =>{ 
+  it('returns new obj where obj.values !== Object',()=>{
+    const nestedObj = {
+      name: 'hello',
+      weight: 123,
+      nested0: [1,2,3],
+      nested1: {
+        name: 'hi',
+        nest: [
+          {
+            hi: 's'
+          }
+        ]
+      }
+    }
+
+    expect(util.removeNestedObj(nestedObj)).toStrictEqual({
+      name: 'hello',
+      weight: 123,
+    })
+  })
+})

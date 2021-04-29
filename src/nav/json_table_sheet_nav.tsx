@@ -12,6 +12,7 @@ const loading = <div>loading</div>
 export const AdminNav = () => {
   const ep = adminStore((s) => s.ep)
   const air = adminStore.getState().air
+  as.setEditObj(undefined)
   console.log('nav ep: ' + ep)
 
   const onClick = (menuInfo: MenuInfo) => {

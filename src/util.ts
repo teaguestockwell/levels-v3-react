@@ -369,3 +369,18 @@ export const sanitizeNewAirEP = (oldEp: string, newId: number) => {
 
   return `${getModelFromEP(oldEp)}?aircraftId=${newId}`
 }
+
+export const removeNestedObj = (obj:Record<string,any>):Record<string,any> => {
+  const filterKeys = []
+
+  for(const k in obj){
+    if(typeof obj[k]  !== 'object'){
+      filterKeys.push(k)
+    }
+  }
+
+  const filteredObj:{[key:string]:any} = {}
+  filterKeys.forEach(k => filteredObj[k] = obj[k])
+  
+  return filteredObj
+}

@@ -2,10 +2,10 @@ import {message} from 'antd'
 import axios from 'axios'
 import {useQuery} from 'react-query'
 import {v4} from 'uuid'
-import {getModelFromEP, getNewModelFromEP, getQueryString} from '../util'
+import {getModelFromEP, getNewModelFromEP, getQueryString, removeNestedObj} from '../util'
 import {adminStore} from './admin_store'
 
-export const UsePollingAtEP = (ep: string, refetchInterval = 2000) => {
+export const usePolling = (ep: string, refetchInterval = 2000) => {
   return useQuery(
     ep,
     async () => {
@@ -31,7 +31,10 @@ export const useGet1 = (ep: string) => {
 }
 
 const put1 = async (obj: any, ep: string): Promise<number> => {
-  return (await axios.put(process.env.REACT_APP_API_BASE_URL + ep, obj)).status
+  // remove all values that are an object
+  const shallowObj = removeNestedObj(obj)
+  
+  return (await axios.put(process.env.REACT_APP_API_BASE_URL + ep, shallowObj)).status
 }
 
 const delete1 = async (obj: any, ep: string): Promise<number> => {
