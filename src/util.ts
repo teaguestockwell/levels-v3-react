@@ -1,7 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {Const} from './const'
 import * as yup from 'yup'
-import {AircraftDeep, Cargo, Category, Config, getYupModelSchemas, Tank} from './types/aircraftDeep'
+import {
+  AircraftDeep,
+  Cargo,
+  Category,
+  Config,
+  getYupModelSchemas,
+  Tank,
+} from './types/aircraftDeep'
 import {CargoString, ChartCCargoString} from './types/cargoString'
 import {v4} from 'uuid'
 import {CargoCalculated, PerMac} from './types/perMac'
@@ -301,20 +308,20 @@ export const getQueryString = (obj: any) =>
     .join('&')
 
 /* given a models name, look at the yup schema an return list keys that an admin may edit for that model
-*
-**/
-export const getEditableKeysOfModel = (model: string):string[] => {
+ *
+ **/
+export const getEditableKeysOfModel = (model: string): string[] => {
   return Object.keys(getYupModelSchemas()[model])
     .filter((k: any) => k !== 'shallowObj')
-    .sort((a:any, b:any) => a.localeCompare(b))
+    .sort((a: any, b: any) => a.localeCompare(b))
 }
 
-export const getModelFromEP = (ep:string):string => {
+export const getModelFromEP = (ep: string): string => {
   console.log(ep)
   return ep.includes('?') ? ep.split('?')[0] : ep
 }
 
-export const getParamsFromEp = (ep:string): string | null => {
+export const getParamsFromEp = (ep: string): string | null => {
   return ep.includes('?') ? ep.split('?')[1] : null
 }
 
@@ -327,25 +334,39 @@ export const getParamsFromEp = (ep:string): string | null => {
   name: "create"
 }
  */
-export const getNewModelFromEP = (ep:string):Record<string,any> => {
+export const getNewModelFromEP = (ep: string): Record<string, any> => {
   //TODO: handle cargo id of configcargo
 
   const params = getParamsFromEp(ep)
   const model = getModelFromEP(ep)
 
   // use the url params to make obj
-  const idModel = params ? queryString.parse(params,{parseNumbers: true}) : {}
-  
-  const baseModelKeys = Object.keys(getYupModelSchemas()[model]).filter(k => k !== 'shallowObj')
-  
-  const baseModelObj: {[key:string]: unknown} = {}
-  for(const k of baseModelKeys){
+  const idModel = params ? queryString.parse(params, {parseNumbers: true}) : {}
+
+  const baseModelKeys = Object.keys(getYupModelSchemas()[model]).filter(
+    (k) => k !== 'shallowObj'
+  )
+
+  const baseModelObj: {[key: string]: unknown} = {}
+  for (const k of baseModelKeys) {
     baseModelObj[k] = ''
   }
 
- return {
-  ...baseModelObj,
-  ...idModel,
-  ...{[`${model}Id`]: 0}
+  return {
+    ...baseModelObj,
+    ...idModel,
+    ...{[`${model}Id`]: 0},
   }
+}
+
+export const sanitizeNewAirEP = (oldEp: string, newId: number) => {
+  if (!oldEp.includes('?')) {
+    return oldEp
+  }
+
+  if (oldEp.includes('configCargo')) {
+    return `config?aircraftId=${newId}`
+  }
+
+  return `${getModelFromEP(oldEp)}?aircraftId=${newId}`
 }

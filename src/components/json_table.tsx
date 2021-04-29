@@ -1,19 +1,17 @@
 /* eslint-disable react/display-name */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {Col, Row, Table} from 'antd'
-import {useMemo } from 'react'
-import {capitalizeFirst } from '../util'
+import {useMemo} from 'react'
+import {capitalizeFirst} from '../util'
 import {DeleteOutlined, EditOutlined} from '@ant-design/icons'
 import {UsePollingAtEP, adminActions} from '../hooks/use_admin_polling'
-import { adminStore, getAdminActions } from '../hooks/admin_store'
+import {adminStore, getAdminActions} from '../hooks/admin_store'
 
 const as = getAdminActions()
 
-
 export const JsonTable = () => {
-  const ep = adminStore(s => s.ep)
+  const ep = adminStore((s) => s.ep)
   const {data} = UsePollingAtEP(ep)
-
 
   const table = useMemo(() => {
     if (!data) {
@@ -77,7 +75,7 @@ export const JsonTable = () => {
         columns={columns}
       />
     )
-  }, [data,ep])
+  }, [data, ep])
 
   return table
 }

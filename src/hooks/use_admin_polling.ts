@@ -1,9 +1,9 @@
-import { message } from 'antd'
+import {message} from 'antd'
 import axios from 'axios'
 import {useQuery} from 'react-query'
-import { v4 } from 'uuid'
-import { getModelFromEP, getNewModelFromEP, getQueryString } from '../util'
-import { adminStore } from './admin_store'
+import {v4} from 'uuid'
+import {getModelFromEP, getNewModelFromEP, getQueryString} from '../util'
+import {adminStore} from './admin_store'
 
 export const UsePollingAtEP = (ep: string, refetchInterval = 2000) => {
   return useQuery(
@@ -18,7 +18,7 @@ export const UsePollingAtEP = (ep: string, refetchInterval = 2000) => {
   )
 }
 
-export const useGet1 = (ep:string) => {
+export const useGet1 = (ep: string) => {
   return useQuery(
     ep,
     async () => {
@@ -30,17 +30,12 @@ export const useGet1 = (ep:string) => {
   )
 }
 
-const put1 = async (obj:any,ep:string): Promise<number> => {
-  return (await axios.put(
-    process.env.REACT_APP_API_BASE_URL + ep,
-    obj
-  )).status
+const put1 = async (obj: any, ep: string): Promise<number> => {
+  return (await axios.put(process.env.REACT_APP_API_BASE_URL + ep, obj)).status
 }
 
-const delete1 = async (obj:any, ep:string): Promise<number> => {
-  return (await axios.delete(
-    process.env.REACT_APP_API_BASE_URL + ep
-  )).status
+const delete1 = async (obj: any, ep: string): Promise<number> => {
+  return (await axios.delete(process.env.REACT_APP_API_BASE_URL + ep)).status
 }
 
 const toastWrap = async (
@@ -62,28 +57,25 @@ const toastWrap = async (
   return success
 }
 
-
 export const adminActions = () => {
   const as = adminStore.getState()
 
   return {
     addNewRow: () => as.setEditObj(getNewModelFromEP(as.ep)),
     closeEditModal: () => as.setEditObj(undefined),
-    deleteRow: (row:any) => toastWrap(
-      delete1(
-         row, getModelFromEP(as.ep) + '?' + getQueryString(row)
+    deleteRow: (row: any) =>
+      toastWrap(
+        delete1(row, getModelFromEP(as.ep) + '?' + getQueryString(row)),
+        'Delet',
+        row.name
       ),
-      'Delet',
-      row.name
-    ),
-    openEditModal: (obj:any) => as.setEditObj(obj),
-    saveEditModal: (obj:any) => {
-      toastWrap(put1(obj,as.ep), 'edit', obj.name)
-      .then(ok => {
-        if(ok){
+    openEditModal: (obj: any) => as.setEditObj(obj),
+    saveEditModal: (obj: any) => {
+      toastWrap(put1(obj, as.ep), 'edit', obj.name).then((ok) => {
+        if (ok) {
           as.setEditObj(undefined)
         }
       })
-    }
+    },
   }
 }
