@@ -5,9 +5,9 @@ import {useMemo} from 'react'
 import {capitalizeFirst} from '../util'
 import {DeleteOutlined, EditOutlined} from '@ant-design/icons'
 import {UsePollingAtEP, adminActions} from '../hooks/use_admin_polling'
-import {adminStore, getAdminActions} from '../hooks/admin_store'
+import {adminStore, getAdminStoreActions} from '../hooks/admin_store'
 
-const as = getAdminActions()
+const as = getAdminStoreActions()
 
 export const JsonTable = () => {
   const ep = adminStore((s) => s.ep)

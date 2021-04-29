@@ -317,7 +317,6 @@ export const getEditableKeysOfModel = (model: string): string[] => {
 }
 
 export const getModelFromEP = (ep: string): string => {
-  console.log(ep)
   return ep.includes('?') ? ep.split('?')[0] : ep
 }
 

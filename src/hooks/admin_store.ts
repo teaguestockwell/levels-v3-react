@@ -21,7 +21,7 @@ export const adminStore = create<AdminStoreState>((set, get) => ({
 
   setAir: (air) => {
     set((s) => {
-      ;(s.ep = sanitizeNewAirEP(s.ep, air.aircraftId)), (s.air = air)
+      (s.ep = sanitizeNewAirEP(s.ep, air.aircraftId)), (s.air = air)
     })
   },
   setEp: (ep) =>
@@ -34,7 +34,7 @@ export const adminStore = create<AdminStoreState>((set, get) => ({
     }),
 }))
 
-export const getAdminActions = () => {
+export const getAdminStoreActions = () => {
   const s = adminStore.getState()
   return {
     setAir: s.setAir,

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {useEffect, useRef, useState} from 'react'
-import {Form, Input, Button} from 'antd'
+import {Form, Input, Button, Select} from 'antd'
 import {
   capitalizeFirst,
   getEditableKeysOfModel as getEditableKeysOfModelName,
@@ -9,9 +9,11 @@ import {
 } from '../util'
 import {v4} from 'uuid'
 import {getYupModelSchemas} from '../types/aircraftDeep'
-import {debounce} from 'lodash'
-import {adminStore} from '../hooks/admin_store'
+import {debounce, throttle} from 'lodash'
 import {adminActions} from '../hooks/use_admin_polling'
+import { adminStore, getAdminStoreActions } from '../hooks/admin_store'
+
+const as = getAdminStoreActions()
 
 export const AdminForm = ({obj, ep}: {obj: any; ep: string}) => {
   const [form] = Form.useForm()
@@ -22,22 +24,25 @@ export const AdminForm = ({obj, ep}: {obj: any; ep: string}) => {
   const [isValid, setIsValid] = useState(false)
   const formKey = useRef(v4()).current
 
+  
   const getIsValid = () =>
-    form.getFieldsError().every((v: any) => v.errors.length === 0)
-
+  form.getFieldsError().every((v: any) => v.errors.length === 0)
+  
+  console.log(getIsValid())
+  
   useEffect(() => {
     form.setFieldsValue(obj)
     setTimeout(() => {
       form.validateFields()
       setIsValid(getIsValid())
-    }, 1)
+    }, 20)
   }, [])
 
   const onChange = () => {
-    setIsValid(getIsValid())
-  }
+    const valid = getIsValid()
 
-  const onSave = () => {
+    if(!valid){setIsValid(false); return}
+
     const newObj = {...obj, ...form.getFieldsValue()}
     // remove values that are objects
     const shallowKeys = Object.keys(newObj).filter(
@@ -50,7 +55,14 @@ export const AdminForm = ({obj, ep}: {obj: any; ep: string}) => {
     // cast it to the correct type
     const casted = schema.shallowObj.cast(shallowObj)
 
-    adminActions().saveEditModal(casted)
+    as.setEditObj(casted)
+    setIsValid(true)
+  }
+
+  const onSave = () => {
+    adminActions().saveEditModal(
+      adminStore.getState().editObj
+    )
   }
 
   return (
@@ -73,7 +85,7 @@ export const AdminForm = ({obj, ep}: {obj: any; ep: string}) => {
           </Form.Item>
         ))}
       </Form>
-      <Button onClick={onSave} block disabled={!isValid}>
+      <Button onClick={throttle(onSave,500)} block disabled={!isValid}>
         Save
       </Button>
     </>

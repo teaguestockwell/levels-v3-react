@@ -4,10 +4,10 @@ import {UsePollingAtEP} from '../hooks/use_admin_polling'
 import {AircraftDeep} from '../types/aircraftDeep'
 import {DownOutlined} from '@ant-design/icons'
 import {MenuInfo} from 'rc-menu/lib/interface'
-import {adminStore, getAdminActions} from '../hooks/admin_store'
+import {adminStore, getAdminStoreActions} from '../hooks/admin_store'
 import isEqual from 'lodash/isEqual'
 
-const as = getAdminActions()
+const as = getAdminStoreActions()
 
 /**
  used to sync the server state of /aircrafts with selected air

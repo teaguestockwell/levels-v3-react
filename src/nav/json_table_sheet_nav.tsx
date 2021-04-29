@@ -2,11 +2,11 @@ import {Menu} from 'antd'
 import SubMenu from 'antd/lib/menu/SubMenu'
 import {MenuInfo} from 'rc-menu/lib/interface'
 import {DownOutlined} from '@ant-design/icons'
-import {adminStore, getAdminActions} from '../hooks/admin_store'
+import {adminStore, getAdminStoreActions} from '../hooks/admin_store'
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-const as = getAdminActions()
+const as = getAdminStoreActions()
 const loading = <div>loading</div>
 
 export const AdminNav = () => {
