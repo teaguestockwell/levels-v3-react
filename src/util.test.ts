@@ -11,6 +11,7 @@ import {
   getPerMac,
   getCargoStringFromChartC,
   getQueryString,
+  getQueryObjFromEP,
 } from './util'
 
 describe('cut()', () =>
@@ -346,6 +347,19 @@ describe('removeNestedObj()', () =>{
     expect(util.removeNestedObj(nestedObj)).toStrictEqual({
       name: 'hello',
       weight: 123,
+    })
+  })
+})
+
+describe('getQueryObjFromEP()', () => {
+  it('return an obj with query params given an endpoint', () => {
+    const ep = 'configCargo?aircraftId=1&configId=1'
+    const qsObj = getQueryObjFromEP(ep)
+
+    expect(qsObj).toStrictEqual({
+      aircraftId: 1,
+      configId: 1,
+      model: 'configCargo'
     })
   })
 })

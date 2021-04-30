@@ -3,6 +3,7 @@ import SubMenu from 'antd/lib/menu/SubMenu'
 import {MenuInfo} from 'rc-menu/lib/interface'
 import {DownOutlined} from '@ant-design/icons'
 import {adminStore, getAdminStoreActions} from '../hooks/admin_store'
+import { getQueryObjFromEP } from '../util'
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
@@ -19,6 +20,14 @@ export const AdminNav = () => {
     as.setEp(String(menuInfo.key))
   }
 
+  const getSubMenuTitle = () => {
+    if(!ep.includes('configCargo')){return 'Cargos in Config'}
+
+    const queryObj = getQueryObjFromEP(ep)
+    const configName = air?.configs.find(c => c.configId === queryObj.configId)?.name ?? 'No Config'
+    return `Cargos in ${configName}`
+  } 
+
   return air ? (
     <Menu mode="horizontal" onClick={onClick} selectedKeys={[ep]}>
       <Menu.Item key={`aircraft`}>{'All Aircraft'}</Menu.Item>
@@ -33,7 +42,7 @@ export const AdminNav = () => {
       <Menu.Item key={`config?aircraftId=${air.aircraftId}`}>
         {'Configs'}
       </Menu.Item>
-      <SubMenu title={'Cargos in Config'} icon={<DownOutlined />}>
+      <SubMenu title={getSubMenuTitle()} icon={<DownOutlined/>}>
         {air.configs.map((c) => (
           <Menu.Item
             key={`configCargo?aircraftId=${air.aircraftId}&configId=${c.configId}`}

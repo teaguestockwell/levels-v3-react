@@ -384,3 +384,10 @@ export const removeNestedObj = (obj:Record<string,any>):Record<string,any> => {
   
   return filteredObj
 }
+
+export const getQueryObjFromEP = (ep:string):Record<string,any> => {
+  const model = getModelFromEP(ep)
+  const params = getParamsFromEp(ep) ?? ''
+  const queryObj = queryString.parse(params, {parseNumbers: true})
+  return {...queryObj, model}
+}
