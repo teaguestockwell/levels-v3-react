@@ -7,7 +7,7 @@ import { adminStore } from '../hooks/admin_store'
 import { mockAircraftsDeep } from '../testUtils/mock_aircrafts_deep'
 
 let matchMedia
-const ep = 'configCargo?config=1&aircraftId=1'
+const ep = 'configCargo?config=20&aircraftId=2'
 const air = mockAircraftsDeep[1]
 const initEditObj = {
   name:"Flare Hazard Placards (Note 1)",
@@ -31,9 +31,9 @@ const initEditObj = {
 
 const setup = () => {
   const store = adminStore.getState()
+  store.setAir(air)
   store.setEp(ep)
   store.setEditObj(initEditObj)
-  store.setAir(air)
 }
 
 
@@ -45,15 +45,15 @@ describe('AdminForm', () => {
 
   it('will render', async () => {
     setup()
-    const ct = renderWrapped(<AdminForm obj={initEditObj} ep={ep}/>)
+    const ct = renderWrapped(<AdminForm/>)
     await waitFor(() => expect(ct.queryAllByText('Loading Test').length).toBe(0))
     await waitFor(() => expect(ct.getByText('Fs')).toBeInTheDocument())
   }) 
 
-  it('will update api state on save', async () => {
+  it('will update api on save', async () => {
     //given an admin form
     setup()
-    const ct = renderWrapped(<AdminForm obj={initEditObj} ep={ep}/>)
+    const ct = renderWrapped(<AdminForm/>)
     await waitFor(() => expect(ct.queryAllByText('Loading Test').length).toBe(0))
     await waitFor(() => expect(ct.getByText('Fs')).toBeInTheDocument())
 

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Select } from "antd"
+import { Form, Select } from "antd"
 import { adminStore, getAdminStoreActions } from "../hooks/admin_store";
 const { Option } = Select;
 
@@ -24,11 +24,13 @@ export const AdminCargoSelect = ({validate}: {validate: () => void}) => {
   }
   
   const onChange = (newCargoId:number) => {
+
     // get fresh state, because this component is memoized, and the 
     // form amy have been edited
     store.setEditObj({
       ...adminStore.getState().editObj,
-      cargoId: newCargoId
+      cargoId: newCargoId,
+      name: (cargos.find(c => c.cargoId === newCargoId)as any).name
     })
 
     // callback to form to revalidate with fresh cargoId

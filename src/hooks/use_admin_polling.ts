@@ -33,6 +33,10 @@ export const useGet1 = (ep: string) => {
 const put1 = async (obj: any, ep: string): Promise<number> => {
   // remove all values that are an object
   const shallowObj = removeNestedObj(obj)
+
+  // name is not a prop on config cargo because it is derived from its cargoId
+  // we use name up until this point for toast
+  if(ep.includes('configCargo')){delete shallowObj.name}
   
   return (await axios.put(process.env.REACT_APP_API_BASE_URL + ep, shallowObj)).status
 }
@@ -73,7 +77,8 @@ export const adminActions = () => {
         row.name
       ),
     openEditModal: (obj: any) => as.setEditObj(obj),
-    saveEditModal: (obj: any) => {
+    saveEditModal: () => {
+      const obj = as.editObj as any
       toastWrap(put1(obj, as.ep), 'sav', obj.name).then((ok) => {
         if (ok) {
           as.setEditObj(undefined)

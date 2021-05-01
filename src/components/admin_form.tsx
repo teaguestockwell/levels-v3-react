@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react'
-import {Form, Input, Button, Select} from 'antd'
+import {useLayoutEffect, useMemo, useRef, useState} from 'react'
+import {Form, Input, Button } from 'antd'
 import {
   capitalizeFirst,
   getEditableKeysOfModel as getEditableKeysOfModelName,
   getModelFromEP,
-  removeNestedObj,
   rulesYupWrapper,
 } from '../util'
 import {v4} from 'uuid'
@@ -17,96 +16,72 @@ import { AdminCargoSelect } from './admin_cargo_select'
 
 const as = getAdminStoreActions()
 
-export const AdminForm = ({obj, ep}: {obj: any; ep: string}) => {
-  const [form] = Form.useForm()
+export const AdminForm = () => {
   const [isValid, setIsValid] = useState(false)
+  const [form] = Form.useForm()
   const formKey = useRef(v4()).current
-
-  const modelName = getModelFromEP(ep)
+  const ep = useRef(adminStore.getState().ep).current
+  const modelName = useRef(getModelFromEP(ep)).current
   const schema = useRef(getYupModelSchemas()[modelName]).current as any
 
-  
-  const getIsValid = () => {
+  const validateAll = () => {
+    const isTextInputValid = form.getFieldsError().every((v: any) => v.errors.length === 0)
     // if there is no cargo select, only validate the fields
     if(!ep.includes('configCargo')){
-      return form.getFieldsError().every((v: any) => v.errors.length === 0)
+      return isTextInputValid
     }
 
-    const fields  = form.getFieldsError().every((v: any) => v.errors.length === 0)
-    const cargoId = (adminStore.getState().editObj as any).cargoId
-    
+    const isCargoIdValid = (adminStore.getState().editObj as any).cargoId ? true : false
+
     // else, both will be validated
-    if(fields && cargoId){
-      return true
-    }
+    return isTextInputValid && isCargoIdValid
+  } 
 
-    return false
-  }
-  
-  const validateCallback = () => {
-    console.log('admin form validate callback')
-    const newValid = getIsValid()
+  // compare validate between current state and old state before setting state
+  const setIsValidWrapper = (newValid:boolean) => {
     newValid === isValid ? null : setIsValid(newValid)
   }
 
-  
+  // init validation state
   useLayoutEffect(() => {   
-    form.setFieldsValue(obj)
+    form.setFieldsValue(adminStore.getState().editObj)
     setTimeout(() => {
-
-      if(ep.includes('configCargo') && adminStore.getState().editObj?.cargoId  != obj.cargoId){
-        as.setEditObj(obj)
-      }
-
-      form.validateFields().then(() =>
-        setIsValid(getIsValid())
-      )
+      form.validateFields().then(() => setIsValidWrapper(validateAll()))
     }, 1)
   }, [])
 
   const onChange = () => {
-    const validField = form.getFieldsError().every((v: any) => v.errors.length === 0)
-    if(validField){
-      const shallowObj = removeNestedObj(
-        {
-          ...obj,
-          ...form.getFieldsValue()
-        }
-      )
-      
-      // cast it to the correct type
-      const casted = schema.shallowObj.cast(shallowObj)
-  
-      if(ep.includes('configCargo')){
-        const cargoId = adminStore.getState().editObj?.cargoId
-        as.setEditObj({...casted, cargoId})
-      } else{
-        as.setEditObj(casted)
-      }
-    }
-    
+    const newValid = validateAll()
 
-    validateCallback()
+    if(newValid){
+      const globalState = adminStore.getState().editObj
+      const formFieldState = form.getFieldsValue()
+  
+      const newStateMergedAndCast = schema.shallowObj.cast({
+        ...globalState,
+        ...formFieldState
+      })
+
+      as.setEditObj(newStateMergedAndCast)
+    }
+
+    setIsValidWrapper(newValid)
   }
 
   const onSave = () => {
-    console.log('on save admin form')
     // safe guard while form is still validating and save is still enabled
-    if(!getIsValid()){return}
+    if(!validateAll()){return}
 
-    // nested props like name may not be inside of edit store, add them in
-    adminActions().saveEditModal(
-      {...obj,...adminStore.getState().editObj}
-    )
+    adminActions().saveEditModal()
   }
 
   const cargoSelect = useMemo(() => {
-    return <AdminCargoSelect validate={validateCallback}/>
-  },[ep,obj])
+    return <AdminCargoSelect validate={() => setIsValidWrapper(validateAll())}/>
+  },[])
 
   return (
     <>
-      {cargoSelect}
+        {cargoSelect}
       <Form key={formKey + '_form'} form={form}>
         {getEditableKeysOfModelName(modelName).map((k) => (
           <Form.Item

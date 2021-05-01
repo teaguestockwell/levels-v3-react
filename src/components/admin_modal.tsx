@@ -13,7 +13,6 @@ export const AdminModal = () => {
 
 
   const form = useMemo(() => {
-    const as = adminStore.getState()
     return isOpen ? (
       <Modal
         visible={true}
@@ -22,7 +21,7 @@ export const AdminModal = () => {
         centered
         closable={false}
       >
-        <AdminForm obj={as.editObj} ep={as.ep} />
+        <AdminForm  />
       </Modal>
     ) : null
   }, [isOpen])
