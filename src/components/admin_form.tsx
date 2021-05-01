@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {useEffect, useMemo, useRef, useState} from 'react'
+import {useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react'
 import {Form, Input, Button, Select} from 'antd'
 import {
   capitalizeFirst,
   getEditableKeysOfModel as getEditableKeysOfModelName,
   getModelFromEP,
+  removeNestedObj,
   rulesYupWrapper,
 } from '../util'
 import {v4} from 'uuid'
@@ -18,12 +19,11 @@ const as = getAdminStoreActions()
 
 export const AdminForm = ({obj, ep}: {obj: any; ep: string}) => {
   const [form] = Form.useForm()
-
-  const modelName = getModelFromEP(ep)
-
-  const schema = useRef(getYupModelSchemas()[modelName]).current as any
   const [isValid, setIsValid] = useState(false)
   const formKey = useRef(v4()).current
+
+  const modelName = getModelFromEP(ep)
+  const schema = useRef(getYupModelSchemas()[modelName]).current as any
 
   
   const getIsValid = () => {
@@ -35,7 +35,6 @@ export const AdminForm = ({obj, ep}: {obj: any; ep: string}) => {
     const fields  = form.getFieldsError().every((v: any) => v.errors.length === 0)
     const cargoId = (adminStore.getState().editObj as any).cargoId
     
-    console.log('validation fired. cargoId: ' + cargoId)
     // else, both will be validated
     if(fields && cargoId){
       return true
@@ -45,12 +44,13 @@ export const AdminForm = ({obj, ep}: {obj: any; ep: string}) => {
   }
   
   const validateCallback = () => {
+    console.log('admin form validate callback')
     const newValid = getIsValid()
     newValid === isValid ? null : setIsValid(newValid)
   }
 
   
-  useEffect(() => {
+  useLayoutEffect(() => {   
     form.setFieldsValue(obj)
     setTimeout(() => {
 
@@ -66,17 +66,14 @@ export const AdminForm = ({obj, ep}: {obj: any; ep: string}) => {
 
   const onChange = () => {
     const validField = form.getFieldsError().every((v: any) => v.errors.length === 0)
-
     if(validField){
-      const newObj = {...obj, ...form.getFieldsValue()}
-      // remove values that are objects
-      const shallowKeys = Object.keys(newObj).filter(
-        (k) => typeof obj[k] !== 'object'
+      const shallowObj = removeNestedObj(
+        {
+          ...obj,
+          ...form.getFieldsValue()
+        }
       )
-      const shallowObj = Object.fromEntries(
-        shallowKeys.map((k) => [k, newObj[k]])
-      )
-  
+      
       // cast it to the correct type
       const casted = schema.shallowObj.cast(shallowObj)
   
@@ -88,10 +85,12 @@ export const AdminForm = ({obj, ep}: {obj: any; ep: string}) => {
       }
     }
     
+
     validateCallback()
   }
 
   const onSave = () => {
+    console.log('on save admin form')
     // safe guard while form is still validating and save is still enabled
     if(!getIsValid()){return}
 
@@ -102,15 +101,6 @@ export const AdminForm = ({obj, ep}: {obj: any; ep: string}) => {
   }
 
   const cargoSelect = useMemo(() => {
-    if(!ep.includes('configCargo')){return}
-
-    const store = adminStore.getState()
-
-    if((store.air?.cargos ?? []).length === 0){
-      return <div>Please add cargo to insert into config</div>
-    }
-
-
     return <AdminCargoSelect validate={validateCallback}/>
   },[ep,obj])
 

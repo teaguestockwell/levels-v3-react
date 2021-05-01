@@ -69,12 +69,12 @@ export const adminActions = () => {
     deleteRow: (row: any) =>
       toastWrap(
         delete1(row, getModelFromEP(as.ep) + '?' + getQueryString(row)),
-        'Delet',
+        'delet',
         row.name
       ),
     openEditModal: (obj: any) => as.setEditObj(obj),
     saveEditModal: (obj: any) => {
-      toastWrap(put1(obj, as.ep), 'edit', obj.name).then((ok) => {
+      toastWrap(put1(obj, as.ep), 'sav', obj.name).then((ok) => {
         if (ok) {
           as.setEditObj(undefined)
         }

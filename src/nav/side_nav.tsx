@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {formatDate} from '../util'
 import {Mac} from '../pages/mac'
 import {Admin} from '../pages/admin'
@@ -15,7 +16,7 @@ export const SideNav = () => {
       <h1>{`Last updated ${lastUpdated}`}</h1>
 
       <Mac />
-      <Admin />
+      <Admin/>
     </>
   )
 }

@@ -10,7 +10,7 @@ export const AdminModal = () => {
     (s) => (s.editObj ? true : false),
     (s0, s1) => s0 && s1
   )
-  console.log('admin modal rendered as: ' + isOpen)
+
 
   const form = useMemo(() => {
     const as = adminStore.getState()

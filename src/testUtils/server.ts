@@ -6,6 +6,10 @@ const endPoints = [
   rest.get('http://localhost:8080/fl-api/aircraft', (req, res, ctx) => {
     return res(ctx.status(200), ctx.body(mockAircraftDeepString))
   }),
+
+  rest.put('http://localhost:8080/fl-api/*',(req,res,ctx) => {
+    return res(ctx.status(200))
+  })
 ]
 
 export const server = setupServer(...endPoints)
