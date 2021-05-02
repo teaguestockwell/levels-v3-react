@@ -7,7 +7,19 @@ const endPoints = [
     return res(ctx.status(200), ctx.body(mockAircraftDeepString))
   }),
 
+  rest.get('http://localhost:8080/fl-api/empty', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.body('[]'))
+  }),
+
+  rest.get('http://localhost:8080/fl-api/error', (req, res, ctx) => {
+    return res(ctx.status(400), ctx.body('error'))
+  }),
+
   rest.put('http://localhost:8080/fl-api/*',(req,res,ctx) => {
+    return res(ctx.status(200))
+  }),
+
+  rest.delete('http://localhost:8080/fl-api/*',(req,res,ctx) => {
     return res(ctx.status(200))
   })
 ]
