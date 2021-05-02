@@ -1,15 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {useLayoutEffect, useMemo, useRef, useState} from 'react'
 import {Form, Input, Button } from 'antd'
-import {
-  capitalizeFirst,
-  getEditableKeysOfModel as getEditableKeysOfModelName,
-  getModelFromEP,
-  rulesYupWrapper,
-} from '../util'
-import {v4} from 'uuid'
-import {getYupModelSchemas} from '../types/aircraftDeep'
 import {debounce, throttle} from 'lodash'
+import {v4} from 'uuid'
+import * as util from '../util'
+import {getYupModelSchemas} from '../types/aircraftDeep'
 import {adminActions} from '../hooks/use_admin_polling'
 import { adminStore, getAdminStoreActions } from '../hooks/admin_store'
 import { AdminCargoSelect } from './admin_cargo_select'
@@ -21,7 +16,7 @@ export const AdminForm = () => {
   const [form] = Form.useForm()
   const formKey = useRef(v4()).current
   const ep = useRef(adminStore.getState().ep).current
-  const modelName = useRef(getModelFromEP(ep)).current
+  const modelName = useRef(util.getModelFromEP(ep)).current
   const schema = useRef(getYupModelSchemas()[modelName]).current as any
 
   const validateAll = () => {
@@ -31,7 +26,7 @@ export const AdminForm = () => {
       return isTextInputValid
     }
 
-    const isCargoIdValid = (adminStore.getState().editObj as any).cargoId ? true : false
+    const isCargoIdValid = (adminStore.getState().editObj ?? {}).cargoId ? true : false
 
     // else, both will be validated
     return isTextInputValid && isCargoIdValid
@@ -83,13 +78,13 @@ export const AdminForm = () => {
     <>
         {cargoSelect}
       <Form key={formKey + '_form'} form={form}>
-        {getEditableKeysOfModelName(modelName).map((k) => (
+        {util.getEditableKeysOfModel(modelName).map((k) => (
           <Form.Item
             key={formKey + k + 'form_item'}
             name={`${k}`}
-            label={`${capitalizeFirst(k)}`}
+            label={`${util.capitalizeFirst(k)}`}
             colon={false}
-            rules={rulesYupWrapper(schema[k])}
+            rules={util.rulesYupWrapper(schema[k])}
             hasFeedback
           >
             <Input
