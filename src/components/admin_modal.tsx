@@ -13,7 +13,6 @@ export const AdminModal = () => {
 
   console.log(isOpen)
 
-
   const form = useMemo(() => {
     return isOpen ? (
       <Modal
@@ -23,7 +22,7 @@ export const AdminModal = () => {
         centered
         closable={false}
       >
-        <AdminForm  />
+        <AdminForm />
       </Modal>
     ) : null
   }, [isOpen])

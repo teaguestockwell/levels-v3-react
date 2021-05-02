@@ -16,7 +16,6 @@ export const ConfigSelect = () => {
   const configEnums = [Category.Emergency, Category.Extra, Category.Steward]
 
   const onConfigChange = async (menuInfo: MenuInfo) => {
-
     // get config from selection
     const newConfigId = Number(menuInfo.key)
     let newConfig: Config

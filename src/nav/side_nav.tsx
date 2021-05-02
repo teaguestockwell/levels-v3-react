@@ -16,7 +16,7 @@ export const SideNav = () => {
       <h1>{`Last updated ${lastUpdated}`}</h1>
 
       <Mac />
-      <Admin/>
+      <Admin />
     </>
   )
 }

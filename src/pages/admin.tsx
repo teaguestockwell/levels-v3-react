@@ -18,7 +18,6 @@ export const Admin = () => {
   useAir()
   return (
     <>
-      
       <AdminAirSelect key={v4()} />
       <Button key={v4()} onClick={() => adminActions().addNewRow()}>
         Add New

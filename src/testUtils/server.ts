@@ -15,13 +15,13 @@ const endPoints = [
     return res(ctx.status(400), ctx.body('error'))
   }),
 
-  rest.put('http://localhost:8080/fl-api/*',(req,res,ctx) => {
+  rest.put('http://localhost:8080/fl-api/*', (req, res, ctx) => {
     return res(ctx.status(200))
   }),
 
-  rest.delete('http://localhost:8080/fl-api/*',(req,res,ctx) => {
+  rest.delete('http://localhost:8080/fl-api/*', (req, res, ctx) => {
     return res(ctx.status(200))
-  })
+  }),
 ]
 
 export const server = setupServer(...endPoints)

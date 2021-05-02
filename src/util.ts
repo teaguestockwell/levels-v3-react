@@ -370,22 +370,24 @@ export const sanitizeNewAirEP = (oldEp: string, newId: number) => {
   return `${getModelFromEP(oldEp)}?aircraftId=${newId}`
 }
 
-export const removeNestedObj = (obj:Record<string,any>):Record<string,any> => {
+export const removeNestedObj = (
+  obj: Record<string, any>
+): Record<string, any> => {
   const filterKeys = []
 
-  for(const k in obj){
-    if(typeof obj[k]  !== 'object'){
+  for (const k in obj) {
+    if (typeof obj[k] !== 'object') {
       filterKeys.push(k)
     }
   }
 
-  const filteredObj:{[key:string]:any} = {}
-  filterKeys.forEach(k => filteredObj[k] = obj[k])
-  
+  const filteredObj: {[key: string]: any} = {}
+  filterKeys.forEach((k) => (filteredObj[k] = obj[k]))
+
   return filteredObj
 }
 
-export const getQueryObjFromEP = (ep:string):Record<string,any> => {
+export const getQueryObjFromEP = (ep: string): Record<string, any> => {
   const model = getModelFromEP(ep)
   const params = getParamsFromEp(ep) ?? ''
   const queryObj = queryString.parse(params, {parseNumbers: true})

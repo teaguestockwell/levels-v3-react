@@ -2,7 +2,12 @@ import {message} from 'antd'
 import axios from 'axios'
 import {useQuery} from 'react-query'
 import {v4} from 'uuid'
-import {getModelFromEP, getNewModelFromEP, getQueryString, removeNestedObj} from '../util'
+import {
+  getModelFromEP,
+  getNewModelFromEP,
+  getQueryString,
+  removeNestedObj,
+} from '../util'
 import {adminStore} from './admin_store'
 
 export const usePolling = (ep: string, refetchInterval = 2000) => {
@@ -36,9 +41,12 @@ const put1 = async (obj: any, ep: string): Promise<number> => {
 
   // name is not a prop on config cargo because it is derived from its cargoId
   // we use name up until this point for toast
-  if(ep.includes('configCargo')){delete shallowObj.name}
-  
-  return (await axios.put(process.env.REACT_APP_API_BASE_URL + ep, shallowObj)).status
+  if (ep.includes('configCargo')) {
+    delete shallowObj.name
+  }
+
+  return (await axios.put(process.env.REACT_APP_API_BASE_URL + ep, shallowObj))
+    .status
 }
 
 const delete1 = async (obj: any, ep: string): Promise<number> => {

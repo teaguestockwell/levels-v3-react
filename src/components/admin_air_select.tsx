@@ -29,7 +29,6 @@ export const AdminAirSelect = () => {
 
   // do not render on every req, only when res is different
   const airSelect = useMemo(() => {
-
     // while !res from server
     if (!data) {
       return loading
@@ -56,7 +55,7 @@ export const AdminAirSelect = () => {
     const serverStateOfSelectedAir = data.find(
       (a: any) => a.aircraftId === air.aircraftId
     )
-    
+
     // while client air is not in server res,
     // set client air selection to first air from res
     if (!serverStateOfSelectedAir) {
@@ -69,18 +68,15 @@ export const AdminAirSelect = () => {
       as.setAir(serverStateOfSelectedAir)
       return loading
     }
- 
+
     // while client air selection and server state are synced
     return (
-      <Select
-        defaultValue={air.aircraftId}
-        onChange={onAirChange}
-      >
-      {
-        data.map((a: AircraftDeep) =>  (
-          <Option key={a.aircraftId} value={a.aircraftId}>{a.name}</Option>
-        ))
-      }
+      <Select defaultValue={air.aircraftId} onChange={onAirChange}>
+        {data.map((a: AircraftDeep) => (
+          <Option key={a.aircraftId} value={a.aircraftId}>
+            {a.name}
+          </Option>
+        ))}
       </Select>
     )
   }, [data])
