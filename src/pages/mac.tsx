@@ -28,6 +28,14 @@ export const Mac = () => {
       <GetMacButton key={v4()} />
 
       <TankList key={v4()} />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
       <ChartC key={v4()} />
 
       <CargoList

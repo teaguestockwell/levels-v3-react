@@ -8,6 +8,9 @@ import {useMemo, useState} from 'react'
 import {getCargoStringFromTank} from '../util'
 import {getAir} from '../hooks/air_store'
 
+import fuelGauge from './../images/fuelGauge.png'
+import fuelGaugePointer from './../images/fuelGaugePointer.png'
+
 const cs = getActionsCS()
 
 export const TankRow = ({
@@ -16,6 +19,7 @@ export const TankRow = ({
 }: {
   tank: Tank
   cargoString: CargoString
+  // tankMax: number
 }) => {
   const weights = useMemo(() => tank.weightsCSV.split(','), [tank])
   const [weight, setWeight] = useState(weights[0])
@@ -49,11 +53,30 @@ export const TankRow = ({
     ),
     []
   )
+  const tankMax = 1000
+  console.log('weight', weight)
+  const rotateDeg = (parseInt(weight) / tankMax) * 180
+  console.log('rotateDeg', rotateDeg)
 
   return (
     <Dropdown overlay={menu} trigger={['click']}>
       <Button>
-        {`${tank.name}: ${weight}`}
+        <div>
+          {tank.name}
+          <br />
+          <img src={fuelGauge} />
+          <img
+            src={fuelGaugePointer}
+            style={{
+              position: 'absolute',
+              left: '53px',
+              top: '70px',
+              transform: 'rotate(' + rotateDeg + 'deg)',
+            }}
+          />
+          <br />
+          {weight}
+        </div>
         <DownOutlined />
       </Button>
     </Dropdown>
