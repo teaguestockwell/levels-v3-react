@@ -5,6 +5,7 @@ import {AddCustomCargo} from '../components/add_custom_cargo'
 import {AirSelect} from '../components/air_select'
 import {CargoList} from '../components/cargo_list'
 import {ChartC} from '../components/chart_c'
+import {Clock} from '../components/clock'
 import {ConfigSelect} from '../components/config_select'
 import {GetMacButton} from '../components/get_mac_button'
 import {PerMac} from '../components/per_mac'
@@ -18,6 +19,7 @@ export const Mac = () => {
 
   return (
     <>
+      <Clock />
       <Logger />
       <PerMac />
       <AirSelect />

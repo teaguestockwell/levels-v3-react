@@ -20,17 +20,29 @@ export const cut = (x: any): string => {
     ? x.toString().substring(0, Const.MAX_FORM_LENGTH - 3) + '...'
     : x.toString()
 }
-export const formatDate = (date: Date) => {
-  const get2SignificantDigits = (num: number): string => {
-    return num.toString().length === 2 ? num.toString() : '0' + num.toString()
-  }
+const getLeading0 = (num: number): string => {
+  const str = num.toString()
+  return str.length === 2 ? str : `0${str}`
+}
 
+export const formatDate = (date: Date) => {
   const year = date.getUTCFullYear()
-  const month = get2SignificantDigits(date.getUTCMonth() + 1) // who made this zero based? nerd
-  const day = get2SignificantDigits(date.getUTCDate())
-  const hour = get2SignificantDigits(date.getUTCHours())
-  const min = get2SignificantDigits(date.getUTCMinutes())
+  const month = getLeading0(date.getUTCMonth() + 1) // who made this zero based? nerd
+  const day = getLeading0(date.getUTCDate())
+  const hour = getLeading0(date.getUTCHours())
+  const min = getLeading0(date.getUTCMinutes())
   return `${year}-${month}-${day} ${hour}:${min} Zulu`
+}
+
+export const getUTCDate = (date: Date) => {
+  return new Date(
+    date.getUTCFullYear(),
+    date.getUTCMonth(),
+    date.getUTCDate(),
+    date.getUTCHours(),
+    date.getUTCMinutes(),
+    date.getUTCSeconds()
+  )
 }
 
 export const capitalizeFirst = (str: string) => {

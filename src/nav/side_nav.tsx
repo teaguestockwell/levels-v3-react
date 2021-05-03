@@ -10,11 +10,8 @@ import {Admin} from '../pages/admin'
 // if pages are components rendered from selected page state: how can their individual state be persisted
 
 export const SideNav = () => {
-  const lastUpdated = formatDate(new Date(Date.now()))
   return (
     <>
-      <h1>{`Last updated ${lastUpdated}`}</h1>
-
       <Mac />
       <Admin />
     </>

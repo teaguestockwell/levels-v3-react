@@ -22,8 +22,7 @@ describe('ConfigSelect', () => {
     fireEvent.mouseDown(getByText('No Config'))
     await waitFor(() => expect(queryAllByText('AE-2').length).toBe(1))
     fireEvent.click(getByText('AE-2'))
-    
- 
+
     // then
     await waitFor(() => {
       expect(CargoStore.getState().config.name).toBe('AE-2')
