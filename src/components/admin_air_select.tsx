@@ -4,6 +4,7 @@ import {usePolling} from '../hooks/use_admin_polling'
 import {AircraftDeep} from '../types/aircraftDeep'
 import {adminStore, getAdminStoreActions} from '../hooks/admin_store'
 import isEqual from 'lodash/isEqual'
+import { Const } from '../const'
 
 const as = getAdminStoreActions()
 const {Option} = Select
@@ -22,8 +23,8 @@ export const AdminAirSelect = () => {
 
   // use the key of the client state to find new data in server state,
   // then set client state
-  const onAirChange = (newAirId: number) => {
-    const serverAir = data.find((x: any) => x.aircraftId === newAirId)
+  const onAirChange = (newName: string) => {
+    const serverAir = data.find((x: any) => x.name === newName)
     as.setAir(serverAir)
   }
 
@@ -71,9 +72,9 @@ export const AdminAirSelect = () => {
 
     // while client air selection and server state are synced
     return (
-      <Select defaultValue={air.aircraftId} onChange={onAirChange}>
+      <Select defaultValue={air.name} onChange={onAirChange} showSearch style={{width: Const.SELECT_WIDTH}}>
         {data.map((a: AircraftDeep) => (
-          <Option key={a.aircraftId} value={a.aircraftId}>
+          <Option key={a.aircraftId} value={a.name}>
             {a.name}
           </Option>
         ))}

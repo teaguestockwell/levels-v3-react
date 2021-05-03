@@ -14,13 +14,13 @@ describe('AirSelect', () => {
     expect(AirStore.getState().selectedAir?.name).toBe('C-17A-ER')
     const oldSchema = AirStore.getState().cargoSchema
 
-    const {getByText, queryAllByText} = renderWrapped(<AirSelect />)
+    const {getByText, queryAllByText,} = renderWrapped(<AirSelect />)
     await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
 
-    fireEvent.click(getByText('C-17A-ER'))
-    await waitFor(() => expect(queryAllByText('C-17A-ER').length).toBe(2))
-    fireEvent.click(getByText('C-17A'))
-
+    fireEvent.mouseDown(getByText('C-17A-ER'))
+    await waitFor(() => expect(queryAllByText('C-17A')[0]).toBeTruthy());
+    fireEvent.click(queryAllByText('C-17A')[1])
+ 
     expect(oldSchema).not.toEqual(AirStore.getState().cargoSchema)
     expect(AirStore.getState().selectedAir?.name).toBe('C-17A')
   })

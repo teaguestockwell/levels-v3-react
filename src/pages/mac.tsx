@@ -20,7 +20,6 @@ export const Mac = () => {
     <>
       <Logger />
       <PerMac />
-
       <AirSelect />
       <AddASelect key={v4()} />
       <AddCustomCargo key={v4()} />

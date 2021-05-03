@@ -20,12 +20,13 @@ describe('ConfigSelect', () => {
 
     // when config is changed
     fireEvent.mouseDown(getByText('No Config'))
-    await waitFor(() => expect(queryAllByText('AE-1').length).toBe(1))
-    fireEvent.click(getByText('AE-1'))
-
+    await waitFor(() => expect(queryAllByText('AE-2').length).toBe(1))
+    fireEvent.click(getByText('AE-2'))
+    
+ 
     // then
     await waitFor(() => {
-      expect(CargoStore.getState().config.name).toBe('AE-1')
+      expect(CargoStore.getState().config.name).toBe('AE-2')
       expect(CargoStore.getState().cargoMap.size).not.toBe(0)
     })
   })

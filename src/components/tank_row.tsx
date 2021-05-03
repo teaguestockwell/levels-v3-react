@@ -1,32 +1,33 @@
-import {Button, Dropdown, Menu} from 'antd'
 import {Tank} from '../types/aircraftDeep'
-import {DownOutlined} from '@ant-design/icons'
-import {MenuInfo} from 'rc-menu/lib/interface'
 import {getActionsCS} from '../hooks/cargo_store'
 import {CargoString} from '../types/cargoString'
-import {useMemo, useState} from 'react'
 import {getCargoStringFromTank} from '../util'
 import {getAir} from '../hooks/air_store'
+import {Select} from 'antd'
+import { Const } from '../const'
 
+const {Option} = Select
 const cs = getActionsCS()
 
-export const TankRow = ({
-  tank,
-  cargoString,
-}: {
-  tank: Tank
-  cargoString: CargoString
-}) => {
-  const weights = useMemo(() => tank.weightsCSV.split(','), [tank])
-  const [weight, setWeight] = useState(weights[0])
-
-  const onClick = (menuInfo: MenuInfo) => {
+export const TankRow = (
+  {
+    tank,
+    cargoString
+  }:
+  {
+    tank: Tank
+    cargoString: CargoString
+  }
+) => {
+  const weights = tank.weightsCSV.split(',')
+  const onChange = (newWeight:string) => {
     // get new cargo string from tank with new index
     // to update fs && weightEA
     // override uuid
+    const newIdx = weights.findIndex(w => w === newWeight)
     const newCargoString = {
       ...getCargoStringFromTank({
-        idx: Number(String(menuInfo.key).split(',')[0]),
+        idx: newIdx,
         tank,
         momMultiplyer: getAir().momMultiplyer,
       }),
@@ -34,28 +35,17 @@ export const TankRow = ({
     }
 
     cs.putCargos([newCargoString])
-
-    // set state to display new fuel weight
-    setWeight(newCargoString.weightEA)
   }
 
-  const menu = useMemo(
-    () => (
-      <Menu onClick={onClick}>
-        {weights.map((lb, i) => (
-          <Menu.Item key={i.toString() + ',' + tank.tankId}>{lb}</Menu.Item>
-        ))}
-      </Menu>
-    ),
-    []
-  )
 
   return (
-    <Dropdown overlay={menu} trigger={['click']}>
-      <Button>
-        {`${tank.name}: ${weight}`}
-        <DownOutlined />
-      </Button>
-    </Dropdown>
+    <Select
+      onChange={onChange}
+      defaultValue={weights[0]}
+      style={{width: Const.SELECT_WIDTH}}
+      showSearch
+    >
+    {weights.map(w => <Option value={w} key={w}>{`${tank.name}: ${w}`}</Option>)}
+    </Select>
   )
 }

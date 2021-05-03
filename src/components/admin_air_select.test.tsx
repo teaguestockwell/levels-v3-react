@@ -33,8 +33,8 @@ describe('AdminAirSelect', () => {
     await waitFor(() => expect(ct.queryAllByText('C-17A-ER').length).toBe(1))
 
     fireEvent.mouseDown(ct.getByText('C-17A-ER'))
-    await waitFor(() => expect(ct.queryAllByText('C-17A').length).toBe(1))
-    fireEvent.click(ct.getByText('C-17A'))
+    await waitFor(() => expect(ct.queryAllByText('C-17A')[0]).toBeTruthy());
+    fireEvent.click(ct.queryAllByText('C-17A')[1])
 
     await waitFor(() => expect(adminStore.getState().air?.name).toBe('C-17A'))
   })

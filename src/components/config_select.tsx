@@ -13,13 +13,13 @@ export const ConfigSelect = () => {
   const objSchema = getSchema().fullObjSchema
   const configEnums = [Category.Emergency, Category.Extra, Category.Steward]
 
-  const onChange = async (newId: number) => {
+  const onChange = async (newName: string) => {
     // get config from selection
     let newConfig: Config
-    if (newId === 0) {
+    if (newName === 'No Config') {
       newConfig = Const.NO_CONFIG
     } else {
-      newConfig = air.configs.find((c) => c.configId === newId) as Config
+      newConfig = air.configs.find((c) => c.name === newName) as Config
     }
 
     // get an array of cargoStrings from that config
@@ -44,12 +44,13 @@ export const ConfigSelect = () => {
   return (
     <Select
       onChange={onChange}
-      defaultValue={0}
+      defaultValue={'No Config'}
       style={{width: Const.SELECT_WIDTH}}
+      showSearch
     >
-      <Option value={0}>No Config</Option>
+      <Option value={'No Config'}>No Config</Option>
       {air.configs.map((c) => (
-        <Option value={c.configId} key={c.configId}>
+        <Option value={c.name} key={c.configId}>
           {c.name}
         </Option>
       ))}

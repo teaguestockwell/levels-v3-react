@@ -37,11 +37,9 @@ describe('TankRow', () => {
     expect(CargoStore.getState().cargoMap.get('0')).toStrictEqual(cargoString)
 
     // when tank weight is changed
-    fireEvent.click(getByText('Tank 1: 250'))
-    fireEvent.click(getByText('500'))
-
-    // button name will change
+    fireEvent.mouseDown(getByText('Tank 1: 250'))
     await waitFor(() => expect(queryAllByText('Tank 1: 500').length).toBe(1))
+    fireEvent.click(getByText('Tank 1: 500'))
 
     // cargoMap weight and fs will change for that tanks selected cargoString
     await waitFor(() => {
