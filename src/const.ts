@@ -1,5 +1,6 @@
 import * as yup from 'yup'
 export const Const = {
+  SELECT_WIDTH: 120,
   API_EPS: [
     'aircraft',
     'cargo',

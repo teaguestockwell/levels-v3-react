@@ -19,11 +19,9 @@ describe('ConfigSelect', () => {
     expect(CargoStore.getState().cargoMap.size).toBe(0)
 
     // when config is changed
-    fireEvent.click(getByText('No Config'))
-    await waitFor(() => expect(queryAllByText('No Config').length).toBe(2))
+    fireEvent.mouseDown(getByText('No Config'))
+    await waitFor(() => expect(queryAllByText('AE-1').length).toBe(1))
     fireEvent.click(getByText('AE-1'))
-    // button name will change
-    await waitFor(() => expect(queryAllByText('No Config').length).toBe(1))
 
     // then
     await waitFor(() => {

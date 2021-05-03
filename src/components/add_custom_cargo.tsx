@@ -12,8 +12,9 @@ export const AddCustomCargo = () => {
   }
 
   return (
-    <Button icon={<PlusCircleOutlined />} onClick={onAddCustomCargoClick}>
+    <Button onClick={onAddCustomCargoClick}>
       Add Custom
+      <PlusCircleOutlined />
     </Button>
   )
 }

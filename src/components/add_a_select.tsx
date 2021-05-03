@@ -1,7 +1,7 @@
 import {Button, Dropdown, Menu} from 'antd'
 import {getActionsCS} from '../hooks/cargo_store'
 import {Cargo, Category} from '../types/aircraftDeep'
-import {DownOutlined} from '@ant-design/icons'
+import {PlusCircleOutlined} from '@ant-design/icons'
 import {getAir, getSchema} from '../hooks/air_store'
 import {MenuInfo} from 'rc-menu/lib/interface'
 import {getCargoStringFromCargo} from '../util'
@@ -51,7 +51,7 @@ export const AddASelect = () => {
     <Dropdown overlay={menu} trigger={['click']}>
       <Button>
         Add AddA
-        <DownOutlined />
+        <PlusCircleOutlined />
       </Button>
     </Dropdown>
   )
