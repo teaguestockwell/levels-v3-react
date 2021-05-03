@@ -12,7 +12,7 @@ export const Admin = () => {
   return (
     <>
       <AdminAirSelect key={v4()} />
-      <AdminAddNew/>
+      <AdminAddNew />
       <AdminNav key={v4()} />
       <JsonTable key={v4()} />
       <AdminModal key={v4()} />
