@@ -53,10 +53,8 @@ export const TankRow = ({
     ),
     []
   )
-  const tankMax = 1000
-  console.log('weight', weight)
-  const rotateDeg = (parseInt(weight) / tankMax) * 180
-  console.log('rotateDeg', rotateDeg)
+
+  const rotateDeg = (parseFloat(weight) / parseFloat(weights[weights.length - 1])) * 180
 
   return (
     <Dropdown overlay={menu} trigger={['click']}>
