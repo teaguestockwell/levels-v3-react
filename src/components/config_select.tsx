@@ -38,7 +38,7 @@ export const ConfigSelect = () => {
     cs.putCargos(newCargos)
 
     // update selected
-    cs.setConfig(newConfig)
+    cs.putConfig(newConfig)
   }
 
   return (

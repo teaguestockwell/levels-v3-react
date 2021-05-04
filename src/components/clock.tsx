@@ -15,7 +15,7 @@ export const Clock = () => {
   useEffect(() => {
     const time = setTimeout(() => setNow(new Date()), 1000)
     return () => clearTimeout(time)
-  },[lnow])
+  }, [lnow])
 
   const df = {
     lHMS: format(lnow, 'HH:mm:ss'),
@@ -58,12 +58,12 @@ export const Clock = () => {
     >
       <Row justify="center">
         <Col flex={2} />
-          {[
-            getCol('Zone', Const.COLORS.TXT_DISABLED, 'left'),
-            getCol('hh:mm:ss', Const.COLORS.TXT_DISABLED),
-            getCol('JJJ', Const.COLORS.TXT_DISABLED),
-            getCol('YYYY-MM-DD', Const.COLORS.TXT_DISABLED),
-          ]}
+        {[
+          getCol('Zone', Const.COLORS.TXT_DISABLED, 'left'),
+          getCol('hh:mm:ss', Const.COLORS.TXT_DISABLED),
+          getCol('JJJ', Const.COLORS.TXT_DISABLED),
+          getCol('YYYY-MM-DD', Const.COLORS.TXT_DISABLED),
+        ]}
         <Col flex={2} />
       </Row>
       <Row justify="center">

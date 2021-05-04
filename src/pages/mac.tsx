@@ -7,6 +7,7 @@ import {CargoList} from '../components/cargo_list'
 import {ChartC} from '../components/chart_c'
 import {Clock} from '../components/clock'
 import {ConfigSelect} from '../components/config_select'
+import {CargoEditModal} from '../components/cargo_edit_modal'
 import {GetMacButton} from '../components/get_mac_button'
 import {PerMac} from '../components/per_mac'
 import {TankList} from '../components/tank_list'
@@ -30,7 +31,6 @@ export const Mac = () => {
 
       <TankList key={v4()} />
       <ChartC key={v4()} />
-
       <CargoList
         key={v4()}
         category={[
@@ -40,6 +40,7 @@ export const Mac = () => {
           Category.User,
         ]}
       />
+      <CargoEditModal />
     </>
   )
 }

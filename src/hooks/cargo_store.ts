@@ -7,9 +7,13 @@ export interface CargoStoreState extends State {
   // read
   cargoMap: Map<string, CargoString>
   config: Config
+  editUuid: string | undefined
 
   // update 1 config
   putConfig: (config: Config) => void
+
+  // update 1 editing state
+  putEditUuid: (uuid: string | undefined) => void
 
   // create | update n cargo
   putCargos: (cargos: CargoString[]) => void
@@ -26,6 +30,13 @@ export const CargoStore = create<CargoStoreState>((set) => ({
   cargoMap: new Map(),
   config: Const.NO_CONFIG,
   configUuids: [],
+  editUuid: undefined,
+
+  // update 1
+  putEditUuid: (uuid) =>
+    set((s) => {
+      s.editUuid = uuid
+    }),
 
   // update 1 config
   putConfig: (config) =>
@@ -81,7 +92,8 @@ export const getConfig = () => CargoStore.getState().config
 export const getActionsCS = () => {
   const state = CargoStore.getState()
   return {
-    setConfig: state.putConfig,
+    putEditUuid: state.putEditUuid,
+    putConfig: state.putConfig,
     putConfigUuids: state.putConfigUuids,
     putCargos: state.putCargos,
     //putCargosIsValid: state.putCargosIsValid,

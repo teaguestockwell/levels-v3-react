@@ -33,6 +33,7 @@ export const CargoForm = ({uuid}: {uuid: string}) => {
 
   const onDelete = () => {
     cs.deleteCargos([cargo.uuid])
+    cs.putEditUuid(undefined)
   }
 
   const filterKeys: string[] = ['uuid', 'category', 'isValid']

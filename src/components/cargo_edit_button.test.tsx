@@ -1,10 +1,10 @@
-import {act, fireEvent, waitFor} from '@testing-library/react'
-import {FormModal} from './form_modal'
+import {act, waitFor} from '@testing-library/react'
 import {renderWrapped} from '../testUtils/render_wrapped'
 import {CargoStore} from '../hooks/cargo_store'
 import {Category} from '../types/aircraftDeep'
 import {CargoString} from '../types/cargoString'
 import MatchMediaMock from 'jest-matchmedia-mock'
+import {CargoEditButton} from './cargo_edit_button'
 
 const cargo: CargoString = {
   name: 'cargo',
@@ -16,7 +16,7 @@ const cargo: CargoString = {
   isValid: true,
 }
 
-describe('ConfigSelect', () => {
+describe('CargoEditButton', () => {
   let matchMedia
 
   beforeAll(() => {
@@ -24,30 +24,21 @@ describe('ConfigSelect', () => {
     matchMedia = new MatchMediaMock()
   })
 
-  it('will render', async () => {
+  it('will render the button', async () => {
     CargoStore.getState().putCargos([cargo])
-    const {getByText, queryAllByText} = renderWrapped(<FormModal uuid={'0'} />)
+    CargoStore.getState().putEditUuid(cargo.uuid)
+    const {getByText, queryAllByText} = renderWrapped(
+      <CargoEditButton uuid={'0'} />
+    )
     await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
     expect(getByText('1 EA cargo')).toBeInTheDocument()
-  })
-
-  it('will open a modal when clicked', async () => {
-    // given
-    CargoStore.getState().putCargos([cargo])
-    const ct = renderWrapped(<FormModal uuid={'0'} />)
-    await waitFor(() =>
-      expect(ct.queryAllByText('Loading Test').length).toBe(0)
-    )
-
-    // when button is clicked
-    fireEvent.click(ct.getByText('1 EA cargo'))
-    await waitFor(() => expect(ct.queryAllByText('Name').length).toBe(1))
   })
 
   it('will update button text on state change', async () => {
     // given
     CargoStore.getState().putCargos([cargo])
-    const ct = renderWrapped(<FormModal uuid={'0'} />)
+    CargoStore.getState().putEditUuid(cargo.uuid)
+    const ct = renderWrapped(<CargoEditButton uuid={'0'} />)
     await waitFor(() =>
       expect(ct.queryAllByText('Loading Test').length).toBe(0)
     )

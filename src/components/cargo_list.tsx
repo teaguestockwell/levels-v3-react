@@ -1,6 +1,6 @@
 import {getCargoMap, useCargoMapSize} from '../hooks/cargo_store'
 import {Category} from '../types/aircraftDeep'
-import {FormModal} from './form_modal'
+import {CargoEditButton} from './cargo_edit_button'
 
 export function CargoList({category}: {category: Category[]}) {
   useCargoMapSize()
@@ -8,9 +8,9 @@ export function CargoList({category}: {category: Category[]}) {
     <>
       {Array.from(getCargoMap().values())
         .filter((x) => category.includes(x.category))
-        .map((cargo) => {
-          return <FormModal key={cargo.uuid + 'form_modal'} uuid={cargo.uuid} />
-        })}
+        .map((cargo) => (
+          <CargoEditButton uuid={cargo.uuid} key={cargo.uuid} />
+        ))}
     </>
   )
 }
