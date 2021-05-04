@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {Col, Row, Space} from 'antd'
-import {useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import {Typography} from 'antd'
 import {format} from 'date-fns'
 import {getUTCDate} from '../util'
@@ -12,7 +12,10 @@ const {Text} = Typography
 export const Clock = () => {
   const [lnow, setNow] = useState(new Date())
   const znow = getUTCDate(lnow)
-  setTimeout(() => setNow(new Date()), 1000)
+  useEffect(() => {
+    const time = setTimeout(() => setNow(new Date()), 1000)
+    return () => clearTimeout(time)
+  },[lnow])
 
   const df = {
     lHMS: format(lnow, 'HH:mm:ss'),
@@ -55,12 +58,12 @@ export const Clock = () => {
     >
       <Row justify="center">
         <Col flex={2} />
-        {[
-          getCol('Zone', Const.COLORS.TXT_DISABLED, 'left'),
-          getCol('hh:mm:ss', Const.COLORS.TXT_DISABLED),
-          getCol('JJJ', Const.COLORS.TXT_DISABLED),
-          getCol('YYYY-MM-DD', Const.COLORS.TXT_DISABLED),
-        ]}
+          {[
+            getCol('Zone', Const.COLORS.TXT_DISABLED, 'left'),
+            getCol('hh:mm:ss', Const.COLORS.TXT_DISABLED),
+            getCol('JJJ', Const.COLORS.TXT_DISABLED),
+            getCol('YYYY-MM-DD', Const.COLORS.TXT_DISABLED),
+          ]}
         <Col flex={2} />
       </Row>
       <Row justify="center">
