@@ -63,8 +63,7 @@
     "npm-force-resolutions": "0.0.10"
   },
   "resolutions": {
-    "ssri": "8.0.1",
-    "postcss": "8.2.1"
+    "ssri": "8.0.1"
   },
   "browserslist": {
     "production": [
