@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import create, {State} from 'zustand'
 import {AircraftDeep} from '../types/aircraftDeep'
 import isEqual from 'lodash/isEqual'
-import {getParamsFromEp, sanitizeNewAirEP} from '../util'
+import {sanitizeNewAirEP} from '../util'
 
 export interface AdminStoreState extends State {
   air: AircraftDeep | undefined
@@ -21,7 +22,8 @@ export const adminStore = create<AdminStoreState>((set, get) => ({
 
   setAir: (air) => {
     set((s) => {
-      (s.ep = sanitizeNewAirEP(s.ep, air.aircraftId)), (s.air = air)
+      s.ep = sanitizeNewAirEP(s.ep, air.aircraftId)
+      s.air = air
     })
   },
   setEp: (ep) =>

@@ -1,3 +1,4 @@
+import React from 'react'
 import {getAir, getSchema} from '../hooks/air_store'
 import {CargoStore, getActionsCS} from '../hooks/cargo_store'
 import {Category, Config} from '../types/aircraftDeep'

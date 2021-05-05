@@ -1,3 +1,4 @@
+import React from 'react'
 import {Button, Dropdown, Menu} from 'antd'
 import {getActionsCS} from '../hooks/cargo_store'
 import {Cargo, Category} from '../types/aircraftDeep'

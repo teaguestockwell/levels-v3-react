@@ -1,3 +1,4 @@
+import React from 'react'
 import {getCargoMap, useCargoMapSize} from '../hooks/cargo_store'
 import {Category} from '../types/aircraftDeep'
 import {CargoEditButton} from './cargo_edit_button'

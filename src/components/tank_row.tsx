@@ -1,3 +1,4 @@
+import React from 'react'
 import {Tank} from '../types/aircraftDeep'
 import {getActionsCS} from '../hooks/cargo_store'
 import {CargoString} from '../types/cargoString'

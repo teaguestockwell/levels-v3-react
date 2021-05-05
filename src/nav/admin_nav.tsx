@@ -1,3 +1,4 @@
+import React from 'react'
 import {Menu} from 'antd'
 import SubMenu from 'antd/lib/menu/SubMenu'
 import {MenuInfo} from 'rc-menu/lib/interface'

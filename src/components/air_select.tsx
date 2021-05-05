@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+import React from 'react'
 import {getActionsAS, getAir} from '../hooks/air_store'
 import {useUserAirs} from '../hooks/use_user_airs'
 import {AircraftDeep} from '../types/aircraftDeep'

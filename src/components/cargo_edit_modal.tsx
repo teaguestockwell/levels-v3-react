@@ -1,3 +1,4 @@
+import React from 'react'
 import {Modal} from 'antd'
 import {CargoStore, getActionsCS} from '../hooks/cargo_store'
 import {CargoForm} from './cargo_form'

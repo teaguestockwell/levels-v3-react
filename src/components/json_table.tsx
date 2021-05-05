@@ -1,5 +1,4 @@
-/* eslint-disable react/display-name */
-/* eslint-disable @typescript-eslint/no-unused-vars */
+import React from 'react'
 import {Col, Row, Table} from 'antd'
 import {useMemo} from 'react'
 import {capitalizeFirst} from '../util'

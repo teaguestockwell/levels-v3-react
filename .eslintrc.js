@@ -9,7 +9,7 @@ const lintTS = {
       jsx: true,
     },
     warnOnUnsupportedTypeScriptVersion: false, // suppress the typescript version difference
-  },
+  },  
   // typescript-eslint https://github.com/typescript-eslint/typescript-eslint/tree/d0d71862efd7e079694fa9513ea983cc908ec6f6/packages/eslint-plugin
   rules: {
     '@typescript-eslint/no-unused-vars': 'error',
@@ -18,6 +18,10 @@ const lintTS = {
     '@typescript-eslint/no-var-requires': 'off', // turning off because we do not care if we import using es6 or common js... stupid lint
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-use-before-define': ['error', {variables: true}],
+     // suppress errors for missing 'import React' in files
+    "react/react-in-jsx-scope": "off",
+    // allow jsx syntax in js files (for next.js project)
+    "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }], //should add ".ts" if typescript project
     // '@typescript-eslint/naming-convention': [
     //   'error',
     //   {

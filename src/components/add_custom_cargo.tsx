@@ -1,3 +1,4 @@
+import React from 'react'
 import {Button} from 'antd'
 import {getActionsCS} from '../hooks/cargo_store'
 import {getCargoString} from '../util'

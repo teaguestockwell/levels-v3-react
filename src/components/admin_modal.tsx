@@ -1,5 +1,5 @@
+import React from 'react'
 import {Modal} from 'antd'
-//import { isEqual } from 'lodash'
 import {useMemo} from 'react'
 import {adminStore} from '../hooks/admin_store'
 import {adminActions} from '../hooks/use_admin_polling'

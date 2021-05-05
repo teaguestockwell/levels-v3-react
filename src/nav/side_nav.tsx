@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import {formatDate} from '../util'
+import React from 'react'
 import {Mac} from '../pages/mac'
 import {Admin} from '../pages/admin'
 

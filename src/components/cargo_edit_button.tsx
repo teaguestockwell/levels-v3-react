@@ -1,3 +1,4 @@
+import React from 'react'
 import {CheckCircleFilled, CloseCircleFilled} from '@ant-design/icons'
 import {getActionsCS, useCargo} from '../hooks/cargo_store'
 import {Button} from 'antd'

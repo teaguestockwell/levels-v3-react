@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import {Form, Select} from 'antd'
+import React from 'react'
+import {Select} from 'antd'
 import {adminStore, getAdminStoreActions} from '../hooks/admin_store'
 const {Option} = Select
 

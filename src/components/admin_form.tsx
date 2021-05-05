@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+import React from 'react'
 import {useLayoutEffect, useMemo, useRef, useState} from 'react'
 import {Form, Input, Button} from 'antd'
 import {debounce, throttle} from 'lodash'
@@ -38,7 +38,9 @@ export const AdminForm = () => {
 
   // compare validate between current state and old state before setting state
   const setIsValidWrapper = (newValid: boolean) => {
-    newValid === isValid ? null : setIsValid(newValid)
+    if(newValid === isValid ? false : true){
+      setIsValid(newValid)
+    }
   }
 
   // init validation state

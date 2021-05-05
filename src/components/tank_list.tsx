@@ -1,3 +1,4 @@
+import React from 'react'
 import {TankRow} from './tank_row'
 import {getCargoMap} from '../hooks/cargo_store'
 import {Category} from '../types/aircraftDeep'
