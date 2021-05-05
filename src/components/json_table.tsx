@@ -1,13 +1,11 @@
 /* eslint-disable react/display-name */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {Col, Row, Table} from 'antd'
 import {useMemo} from 'react'
-import {capitalizeFirst, getModelFromEP} from '../util'
+import {capitalizeFirst} from '../util'
 import {DeleteOutlined, EditOutlined} from '@ant-design/icons'
 import {usePolling, adminActions} from '../hooks/use_admin_polling'
-import {adminStore, getAdminStoreActions} from '../hooks/admin_store'
+import {adminStore} from '../hooks/admin_store'
 import { v4 } from 'uuid'
-const as = getAdminStoreActions()
 
 export const JsonTable = () => {
   const ep = adminStore((s) => s.ep)
@@ -46,7 +44,7 @@ export const JsonTable = () => {
       {
         title: 'Delete / Edit',
         dataIndex: '',
-        key: 'operation',
+        key: v4(),
         width: 124,
         render: (_: any, row: any) => (
           <Row> 
