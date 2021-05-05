@@ -6,7 +6,7 @@
     "preinstall": "npx npm-force-resolutions",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test:unit": "react-scripts test --coverage --timeout 10000",
+    "test:unit": "react-scripts test --coverage",
     "lint": "eslint . --ext js,jsx,ts,tsx",
     "coverage": "npm test -- --coverage",
     "pretty": "npx prettier --write ."

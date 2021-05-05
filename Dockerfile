@@ -8,11 +8,8 @@ USER root
 RUN node -e "const fs = require('fs');  fs.chown('/home/node/', 950, 950, (error) => {console.log(error)});"
 USER 950
 
-# COPY without dev env
+# COPY
 COPY --chown=950:950 . .
-
-# Do not use development env
-RUN rm .env
 
 # install dependencies
 RUN npm i
