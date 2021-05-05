@@ -2,11 +2,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {Col, Row, Table} from 'antd'
 import {useMemo} from 'react'
-import {capitalizeFirst} from '../util'
+import {capitalizeFirst, getModelFromEP} from '../util'
 import {DeleteOutlined, EditOutlined} from '@ant-design/icons'
 import {usePolling, adminActions} from '../hooks/use_admin_polling'
 import {adminStore, getAdminStoreActions} from '../hooks/admin_store'
-
+import { v4 } from 'uuid'
 const as = getAdminStoreActions()
 
 export const JsonTable = () => {
@@ -49,7 +49,7 @@ export const JsonTable = () => {
         key: 'operation',
         width: 124,
         render: (_: any, row: any) => (
-          <Row>
+          <Row> 
             <Col span={8}>
               <DeleteOutlined
                 style={{fontSize: '24px'}}
@@ -71,11 +71,12 @@ export const JsonTable = () => {
       <Table
         pagination={{pageSize: 50}}
         scroll={{y: 500}}
-        dataSource={data}
         columns={columns}
+        dataSource={data}
+        //rowKey="name" 
       />
     )
   }, [data, ep])
-
+ 
   return table
 }

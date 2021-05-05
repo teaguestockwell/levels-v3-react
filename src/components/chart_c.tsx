@@ -25,7 +25,8 @@ export const ChartC = () => {
 
   useEffect(() => {
     form.setFieldsValue({mom: '', weight: ''})
-    setTimeout(() => form.validateFields(), 1)
+    const time = setTimeout(() => form.validateFields(), 1)
+    return () => clearTimeout(time)
   }, [])
 
   const onChange = () => {

@@ -19,7 +19,8 @@ export const CargoForm = ({uuid}: {uuid: string}) => {
   // init value and validation inside store is handled in the methods that expose this form
   useEffect(() => {
     form.setFieldsValue(cargo)
-    setTimeout(() => form.validateFields(), 1)
+    const time = setTimeout(() => form.validateFields(), 1)
+    return () => clearTimeout(time)
   }, [])
 
   const onChange = () => {
