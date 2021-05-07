@@ -15,7 +15,7 @@ COPY --chown=950:950 . .
 RUN npm i
 
 # build react app
-RUN npx react-scripts build
+RUN GENERATE_SOURCEMAP=false npm run build
 
 # Stage 2
 FROM registry.il2.dso.mil/platform-one/devops/pipeline-templates/base-image/harden-nginx-19:1.19.2
