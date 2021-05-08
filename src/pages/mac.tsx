@@ -25,6 +25,7 @@ export const Mac = () => {
       <Label text={'Tanks'} />
       <TankList key={v4()} />
       <Label text={'Chart C'} />
+      <ChartC key={v4()} />
       <Logger />
       <PerMac />
       <AirSelect />
@@ -33,7 +34,6 @@ export const Mac = () => {
       <ConfigSelect key={v4()} />
       <GetMacButton key={v4()} />
 
-      <ChartC key={v4()} />
       <CargoList
         key={v4()}
         category={[
