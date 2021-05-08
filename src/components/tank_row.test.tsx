@@ -5,6 +5,7 @@ import {CargoStore} from '../hooks/cargo_store'
 import {mockAircraftsDeep} from '../testUtils/mock_aircrafts_deep'
 import {Category} from '../types/aircraftDeep'
 import {CargoString} from '../types/cargoString'
+import MatchMediaMock from 'jest-matchmedia-mock'
 
 const tank = mockAircraftsDeep[0].tanks[0]
 const cargoString: CargoString = {
@@ -17,13 +18,25 @@ const cargoString: CargoString = {
   isValid: true,
 }
 
+const setup = () => {
+  CargoStore.getState().putCargos([cargoString])
+}
+
 describe('TankRow', () => {
+  let matchMedia
+
+  beforeAll(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    matchMedia = new MatchMediaMock()
+  })
+
   it('will render', async () => {
-    const {getByText, queryAllByText} = renderWrapped(
-      <TankRow tank={tank} cargoString={cargoString} />
+    setup()
+    const ct = renderWrapped(<TankRow tank={tank} cargoString={cargoString} />)
+    await waitFor(() =>
+      expect(ct.queryAllByText('Loading Test').length).toBe(0)
     )
-    await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
-    expect(getByText('Tank 1: 250')).toBeInTheDocument()
+    expect(ct.queryAllByText('250').length).toBe(1)
   })
 
   it('will change tank weight and fs', async () => {
@@ -37,9 +50,9 @@ describe('TankRow', () => {
     expect(CargoStore.getState().cargoMap.get('0')).toStrictEqual(cargoString)
 
     // when tank weight is changed
-    fireEvent.mouseDown(getByText('Tank 1: 250'))
-    await waitFor(() => expect(queryAllByText('Tank 1: 500').length).toBe(1))
-    fireEvent.click(getByText('Tank 1: 500'))
+    fireEvent.mouseDown(getByText('250'))
+    await waitFor(() => expect(queryAllByText('500').length).toBe(2))
+    fireEvent.click(queryAllByText('500')[1])
 
     // cargoMap weight and fs will change for that tanks selected cargoString
     await waitFor(() => {

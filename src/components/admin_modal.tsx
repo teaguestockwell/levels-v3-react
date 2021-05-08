@@ -11,8 +11,6 @@ export const AdminModal = () => {
     (s0, s1) => s0 && s1
   )
 
-  console.log(isOpen)
-
   const form = useMemo(() => {
     return isOpen ? (
       <Modal

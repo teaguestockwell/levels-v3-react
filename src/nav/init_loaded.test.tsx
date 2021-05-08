@@ -18,6 +18,6 @@ describe('InitLoaded', () => {
     await waitFor(() =>
       expect(ct.queryAllByText('Loading Test').length).toBe(0)
     )
-    await waitFor(() => expect(ct.getByText('Tank 1: 250')).toBeInTheDocument())
+    await waitFor(() => expect(ct.queryAllByText('250').length).toBe(4))
   })
 })

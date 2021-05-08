@@ -38,7 +38,7 @@ export const AdminForm = () => {
 
   // compare validate between current state and old state before setting state
   const setIsValidWrapper = (newValid: boolean) => {
-    if(newValid === isValid ? false : true){
+    if (newValid === isValid ? false : true) {
       setIsValid(newValid)
     }
   }
@@ -50,7 +50,7 @@ export const AdminForm = () => {
       form.validateFields().then(() => setIsValidWrapper(validateAll()))
     }, 1)
     return () => clearTimeout(time)
-  }, []) 
+  }, [])
 
   const onChange = () => {
     const newValid = validateAll()

@@ -11,7 +11,6 @@ const {Option} = Select
 export const AirSelect = () => {
   const {data} = useUserAirs()
   const airMap = data as Map<number, AircraftDeep>
-  console.log('air select')
 
   const onAirChange = (newName: string) => {
     const newAir = Array.from(airMap.values()).find(

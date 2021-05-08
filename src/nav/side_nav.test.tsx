@@ -13,6 +13,6 @@ describe('SideNav', () => {
     await waitFor(() =>
       expect(ct.queryAllByText('Loading Test').length).toBe(0)
     )
-    expect(ct.getByText('Tank 1: 250')).toBeInTheDocument()
+    expect(ct.queryAllByText('250').length).toBe(4)
   })
 })

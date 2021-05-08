@@ -14,6 +14,7 @@ import {TankList} from '../components/tank_list'
 import {useAirChangeStoreReset} from '../hooks/air_store'
 import {Logger} from '../testUtils/logger'
 import {Category} from '../types/aircraftDeep'
+import {Label} from '../components/label'
 
 export const Mac = () => {
   useAirChangeStoreReset()
@@ -21,6 +22,9 @@ export const Mac = () => {
   return (
     <>
       <Clock />
+      <Label text={'Tanks'} />
+      <TankList key={v4()} />
+      <Label text={'Chart C'} />
       <Logger />
       <PerMac />
       <AirSelect />
@@ -29,7 +33,6 @@ export const Mac = () => {
       <ConfigSelect key={v4()} />
       <GetMacButton key={v4()} />
 
-      <TankList key={v4()} />
       <ChartC key={v4()} />
       <CargoList
         key={v4()}

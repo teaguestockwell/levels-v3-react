@@ -5,7 +5,7 @@ import {capitalizeFirst} from '../util'
 import {DeleteOutlined, EditOutlined} from '@ant-design/icons'
 import {usePolling, adminActions} from '../hooks/use_admin_polling'
 import {adminStore} from '../hooks/admin_store'
-import { v4 } from 'uuid'
+import {v4} from 'uuid'
 
 export const JsonTable = () => {
   const ep = adminStore((s) => s.ep)
@@ -47,7 +47,7 @@ export const JsonTable = () => {
         key: v4(),
         width: 124,
         render: (_: any, row: any) => (
-          <Row> 
+          <Row>
             <Col span={8}>
               <DeleteOutlined
                 style={{fontSize: '24px'}}
@@ -71,10 +71,10 @@ export const JsonTable = () => {
         scroll={{y: 500}}
         columns={columns}
         dataSource={data}
-        //rowKey="name" 
+        //rowKey="name"
       />
     )
   }, [data, ep])
- 
+
   return table
 }

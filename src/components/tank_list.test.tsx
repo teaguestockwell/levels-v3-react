@@ -1,32 +1,43 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {fireEvent, waitFor} from '@testing-library/react'
+import {waitFor} from '@testing-library/react'
 import {TankList} from './tank_list'
 import {renderWrapped} from '../testUtils/render_wrapped'
-import {CargoStore} from '../hooks/cargo_store'
-import {mockAircraftsDeep} from '../testUtils/mock_aircrafts_deep'
 import {Category} from '../types/aircraftDeep'
 import {CargoString} from '../types/cargoString'
-import {getActionsAS} from '../hooks/air_store'
+import {CargoStore} from '../hooks/cargo_store'
+import MatchMediaMock from 'jest-matchmedia-mock'
 
-const air = mockAircraftsDeep[0]
-const cargoString: CargoString = {
-  uuid: '0',
+const cargoString = (uuid: string): CargoString => ({
+  uuid,
   name: 'Tank 1',
   weightEA: '250',
   fs: '900',
   qty: '1',
   category: Category.Tank,
   isValid: true,
+})
+
+const setup = () => {
+  CargoStore.getState().putCargos([
+    cargoString('0'),
+    cargoString('1'),
+    cargoString('2'),
+    cargoString('3'),
+  ])
 }
 
 describe('TankList', () => {
+  let matchMedia
+
+  beforeAll(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    matchMedia = new MatchMediaMock()
+  })
+
   it('will render', async () => {
-    getActionsAS().setSelectedAir(air)
-    const {getByText, queryAllByText, debug} = renderWrapped(<TankList />)
+    setup()
+    const {queryAllByText, debug} = renderWrapped(<TankList />)
     await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
-    expect(getByText('Tank 1: 250')).toBeInTheDocument()
-    expect(getByText('Tank 2 ER: 250')).toBeInTheDocument()
-    expect(getByText('Tank 3 ER: 250')).toBeInTheDocument()
-    expect(getByText('Tank 4: 250')).toBeInTheDocument()
+    expect(queryAllByText('250').length).toBe(4)
   })
 })
