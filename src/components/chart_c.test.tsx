@@ -33,7 +33,7 @@ describe('ChartC', () => {
     await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
 
     await waitFor(() => {
-      expect(getByText('Weight')).toBeInTheDocument()
+      expect(getByText('Basic Weight')).toBeInTheDocument()
     })
   })
 
@@ -46,8 +46,8 @@ describe('ChartC', () => {
     )
 
     // when
-    fireEvent.change(ct.getByLabelText('Weight'), {target: {value: '282000'}})
-    fireEvent.change(ct.getByLabelText('Moment'), {target: {value: '26000'}})
+    fireEvent.change(ct.getByLabelText('Basic Weight'), {target: {value: '282000'}})
+    fireEvent.change(ct.getByLabelText('Basic Moment'), {target: {value: '26000'}})
 
     // then
     await waitFor(() => {
