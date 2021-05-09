@@ -1,12 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {QueryClient, QueryClientProvider} from 'react-query'
+import {QueryClientProvider} from 'react-query'
 import {InitLoaded} from './nav/init_loaded'
 import 'antd/dist/antd.css'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
-
-// Create a client
-export const queryClient = new QueryClient()
+import {queryClient} from './const'
 
 ReactDOM.render(
   <React.StrictMode>

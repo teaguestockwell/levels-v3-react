@@ -4,7 +4,7 @@ import {AirStore, getActionsAS} from '../hooks/air_store'
 import {useUserAirs, useUserAirsPolling} from '../hooks/use_user_airs'
 import {useEffect, useState} from 'react'
 import {formatDate} from '../util'
-import { queryClient } from '../index'
+import {queryClient} from '../const'
 
 const as = getActionsAS()
 

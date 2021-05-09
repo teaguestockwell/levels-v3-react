@@ -1,4 +1,5 @@
-import {QueryClient, QueryClientProvider} from 'react-query'
+import {QueryClientProvider} from 'react-query'
+import {queryClient} from '../const'
 import {render} from '@testing-library/react'
 import {useUserAirs} from '../hooks/use_user_airs'
 import {getCargoSchema} from '../util'
@@ -19,14 +20,14 @@ const IsLoaded = ({children}: {children: React.ReactNode}) => {
   return <div>Loading Test</div>
 }
 
-const queryClientInit = new QueryClient()
+
 
 interface WrapperProps {
   children?: React.ReactNode
 }
 const Wrapper: React.FC<WrapperProps> = (props) => {
   return (
-    <QueryClientProvider client={queryClientInit}>
+    <QueryClientProvider client={queryClient}>
       <IsLoaded>{props.children}</IsLoaded>
     </QueryClientProvider>
   )

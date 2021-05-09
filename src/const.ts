@@ -1,4 +1,8 @@
+import { QueryClient } from 'react-query'
 import * as yup from 'yup'
+
+export const queryClient = new QueryClient()
+
 export const Const = {
   COLORS: {
     TXT_DISABLED: '#8A8A8A',
