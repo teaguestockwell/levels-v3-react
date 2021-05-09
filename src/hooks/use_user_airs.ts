@@ -1,20 +1,20 @@
 import axios from 'axios'
 import {useQuery} from 'react-query'
-import { v4 } from 'uuid'
+import {v4} from 'uuid'
 
 const getNAircraft = async () => {
-  try{
-  const data = ( 
-    await axios.get(
-      process.env.REACT_APP_API_BASE_URL + 'aircraft/lastUpdated'
-      //{timeout: 2}
-    )
-  ).data
-  
-  // used to diff reqs that came from the same sw cache
-  data.key = v4()
-  return data
-  } catch (e){
+  try {
+    const data = (
+      await axios.get(
+        process.env.REACT_APP_API_BASE_URL + 'aircraft/lastUpdated'
+        //{timeout: 2}
+      )
+    ).data
+
+    // used to diff reqs that came from the same sw cache
+    data.key = v4()
+    return data
+  } catch (e) {
     console.error(e)
     return null
   }
@@ -30,7 +30,7 @@ export const useUserAirs = () => {
     retry: 5,
     staleTime: Infinity,
     refetchOnWindowFocus: false,
-    refetchOnMount: false
+    refetchOnMount: false,
   })
 
   if (query.data && query.data.airs.length > 0) {
@@ -53,7 +53,7 @@ export const useUserAirsPolling = () => {
     retry: 5,
     refetchInterval: 10000,
     refetchOnWindowFocus: false,
-    refetchOnMount: false
+    refetchOnMount: false,
   })
 
   if (query.data && query.data.airs.length > 0) {

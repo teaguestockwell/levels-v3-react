@@ -12,7 +12,7 @@ export const AirSelect = () => {
   const {data} = useUserAirs()
 
   const onAirChange = (newName: string) => {
-    const newAir = data.airs.find((a:AircraftDeep) => a.name === newName)
+    const newAir = data.airs.find((a: AircraftDeep) => a.name === newName)
     as.setSelectedAir(newAir)
   }
 
@@ -23,7 +23,7 @@ export const AirSelect = () => {
       style={{width: Const.SELECT_WIDTH}}
       showSearch
     >
-      {data.airs.map((a:AircraftDeep) => (
+      {data.airs.map((a: AircraftDeep) => (
         <Option key={a.aircraftId} value={a.name}>
           {a.name}
         </Option>

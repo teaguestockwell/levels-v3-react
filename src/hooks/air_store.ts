@@ -21,7 +21,10 @@ export const AirStore = create<AirStoreState>((set) => ({
   selectedAir: undefined,
   cargoSchema: undefined,
   lastUpdated: undefined,
-  setLastUpdated: (lastUpdated) => set(s => {s.lastUpdated = lastUpdated}),
+  setLastUpdated: (lastUpdated) =>
+    set((s) => {
+      s.lastUpdated = lastUpdated
+    }),
   setCargoSchema: (cargoSchema) =>
     set((state) => {
       state.cargoSchema = cargoSchema

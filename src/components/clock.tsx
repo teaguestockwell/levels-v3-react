@@ -51,30 +51,32 @@ export const Clock = () => {
     type: 'flex',
   } as any
 
-  return <div
-    style={{
-      boxShadow: Const.BOX_SHADOW,
-      paddingBottom: '10px',
-      paddingTop: '10px',
-    }}
-  >
-    <Row {...rowProps}>
-      {getCol('Zone', Const.COLORS.TXT_DISABLED,'left')}
-      {getCol('hh:mm:ss', Const.COLORS.TXT_DISABLED)}
-      {getCol('JJJ', Const.COLORS.TXT_DISABLED)}
-      {getCol('YYYY-MM-DD', Const.COLORS.TXT_DISABLED)}
-    </Row>
-    <Row {...rowProps}>
-      {getCol('Local', Const.COLORS.TXT_RED, 'left')}
-      {getCol(clock.lHMS)}
-      {getCol(clock.lJJJ)}
-      {getCol(clock.lYMD)}
-    </Row>
-    <Row {...rowProps}>
-      {getCol('Zulu', Const.COLORS.TXT_RED, 'left')}
-      {getCol(clock.zHMS)}
-      {getCol(clock.zJJJ)}
-      {getCol(clock.zYMD)}
-    </Row>
-  </div>
+  return (
+    <div
+      style={{
+        boxShadow: Const.BOX_SHADOW,
+        paddingBottom: '10px',
+        paddingTop: '10px',
+      }}
+    >
+      <Row {...rowProps}>
+        {getCol('Zone', Const.COLORS.TXT_DISABLED, 'left')}
+        {getCol('hh:mm:ss', Const.COLORS.TXT_DISABLED)}
+        {getCol('JJJ', Const.COLORS.TXT_DISABLED)}
+        {getCol('YYYY-MM-DD', Const.COLORS.TXT_DISABLED)}
+      </Row>
+      <Row {...rowProps}>
+        {getCol('Local', Const.COLORS.TXT_RED, 'left')}
+        {getCol(clock.lHMS)}
+        {getCol(clock.lJJJ)}
+        {getCol(clock.lYMD)}
+      </Row>
+      <Row {...rowProps}>
+        {getCol('Zulu', Const.COLORS.TXT_RED, 'left')}
+        {getCol(clock.zHMS)}
+        {getCol(clock.zJJJ)}
+        {getCol(clock.zYMD)}
+      </Row>
+    </div>
+  )
 }
