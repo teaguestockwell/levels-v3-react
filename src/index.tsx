@@ -6,7 +6,7 @@ import 'antd/dist/antd.css'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 
 // Create a client
-const queryClient = new QueryClient()
+export const queryClient = new QueryClient()
 
 ReactDOM.render(
   <React.StrictMode>

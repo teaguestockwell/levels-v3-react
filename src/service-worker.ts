@@ -71,7 +71,7 @@ registerRoute(
 )
 
 registerRoute(
-  ({url}) => url.pathname.endsWith('aircraft'),
+  ({url}) => url.pathname.endsWith('lastUpdated'),
   new NetworkFirst({
     cacheName: 'json',
     plugins: [

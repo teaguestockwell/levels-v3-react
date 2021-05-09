@@ -9,9 +9,9 @@ const IsLoaded = ({children}: {children: React.ReactNode}) => {
   const {data, hasRoles} = useUserAirs()
 
   if (data && hasRoles) {
-    const initAir = data.values().next().value
-    AirStore.getState().setSelectedAir(initAir)
-    AirStore.getState().setCargoSchema(getCargoSchema(initAir))
+    AirStore.getState().setSelectedAir(data.airs[0])
+    AirStore.getState().setLastUpdated(data.lastUpdated)
+    AirStore.getState().setCargoSchema(getCargoSchema(data.airs[0]))
 
     return <>{children}</>
   }

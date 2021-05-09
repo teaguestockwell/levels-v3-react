@@ -5,12 +5,13 @@ import {Offline} from '../pages/offline'
 import {getActionsAS} from '../hooks/air_store'
 import {SideNav} from './side_nav'
 
+const as = getActionsAS()
 export const InitLoaded = () => {
   const {status, data, hasRoles} = useUserAirs()
 
   if (data && hasRoles) {
-    const initAir = data.values().next().value
-    getActionsAS().setSelectedAir(initAir)
+    as.setSelectedAir(data.airs[0])
+    as.setLastUpdated(data.lastUpdated)
     return <SideNav />
   }
 

@@ -15,12 +15,14 @@ import {useAirChangeStoreReset} from '../hooks/air_store'
 import {Logger} from '../testUtils/logger'
 import {Category} from '../types/aircraftDeep'
 import {Label} from '../components/label'
+import { ClientServerSync } from '../components/client_server_sync'
 
 export const Mac = () => {
   useAirChangeStoreReset()
 
   return (
     <>
+      <ClientServerSync/>
       <Clock />
       <Label text={'Tanks'} />
       <TankList key={v4()} />
