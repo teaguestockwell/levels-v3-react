@@ -12,43 +12,37 @@ const as = getActionsAS()
 
 export const ClientServerSync = () => {
   const {data: clientData} = useUserAirs()
-  const {data: serverData, status} = useUserAirsPolling()
+  const {data: serverData, status } = useUserAirsPolling()
   const [state, setState] = useState<{
-    online: boolean | undefined,
+    online: any,
     previousServerLastUpdated: number ,
     isSynced:boolean,
     serverData: any
   }>(
     {
-      online: undefined,
+      online: '...',
       previousServerLastUpdated: AirStore.getState().lastUpdated as number,
       isSynced: true,
       serverData: null
     }
   )
 
+
   const syncState = () => {
     queryClient.setQueryData('userAirs', () => state.serverData)
   }
     useEffect(() => {
-      if(serverData && (status === 'success') || (status === 'error')){
-        const key = v4()
-    
+      // testing only, sw should always return data
+      if(!serverData){setState((s) => ({...s, online: false}))}
+      
+      if(serverData){
         const isSynced = isEqual(clientData.airs,serverData.airs)
         // is the server data coming from the sw cache? => no two lastUpdated should be the same
         const online = serverData.lastUpdated === state.previousServerLastUpdated ? false : true
-        
-        if(!online){
-          message.info({content: 'You are using the app offline', key})
-        }
 
         if(isSynced && online){
           as.setLastUpdated(serverData.lastUpdated)
-          message.info({content: 'You are using the latest data', key})
-        }
-
-        if(!isSynced && online){
-          message.info({content: 'Please sync', key})
+          //message.info({content: 'You are using the latest data', key})
         }
 
         setState({
@@ -58,7 +52,7 @@ export const ClientServerSync = () => {
           serverData
         })
       }
-  },[serverData])
+  },[serverData?.key])
 
   const lastUpdated = formatDate(new Date(
     AirStore.getState().lastUpdated as number

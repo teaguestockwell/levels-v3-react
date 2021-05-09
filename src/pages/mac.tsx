@@ -22,7 +22,7 @@ export const Mac = () => {
 
   return (
     <>
-      <ClientServerSync/>
+      <ClientServerSync key={v4()}/>
       <Clock />
       <Label text={'Tanks'} />
       <TankList key={v4()} />

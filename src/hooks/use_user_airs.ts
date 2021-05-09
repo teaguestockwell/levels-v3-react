@@ -1,13 +1,23 @@
 import axios from 'axios'
 import {useQuery} from 'react-query'
+import { v4 } from 'uuid'
 
 const getNAircraft = async () => {
-  return (
+  try{
+  const data = ( 
     await axios.get(
       process.env.REACT_APP_API_BASE_URL + 'aircraft/lastUpdated'
       //{timeout: 2}
     )
   ).data
+  
+  // used to diff reqs that came from the same sw cache
+  data.key = v4()
+  return data
+  } catch (e){
+    console.error(e)
+    return null
+  }
   // TODO: add call to /general to get highest role.
   // Put that into ret obj so dashboard can choose to display admin button
 }
