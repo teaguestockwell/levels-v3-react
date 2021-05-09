@@ -4,10 +4,9 @@ import {AirStore, getActionsAS} from '../hooks/air_store'
 import {useUserAirs, useUserAirsPolling} from '../hooks/use_user_airs'
 import {useEffect, useState} from 'react'
 import {formatDate} from '../util'
-import { QueryClient } from 'react-query'
+import { queryClient } from '../index'
 
 const as = getActionsAS()
-const queryClient = new QueryClient()
 
 export const ClientServerSync = () => {
   const {data: clientData} = useUserAirs()
