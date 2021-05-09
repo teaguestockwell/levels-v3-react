@@ -2,11 +2,12 @@
 import {isEqual} from 'lodash'
 import {AirStore, getActionsAS} from '../hooks/air_store'
 import {useUserAirs, useUserAirsPolling} from '../hooks/use_user_airs'
-import {queryClient} from '../index'
 import {useEffect, useState} from 'react'
 import {formatDate} from '../util'
+import { QueryClient } from 'react-query'
 
 const as = getActionsAS()
+const queryClient = new QueryClient()
 
 export const ClientServerSync = () => {
   const {data: clientData} = useUserAirs()
