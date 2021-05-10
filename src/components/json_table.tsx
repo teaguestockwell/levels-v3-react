@@ -67,8 +67,8 @@ export const JsonTable = () => {
 
     return (
       <Table
-        pagination={{pageSize: 50}}
-        scroll={{y: 500}}
+        pagination={{pageSize: 100}}
+        //scroll={{y: 500}}
         columns={columns}
         dataSource={data}
         //rowKey="name"

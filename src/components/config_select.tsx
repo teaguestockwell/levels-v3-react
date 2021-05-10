@@ -44,7 +44,7 @@ export const ConfigSelect = () => {
   return (
     <Select
       onChange={onChange}
-      defaultValue={'No Config'}
+      defaultValue={CargoStore.getState().config.name}
       style={{width: Const.SELECT_WIDTH}}
       showSearch
     >

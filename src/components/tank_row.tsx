@@ -22,7 +22,7 @@ export const TankRow = ({
   cargoString: CargoString
 }) => {
   const weights = tank.weightsCSV.split(',')
-  const currentWeight = useCargo(cargoString.uuid).weightEA
+  const currentWeight = useCargo(cargoString?.uuid)?.weightEA ?? 0
   const maxWeight = weights[weights.length - 1]
   const liquidConfig = {
     renderer: 'svg',
@@ -91,7 +91,6 @@ export const TankRow = ({
   const select = useMemo(() => {
     return (
       <Select
-        showArrow={false}
         onChange={onChange}
         defaultValue={currentWeight}
         style={{width: 100}}

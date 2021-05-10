@@ -74,6 +74,7 @@ export const ChartC = () => {
               colon={false}
               rules={rulesYupWrapper(schema.weight)}
               hasFeedback
+              labelCol={{span: 24}}
             >
               <Input
                 size="large"
@@ -89,6 +90,7 @@ export const ChartC = () => {
               colon={false}
               rules={rulesYupWrapper(schema.mom)}
               hasFeedback
+              labelCol={{span: 24}}
             >
               <Input
                 size="large"

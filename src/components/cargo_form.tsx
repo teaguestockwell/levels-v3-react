@@ -52,6 +52,7 @@ export const CargoForm = ({uuid}: {uuid: string}) => {
               colon={false}
               rules={rulesYupWrapper(schema[k])}
               hasFeedback
+              labelCol={{span: 24}}
             >
               <Input
                 size="large"

@@ -97,6 +97,7 @@ export const AdminForm = () => {
             colon={false}
             rules={util.rulesYupWrapper(schema[k])}
             hasFeedback
+            labelCol={{span: 24}}
           >
             <Input
               size="large"

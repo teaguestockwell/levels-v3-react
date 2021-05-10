@@ -1,6 +1,5 @@
 import {AdminAddNew} from '../components/admin_add_new'
 import {v4} from 'uuid'
-import {AdminAirSelect} from '../components/admin_air_select'
 import {AdminModal} from '../components/admin_modal'
 import {JsonTable} from '../components/json_table'
 import {useAir} from '../hooks/admin_store'
@@ -11,9 +10,8 @@ export const Admin = () => {
   useAir()
   return (
     <>
-      <AdminAirSelect key={v4()} />
-      <AdminAddNew />
       <AdminNav key={v4()} />
+      <AdminAddNew />
       <JsonTable key={v4()} />
       <AdminModal key={v4()} />
     </>
