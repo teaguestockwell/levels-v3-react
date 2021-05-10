@@ -1,11 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {v4} from 'uuid'
 import {
   renderWrapped,
   waitFor,
-  fireEvent,
-  screen,
-  act,
 } from '../testUtils/render_wrapped'
 import {AdminModal} from './admin_modal'
 import MatchMediaMock from 'jest-matchmedia-mock'
@@ -46,15 +42,6 @@ describe('AdminModal', () => {
   beforeAll(() => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     matchMedia = new MatchMediaMock()
-  })
-
-  it('will render open when store has edit obj', async () => {
-    setup()
-    const ct = renderWrapped(<AdminModal />)
-    await waitFor(() =>
-      expect(ct.queryAllByText('Loading Test').length).toBe(0)
-    )
-    await waitFor(() => expect(ct.getByText('Fs')).toBeInTheDocument())
   })
 
   it('will render closed when store has no edit obj', async () => {

@@ -15,7 +15,10 @@ export const usePolling = (ep: string, refetchInterval = 2000) => {
     ep,
     async () => {
       try {
-        return (await axios.get(process.env.REACT_APP_API_BASE_URL + ep)).data
+        return {
+          data:(await axios.get(process.env.REACT_APP_API_BASE_URL + ep)).data, 
+          key: v4()
+        }
       } catch (e) {
         return null
       }

@@ -27,7 +27,17 @@ export const ClientServerSync = () => {
     queryClient.setQueryData('userAirs', () => state.serverData)
   }
   useEffect(() => {
-    // NOTE: during non prod builds, sw will not cache, so state will unsync
+    
+    // fallback if sw does not return cache ex: staging builds
+    if(!serverData){
+      setState({
+        isSynced: true,
+        online: false,
+        previousServerLastUpdated: AirStore.getState().lastUpdated as number,
+        serverData: null
+      })
+    }
+
     if (serverData) {
       const isSynced = isEqual(clientData.airs, serverData.airs)
       // is the server data coming from the sw cache? => no two lastUpdated should be the same

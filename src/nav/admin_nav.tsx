@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {Menu} from 'antd'
+import {Affix, Menu} from 'antd'
 import SubMenu from 'antd/lib/menu/SubMenu'
 import {MenuInfo} from 'rc-menu/lib/interface'
 import {DownOutlined} from '@ant-design/icons'
 import {adminStore, getAdminStoreActions} from '../hooks/admin_store'
 import {getQueryObjFromEP} from '../util'
+import { Const } from '../const'
 
 const as = getAdminStoreActions()
 
 export const AdminNav = () => {
   const ep = adminStore((s) => s.ep)
   const air = adminStore.getState().air
-  as.setEditObj(undefined)
 
   const onClick = (menuInfo: MenuInfo) => {
     as.setEp(String(menuInfo.key))
@@ -30,7 +30,8 @@ export const AdminNav = () => {
   }
 
   return air ? (
-    <Menu mode="horizontal" onClick={onClick} selectedKeys={[ep]}>
+    <Affix offsetTop={Const.HEIGHT.APP_BAR_NUM}>
+      <Menu mode="horizontal" onClick={onClick} selectedKeys={[ep]}>
       <Menu.Item key={`aircraft`}>{'Your Aircraft'}</Menu.Item>
       <Menu.Item key={`cargo?aircraftId=${air.aircraftId}`}>
         {'Cargos'}
@@ -47,11 +48,12 @@ export const AdminNav = () => {
         {air.configs.map((c) => (
           <Menu.Item
             key={`configCargo?aircraftId=${air.aircraftId}&configId=${c.configId}`}
-          >
+            >
             {c.name}
           </Menu.Item>
         ))}
       </SubMenu>
     </Menu>
+  </Affix>
   ) : null
 }

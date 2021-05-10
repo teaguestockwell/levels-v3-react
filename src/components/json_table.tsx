@@ -6,7 +6,7 @@ import {DeleteOutlined, EditOutlined} from '@ant-design/icons'
 import {usePolling, adminActions} from '../hooks/use_admin_polling'
 import {adminStore} from '../hooks/admin_store'
 import {v4} from 'uuid'
-import {AdminAddNew} from './admin_add_new'
+import { AdminAddNew } from './admin_add_new'
 
 export const JsonTable = () => {
   const ep = adminStore((s) => s.ep)
@@ -21,24 +21,27 @@ export const JsonTable = () => {
       )
     }
 
-    if (data.msg) {
+    if (data.data.msg) {
       return (
         <Result
           status="error"
-          title={`${data.msg}` ? `${data.msg}` : 'Failed to load'}
+          title={`${data.data.msg}` ? `${data.data.msg}` : 'Failed to load'}
         />
       )
     }
 
-    if (data.length === 0) {
-      return <Empty />
+    if (data.data.length === 0) {
+      return <>
+      <AdminAddNew />
+      <Empty />
+      </>
     }
 
     const displayKeys = [
       'name',
-      ...Object.keys((data as Record<string, unknown>[])[0])
+      ...Object.keys((data.data as Record<string, unknown>[])[0])
         .filter(
-          (k) => typeof (data as Record<string, unknown>[])[0][k] !== 'object'
+          (k) => typeof (data.data as Record<string, unknown>[])[0][k] !== 'object'
         )
         .filter((k) => !k.includes('Id'))
         .filter((k) => k !== 'name')
@@ -83,7 +86,7 @@ export const JsonTable = () => {
           pagination={{pageSize: 1000}}
           scroll={{y: 500}}
           columns={columns}
-          dataSource={data}
+          dataSource={data.data}
           //rowKey="name"
           sticky
         />
