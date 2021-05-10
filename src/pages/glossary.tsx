@@ -1,1 +1,3 @@
-export const Glossary = () =>{return <div>Glossary</div>}
+export const Glossary = () => {
+  return <div>Glossary</div>
+}

@@ -1,11 +1,12 @@
 /* eslint-disable react/display-name */
-import {Col, Row, Table} from 'antd'
+import {Col, Empty, Result, Row, Skeleton, Table} from 'antd'
 import {useMemo} from 'react'
 import {capitalizeFirst} from '../util'
 import {DeleteOutlined, EditOutlined} from '@ant-design/icons'
 import {usePolling, adminActions} from '../hooks/use_admin_polling'
 import {adminStore} from '../hooks/admin_store'
 import {v4} from 'uuid'
+import {AdminAddNew} from './admin_add_new'
 
 export const JsonTable = () => {
   const ep = adminStore((s) => s.ep)
@@ -13,15 +14,24 @@ export const JsonTable = () => {
 
   const table = useMemo(() => {
     if (!data) {
-      return <div>loading state</div>
+      return (
+        <div style={{paddingLeft: '12px', paddingRight: '12px'}}>
+          <Skeleton active paragraph={{rows: 20}} />
+        </div>
+      )
     }
 
     if (data.msg) {
-      return <div>error state</div>
+      return (
+        <Result
+          status="error"
+          title={`${data.msg}` ? `${data.msg}` : 'Failed to load'}
+        />
+      )
     }
 
     if (data.length === 0) {
-      return <div>empty state</div>
+      return <Empty />
     }
 
     const displayKeys = [
@@ -66,13 +76,18 @@ export const JsonTable = () => {
     ]
 
     return (
-      <Table
-        pagination={{pageSize: 100}}
-        //scroll={{y: 500}}
-        columns={columns}
-        dataSource={data}
-        //rowKey="name"
-      />
+      <>
+        <AdminAddNew />
+        <Table
+          style={{padding: '0px 12px 0px 12px'}}
+          pagination={{pageSize: 1000}}
+          scroll={{y: 500}}
+          columns={columns}
+          dataSource={data}
+          //rowKey="name"
+          sticky
+        />
+      </>
     )
   }, [data, ep])
 

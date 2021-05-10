@@ -20,8 +20,6 @@ const IsLoaded = ({children}: {children: React.ReactNode}) => {
   return <div>Loading Test</div>
 }
 
-
-
 interface WrapperProps {
   children?: React.ReactNode
 }

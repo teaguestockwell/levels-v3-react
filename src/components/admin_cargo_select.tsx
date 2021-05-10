@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {Form, Select} from 'antd'
+import {Row, Select} from 'antd'
 import {adminStore, getAdminStoreActions} from '../hooks/admin_store'
-const {Option} = Select
+import {Typography} from 'antd'
 
+const {Text} = Typography
+const {Option} = Select
 const as = getAdminStoreActions()
 
 /**
@@ -37,12 +39,27 @@ export const AdminCargoSelect = ({validate}: {validate: () => void}) => {
   }
 
   return (
-    <Select defaultValue={selectedId} onChange={onChange}>
-      {cargos.map((c) => (
-        <Option key={c.cargoId} value={c.cargoId}>
-          {c.name}
-        </Option>
-      ))}
-    </Select>
+    <>
+      <Row justify="start" style={{paddingBottom: '10px'}}>
+        <Text>
+          Select cargo in config: weight defaults to cargo weight, fs overrides
+          default cargo fs, cargo must be unique to config
+        </Text>
+      </Row>
+      <Row justify="start">
+        <Select
+          defaultValue={selectedId}
+          onChange={onChange}
+          style={{width: 400, textAlign: 'center'}}
+          dropdownStyle={{textAlign: 'center'}}
+        >
+          {cargos.map((c) => (
+            <Option key={c.cargoId} value={c.cargoId}>
+              {c.name}
+            </Option>
+          ))}
+        </Select>
+      </Row>
+    </>
   )
 }

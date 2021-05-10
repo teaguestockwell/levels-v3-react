@@ -45,7 +45,8 @@ export const ConfigSelect = () => {
     <Select
       onChange={onChange}
       defaultValue={CargoStore.getState().config.name}
-      style={{width: Const.SELECT_WIDTH}}
+      style={{width: Const.SELECT_WIDTH, textAlign: 'center'}}
+      dropdownStyle={{textAlign: 'center'}}
       showSearch
     >
       <Option value={'No Config'}>No Config</Option>

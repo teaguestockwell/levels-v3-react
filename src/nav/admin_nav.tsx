@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {Menu} from 'antd'
 import SubMenu from 'antd/lib/menu/SubMenu'
 import {MenuInfo} from 'rc-menu/lib/interface'
@@ -5,10 +6,7 @@ import {DownOutlined} from '@ant-design/icons'
 import {adminStore, getAdminStoreActions} from '../hooks/admin_store'
 import {getQueryObjFromEP} from '../util'
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 const as = getAdminStoreActions()
-const loading = <div>loading</div>
 
 export const AdminNav = () => {
   const ep = adminStore((s) => s.ep)
@@ -33,7 +31,7 @@ export const AdminNav = () => {
 
   return air ? (
     <Menu mode="horizontal" onClick={onClick} selectedKeys={[ep]}>
-      <Menu.Item key={`aircraft`}>{'All Aircraft'}</Menu.Item>
+      <Menu.Item key={`aircraft`}>{'Your Aircraft'}</Menu.Item>
       <Menu.Item key={`cargo?aircraftId=${air.aircraftId}`}>
         {'Cargos'}
       </Menu.Item>
@@ -55,7 +53,5 @@ export const AdminNav = () => {
         ))}
       </SubMenu>
     </Menu>
-  ) : (
-    loading
-  )
+  ) : null
 }

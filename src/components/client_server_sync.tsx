@@ -27,7 +27,7 @@ export const ClientServerSync = () => {
     queryClient.setQueryData('userAirs', () => state.serverData)
   }
   useEffect(() => {
-    // NOTE: during non prod builds, sw will not cache, so state will unsync 
+    // NOTE: during non prod builds, sw will not cache, so state will unsync
     if (serverData) {
       const isSynced = isEqual(clientData.airs, serverData.airs)
       // is the server data coming from the sw cache? => no two lastUpdated should be the same

@@ -4,6 +4,7 @@ import {AdminCargoSelect} from './admin_cargo_select'
 import {renderWrapped} from '../testUtils/render_wrapped'
 import {adminStore, getAdminStoreActions} from '../hooks/admin_store'
 import {mockAircraftsDeep} from '../testUtils/mock_aircrafts_deep'
+import MatchMediaMock from 'jest-matchmedia-mock'
 
 const adminStoreActions = getAdminStoreActions()
 const c17 = mockAircraftsDeep[1]
@@ -35,6 +36,8 @@ const setup = () => {
 }
 
 describe('AdminCargoSelect', () => {
+  let mediaMock
+  beforeAll(() => (mediaMock = new MatchMediaMock()))
   it('will render', async () => {
     setup()
     const fn = jest.fn()

@@ -7,10 +7,16 @@ const endPoints = [
     return res(ctx.status(200), ctx.body(mockAircraftDeepString))
   }),
 
-  rest.get('http://localhost:8080/fl-api/aircraft/lastUpdated', (req, res, ctx) => {
-    const ret = JSON.stringify({airs: mockAircraftsDeep, lastUpdated: Date.now()})
-    return res(ctx.status(200), ctx.body(ret))
-  }),
+  rest.get(
+    'http://localhost:8080/fl-api/aircraft/lastUpdated',
+    (req, res, ctx) => {
+      const ret = JSON.stringify({
+        airs: mockAircraftsDeep,
+        lastUpdated: Date.now(),
+      })
+      return res(ctx.status(200), ctx.body(ret))
+    }
+  ),
 
   rest.get('http://localhost:8080/fl-api/empty', (req, res, ctx) => {
     return res(ctx.status(200), ctx.body('[]'))

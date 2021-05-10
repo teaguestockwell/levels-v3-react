@@ -1,4 +1,4 @@
-import {AdminAddNew} from '../components/admin_add_new'
+//import {AdminAddNew} from '../components/admin_add_new'
 import {v4} from 'uuid'
 import {AdminModal} from '../components/admin_modal'
 import {JsonTable} from '../components/json_table'
@@ -11,7 +11,6 @@ export const Admin = () => {
   return (
     <>
       <AdminNav key={v4()} />
-      <AdminAddNew />
       <JsonTable key={v4()} />
       <AdminModal key={v4()} />
     </>

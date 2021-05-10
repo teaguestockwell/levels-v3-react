@@ -1,9 +1,7 @@
 import {useUserAirs} from '../hooks/use_user_airs'
-import {AccessDenied} from '../pages/access_denied'
-import {Loading} from '../pages/loading'
-import {Offline} from '../pages/offline'
 import {getActionsAS, initAirCargos} from '../hooks/air_store'
 import {MobileNav} from './mobile_nav'
+import {Result, Skeleton} from 'antd'
 
 const as = getActionsAS()
 export const InitLoaded = () => {
@@ -17,13 +15,21 @@ export const InitLoaded = () => {
   }
 
   if (data && !hasRoles) {
-    return <AccessDenied />
+    return <Result title="You have no assigned aircraft" />
   }
+
   if (status === 'loading') {
-    return <Loading />
+    return (
+      <div style={{padding: '12px 12px 12px 12px'}}>
+        <Skeleton active paragraph={{rows: 30}} />
+      </div>
+    )
   }
-  if (status === 'error') {
-    return <Offline />
-  }
-  return <div>Unhandled State</div>
+
+  return (
+    <Result
+      status="error"
+      title="Failed to load. Please check your connection"
+    />
+  )
 }

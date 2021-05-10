@@ -14,7 +14,11 @@ export const usePolling = (ep: string, refetchInterval = 2000) => {
   return useQuery(
     ep,
     async () => {
-      return (await axios.get(process.env.REACT_APP_API_BASE_URL + ep)).data
+      try {
+        return (await axios.get(process.env.REACT_APP_API_BASE_URL + ep)).data
+      } catch (e) {
+        return null
+      }
     },
     {
       retry: 5,

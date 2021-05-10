@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {getActionsAS, getAir, initAirCargos} from '../hooks/air_store'
-import {useUserAirs } from '../hooks/use_user_airs'
+import {useUserAirs} from '../hooks/use_user_airs'
 import {AircraftDeep} from '../types/aircraftDeep'
 import {Select} from 'antd'
 import {Const} from '../const'
@@ -21,7 +21,8 @@ export const UserAirSelect = () => {
     <Select
       defaultValue={getAir().name}
       onChange={onAirChange}
-      style={{width: Const.SELECT_WIDTH}}
+      style={{width: Const.SELECT_WIDTH, textAlign: 'center'}}
+      dropdownStyle={{textAlign: 'center'}}
       showSearch
     >
       {data.airs.map((a: AircraftDeep) => (

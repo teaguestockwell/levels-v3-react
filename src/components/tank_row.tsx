@@ -93,7 +93,8 @@ export const TankRow = ({
       <Select
         onChange={onChange}
         defaultValue={currentWeight}
-        style={{width: 100}}
+        style={{width: 100, textAlign: 'center'}}
+        dropdownStyle={{textAlign: 'center'}}
         showSearch
       >
         {weights.map((w) => (

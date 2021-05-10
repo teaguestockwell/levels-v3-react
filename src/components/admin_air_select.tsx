@@ -1,11 +1,11 @@
-import {Select} from 'antd'
+import {Alert, Select, Spin} from 'antd'
 import {useMemo} from 'react'
 import {usePolling} from '../hooks/use_admin_polling'
 import {AircraftDeep} from '../types/aircraftDeep'
 import {adminStore, getAdminStoreActions} from '../hooks/admin_store'
 import isEqual from 'lodash/isEqual'
 import {Const} from '../const'
-import { initAirCargos } from '../hooks/air_store'
+import {initAirCargos} from '../hooks/air_store'
 
 const as = getAdminStoreActions()
 const {Option} = Select
@@ -18,9 +18,7 @@ export const AdminAirSelect = () => {
   const {data} = usePolling('aircraft', 5000)
   const air = adminStore.getState().air
 
-  const loading = <div>loading state</div>
-  const error = <div>error state</div>
-  const empty = <div>empty state</div>
+  const loading = <Spin />
 
   // use the key of the client state to find new data in server state,
   // then set client state
@@ -39,12 +37,12 @@ export const AdminAirSelect = () => {
 
     // while !res contains error
     if (data.msg) {
-      return error
+      return <Alert message="Error" type="error" showIcon />
     }
 
     // while no data within res
     if (data.length === 0) {
-      return empty
+      return <Alert message="No Aircraft" type="warning" showIcon />
     }
 
     // while no client state for selection,
@@ -78,7 +76,8 @@ export const AdminAirSelect = () => {
         defaultValue={air.name}
         onChange={onAirChange}
         showSearch
-        style={{width: Const.SELECT_WIDTH}}
+        style={{width: Const.SELECT_WIDTH, textAlign: 'center'}}
+        dropdownStyle={{textAlign: 'center'}}
       >
         {data.map((a: AircraftDeep) => (
           <Option key={a.aircraftId} value={a.name}>

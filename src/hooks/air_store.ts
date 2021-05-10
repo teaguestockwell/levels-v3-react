@@ -1,4 +1,4 @@
-import { isEqual } from 'lodash'
+import {isEqual} from 'lodash'
 import {v4} from 'uuid'
 import create, {State} from 'zustand'
 import {AircraftDeep, Category} from '../types/aircraftDeep'
@@ -33,7 +33,8 @@ export const AirStore = create<AirStoreState>((set) => ({
   setSelectedAir: (air) => {
     set((state) => {
       state.selectedAir = air
-    })}
+    })
+  },
 }))
 
 export const getAir = () => AirStore.getState().selectedAir as AircraftDeep
@@ -48,7 +49,7 @@ export const getActionsAS = () => {
 }
 export const useAirId = () => AirStore((x) => x.selectedAir?.aircraftId)
 
-export const initAirCargos = (air:AircraftDeep) => {
+export const initAirCargos = (air: AircraftDeep) => {
   const cs = getActionsCS()
   const as = getActionsAS()
 
@@ -74,7 +75,6 @@ export const initAirCargos = (air:AircraftDeep) => {
   ])
 }
 
-
 /** hook that will cause re-renders on aircraft change.
   When aircraft is changed, it will update the initial state of 
   the cargo and aircraft store to reflect the new aircraft, 
@@ -95,5 +95,8 @@ export const useAirChangeStoreReset = () => {
   return air
 }
 
-export const useUserAir = () => AirStore(s => s.selectedAir,(s1,s2) => isEqual(s1,s2))
-
+export const useUserAir = () =>
+  AirStore(
+    (s) => s.selectedAir,
+    (s1, s2) => isEqual(s1, s2)
+  )
