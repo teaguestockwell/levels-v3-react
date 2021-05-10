@@ -4,6 +4,11 @@ import * as yup from 'yup'
 export const queryClient = new QueryClient()
 
 export const Const = {
+  HEIGHT: {
+    APP_BAR: '50px',
+    BOTTOM_NAV_BAR: '75px'
+  },
+  PAGES: ['%MAC','Admin','Glossary','Help'],
   COLORS: {
     TXT_DISABLED: '#8A8A8A',
     TXT_RED: '#A40606',

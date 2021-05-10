@@ -1,18 +1,18 @@
-import {SideNav} from './side_nav'
+import {MobileNav} from './mobile_nav'
 import {renderWrapped, waitFor} from '../testUtils/render_wrapped'
 import MatchMediaMock from 'jest-matchmedia-mock'
 
-describe('SideNav', () => {
+describe('MobileNav', () => {
   let matchMedia
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   beforeAll(() => (matchMedia = new MatchMediaMock()))
 
   it('will render', async () => {
-    const ct = renderWrapped(<SideNav />)
+    const ct = renderWrapped(<MobileNav />)
 
     await waitFor(() =>
       expect(ct.queryAllByText('Loading Test').length).toBe(0)
     )
-    expect(ct.queryAllByText('250').length).toBe(4)
+    expect(ct.queryAllByText('%MAC').length).toBe(1)
   })
 })
