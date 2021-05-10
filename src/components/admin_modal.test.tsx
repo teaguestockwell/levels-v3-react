@@ -62,14 +62,15 @@ describe('AdminModal', () => {
     await waitFor(() =>
       expect(ct.queryAllByText('Loading Test').length).toBe(0)
     )
+
+    expect(ct.queryAllByText('Fs').length).toBe(0)
+
+    //open
+    adminStore.getState().setEditObj(initEditObj)
     await waitFor(() => expect(ct.getByText('Fs')).toBeInTheDocument())
 
     //close
     adminStore.getState().setEditObj(undefined)
     await waitFor(() => expect(ct.queryAllByText('Fs').length).toBe(0))
-
-    //open
-    adminStore.getState().setEditObj(initEditObj)
-    await waitFor(() => expect(ct.getByText('Fs')).toBeInTheDocument())
   })
 })
