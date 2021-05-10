@@ -5,6 +5,7 @@ import {AircraftDeep} from '../types/aircraftDeep'
 import {adminStore, getAdminStoreActions} from '../hooks/admin_store'
 import isEqual from 'lodash/isEqual'
 import {Const} from '../const'
+import { initAirCargos } from '../hooks/air_store'
 
 const as = getAdminStoreActions()
 const {Option} = Select
@@ -26,6 +27,7 @@ export const AdminAirSelect = () => {
   const onAirChange = (newName: string) => {
     const serverAir = data.find((x: any) => x.name === newName)
     as.setAir(serverAir)
+    initAirCargos(serverAir)
   }
 
   // do not render on every req, only when res is different

@@ -1,3 +1,4 @@
+import { isEqual } from 'lodash'
 import {v4} from 'uuid'
 import create, {State} from 'zustand'
 import {AircraftDeep, Category} from '../types/aircraftDeep'
@@ -29,10 +30,10 @@ export const AirStore = create<AirStoreState>((set) => ({
     set((state) => {
       state.cargoSchema = cargoSchema
     }),
-  setSelectedAir: (air) =>
+  setSelectedAir: (air) => {
     set((state) => {
       state.selectedAir = air
-    }),
+    })}
 }))
 
 export const getAir = () => AirStore.getState().selectedAir as AircraftDeep
@@ -47,25 +48,10 @@ export const getActionsAS = () => {
 }
 export const useAirId = () => AirStore((x) => x.selectedAir?.aircraftId)
 
-/** hook that will cause re-renders on aircraft change.
-  When aircraft is changed, it will update the initial state of 
-  the cargo and aircraft store to reflect the new aircraft, 
-  by changing the cargo validation schema, and resting the chart c and 
-  tanks to their initial state for that aircraft  
-*/
-export const useAirChangeStoreReset = () => {
-  // given the actions to modify state inside cargo and aircraft store
+export const initAirCargos = (air:AircraftDeep) => {
   const cs = getActionsCS()
   const as = getActionsAS()
 
-  // when a new aircraft is selected
-  const air = AirStore(
-    (s1) => s1.selectedAir,
-    (s1, s2) => s1?.aircraftId === s2?.aircraftId
-  ) as AircraftDeep
-
-  // then
-  // clear all cargos and remove config
   cs.resetCargoStore()
 
   // set cargo validation schema to schema from new aircraft
@@ -86,7 +72,28 @@ export const useAirChangeStoreReset = () => {
     // n tanks
     ...getCargoStringsFromAirTanks(air),
   ])
+}
+
+
+/** hook that will cause re-renders on aircraft change.
+  When aircraft is changed, it will update the initial state of 
+  the cargo and aircraft store to reflect the new aircraft, 
+  by changing the cargo validation schema, and resting the chart c and 
+  tanks to their initial state for that aircraft  
+*/
+export const useAirChangeStoreReset = () => {
+  console.log()
+  // when a new aircraft is selected
+  const air = AirStore(
+    (s1) => s1.selectedAir,
+    (s1, s2) => s1?.aircraftId === s2?.aircraftId
+  ) as AircraftDeep
+
+  initAirCargos(air)
 
   // return the new aircraft + the hook that fires this func on air change.
   return air
 }
+
+export const useUserAir = () => AirStore(s => s.selectedAir,(s1,s2) => isEqual(s1,s2))
+
