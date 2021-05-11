@@ -18,6 +18,6 @@ describe('InitLoaded', () => {
     await waitFor(() =>
       expect(ct.queryAllByText('Loading Test').length).toBe(0)
     )
-    await waitFor(() => expect(ct.queryAllByText('250').length).toBe(4))
+    await waitFor(() => expect(ct.queryAllByText('Desktop').length).toBe(1))
   })
 })

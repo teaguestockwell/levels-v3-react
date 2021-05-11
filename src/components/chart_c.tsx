@@ -10,13 +10,11 @@ import {getActionsCS, getCargoMap} from '../hooks/cargo_store'
 import {Category} from '../types/aircraftDeep'
 import {debounce} from 'lodash'
 import {Row, Col} from 'antd'
-
 const cs = getActionsCS()
 const {Text} = Typography
 
 export const ChartC = () => {
   const [form] = Form.useForm()
-
   const schema = useRef(getChartCSchema(getAir())).current
   const air = useRef(getAir()).current
   const initCargo = useRef(
@@ -26,9 +24,10 @@ export const ChartC = () => {
   ).current[0]
 
   useEffect(() => {
-    form.setFieldsValue({mom: '', weight: ''})
-    const time = setTimeout(() => form.validateFields(), 1)
-    return () => clearTimeout(time)
+    // console.log(' cart c clear')
+    // form.setFieldsValue({mom: '', weight: ''})
+    // const time = setTimeout(() => form.validateFields(), 1)
+    // return () => clearTimeout(time)
   }, [])
 
   const onChange = () => {

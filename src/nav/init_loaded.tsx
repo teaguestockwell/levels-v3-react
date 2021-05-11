@@ -1,7 +1,7 @@
 import {useUserAirs} from '../hooks/use_user_airs'
 import {getActionsAS, initAirCargos} from '../hooks/air_store'
-import {MobileNav} from './mobile_nav'
 import {Result, Skeleton} from 'antd'
+import { DynamicMainNav } from './dynamic_main_nav'
 
 const as = getActionsAS()
 export const InitLoaded = () => {
@@ -11,7 +11,7 @@ export const InitLoaded = () => {
     initAirCargos(data.airs[0])
     as.setSelectedAir(data.airs[0])
     as.setLastUpdated(data.lastUpdated)
-    return <MobileNav />
+    return <DynamicMainNav />
   }
 
   if (data && !hasRoles) {
