@@ -6,7 +6,7 @@ import {
   getChartCSchema,
   rulesYupWrapper,
 } from '../util'
-import {getActionsCS, getCargoMap} from '../hooks/cargo_store'
+import {CargoStore, getActionsCS, getCargoMap} from '../hooks/cargo_store'
 import {Category} from '../types/aircraftDeep'
 import {debounce} from 'lodash'
 import {Row, Col} from 'antd'
@@ -24,10 +24,10 @@ export const ChartC = () => {
   ).current[0]
 
   useEffect(() => {
-    // console.log(' cart c clear')
-    // form.setFieldsValue({mom: '', weight: ''})
-    // const time = setTimeout(() => form.validateFields(), 1)
-    // return () => clearTimeout(time)
+    const csState = CargoStore.getState()
+    form.setFieldsValue({mom: csState.basicMom, weight: csState.basicWeight})
+    const time = setTimeout(() => form.validateFields(), 1)
+    return () => clearTimeout(time)
   }, [])
 
   const onChange = () => {
@@ -42,6 +42,8 @@ export const ChartC = () => {
       initCargo.uuid
     )
 
+    cs.putBasicMom(form.getFieldValue('mom'))
+    cs.putBasicWeight(form.getFieldValue('weight'))
     cs.putCargos([cargo])
   }
 

@@ -8,7 +8,11 @@ export interface CargoStoreState extends State {
   cargoMap: Map<string, CargoString>
   config: Config
   editUuid: string | undefined
+  basicWeight: string
+  basicMom: string
 
+  putBasicMom: (basicMom:string) => void
+  putBasicWeight: (basicWeight:string) => void
   // update 1 config
   putConfig: (config: Config) => void
 
@@ -31,7 +35,11 @@ export const CargoStore = create<CargoStoreState>((set) => ({
   config: Const.NO_CONFIG,
   configUuids: [],
   editUuid: undefined,
+  basicMom: '',
+  basicWeight: '',
 
+  putBasicMom: (basicMom) => set(s => {s.basicMom = basicMom}),
+  putBasicWeight: (basicWeight) => set(s => {s.basicWeight = basicWeight}),
   // update 1
   putEditUuid: (uuid) =>
     set((s) => {
@@ -60,6 +68,8 @@ export const CargoStore = create<CargoStoreState>((set) => ({
     set((state) => {
       state.cargoMap.clear()
       state.config = Const.NO_CONFIG
+      state.basicMom = ''
+      state.basicWeight = ''
     }),
 }))
 
@@ -92,6 +102,8 @@ export const getConfig = () => CargoStore.getState().config
 export const getActionsCS = () => {
   const state = CargoStore.getState()
   return {
+    putBasicWeight: state.putBasicWeight,
+    putBasicMom: state.putBasicMom,
     putEditUuid: state.putEditUuid,
     putConfig: state.putConfig,
     putConfigUuids: state.putConfigUuids,
