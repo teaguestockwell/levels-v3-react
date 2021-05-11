@@ -31,7 +31,7 @@ export const AdminNav = () => {
 
   return air ? (
     <Affix offsetTop={Const.HEIGHT.APP_BAR_NUM}>
-      <Menu mode="horizontal" onClick={onClick} selectedKeys={[ep]}>
+      <Menu mode="horizontal" onClick={onClick} selectedKeys={[ep]} style={{boxShadow: Const.BOX_SHADOW,}}>
       <Menu.Item key={`aircraft`}>{'Your Aircraft'}</Menu.Item>
       <Menu.Item key={`cargo?aircraftId=${air.aircraftId}`}>
         {'Cargos'}

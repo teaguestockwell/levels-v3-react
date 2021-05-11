@@ -24,13 +24,13 @@ export const ChartC = () => {
   ).current[0]
 
   useEffect(() => {
-    const csState = CargoStore.getState()
-    form.setFieldsValue({mom: csState.basicMom, weight: csState.basicWeight})
+    form.setFieldsValue(CargoStore.getState().chartC)
     const time = setTimeout(() => form.validateFields(), 1)
     return () => clearTimeout(time)
   }, [])
 
   const onChange = () => {
+    const newChartC = form.getFieldsValue()
     const isValid = form
       .getFieldsError()
       .every((v: any) => v.errors.length === 0)
@@ -38,12 +38,10 @@ export const ChartC = () => {
     // convert form input to cargo string, parse moment into fs
     const cargo = getCargoStringFromChartC(
       air.momMultiplyer,
-      {...form.getFieldsValue(), isValid},
+      {...newChartC, isValid},
       initCargo.uuid
     )
-
-    cs.putBasicMom(form.getFieldValue('mom'))
-    cs.putBasicWeight(form.getFieldValue('weight'))
+    cs.putChartC(newChartC)
     cs.putCargos([cargo])
   }
 

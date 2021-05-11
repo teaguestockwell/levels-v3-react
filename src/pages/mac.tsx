@@ -18,7 +18,6 @@ import {useUserAir} from '../hooks/air_store'
 
 export const Mac = () => {
   useUserAir()
-  console.log('mac render')
 
 
   return (

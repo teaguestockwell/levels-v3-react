@@ -8,11 +8,10 @@ export interface CargoStoreState extends State {
   cargoMap: Map<string, CargoString>
   config: Config
   editUuid: string | undefined
-  basicWeight: string
-  basicMom: string
+  chartC: {weight:string, mom:string}
 
-  putBasicMom: (basicMom:string) => void
-  putBasicWeight: (basicWeight:string) => void
+  putChartC: (chartC: {weight:string, mom:string}) => void
+
   // update 1 config
   putConfig: (config: Config) => void
 
@@ -35,11 +34,10 @@ export const CargoStore = create<CargoStoreState>((set) => ({
   config: Const.NO_CONFIG,
   configUuids: [],
   editUuid: undefined,
-  basicMom: '',
-  basicWeight: '',
+  chartC: {weight:'', mom:''},
 
-  putBasicMom: (basicMom) => set(s => {s.basicMom = basicMom}),
-  putBasicWeight: (basicWeight) => set(s => {s.basicWeight = basicWeight}),
+  putChartC: (chartC) => set(s => {s.chartC = chartC}),
+
   // update 1
   putEditUuid: (uuid) =>
     set((s) => {
@@ -68,8 +66,7 @@ export const CargoStore = create<CargoStoreState>((set) => ({
     set((state) => {
       state.cargoMap.clear()
       state.config = Const.NO_CONFIG
-      state.basicMom = ''
-      state.basicWeight = ''
+      state.chartC = {weight:'', mom:''}
     }),
 }))
 
@@ -108,8 +105,7 @@ export const getActionsCS = () => {
     putConfig: state.putConfig,
     putConfigUuids: state.putConfigUuids,
     putCargos: state.putCargos,
-    //putCargosIsValid: state.putCargosIsValid,
-    //deleteCargosIsValid: state.deleteCargosIsValid,
+    putChartC: state.putChartC,
     deleteCargos: state.deleteCargos,
     resetCargoStore: state.resetCargoStore,
   }
