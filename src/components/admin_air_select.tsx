@@ -6,7 +6,7 @@ import {getAdminStoreActions, useAir} from '../hooks/admin_store'
 import isEqual from 'lodash/isEqual'
 import {Const} from '../const'
 import {initAirCargos} from '../hooks/air_store'
-import { v4 } from 'uuid'
+import {v4} from 'uuid'
 
 const as = getAdminStoreActions()
 const {Option} = Select

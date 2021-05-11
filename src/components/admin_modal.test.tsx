@@ -1,8 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {
-  renderWrapped,
-  waitFor,
-} from '../testUtils/render_wrapped'
+import {renderWrapped, waitFor} from '../testUtils/render_wrapped'
 import {AdminModal} from './admin_modal'
 import MatchMediaMock from 'jest-matchmedia-mock'
 import {adminStore} from '../hooks/admin_store'

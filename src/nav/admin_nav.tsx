@@ -5,7 +5,7 @@ import {MenuInfo} from 'rc-menu/lib/interface'
 import {DownOutlined} from '@ant-design/icons'
 import {adminStore, getAdminStoreActions} from '../hooks/admin_store'
 import {getQueryObjFromEP} from '../util'
-import { Const } from '../const'
+import {Const} from '../const'
 
 const as = getAdminStoreActions()
 
@@ -31,29 +31,38 @@ export const AdminNav = () => {
 
   return air ? (
     <Affix offsetTop={Const.HEIGHT.APP_BAR_NUM}>
-      <Menu mode="horizontal" onClick={onClick} selectedKeys={[ep]} style={{boxShadow: Const.BOX_SHADOW,}}>
-      <Menu.Item key={`aircraft`}>{'Your Aircraft'}</Menu.Item>
-      <Menu.Item key={`cargo?aircraftId=${air.aircraftId}`}>
-        {'Cargos'}
-      </Menu.Item>
-      <Menu.Item key={`glossary?aircraftId=${air.aircraftId}`}>
-        {'Glossarys'}
-      </Menu.Item>
-      <Menu.Item key={`tank?aircraftId=${air.aircraftId}`}>{'Tanks'}</Menu.Item>
-      <Menu.Item key={`user?aircraftId=${air.aircraftId}`}>{'Users'}</Menu.Item>
-      <Menu.Item key={`config?aircraftId=${air.aircraftId}`}>
-        {'Configs'}
-      </Menu.Item>
-      <SubMenu title={getSubMenuTitle()} icon={<DownOutlined />}>
-        {air.configs.map((c) => (
-          <Menu.Item
-            key={`configCargo?aircraftId=${air.aircraftId}&configId=${c.configId}`}
+      <Menu
+        mode="horizontal"
+        onClick={onClick}
+        selectedKeys={[ep]}
+        style={{boxShadow: Const.BOX_SHADOW}}
+      >
+        <Menu.Item key={`aircraft`}>{'Your Aircraft'}</Menu.Item>
+        <Menu.Item key={`cargo?aircraftId=${air.aircraftId}`}>
+          {'Cargos'}
+        </Menu.Item>
+        <Menu.Item key={`glossary?aircraftId=${air.aircraftId}`}>
+          {'Glossarys'}
+        </Menu.Item>
+        <Menu.Item key={`tank?aircraftId=${air.aircraftId}`}>
+          {'Tanks'}
+        </Menu.Item>
+        <Menu.Item key={`user?aircraftId=${air.aircraftId}`}>
+          {'Users'}
+        </Menu.Item>
+        <Menu.Item key={`config?aircraftId=${air.aircraftId}`}>
+          {'Configs'}
+        </Menu.Item>
+        <SubMenu title={getSubMenuTitle()} icon={<DownOutlined />}>
+          {air.configs.map((c) => (
+            <Menu.Item
+              key={`configCargo?aircraftId=${air.aircraftId}&configId=${c.configId}`}
             >
-            {c.name}
-          </Menu.Item>
-        ))}
-      </SubMenu>
-    </Menu>
-  </Affix>
+              {c.name}
+            </Menu.Item>
+          ))}
+        </SubMenu>
+      </Menu>
+    </Affix>
   ) : null
 }

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {Const} from '../const'
-import { Button, Col, Row, Typography } from 'antd'
-import { navIcons, pageNames,getNavItemStyle } from './dynamic_main_nav'
+import {Button, Col, Row, Typography} from 'antd'
+import {navIcons, pageNames, getNavItemStyle} from './dynamic_main_nav'
 
 /** 
 @param page page component to be rendered
@@ -9,21 +9,17 @@ import { navIcons, pageNames,getNavItemStyle } from './dynamic_main_nav'
 @param setPage callback used to change pages
 @param appBar top nav component
 */
-export const MobileNav = (
-  {
-    page,
-    pageName,
-    setPage,
-    appBar
-  }:
-  {
-    page: JSX.Element,
-    pageName: string,
-    setPage: (pageName:string) => void,
-    appBar: JSX.Element,
-  }
-) => {
-
+export const MobileNav = ({
+  page,
+  pageName,
+  setPage,
+  appBar,
+}: {
+  page: JSX.Element
+  pageName: string
+  setPage: (pageName: string) => void
+  appBar: JSX.Element
+}) => {
   // /** lookup map for at 'active' || 'inactive' navigation text styles */
   // const navTextStyle: {[key:string]: any} = {
   //   'active':   {
@@ -46,26 +42,28 @@ export const MobileNav = (
   }
 
   return (
-    // since bottom nav bar sits on top, add padding to make viewport scroll to uncover 
+    // since bottom nav bar sits on top, add padding to make viewport scroll to uncover
     <div style={{paddingBottom: Const.HEIGHT.BOTTOM_NAV_BAR}}>
       {appBar}
       {page}
-      
-      <div style={{
-        position: 'fixed', 
-        bottom: '0',
-        width: '100%',
-        zIndex: 1,
-        height: Const.HEIGHT.BOTTOM_NAV_BAR,
-        backgroundColor: '#383838',
-      }}>
+
+      <div
+        style={{
+          position: 'fixed',
+          bottom: '0',
+          width: '100%',
+          zIndex: 1,
+          height: Const.HEIGHT.BOTTOM_NAV_BAR,
+          backgroundColor: '#383838',
+        }}
+      >
         <Row justify="center" style={{padding: '15px 0px 0px 0px'}}>
           {pageNames.map((x) => (
             <Col {...colProps} key={x}>
               <Button
-                type='text'
+                type="text"
                 onClick={() => setPage(x)}
-                icon={navIcons[getNavItemStyle(x,pageName)][x]}
+                icon={navIcons[getNavItemStyle(x, pageName)][x]}
               />
             </Col>
           ))}

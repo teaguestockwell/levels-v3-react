@@ -1,7 +1,7 @@
 import {useUserAirs} from '../hooks/use_user_airs'
 import {getActionsAS, initAirCargos} from '../hooks/air_store'
 import {Result, Skeleton} from 'antd'
-import { DynamicMainNav } from './dynamic_main_nav'
+import {DynamicMainNav} from './dynamic_main_nav'
 
 const as = getActionsAS()
 export const InitLoaded = () => {

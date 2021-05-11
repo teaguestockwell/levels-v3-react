@@ -1,5 +1,5 @@
 import {AppBar} from './app_bar'
-import { render } from '@testing-library/react'
+import {render} from '@testing-library/react'
 import MatchMediaMock from 'jest-matchmedia-mock'
 
 describe('AppBar', () => {
@@ -8,7 +8,7 @@ describe('AppBar', () => {
   beforeAll(() => (matchMedia = new MatchMediaMock()))
 
   it('should render', () => {
-    const ct = render(<AppBar select={<div>select</div>}/>)
+    const ct = render(<AppBar select={<div>select</div>} />)
     expect(ct.queryAllByText('Atlas').length).toBe(1)
   })
 })

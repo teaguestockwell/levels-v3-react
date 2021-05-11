@@ -82,7 +82,7 @@ export const ChartC = () => {
               />
             </Form.Item>
           </Col>
-          <Col span={2}/>
+          <Col span={2} />
           <Col span={11}>
             <Form.Item
               name={'mom'}

@@ -19,7 +19,6 @@ import {useUserAir} from '../hooks/air_store'
 export const Mac = () => {
   useUserAir()
 
-
   return (
     <>
       <Clock />
@@ -27,7 +26,7 @@ export const Mac = () => {
       <Label text={'Tanks'} />
       <TankList key={v4()} />
       <Label text={'Chart C'} />
-      <ChartC key={v4()}/>
+      <ChartC key={v4()} />
       <Logger />
       <PerMac />
       <AddASelect key={v4()} />

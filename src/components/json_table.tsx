@@ -6,7 +6,7 @@ import {DeleteOutlined, EditOutlined} from '@ant-design/icons'
 import {usePolling, adminActions} from '../hooks/use_admin_polling'
 import {adminStore} from '../hooks/admin_store'
 import {v4} from 'uuid'
-import { AdminAddNew } from './admin_add_new'
+import {AdminAddNew} from './admin_add_new'
 
 export const JsonTable = () => {
   const ep = adminStore((s) => s.ep)
@@ -31,17 +31,20 @@ export const JsonTable = () => {
     }
 
     if (data.data.length === 0) {
-      return <>
-      <AdminAddNew />
-      <Empty />
-      </>
+      return (
+        <>
+          <AdminAddNew />
+          <Empty />
+        </>
+      )
     }
 
     const displayKeys = [
       'name',
       ...Object.keys((data.data as Record<string, unknown>[])[0])
         .filter(
-          (k) => typeof (data.data as Record<string, unknown>[])[0][k] !== 'object'
+          (k) =>
+            typeof (data.data as Record<string, unknown>[])[0][k] !== 'object'
         )
         .filter((k) => !k.includes('Id'))
         .filter((k) => k !== 'name')

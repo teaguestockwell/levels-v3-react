@@ -8,9 +8,9 @@ export interface CargoStoreState extends State {
   cargoMap: Map<string, CargoString>
   config: Config
   editUuid: string | undefined
-  chartC: {weight:string, mom:string}
+  chartC: {weight: string; mom: string}
 
-  putChartC: (chartC: {weight:string, mom:string}) => void
+  putChartC: (chartC: {weight: string; mom: string}) => void
 
   // update 1 config
   putConfig: (config: Config) => void
@@ -34,9 +34,12 @@ export const CargoStore = create<CargoStoreState>((set) => ({
   config: Const.NO_CONFIG,
   configUuids: [],
   editUuid: undefined,
-  chartC: {weight:'', mom:''},
+  chartC: {weight: '', mom: ''},
 
-  putChartC: (chartC) => set(s => {s.chartC = chartC}),
+  putChartC: (chartC) =>
+    set((s) => {
+      s.chartC = chartC
+    }),
 
   // update 1
   putEditUuid: (uuid) =>
@@ -66,7 +69,7 @@ export const CargoStore = create<CargoStoreState>((set) => ({
     set((state) => {
       state.cargoMap.clear()
       state.config = Const.NO_CONFIG
-      state.chartC = {weight:'', mom:''}
+      state.chartC = {weight: '', mom: ''}
     }),
 }))
 

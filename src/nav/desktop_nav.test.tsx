@@ -8,14 +8,16 @@ describe('DesktopNav', () => {
   beforeAll(() => (matchMedia = new MatchMediaMock()))
 
   it('will render', async () => {
-    const ct = renderWrapped(<DesktopNav
+    const ct = renderWrapped(
+      <DesktopNav
         initCollapsed={false}
-       page={<div>hi</div>} 
-       pageName={'%MAC'}
-       appBar={<div>appbar</div>}
-       // eslint-disable-next-line @typescript-eslint/no-empty-function
-       setPage={() => {}}
-    />)
+        page={<div>hi</div>}
+        pageName={'%MAC'}
+        appBar={<div>appbar</div>}
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        setPage={() => {}}
+      />
+    )
 
     await waitFor(() =>
       expect(ct.queryAllByText('Loading Test').length).toBe(0)

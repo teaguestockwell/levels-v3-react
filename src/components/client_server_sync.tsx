@@ -27,14 +27,13 @@ export const ClientServerSync = () => {
     queryClient.setQueryData('userAirs', () => state.serverData)
   }
   useEffect(() => {
-    
     // fallback if sw does not return cache ex: staging builds
-    if(!serverData){
+    if (!serverData) {
       setState({
         isSynced: true,
         online: false,
         previousServerLastUpdated: AirStore.getState().lastUpdated as number,
-        serverData: null
+        serverData: null,
       })
     }
 
