@@ -65,8 +65,8 @@ export const ChartC = () => {
       }}
     >
       <Form key={air.aircraftId + '_chart_c_form'} form={form}>
-        <Row justify="center" gutter={{xs: 8, sm: 16, md: 24, lg: 32}}>
-          <Col span={12}>
+        <Row justify="center">
+          <Col span={11}>
             <Form.Item
               name={`weight`}
               label={getLabel('Basic Weight')}
@@ -82,7 +82,8 @@ export const ChartC = () => {
               />
             </Form.Item>
           </Col>
-          <Col span={12}>
+          <Col span={2}/>
+          <Col span={11}>
             <Form.Item
               name={'mom'}
               label={getLabel('Basic Moment')}

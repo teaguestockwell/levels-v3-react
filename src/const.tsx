@@ -7,9 +7,8 @@ export const Const = {
   HEIGHT: {
     APP_BAR: '50px',
     APP_BAR_NUM: 50,
-    BOTTOM_NAV_BAR: '75px',
+    BOTTOM_NAV_BAR: '60px',
   },
-  PAGES: ['%MAC', 'Admin', 'Glossary', 'Help'],
   COLORS: {
     TXT_DISABLED: '#8A8A8A',
     TXT_RED: '#A40606',

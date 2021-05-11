@@ -1,53 +1,67 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Affix, Breadcrumb, Col, Layout, Menu, Row, Typography } from "antd"
-import Sider from "antd/lib/layout/Sider"
+import { Layout, Menu } from "antd"
 import { Const } from "../const"
-import { AppBar } from "./app_bar"
-import { getIcon, pages as pageNames } from "./dynamic_main_nav"
-import './desktop_nav.css'
+import { navIcons, pageNames, getNavItemStyle} from "./dynamic_main_nav"
 import { useState } from "react"
+import './desktop_nav.css'
+
+import Sider from "antd/lib/layout/Sider"
+// dont use this slider, it will break layout V
+//const {Sider} = Layout
 
 export const DesktopNav = (
   {
     page,
     pageName,
     setPage,
-    select,
+    appBar,
+    initCollapsed
   }:
   {
     page: JSX.Element,
     pageName: string,
     setPage: (pageName:string) => void,
-    select: JSX.Element,
+    appBar: JSX.Element,
+    initCollapsed:boolean
   }
 ) => {
-  const [collapsed, setCollapsed] = useState(window.innerWidth > 1200 ? false : true)
+  const [collapsed, setCollapsed] = useState(initCollapsed)
+
   return <Layout style={{backgroundColor: 'white',}}>
-    <AppBar select={select}/>
-    <Sider collapsible 
-    collapsed={collapsed}
-    onCollapse={() => setCollapsed(s => !s)}
-    style={{
-      paddingTop: Const.HEIGHT.APP_BAR,
-      backgroundColor: '#383838', minHeight: '100%', background: '#383838',overflow: 'auto',
+    {appBar}
+    <Sider 
+      style={{
+        paddingTop: Const.HEIGHT.APP_BAR,
+        backgroundColor: '#383838', minHeight: '100%', background: '#383838',overflow: 'auto',
         height: '100vh',
         position: 'fixed',
-        left: 0,}}>
+        left: 0,
+      }}
+      collapsible 
+      collapsed={collapsed}
+      onCollapse={() => setCollapsed(s => !s)}
+      >
         <Menu
+          style={{
+            height: '100%',
+            background: '#383838',
+            borderRight: '1px solid #383838',
+            paddingTop: '20px'
+          }}
           mode="inline"
-          defaultSelectedKeys={['1']}
-          style={{ height: '100%', background: '#383838', borderRight: '1px solid #383838'}}
-          onClick={(x:any) => setPage(x.key)}
-        
+          defaultSelectedKeys={[pageName]}
+          onClick={(x:any) => setPage(String(x.key))}
         >
           {
             pageNames.map(name => 
               <Menu.Item 
-                icon={getIcon(name,pageName)}
+                style={{
+                  backgroundColor: '#383838',
+                  color: name === pageName ? 'white' : '#737373' 
+                }}
+                icon={navIcons[getNavItemStyle(name,pageName)][name]}
                 key={name}
-                style={{backgroundColor: '#383838', color: name === pageName ? 'white' : '#737373'}}
               >
-                {name}
+                {collapsed ? null : name}
               </Menu.Item>
             )
           }

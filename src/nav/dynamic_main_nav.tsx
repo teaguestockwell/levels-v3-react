@@ -1,14 +1,15 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+import { v4 } from 'uuid'
+import { useMemo, useState } from "react"
+import { useSize } from '../hooks/use_size'
+import { DesktopNav } from './desktop_nav'
+import { MobileNav } from './mobile_nav'
 import {Mac} from '../pages/mac'
 import {Admin} from '../pages/admin'
 import {UserAirSelect} from '../components/user_air_select'
-import {AdminAirSelect} from '../components/admin_air_select'
 import {Glossary} from '../pages/glossary'
 import {Help} from '../pages/help'
-import { useMemo, useRef, useState } from "react"
-import { useSize } from "../hooks/use_size"
-import { MobileNav } from './mobile_nav'
-import { DesktopNav } from './desktop_nav'
+import { AppBar } from './app_bar'
+import {AdminAirSelect} from '../components/admin_air_select'
 import {
   ContainerFilled,
   LayoutFilled,
@@ -16,68 +17,69 @@ import {
   QuestionCircleFilled,
 } from '@ant-design/icons'
 
-export   const getIconStyle = (name: string, pageName:string) => ({
-  color: name === pageName ? 'white' : '#737373',
+const darkIconStyle = {
+  color:'#737373', 
   height: '30px',
   fontSize: '175%',
-})
-
-export const getIcon = (name: string, pageName:string) => {
-  if (name === '%MAC') {
-    return <LayoutFilled style={getIconStyle(name, pageName)} />
-  }
-  if (name === 'Admin') {
-    return <ToolFilled style={getIconStyle(name, pageName)} />
-  }
-  if (name === 'Glossary') {
-    return <ContainerFilled style={getIconStyle(name, pageName)} />
-  }
-  if (name === 'Help') {
-    return <QuestionCircleFilled style={getIconStyle(name, pageName)} />
-  }
-  return null
 }
 
-export const getTextStyle = (name: string, pageName:string): any => ({
-  color: name === pageName ? 'white' : '#737373',
-  fontWeight: 'normal',
-  fontSize: '14px',
-  lineHeight: '18px',
-})
+const lightIconStyle = {
+  color:'white',
+  height: '30px',
+  fontSize: '175%',
+}
 
-export const pages = ['%MAC', 'Glossary', 'Help', 'Admin']
+/** if x===y return 'active' else return 'inactive' */
+export const getNavItemStyle = (x:string, y:string) => x===y ? 'active' : 'inactive'
+
+export const pageNames = ['%MAC', 'Glossary', 'Help', 'Admin']
+
+/** lookup map for at 'active' || 'inactive' navigation icons styles */
+export const navIcons:{[key:string]:any} = {
+  'inactive': {
+    '%MAC': <LayoutFilled style={darkIconStyle}/>,
+    'Glossary': <ContainerFilled style={darkIconStyle}/> ,
+    'Admin': <ToolFilled style={darkIconStyle}/> ,
+    'Help' : <QuestionCircleFilled style={darkIconStyle}/> ,
+  },
+  'active': {
+    '%MAC': <LayoutFilled style={lightIconStyle}/>,
+    'Glossary': <ContainerFilled style={lightIconStyle}/> ,
+    'Admin': <ToolFilled style={lightIconStyle}/> ,
+    'Help' : <QuestionCircleFilled style={lightIconStyle}/> ,
+  }
+}
+
+/** globally scoped components that persist between layouts */
+export const persistentComponents:{[key: string]: JSX.Element} = {
+  '%MAC': <Mac /> ,
+  'Glossary': <Glossary /> ,
+  'Admin': <Admin /> ,
+  'Help' : <Help /> ,
+  'AdminAppBar' : <AppBar select={<AdminAirSelect />}/>,
+  'UserAppBar': <AppBar select={<UserAirSelect />}/>
+}
 
 export const DynamicMainNav = () => {
   const [pageName, setPageName] = useState('%MAC')
-  const {width, height} = useSize()
-  const isMobile = width > 750 ? false :true
-  
-  const mac = useRef(<Mac />).current
-  const glossary = useRef(<Glossary />).current
-  const admin = useRef(<Admin />).current
-  const help = useRef(<Help />).current
-  const userAirSelect = useRef(<UserAirSelect />).current
-  const adminAirSelect = useRef(<AdminAirSelect />).current
-
-  const getPage = () => {
-    switch (pageName) {
-      case '%MAC': return mac
-      case 'Admin': return admin
-      case 'Help': return help
-      case 'Glossary': return glossary
-      default: return mac
-    }
-  }
+  const {width} = useSize()
+  const breakPoint = width > 750 ? width > 1200 ? 'desktop' : 'tablet' : 'mobile'
 
   return useMemo(() => {
     const props = {
-      page: getPage(),
+      page: persistentComponents[pageName],
       pageName: pageName,
-      setPage: (x:any) => setPageName(x),
-      select: pageName !== 'Admin' ? userAirSelect : adminAirSelect
+      setPage: setPageName,
+      appBar: pageName !== 'Admin' ? persistentComponents['UserAppBar'] : persistentComponents['AdminAppBar']
     }
+    
+    // width > 1200: side nav with drawer init open
+    if(breakPoint === 'desktop'){return <DesktopNav {...props} initCollapsed={false} key={v4()}/>}
 
-    if(isMobile) {return <MobileNav {...props}/>}
-    return <DesktopNav {...props}/>
-  },[pageName, isMobile])
+    // width > 750: side nav with drawer init closed
+    if(breakPoint === 'tablet'){return <DesktopNav {...props} initCollapsed={true} key={v4()}/>}
+
+    // bottom nav bar
+    return <MobileNav {...props}/>
+  },[pageName, breakPoint])
 }

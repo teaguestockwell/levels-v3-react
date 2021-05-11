@@ -84,11 +84,11 @@ export const JsonTable = () => {
         <Table
           style={{padding: '0px 12px 0px 12px'}}
           pagination={{pageSize: 1000}}
-          scroll={{y: 500}}
+          scroll={{x: 500}}
           columns={columns}
           dataSource={data.data}
           //rowKey="name"
-          sticky
+          //sticky
         />
       </>
     )
