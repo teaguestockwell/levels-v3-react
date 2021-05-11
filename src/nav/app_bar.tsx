@@ -1,9 +1,10 @@
 import {Affix, Row, Col, Typography} from 'antd'
 import {Const} from '../const'
+import icon from '../img/icon.png'
 
 export const AppBar = ({select}: {select: JSX.Element}) => {
   return (
-    <Affix style={{zIndex: 1}}>
+    <Affix style={{zIndex: 2}}>
       <div
         style={{
           height: Const.HEIGHT.APP_BAR,
@@ -12,8 +13,15 @@ export const AppBar = ({select}: {select: JSX.Element}) => {
       >
         <Row justify="center" style={{paddingTop: '8px'}}>
           <Col span={8}>
-            <Typography.Text
+              <img src={icon} style={{
+              marginLeft: '18px',
+              marginTop: -14,
+              width: Const.HEIGHT.APP_BAR_NUM - 16,
+              height: Const.HEIGHT.APP_BAR_NUM - 16,
+            }}/>
+             <Typography.Text
               style={{
+                textAlign: 'left',
                 color: 'white',
                 fontWeight: 'normal',
                 fontSize: '32px',
