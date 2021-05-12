@@ -10,7 +10,6 @@ describe('DesktopNav', () => {
   it('will render', async () => {
     const ct = renderWrapped(
       <DesktopNav
-        initCollapsed={false}
         page={<div>hi</div>}
         pageName={'%MAC'}
         appBar={<div>appbar</div>}
@@ -22,7 +21,6 @@ describe('DesktopNav', () => {
     await waitFor(() =>
       expect(ct.queryAllByText('Loading Test').length).toBe(0)
     )
-    expect(ct.queryAllByText('%MAC').length).toBe(1)
-    ct.debug()
+    expect(ct.queryAllByText('hi').length).toBe(1)
   })
 })

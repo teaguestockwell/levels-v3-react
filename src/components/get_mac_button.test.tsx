@@ -10,6 +10,5 @@ describe('GetMacButton', () => {
       expect(ct.queryAllByText('Loading Test').length).toBe(0)
     )
     expect(ct.getByText('Show Work / Form F')).toBeInTheDocument()
-    ct.debug()
   })
 })

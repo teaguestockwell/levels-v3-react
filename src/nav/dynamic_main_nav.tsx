@@ -1,4 +1,3 @@
-import {v4} from 'uuid'
 import {useMemo, useState} from 'react'
 import {useSize} from '../hooks/use_size'
 import {DesktopNav} from './desktop_nav'
@@ -6,7 +5,7 @@ import {MobileNav} from './mobile_nav'
 import {Mac} from '../pages/mac'
 import {Admin} from '../pages/admin'
 import {UserAirSelect} from '../components/user_air_select'
-import {Glossary} from '../pages/glossary'
+import {GlossaryList} from '../pages/glossary_list'
 import {Help} from '../pages/help'
 import {AppBar} from './app_bar'
 import {AdminAirSelect} from '../components/admin_air_select'
@@ -54,7 +53,7 @@ export const navIcons: {[key: string]: any} = {
 /** globally scoped components that persist between layouts */
 export const persistentComponents: {[key: string]: JSX.Element} = {
   '%MAC': <Mac />,
-  Glossary: <Glossary />,
+  Glossary: <GlossaryList />,
   Admin: <Admin />,
   Help: <Help />,
   AdminAppBar: <AppBar select={<AdminAirSelect />} />,
@@ -65,7 +64,7 @@ export const DynamicMainNav = () => {
   const [pageName, setPageName] = useState('%MAC')
   const {width} = useSize()
   const breakPoint =
-    width > 750 ? (width > 1200 ? 'desktop' : 'tablet') : 'mobile'
+    width > 750 ? 'desktop' : 'mobile'
 
   return useMemo(() => {
     const props = {
@@ -80,12 +79,7 @@ export const DynamicMainNav = () => {
 
     // width > 1200: side nav with drawer init open
     if (breakPoint === 'desktop') {
-      return <DesktopNav {...props} initCollapsed={false} key={v4()} />
-    }
-
-    // width > 750: side nav with drawer init closed
-    if (breakPoint === 'tablet') {
-      return <DesktopNav {...props} initCollapsed={true} key={v4()} />
+      return <DesktopNav {...props}/>
     }
 
     // bottom nav bar

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {Layout, Menu} from 'antd'
 import {Const} from '../const'
 import {navIcons, pageNames, getNavItemStyle} from './dynamic_main_nav'
@@ -13,23 +14,21 @@ export const DesktopNav = ({
   pageName,
   setPage,
   appBar,
-  initCollapsed,
 }: {
   page: JSX.Element
   pageName: string
   setPage: (pageName: string) => void
   appBar: JSX.Element
-  initCollapsed: boolean
 }) => {
-  const [collapsed, setCollapsed] = useState(initCollapsed)
+  const [collapsed, setCollapsed] = useState(true)
 
-  return (
+  return (<>
+    {appBar}
     <Layout style={{backgroundColor: 'white'}}>
-      {appBar}
       <Sider
         style={{
           zIndex: 1,
-          paddingTop: Const.HEIGHT.APP_BAR,
+          
           backgroundColor: '#383838',
           minHeight: '100%',
           background: '#383838',
@@ -69,5 +68,6 @@ export const DesktopNav = ({
       </Sider>
       <div style={{paddingLeft: collapsed ? '80px' : '200px'}}>{page}</div>
     </Layout>
+    </>
   )
 }
