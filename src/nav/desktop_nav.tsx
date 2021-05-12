@@ -32,7 +32,7 @@ export const DesktopNav = ({
           minHeight: '100%',
           background: '#383838',
           overflow: 'auto',
-          height: '100vh',
+          height: '100%',
           position: 'fixed',
           left: 0,
         }}
@@ -46,7 +46,7 @@ export const DesktopNav = ({
             height: '100%',
             background: '#383838',
             borderRight: '1px solid #383838',
-            paddingTop: '20px',
+            paddingTop: '10px',
           }}
           mode="inline"
           defaultSelectedKeys={[pageName]}

@@ -1,5 +1,6 @@
 import {Affix, Row, Col, Typography} from 'antd'
 import {Const} from '../const'
+import icon from '../imgs/icon_round_512.png'
 
 export const AppBar = ({select}: {select: JSX.Element}) => {
   return (
@@ -12,13 +13,19 @@ export const AppBar = ({select}: {select: JSX.Element}) => {
       >
         <Row justify="center" style={{paddingTop: '8px'}}>
           <Col span={8}>
+          <img src={icon} style={{
+              marginLeft: window.innerWidth > 750 ? '18px': '16px',
+              marginTop: -14,
+              width: Const.HEIGHT.APP_BAR_NUM - 16,
+              height: Const.HEIGHT.APP_BAR_NUM - 16,
+            }}/>
             <Typography.Text
               style={{
                 color: 'white',
                 fontWeight: 'normal',
                 fontSize: '32px',
                 lineHeight: '30px',
-                paddingLeft: '12px',
+                paddingLeft: window.innerWidth > 750 ? '26px' : '12px',
               }}
             >
               Atlas
