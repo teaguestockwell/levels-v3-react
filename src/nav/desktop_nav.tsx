@@ -28,7 +28,6 @@ export const DesktopNav = ({
       <Sider
         style={{
           zIndex: 1,
-          
           backgroundColor: '#383838',
           minHeight: '100%',
           background: '#383838',
@@ -37,6 +36,7 @@ export const DesktopNav = ({
           position: 'fixed',
           left: 0,
         }}
+        width='150'
         collapsible
         collapsed={collapsed}
         onCollapse={() => setCollapsed((s) => !s)}
@@ -66,7 +66,7 @@ export const DesktopNav = ({
           ))}
         </Menu>
       </Sider>
-      <div style={{paddingLeft: collapsed ? '80px' : '200px'}}>{page}</div>
+      <div style={{paddingLeft: collapsed ? '80px' : '150px'}}>{page}</div>
     </Layout>
     </>
   )
