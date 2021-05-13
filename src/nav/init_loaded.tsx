@@ -3,7 +3,7 @@ import {AirStore, getActionsAS, initAirCargos} from '../hooks/air_store'
 import {Result, Skeleton} from 'antd'
 import {DynamicMainNav} from './dynamic_main_nav'
 import { v4 } from 'uuid'
-import { getActionsClientSyncStore } from '../hooks/client_server_sync_store'
+import { getActionsClientSyncStore } from '../hooks/useUserServerClientSync'
 
 const as = getActionsAS()
 const ss = getActionsClientSyncStore()
