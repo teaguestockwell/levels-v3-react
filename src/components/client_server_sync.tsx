@@ -8,7 +8,9 @@ import { formatDistanceToNowStrict } from 'date-fns'
 import { v4 } from 'uuid'
 import {SyncOutlined} from '@ant-design/icons'
 import TextLoop from 'react-text-loop'
+import { ClientServerSyncStore, getActionsClientSyncStore} from '../hooks/client_server_sync_store'
 
+const ss = getActionsClientSyncStore()
 export const ClientServerSync = () => {
   const { data: clientData } = useUserAirs()
   const { data: serverData } = useUserAirsPolling()
@@ -16,15 +18,11 @@ export const ClientServerSync = () => {
   const [state, setState] = useState<{
     isClientOnline: boolean
     isClientEqualToRes: boolean
-    previousServerTimeStamp: number
-    lastSyncTimeStamp: number
   }>({
     isClientOnline: false,
     isClientEqualToRes: true,
-    // the init state to dif server against is the sw cache time stamp from clientData
-    previousServerTimeStamp: clientData.lastUpdated,
-    lastSyncTimeStamp: clientData.lastUpdated,
   })
+
 
   // start a clock to schedule updates to TextLoop,
   // since there are 3 rows @ 3s ea, update once every 9s
@@ -39,29 +37,33 @@ export const ClientServerSync = () => {
 
     // fallback if service worker does not return cache
     if (!serverData) {
-      setState(s => ({
-        lastSyncTimeStamp: s.lastSyncTimeStamp,
+      setState({
+        //lastSyncTimeStamp: s.lastSyncTimeStamp,
+        //previousServerTimeStamp: s.previousServerTimeStamp,
         isClientEqualToRes: true,
         isClientOnline: false,
-        previousServerTimeStamp: s.previousServerTimeStamp,
-      }))
+      })
     }
 
     if (serverData) {
+      const gs = ClientServerSyncStore.getState()
       // are the preloaded aircraft stale?
       const isClientEqualToRes = isEqual(clientData.airs, serverData.airs)
 
       // if server timeStamp1 === timestamp2, res is from service worker cache
-      const isClientOnline = serverData.lastUpdated !== state.previousServerTimeStamp
+      const isClientOnline = serverData.lastUpdated !== gs.previousServerTimeStamp
 
       // client res equality does not mean client is synced with server because the res could have been cached 
       const isClientSyncedWithServer = state.isClientEqualToRes && state.isClientOnline
 
+      ss.setLastSyncTimeStamp(isClientSyncedWithServer ? serverData.lastUpdated : gs.lastSyncTimeStamp)
+      ss.setPreviousServerTimeStamp(serverData.lastUpdated)
+
       setState({
-        lastSyncTimeStamp: isClientSyncedWithServer ? serverData.lastUpdated : state.lastSyncTimeStamp,
+        //lastSyncTimeStamp: isClientSyncedWithServer ? serverData.lastUpdated : state.lastSyncTimeStamp,
+        //previousServerTimeStamp: serverData.lastUpdated,
         isClientEqualToRes,
         isClientOnline,
-        previousServerTimeStamp: serverData.lastUpdated,
       })
     }
     // key is unique to each res regardless is it is from service worker cache
@@ -69,14 +71,17 @@ export const ClientServerSync = () => {
 
   
   return useMemo(() => {
+    const gs = ClientServerSyncStore.getState()
     // was the client synced with the server over 48 hours ago?
-    const isClientStale = Date.now() - state.lastSyncTimeStamp > 172800000 
+    const isClientStale = Date.now() - (gs.lastSyncTimeStamp as number) > 172800000 
 
     // factor in that the text loop will display 6 secs late
-    const lastSyncedFormatted = formatDistanceToNowStrict(new Date(state.lastSyncTimeStamp - 6000))
+    const lastSyncedFormatted = formatDistanceToNowStrict(new Date((gs.lastSyncTimeStamp as number) - 6000))
 
     // client res equality does not mean client is synced with server because the res could have been cached 
     const isClientSyncedWithServer = state.isClientEqualToRes && state.isClientOnline
+
+    console.log(gs.lastSyncTimeStamp)
 
     const getAlertType = () => {
       if(isClientSyncedWithServer){return 'success'}
@@ -87,8 +92,6 @@ export const ClientServerSync = () => {
     
     //invalidate initLoaded to reset app
     const syncClientAndServerState = () => queryClient.setQueryData('userAirs', () => serverData.data)
-
-    console.log(lastSyncedFormatted)
 
     return <Alert
       key={v4()}
