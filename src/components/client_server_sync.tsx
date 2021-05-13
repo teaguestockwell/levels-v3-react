@@ -1,20 +1,25 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {queryClient} from '../const'
 import {Alert, Button} from 'antd'
 import { v4 } from 'uuid'
 import {SyncOutlined} from '@ant-design/icons'
 import TextLoop from 'react-text-loop'
 import { useTick } from '../hooks/use_tick'
-import { useUserServerClientSync } from '../hooks/useUserServerClientSync'
+import { useUserServerSync } from '../hooks/use_user_server_sync'
 import { useMemo } from 'react'
+import { formatDistanceToNowStrict } from 'date-fns'
 
 export const ClientServerSync = () => {
   const tick = useTick(9000)
-  const sync = useUserServerClientSync()
-  const isMobile = window.innerWidth > 750 ? false : true
-
+  const sync = useUserServerSync()
 
   return useMemo(() => {
+
+    // factor in that the text loop will display 6 secs late
+    const lastSyncedFormatted = formatDistanceToNowStrict(
+      new Date(
+        (sync.lastSyncTimeStamp as number) - 6000
+      )
+    )
 
     const getAlertType = () => {
       if(sync.isClientSyncedWithServer){return 'success'}
@@ -23,9 +28,6 @@ export const ClientServerSync = () => {
       return 'error'
     }
     
-    //invalidate initLoaded to reset app
-    const syncClientAndServerState = () => queryClient.setQueryData('userAirs', () => sync.serverData.data)
-
     return <Alert
       key={v4()}
       style={{
@@ -39,14 +41,14 @@ export const ClientServerSync = () => {
       showIcon
       banner
       type={getAlertType()}
-      action={sync.isClientEqualToRes ? null :<Button size="small" type="primary" shape='circle' icon={<SyncOutlined />} onClick={syncClientAndServerState}/>}
+      action={sync.isClientEqualToRes ? null :<Button size="small" type="primary" shape='circle' icon={<SyncOutlined />} onClick={sync.syncClientAndServerState}/>}
       message={
         <TextLoop mask>
           <div>{sync.isClientOnline ? 'Online' : 'Offline'}</div>
           <div>last synced</div>
-          <div>{`${sync.lastSyncedFormatted} ago`}</div>
+          <div>{`${lastSyncedFormatted} ago`}</div>
         </TextLoop>
       }
     />
-  },[tick, isMobile])
+  },[tick])
 }

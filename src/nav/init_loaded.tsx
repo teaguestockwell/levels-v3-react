@@ -3,21 +3,26 @@ import {AirStore, getActionsAS, initAirCargos} from '../hooks/air_store'
 import {Result, Skeleton} from 'antd'
 import {DynamicMainNav} from './dynamic_main_nav'
 import { v4 } from 'uuid'
-import { getActionsClientSyncStore } from '../hooks/useUserServerClientSync'
+import { getActionsClientSyncStore } from '../hooks/use_user_server_sync'
 
 const as = getActionsAS()
 const ss = getActionsClientSyncStore()
+
 export const InitLoaded = () => {
   const {status, data, hasRoles} = useUserAirs()
 
   if (data && hasRoles) {
+
+    // try to preserve selection of last selected aircraft 
     const oldId = AirStore.getState().selectedAir?.aircraftId
     const newIdx = data.airs.findIndex((a:any) => a.aircraftId === oldId)
     const airIdx = newIdx === -1 ? 0 : newIdx
 
+    //init state of selected aircraft
     initAirCargos(data.airs[airIdx])
     as.setSelectedAir(data.airs[airIdx])
 
+    // init state of server client sync
     ss.setLastSyncTimeStamp(data.lastUpdated)
     ss.setPreviousServerTimeStamp(data.lastUpdated)
     ss.setIsClientEqualToRes(true)

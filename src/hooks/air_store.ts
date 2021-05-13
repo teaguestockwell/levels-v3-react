@@ -82,7 +82,6 @@ export const initAirCargos = (air: AircraftDeep) => {
   tanks to their initial state for that aircraft  
 */
 export const useAirChangeStoreReset = () => {
-  console.log()
   // when a new aircraft is selected
   const air = AirStore(
     (s1) => s1.selectedAir,

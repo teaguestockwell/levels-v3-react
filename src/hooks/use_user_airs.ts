@@ -29,6 +29,7 @@ export const useUserAirs = () => {
     staleTime: Infinity,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
+    cacheTime: Infinity
   })
 
   if (query.data && query.data.airs.length > 0) {
@@ -51,7 +52,9 @@ export const useUserAirsPolling = () => {
     refetchInterval: 10000,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
-    refetchIntervalInBackground: true
+    refetchIntervalInBackground: true,
+    retry: Infinity,
+
   })
 
   if (query.data && query.data.airs.length > 0) {

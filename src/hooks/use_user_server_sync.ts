@@ -1,8 +1,8 @@
 import { isEqual } from "lodash"
-import { useEffect, useRef } from "react"
+import { useEffect } from "react"
 import { useUserAirs, useUserAirsPolling } from "./use_user_airs"
 import create, {State} from 'zustand'
-import { formatDistanceToNowStrict } from "date-fns"
+import {queryClient} from '../const'
 
 interface ClientServerSyncStateI extends State {
   previousServerTimeStamp: number | undefined
@@ -38,10 +38,15 @@ export const getActionsClientSyncStore = () => {
   }
 }
 
-export const useUserServerClientSync = () => {
+// ref to global store state updating functions
+const ss = getActionsClientSyncStore()
+
+export const useUserServerSync = () => {
+  // the data that the client has loaded
   const { data: clientData } = useUserAirs()
+
+  // poll the server | service worker
   const { data: serverData } = useUserAirsPolling()
-  const ss = useRef(getActionsClientSyncStore()).current
 
   // every time there is a new res
   useEffect(() => {
@@ -62,7 +67,7 @@ export const useUserServerClientSync = () => {
       const isClientOnline = serverData.lastUpdated !== gs.previousServerTimeStamp
 
       // client res equality does not mean client is synced with server because the res could have been cached 
-      const isClientSyncedWithServer = gs.isClientEqualToRes && gs.isClientOnline
+      const isClientSyncedWithServer = isClientEqualToRes && isClientOnline
 
       ss.setLastSyncTimeStamp(isClientSyncedWithServer ? serverData.lastUpdated : gs.lastSyncTimeStamp)
       ss.setPreviousServerTimeStamp(serverData.lastUpdated)
@@ -84,10 +89,10 @@ export const useUserServerClientSync = () => {
     // was the client synced with the server over 48 hours ago?
     isClientStale: Date.now() - (gs.lastSyncTimeStamp as number) > 172800000,
 
-    // factor in that the text loop will display 6 secs late
-    lastSyncedFormatted: formatDistanceToNowStrict(new Date((gs.lastSyncTimeStamp as number) - 6000)),
-
     // client res equality does not mean client is synced with server because the res could have been cached 
-    isClientSyncedWithServer: gs.isClientEqualToRes && gs.isClientOnline
+    isClientSyncedWithServer: gs.isClientEqualToRes && gs.isClientOnline,
+
+    //invalidate initLoaded to reset app
+    syncClientAndServerState: () => queryClient.setQueryData('userAirs', () => serverData)
   }
 }
