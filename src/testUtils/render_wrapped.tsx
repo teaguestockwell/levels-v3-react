@@ -11,7 +11,6 @@ const IsLoaded = ({children}: {children: React.ReactNode}) => {
 
   if (data && hasRoles) {
     AirStore.getState().setSelectedAir(data.airs[0])
-    AirStore.getState().setLastUpdated(data.lastUpdated)
     AirStore.getState().setCargoSchema(getCargoSchema(data.airs[0]))
 
     return <>{children}</>

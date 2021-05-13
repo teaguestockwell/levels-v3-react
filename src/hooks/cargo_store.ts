@@ -5,10 +5,13 @@ import {CargoString} from '../types/cargoString'
 import isEqual from 'lodash/isEqual'
 export interface CargoStoreState extends State {
   // read
+  pageName: string
   cargoMap: Map<string, CargoString>
   config: Config
   editUuid: string | undefined
   chartC: {weight: string; mom: string}
+
+  putPageName: (pageName: string) => void
 
   putChartC: (chartC: {weight: string; mom: string}) => void
 
@@ -28,13 +31,17 @@ export interface CargoStoreState extends State {
 }
 
 export const CargoStore = create<CargoStoreState>((set) => ({
+
   // read
+  pageName: '%MAC',
   cargoValidMap: new Map(),
   cargoMap: new Map(),
   config: Const.NO_CONFIG,
   configUuids: [],
   editUuid: undefined,
   chartC: {weight: '', mom: ''},
+
+  putPageName: (pageName) => set(s => {s.pageName = pageName}),
 
   putChartC: (chartC) =>
     set((s) => {
@@ -99,9 +106,12 @@ export const getCargoAtUuid = (uuid: string) =>
   CargoStore.getState().cargoMap.get(uuid) as CargoString
 export const getConfig = () => CargoStore.getState().config
 
+export const usePageName = () => CargoStore(s => s.pageName)
+
 export const getActionsCS = () => {
   const state = CargoStore.getState()
   return {
+    putPageName: state.putPageName,
     putBasicWeight: state.putBasicWeight,
     putBasicMom: state.putBasicMom,
     putEditUuid: state.putEditUuid,

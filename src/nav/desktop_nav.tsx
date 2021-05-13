@@ -1,29 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {Layout, Menu} from 'antd'
 import {Const} from '../const'
-import {navIcons, pageNames, getNavItemStyle} from './dynamic_main_nav'
+import {navIcons, pageNames, getNavItemStyle, persistentComponents, getAppBar} from './dynamic_main_nav'
 import {useState} from 'react'
 import './desktop_nav.css'
 
 import Sider from 'antd/lib/layout/Sider'
+import { getActionsCS, usePageName } from '../hooks/cargo_store'
 // dont use this slider, it will break layout V
 //const {Sider} = Layout
+const cs = getActionsCS()
 
-export const DesktopNav = ({
-  page,
-  pageName,
-  setPage,
-  appBar,
-}: {
-  page: JSX.Element
-  pageName: string
-  setPage: (pageName: string) => void
-  appBar: JSX.Element
-}) => {
+export const DesktopNav = () => {
   const [collapsed, setCollapsed] = useState(true)
+  const pageName = usePageName()
 
-  return (<>
-    {appBar}
+  return (
+  <>
+    {getAppBar(pageName)}
     <Layout style={{backgroundColor: 'white'}}>
       <Sider
         style={{
@@ -50,7 +44,7 @@ export const DesktopNav = ({
           }}
           mode="inline"
           defaultSelectedKeys={[pageName]}
-          onClick={(x: any) => setPage(String(x.key))}
+          onClick={(x: any) => cs.putPageName(String(x.key))}
         >
           {pageNames.map((name) => (
             <Menu.Item
@@ -66,7 +60,7 @@ export const DesktopNav = ({
           ))}
         </Menu>
       </Sider>
-      <div style={{paddingLeft: collapsed ? '80px' : '150px'}}>{page}</div>
+      <div style={{paddingLeft: collapsed ? '80px' : '150px'}}>{persistentComponents[pageName]}</div>
     </Layout>
     </>
   )

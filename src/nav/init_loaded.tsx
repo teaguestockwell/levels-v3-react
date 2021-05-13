@@ -1,17 +1,27 @@
 import {useUserAirs} from '../hooks/use_user_airs'
-import {getActionsAS, initAirCargos} from '../hooks/air_store'
+import {AirStore, getActionsAS, initAirCargos} from '../hooks/air_store'
 import {Result, Skeleton} from 'antd'
 import {DynamicMainNav} from './dynamic_main_nav'
+import { v4 } from 'uuid'
+import { getActionsClientSyncStore } from '../hooks/client_server_sync_store'
 
 const as = getActionsAS()
+const ss = getActionsClientSyncStore()
 export const InitLoaded = () => {
   const {status, data, hasRoles} = useUserAirs()
 
   if (data && hasRoles) {
-    initAirCargos(data.airs[0])
-    as.setSelectedAir(data.airs[0])
+    const oldId = AirStore.getState().selectedAir?.aircraftId
+    const newIdx = data.airs.findIndex((a:any) => a.aircraftId === oldId)
+    const airIdx = newIdx === -1 ? 0 : newIdx
+
+    initAirCargos(data.airs[airIdx])
+    as.setSelectedAir(data.airs[airIdx])
     as.setLastUpdated(data.lastUpdated)
-    return <DynamicMainNav />
+    ss.setLastSyncTimeStamp(data.lastUpdated)
+    ss.setPreviousServerTimeStamp(data.lastUpdated)
+
+    return <DynamicMainNav key={v4()} />
   }
 
   if (data && !hasRoles) {

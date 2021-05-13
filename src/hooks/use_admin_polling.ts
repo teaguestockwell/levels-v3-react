@@ -24,7 +24,6 @@ export const usePolling = (ep: string, refetchInterval = 2000) => {
       }
     },
     {
-      retry: 5,
       refetchInterval,
     }
   )
@@ -36,9 +35,6 @@ export const useGet1 = (ep: string) => {
     async () => {
       return (await axios.get(process.env.REACT_APP_API_BASE_URL + ep)).data
     },
-    {
-      retry: 5,
-    }
   )
 }
 

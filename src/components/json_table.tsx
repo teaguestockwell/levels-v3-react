@@ -95,7 +95,8 @@ export const JsonTable = () => {
         />
       </>
     )
-  }, [data, ep])
+    // we dont need to dif data.key because the sw does not cache admin ep
+  }, [data?.data, ep])
 
   return table
 }

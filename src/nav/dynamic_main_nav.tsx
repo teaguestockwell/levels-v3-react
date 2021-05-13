@@ -1,4 +1,4 @@
-import {useMemo, useState} from 'react'
+import {useMemo } from 'react'
 import {useSize} from '../hooks/use_size'
 import {DesktopNav} from './desktop_nav'
 import {MobileNav} from './mobile_nav'
@@ -16,6 +16,7 @@ import {
   ToolFilled,
   QuestionCircleFilled,
 } from '@ant-design/icons'
+import { AdminServerSync } from '../components/admin_server_sync'
 
 const darkIconStyle = {
   color: '#737373',
@@ -33,14 +34,15 @@ const lightIconStyle = {
 export const getNavItemStyle = (x: string, y: string) =>
   x === y ? 'active' : 'inactive'
 
-export const pageNames = ['%MAC', 'Glossary', 'Help', 'Admin']
-
-/** lookup map for at 'active' || 'inactive' navigation icons styles */
-export const navIcons: {[key: string]: any} = {
-  inactive: {
-    '%MAC': <LayoutFilled style={darkIconStyle} />,
-    Glossary: <ContainerFilled style={darkIconStyle} />,
-    Admin: <ToolFilled style={darkIconStyle} />,
+  
+  export const pageNames = ['%MAC', 'Glossary', 'Help', 'Admin']
+  
+  /** lookup map for at 'active' || 'inactive' navigation icons styles */
+  export const navIcons: {[key: string]: any} = {
+    inactive: {
+      '%MAC': <LayoutFilled style={darkIconStyle} />,
+      Glossary: <ContainerFilled style={darkIconStyle} />,
+      Admin: <ToolFilled style={darkIconStyle} />,
     Help: <QuestionCircleFilled style={darkIconStyle} />,
   },
   active: {
@@ -57,33 +59,23 @@ export const persistentComponents: {[key: string]: JSX.Element} = {
   Glossary: <GlossaryList />,
   Admin: <Admin />,
   Help: <Help />,
-  AdminAppBar: <AppBar select={<AdminAirSelect/>} sync={null} />,
+  AdminAppBar: <AppBar select={<AdminAirSelect/>} sync={<AdminServerSync/>} />,
   UserAppBar: <AppBar select={<UserAirSelect/>} sync={<ClientServerSync/>} />,
 }
 
+export const getAppBar = (pageName:string) => pageName !== 'Admin' ? persistentComponents['UserAppBar'] : persistentComponents['AdminAppBar']
+
+
 export const DynamicMainNav = () => {
-  const [pageName, setPageName] = useState('%MAC')
   const {width} = useSize()
-  const breakPoint =
-    width > 750 ? 'desktop' : 'mobile'
+  const breakPoint = width > 750 ? 'desktop' : 'mobile'
 
   return useMemo(() => {
-    const props = {
-      page: persistentComponents[pageName],
-      pageName: pageName,
-      setPage: setPageName,
-      appBar:
-        pageName !== 'Admin'
-          ? persistentComponents['UserAppBar']
-          : persistentComponents['AdminAppBar'],
-    }
 
     // width > 1200: side nav with drawer init open
-    if (breakPoint === 'desktop') {
-      return <DesktopNav {...props}/>
-    }
+    if (breakPoint === 'desktop') {return <DesktopNav/>}
 
     // bottom nav bar
-    return <MobileNav {...props} />
-  }, [pageName, breakPoint])
+    return <MobileNav/>
+  }, [breakPoint])
 }

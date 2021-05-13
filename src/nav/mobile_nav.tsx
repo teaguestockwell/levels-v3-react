@@ -1,25 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {Const} from '../const'
 import {Button, Col, Row, Typography} from 'antd'
-import {navIcons, pageNames, getNavItemStyle} from './dynamic_main_nav'
+import {navIcons, pageNames, getNavItemStyle, getAppBar, persistentComponents} from './dynamic_main_nav'
+import { getActionsCS, usePageName } from '../hooks/cargo_store'
 
+const cs = getActionsCS()
 /** 
 @param page page component to be rendered
 @param pageName pageName
 @param setPage callback used to change pages
 @param appBar top nav component
 */
-export const MobileNav = ({
-  page,
-  pageName,
-  setPage,
-  appBar,
-}: {
-  page: JSX.Element
-  pageName: string
-  setPage: (pageName: string) => void
-  appBar: JSX.Element
-}) => {
+export const MobileNav = () => {
+  const pageName = usePageName()
   // /** lookup map for at 'active' || 'inactive' navigation text styles */
   // const navTextStyle: {[key:string]: any} = {
   //   'active':   {
@@ -44,9 +37,8 @@ export const MobileNav = ({
   return (
     // since bottom nav bar sits on top, add padding to make viewport scroll to uncover
     <div style={{paddingBottom: Const.HEIGHT.BOTTOM_NAV_BAR}}>
-      {appBar}
-      {page}
-
+      {getAppBar(pageName)}
+      {persistentComponents[pageName]}
       <div
         style={{
           position: 'fixed',
@@ -62,7 +54,7 @@ export const MobileNav = ({
             <Col {...colProps} key={x}>
               <Button
                 type="text"
-                onClick={() => setPage(x)}
+                onClick={() => cs.putPageName(x)}
                 icon={navIcons[getNavItemStyle(x, pageName)][x]}
               />
             </Col>
