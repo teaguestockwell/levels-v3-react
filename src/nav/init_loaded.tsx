@@ -3,10 +3,8 @@ import {AirStore, getActionsAS, initAirCargos} from '../hooks/air_store'
 import {Result, Skeleton} from 'antd'
 import {DynamicMainNav} from './dynamic_main_nav'
 import { v4 } from 'uuid'
-import { getActionsClientSyncStore } from '../hooks/client_server_sync_store'
 
 const as = getActionsAS()
-const ss = getActionsClientSyncStore()
 export const InitLoaded = () => {
   const {status, data, hasRoles} = useUserAirs()
 
@@ -18,8 +16,6 @@ export const InitLoaded = () => {
     initAirCargos(data.airs[airIdx])
     as.setSelectedAir(data.airs[airIdx])
     as.setLastUpdated(data.lastUpdated)
-    ss.setLastSyncTimeStamp(data.lastUpdated)
-    ss.setPreviousServerTimeStamp(data.lastUpdated)
 
     return <DynamicMainNav key={v4()} />
   }

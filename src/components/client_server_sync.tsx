@@ -8,14 +8,23 @@ import { formatDistanceToNowStrict } from 'date-fns'
 import { v4 } from 'uuid'
 import {SyncOutlined} from '@ant-design/icons'
 import TextLoop from 'react-text-loop'
-import { ClientServerSyncStore, getActionsClientSyncStore, getActionsClientSyncStore, getActionsClientSyncStore, getActionsClientSyncStore } from '../hooks/client_server_sync_store'
-
-const ss = getActionsClientSyncStore()
 
 export const ClientServerSync = () => {
   const { data: clientData } = useUserAirs()
   const { data: serverData } = useUserAirsPolling()
   const [ tick, setTick ] = useState(Date.now())
+  const [state, setState] = useState<{
+    isClientOnline: boolean
+    isClientEqualToRes: boolean
+    previousServerTimeStamp: number
+    lastSyncTimeStamp: number
+  }>({
+    isClientOnline: false,
+    isClientEqualToRes: true,
+    // the init state to dif server against is the sw cache time stamp from clientData
+    previousServerTimeStamp: clientData.lastUpdated,
+    lastSyncTimeStamp: clientData.lastUpdated,
+  })
 
   // start a clock to schedule updates to TextLoop,
   // since there are 3 rows @ 3s ea, update once every 9s
@@ -27,18 +36,15 @@ export const ClientServerSync = () => {
 
   // every time there is a new res
   useEffect(() => {
-    const s = ClientServerSyncStore.getState()
 
     // fallback if service worker does not return cache
     if (!serverData) {
-   
-      ss.set
-      // s.setState({
-      //   lastSyncTimeStamp: s.state.lastSyncTimeStamp,
-      //   isClientEqualToRes: true,
-      //   isClientOnline: false,
-      //   previousServerTimeStamp: s.state.previousServerTimeStamp,
-      // })
+      setState(s => ({
+        lastSyncTimeStamp: s.lastSyncTimeStamp,
+        isClientEqualToRes: true,
+        isClientOnline: false,
+        previousServerTimeStamp: s.previousServerTimeStamp,
+      }))
     }
 
     if (serverData) {
@@ -46,13 +52,13 @@ export const ClientServerSync = () => {
       const isClientEqualToRes = isEqual(clientData.airs, serverData.airs)
 
       // if server timeStamp1 === timestamp2, res is from service worker cache
-      const isClientOnline = serverData.lastUpdated !== s.state.previousServerTimeStamp
+      const isClientOnline = serverData.lastUpdated !== state.previousServerTimeStamp
 
       // client res equality does not mean client is synced with server because the res could have been cached 
-      const isClientSyncedWithServer = s.state.isClientEqualToRes && s.state.isClientOnline
+      const isClientSyncedWithServer = state.isClientEqualToRes && state.isClientOnline
 
-      s.setState({
-        lastSyncTimeStamp: isClientSyncedWithServer ? serverData.lastUpdated : s.state.lastSyncTimeStamp,
+      setState({
+        lastSyncTimeStamp: isClientSyncedWithServer ? serverData.lastUpdated : state.lastSyncTimeStamp,
         isClientEqualToRes,
         isClientOnline,
         previousServerTimeStamp: serverData.lastUpdated,
@@ -63,21 +69,18 @@ export const ClientServerSync = () => {
 
   
   return useMemo(() => {
-    const s = ClientServerSyncStore.getState()
-    console.log(s.state.lastSyncTimeStamp)
-
     // was the client synced with the server over 48 hours ago?
-    const isClientStale = Date.now() - (s.state.lastSyncTimeStamp as number) > 172800000 
+    const isClientStale = Date.now() - state.lastSyncTimeStamp > 172800000 
 
     // factor in that the text loop will display 6 secs late
-    const lastSyncedFormatted = formatDistanceToNowStrict(new Date((s.state.lastSyncTimeStamp as number) - 6000))
+    const lastSyncedFormatted = formatDistanceToNowStrict(new Date(state.lastSyncTimeStamp - 6000))
 
     // client res equality does not mean client is synced with server because the res could have been cached 
-    const isClientSyncedWithServer = s.state.isClientEqualToRes && s.state.isClientOnline
+    const isClientSyncedWithServer = state.isClientEqualToRes && state.isClientOnline
 
     const getAlertType = () => {
       if(isClientSyncedWithServer){return 'success'}
-      if(!s.state.isClientEqualToRes){return 'warning'}
+      if(!state.isClientEqualToRes){return 'warning'}
       if(!isClientStale){return 'info'}
       return 'error'
     }
@@ -100,10 +103,10 @@ export const ClientServerSync = () => {
       showIcon
       banner
       type={getAlertType()}
-      action={s.state.isClientEqualToRes ? null :<Button size="small" type="primary" shape='circle' icon={<SyncOutlined />} onClick={syncClientAndServerState}/>}
+      action={state.isClientEqualToRes ? null :<Button size="small" type="primary" shape='circle' icon={<SyncOutlined />} onClick={syncClientAndServerState}/>}
       message={
         <TextLoop mask>
-          <div>{s.state.isClientOnline ? 'Online' : 'Offline'}</div>
+          <div>{state.isClientOnline ? 'Online' : 'Offline'}</div>
           <div>last synced</div>
           <div>{`${lastSyncedFormatted} ago`}</div>
         </TextLoop>
