@@ -4,11 +4,12 @@ import {DesktopNav} from './desktop_nav'
 import {MobileNav} from './mobile_nav'
 import {Mac} from '../pages/mac'
 import {Admin} from '../pages/admin'
-import {UserAirSelect} from '../components/user_air_select'
 import {GlossaryList} from '../pages/glossary_list'
 import {Help} from '../pages/help'
 import {AppBar} from './app_bar'
-import {AdminAirSelect} from '../components/admin_air_select'
+import { AdminAirSelect } from '../components/admin_air_select'
+import { ClientServerSync } from '../components/client_server_sync'
+import { UserAirSelect } from '../components/user_air_select'
 import {
   ContainerFilled,
   LayoutFilled,
@@ -56,8 +57,8 @@ export const persistentComponents: {[key: string]: JSX.Element} = {
   Glossary: <GlossaryList />,
   Admin: <Admin />,
   Help: <Help />,
-  AdminAppBar: <AppBar select={<AdminAirSelect />} />,
-  UserAppBar: <AppBar select={<UserAirSelect />} />,
+  AdminAppBar: <AppBar select={<AdminAirSelect/>} sync={null} />,
+  UserAppBar: <AppBar select={<UserAirSelect/>} sync={<ClientServerSync/>} />,
 }
 
 export const DynamicMainNav = () => {

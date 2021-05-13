@@ -13,7 +13,6 @@ import {TankList} from '../components/tank_list'
 import {Logger} from '../testUtils/logger'
 import {Category} from '../types/aircraftDeep'
 import {Label} from '../components/label'
-import {ClientServerSync} from '../components/client_server_sync'
 import {useUserAir} from '../hooks/air_store'
 
 export const Mac = () => {
@@ -22,7 +21,6 @@ export const Mac = () => {
   return (
     <>
       <Clock />
-      <ClientServerSync key={v4()} />
       <Label text={'Tanks'} />
       <TankList key={v4()} />
       <Label text={'Chart C'} />
