@@ -17,8 +17,10 @@ export const InitLoaded = () => {
 
     initAirCargos(data.airs[airIdx])
     as.setSelectedAir(data.airs[airIdx])
+
     ss.setLastSyncTimeStamp(data.lastUpdated)
     ss.setPreviousServerTimeStamp(data.lastUpdated)
+    ss.setIsClientEqualToRes(true)
 
     return <DynamicMainNav key={v4()} />
   }
