@@ -1,36 +1,35 @@
-import {useUserAirs} from '../hooks/use_user_airs'
+import {useUserAirs} from '../hooks/query'
 import {AirStore, getActionsAS, initAirCargos} from '../hooks/air_store'
 import {Result, Skeleton} from 'antd'
 import {DynamicMainNav} from './dynamic_main_nav'
 import { v4 } from 'uuid'
-import { getActionsClientSyncStore } from '../hooks/use_user_server_sync'
+import { ClientServerSyncStore } from '../hooks/use_client_server_sync'
 
 const as = getActionsAS()
-const ss = getActionsClientSyncStore()
+const ss = ClientServerSyncStore.getState()
 
 export const InitLoaded = () => {
-  const {status, data, hasRoles} = useUserAirs()
+  const {status, data} = useUserAirs()
+  const isResEmpty = data?.data.length > 0
 
-  if (data && hasRoles) {
-
+  if (data?.data && isResEmpty) {
     // try to preserve selection of last selected aircraft 
     const oldId = AirStore.getState().selectedAir?.aircraftId
-    const newIdx = data.airs.findIndex((a:any) => a.aircraftId === oldId)
+    const newIdx = data.data.findIndex((a:any) => a.aircraftId === oldId)
     const airIdx = newIdx === -1 ? 0 : newIdx
 
     //init state of selected aircraft
-    initAirCargos(data.airs[airIdx])
-    as.setSelectedAir(data.airs[airIdx])
+    initAirCargos(data.data[airIdx])
+    as.setSelectedAir(data.data[airIdx])
 
     // init state of server client sync
-    ss.setLastSyncTimeStamp(data.lastUpdated)
-    ss.setPreviousServerTimeStamp(data.lastUpdated)
-    ss.setIsClientEqualToRes(true)
+    ss.setLastSyncEpoch(data.serverEpoch)
+    ss.setIsClientCacheEqualToSwRes(true)
 
     return <DynamicMainNav key={v4()} />
   }
 
-  if (data && !hasRoles) {
+  if (data && !isResEmpty) {
     return <Result title="You have no assigned aircraft" />
   }
 
