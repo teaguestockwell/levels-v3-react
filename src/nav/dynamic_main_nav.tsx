@@ -1,5 +1,4 @@
-import {useMemo } from 'react'
-import {useSize} from '../hooks/use_size'
+import {useIsWidthGT} from '../hooks/use_is_width_gt'
 import {DesktopNav} from './desktop_nav'
 import {MobileNav} from './mobile_nav'
 import {Mac} from '../pages/mac'
@@ -61,21 +60,19 @@ export const persistentComponents: {[key: string]: JSX.Element} = {
   Help: <Help />,
   AdminAppBar: <AppBar select={<AdminAirSelect/>} sync={<AdminServerSync/>} />,
   UserAppBar: <AppBar select={<UserAirSelect/>} sync={<ClientServerSync/>} />,
+  MobileNav: <MobileNav/>,
+  DesktopNav: <DesktopNav/>
 }
 
 export const getAppBar = (pageName:string) => pageName !== 'Admin' ? persistentComponents['UserAppBar'] : persistentComponents['AdminAppBar']
 
 
 export const DynamicMainNav = () => {
-  const {width} = useSize()
-  const breakPoint = width > 750 ? 'desktop' : 'mobile'
+  const {isWidthGT} = useIsWidthGT()
 
-  return useMemo(() => {
+  // width > 1200: side nav with drawer init open
+  if (!isWidthGT) {return persistentComponents.MobileNav}
 
-    // width > 1200: side nav with drawer init open
-    if (breakPoint === 'desktop') {return <DesktopNav/>}
-
-    // bottom nav bar
-    return <MobileNav/>
-  }, [breakPoint])
+  // bottom nav bar
+  return persistentComponents.DesktopNav
 }

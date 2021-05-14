@@ -1,14 +1,12 @@
 import {debounce} from 'lodash'
 import {useEffect, useState} from 'react'
 
-export const useSize = (debounceDelay = 500) => {
-  const [width, setWidth] = useState(window.innerWidth)
-  const [height, setHeight] = useState(window.innerHeight)
+export const useIsWidthGT = (breakPoint = 750, debounceDelay = 500) => {
+  const [isWidthGT, setIsWidthGT] = useState(window.innerWidth > breakPoint)
 
   useEffect(() => {
     const handleWindowResize = () => {
-      setWidth(window.innerWidth)
-      setHeight(window.innerHeight)
+      setIsWidthGT(window.innerWidth > breakPoint)
     }
 
     const debounced = debounce(handleWindowResize, debounceDelay)
@@ -17,5 +15,5 @@ export const useSize = (debounceDelay = 500) => {
     return () => window.removeEventListener('resize', debounced)
   }, [])
 
-  return {width, height}
+  return {isWidthGT}
 }

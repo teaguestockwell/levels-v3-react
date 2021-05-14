@@ -2,7 +2,6 @@
 import {Alert, Button} from 'antd'
 import { v4 } from 'uuid'
 import {SyncOutlined} from '@ant-design/icons'
-import { useTick } from '../hooks/use_tick'
 import { useClientServerSync } from '../hooks/use_client_server_sync'
 import { useMemo } from 'react'
 import { formatDistanceToNowStrict } from 'date-fns'
@@ -10,11 +9,9 @@ import TextLoop from 'react-text-loop'
 import {queryClient} from '../utils/const'
 
 export const ClientServerSync = () => {
-  const tick = useTick(9000)
   const sync = useClientServerSync()
 
   return useMemo(() => {
-
     // factor in that the text loop will display 6 secs late
     const lastSyncedFormatted = formatDistanceToNowStrict(
       new Date(
@@ -28,6 +25,8 @@ export const ClientServerSync = () => {
       if(!sync.isClientStale){return 'info'} // online && !isClientSyncedWithServer || lastSync > 48hrs ago
       return 'error'
     }
+
+    const loopLength = 3000
     
     return <Alert
       key={v4()}
@@ -43,10 +42,13 @@ export const ClientServerSync = () => {
       banner
       type={getAlertType()}
       message={
-        <TextLoop mask>
-          <div>{sync.isClientOnline ? 'Online' : 'Offline'}</div>
-          <div>last synced</div>
-          <div>{`${lastSyncedFormatted} ago`}</div>
+        <TextLoop 
+          mask
+          interval={[loopLength, loopLength,loopLength]}
+        >
+          {sync.isClientOnline ? 'Online' : 'Offline'}
+          {'last synced'}
+          {`${lastSyncedFormatted} ago`}
         </TextLoop>
       }
       action={
@@ -57,9 +59,9 @@ export const ClientServerSync = () => {
          type="primary"
          shape='circle'
          icon={<SyncOutlined />}
-         onClick={() => queryClient.setQueryData('userAirs', () => sync.serverData)}
+         onClick={() => queryClient.setQueryData('userAirs', () => sync.swRes)}
         />
       }
     />
-  },[tick])
+  },[sync.swRes?.clientReqKey])
 }

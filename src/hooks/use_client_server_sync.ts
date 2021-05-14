@@ -27,11 +27,12 @@ export const ClientServerSyncStore = create<IClientServerSyncStore>(set => ({
 const ss = ClientServerSyncStore.getState()
 
 export const useClientServerSync = () => {
+  const pollingFreq = 9000
   // the data that the client has loaded on init state
   const { data: clientCache } = useUserAirs()
 
   // poll the server | service worker 
-  const { data: swRes } = usePolling('aircraft/lastUpdated',10000)
+  const { data: swRes } = usePolling('aircraft/lastUpdated',pollingFreq, true)
 
   useEffect(() => {
 
@@ -66,8 +67,8 @@ export const useClientServerSync = () => {
     isClientOnline: gs.isClientOnline,
     isClientCacheEqualToSwRes: gs.isClientCacheEqualToSwRes,
     lastSyncEpoch: gs.lastSyncEpoch,
-    serverData: swRes,
-
+    swRes,
+    pollingFreq,
     // was the client synced with the server over 48 hours ago?
     isClientStale: Date.now() - (gs.lastSyncEpoch as number) > 172800000,
 

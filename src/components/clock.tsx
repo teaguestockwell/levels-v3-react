@@ -5,17 +5,14 @@ import {Typography} from 'antd'
 import {format} from 'date-fns'
 import {getUTCDate} from '../utils/util'
 import {Const} from '../utils/const'
+import { useTick } from '../hooks/use_tick'
 
 const {Text} = Typography
 
 export const Clock = () => {
-  const [lnow, setNow] = useState(new Date())
+  useTick(1000)
+  const lnow = new Date()
   const znow = getUTCDate(lnow)
-
-  useEffect(() => {
-    const time = setTimeout(() => setNow(new Date()), 1000)
-    return () => clearTimeout(time)
-  }, [lnow])
 
   const clock = {
     lHMS: format(lnow, 'HH:mm:ss'),

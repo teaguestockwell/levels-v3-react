@@ -85,5 +85,5 @@ export const AdminAirSelect = () => {
         ))}
       </Select>
     )
-  }, [data?.data, air])
+  }, [data, air])
 }
