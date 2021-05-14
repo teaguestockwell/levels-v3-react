@@ -22,7 +22,7 @@ export const AdminServerSync = () => {
         banner
         showIcon
         key={v4()}
-        type={data ? 'success' : 'error'}
+        type={data ? 'success' : 'info'}
         message={data ? `synced ${getDif()}s ago` : 'Offline'}
         style={{
           marginTop: '-1px',
