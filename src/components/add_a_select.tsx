@@ -3,7 +3,7 @@ import {getActionsCS} from '../hooks/cargo_store'
 import {Cargo, Category} from '../types/aircraftDeep'
 import {getAir, getSchema} from '../hooks/air_store'
 import {MenuInfo} from 'rc-menu/lib/interface'
-import {getCargoStringFromCargo} from '../util'
+import {getCargoStringFromCargo} from '../utils/util'
 
 const cs = getActionsCS()
 

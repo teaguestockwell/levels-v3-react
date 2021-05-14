@@ -2,7 +2,7 @@ import {Modal} from 'antd'
 //import { isEqual } from 'lodash'
 import {useEffect, useMemo} from 'react'
 import {adminStore, getAdminStoreActions} from '../hooks/admin_store'
-import {adminActions} from '../hooks/use_admin_polling'
+import {adminActions} from '../utils/admin_actions'
 import {AdminForm} from './admin_form'
 
 const as = getAdminStoreActions()

@@ -1,5 +1,5 @@
 import {Affix, Row, Col, Typography} from 'antd'
-import {Const} from '../const'
+import {Const} from '../utils/const'
 import icon from '../imgs/icon_round_512.png'
 
 export const AppBar = ({sync, select}: {sync: JSX.Element | null, select:JSX.Element}) => {

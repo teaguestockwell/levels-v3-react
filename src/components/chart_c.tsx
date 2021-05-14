@@ -5,7 +5,7 @@ import {
   getCargoStringFromChartC,
   getChartCSchema,
   rulesYupWrapper,
-} from '../util'
+} from '../utils/util'
 import {CargoStore, getActionsCS, getCargoMap} from '../hooks/cargo_store'
 import {Category} from '../types/aircraftDeep'
 import {debounce} from 'lodash'

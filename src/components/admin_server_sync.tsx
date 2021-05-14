@@ -3,7 +3,7 @@ import { Alert } from "antd"
 import { useEffect, useMemo, useState } from "react"
 import { v4 } from "uuid"
 import { adminStore } from "../hooks/admin_store"
-import { usePolling } from "../hooks/use_admin_polling"
+import { usePolling } from "../hooks/query"
 
 // this component dose not sync anything, it is used only for display
 export const AdminServerSync = () => {

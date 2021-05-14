@@ -1,7 +1,7 @@
 import {Button} from 'antd'
 import {getAir} from '../hooks/air_store'
 import {getCargoMap, useValidation} from '../hooks/cargo_store'
-import {getPerMac} from '../util'
+import {getPerMac} from '../utils/util'
 
 export const GetMacButton = () => {
   const isCargoValid = useValidation()

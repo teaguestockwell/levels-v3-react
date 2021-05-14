@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {Layout, Menu} from 'antd'
-import {Const} from '../const'
+import {Const} from '../utils/const'
 import {navIcons, pageNames, getNavItemStyle, persistentComponents, getAppBar} from './dynamic_main_nav'
 import {useState} from 'react'
 import './desktop_nav.css'

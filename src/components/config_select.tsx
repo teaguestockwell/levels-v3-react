@@ -1,8 +1,8 @@
 import {getAir, getSchema} from '../hooks/air_store'
 import {CargoStore, getActionsCS} from '../hooks/cargo_store'
 import {Category, Config} from '../types/aircraftDeep'
-import {getCargoStringsFromConfig} from '../util'
-import {Const} from '../const'
+import {getCargoStringsFromConfig} from '../utils/util'
+import {Const} from '../utils/const'
 import {Select} from 'antd'
 
 const {Option} = Select

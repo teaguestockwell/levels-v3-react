@@ -3,7 +3,7 @@ import {useEffect, useRef} from 'react'
 import {Form, Input, Button} from 'antd'
 import {getSchema} from '../hooks/air_store'
 import {getActionsCS, getCargoAtUuid} from '../hooks/cargo_store'
-import {capitalizeFirst, rulesYupWrapper} from '../util'
+import {capitalizeFirst, rulesYupWrapper} from '../utils/util'
 import debounce from 'lodash/debounce'
 
 const cs = getActionsCS()

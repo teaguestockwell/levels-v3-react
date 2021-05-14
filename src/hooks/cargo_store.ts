@@ -1,5 +1,5 @@
 import create, {State} from 'zustand'
-import {Const} from '../const'
+import {Const} from '../utils/const'
 import {Config} from '../types/aircraftDeep'
 import {CargoString} from '../types/cargoString'
 import isEqual from 'lodash/isEqual'

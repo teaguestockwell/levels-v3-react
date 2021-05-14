@@ -2,15 +2,13 @@ import {isEqual} from 'lodash'
 import {v4} from 'uuid'
 import create, {State} from 'zustand'
 import {AircraftDeep, Category} from '../types/aircraftDeep'
-import {CargoSchema, getCargoSchema, getCargoStringsFromAirTanks} from '../util'
+import {CargoSchema, getCargoSchema, getCargoStringsFromAirTanks} from '../utils/util'
 import {getActionsCS} from './cargo_store'
 export interface AirStoreState extends State {
   selectedAir: AircraftDeep | undefined
   cargoSchema: CargoSchema | undefined
-  lastUpdated: number | undefined
   setCargoSchema: (cargoSchema: CargoSchema) => void
   setSelectedAir: (air: AircraftDeep) => void
-  setLastUpdated: (lastUpdated: number) => void
 }
 
 export const selectActionsAS = (state: AirStoreState) => ({
@@ -21,11 +19,6 @@ export const selectActionsAS = (state: AirStoreState) => ({
 export const AirStore = create<AirStoreState>((set) => ({
   selectedAir: undefined,
   cargoSchema: undefined,
-  lastUpdated: undefined,
-  setLastUpdated: (lastUpdated) =>
-    set((s) => {
-      s.lastUpdated = lastUpdated
-    }),
   setCargoSchema: (cargoSchema) =>
     set((state) => {
       state.cargoSchema = cargoSchema
@@ -42,7 +35,6 @@ export const getSchema = () => AirStore.getState().cargoSchema as CargoSchema
 export const getActionsAS = () => {
   const state = AirStore.getState()
   return {
-    setLastUpdated: state.setLastUpdated,
     setCargoSchema: state.setCargoSchema,
     setSelectedAir: state.setSelectedAir,
   }

@@ -2,7 +2,7 @@
 import create, {State} from 'zustand'
 import {AircraftDeep} from '../types/aircraftDeep'
 import isEqual from 'lodash/isEqual'
-import {getParamsFromEp, sanitizeNewAirEP} from '../util'
+import {getParamsFromEp, sanitizeNewAirEP} from '../utils/util'
 
 export interface AdminStoreState extends State {
   air: AircraftDeep | undefined

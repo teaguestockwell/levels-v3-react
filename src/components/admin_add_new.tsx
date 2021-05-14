@@ -1,7 +1,7 @@
 import {Button, Row} from 'antd'
 import {adminStore} from '../hooks/admin_store'
-import {adminActions} from '../hooks/use_admin_polling'
-import {capitalizeFirst, getModelFromEP} from '../util'
+import {adminActions} from '../utils/admin_actions'
+import {capitalizeFirst, getModelFromEP} from '../utils/util'
 
 export const AdminAddNew = () => {
   const ep = adminStore((s) => s.ep)

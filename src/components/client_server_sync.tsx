@@ -2,29 +2,30 @@
 import {Alert, Button} from 'antd'
 import { v4 } from 'uuid'
 import {SyncOutlined} from '@ant-design/icons'
-import TextLoop from 'react-text-loop'
 import { useTick } from '../hooks/use_tick'
-import { useUserServerSync } from '../hooks/use_user_server_sync'
+import { useClientServerSync } from '../hooks/use_client_server_sync'
 import { useMemo } from 'react'
 import { formatDistanceToNowStrict } from 'date-fns'
+import TextLoop from 'react-text-loop'
+import {queryClient} from '../utils/const'
 
 export const ClientServerSync = () => {
   const tick = useTick(9000)
-  const sync = useUserServerSync()
+  const sync = useClientServerSync()
 
   return useMemo(() => {
 
     // factor in that the text loop will display 6 secs late
     const lastSyncedFormatted = formatDistanceToNowStrict(
       new Date(
-        (sync.lastSyncTimeStamp as number) - 6000
+        (sync.lastSyncEpoch as number) - 6000
       )
     )
 
     const getAlertType = () => {
-      if(sync.isClientSyncedWithServer){return 'success'}
-      if(!sync.isClientEqualToRes){return 'warning'}
-      if(!sync.isClientStale){return 'info'}
+      if(sync.isClientSyncedWithServer){return 'success'} // online synced
+      if(!sync.isClientCacheEqualToSwRes){return 'warning'} // offline
+      if(!sync.isClientStale){return 'info'} // online && !isClientSyncedWithServer || lastSync > 48hrs ago
       return 'error'
     }
     
@@ -41,13 +42,23 @@ export const ClientServerSync = () => {
       showIcon
       banner
       type={getAlertType()}
-      action={sync.isClientEqualToRes ? null :<Button size="small" type="primary" shape='circle' icon={<SyncOutlined />} onClick={sync.syncClientAndServerState}/>}
       message={
         <TextLoop mask>
           <div>{sync.isClientOnline ? 'Online' : 'Offline'}</div>
           <div>last synced</div>
           <div>{`${lastSyncedFormatted} ago`}</div>
         </TextLoop>
+      }
+      action={
+        sync.isClientCacheEqualToSwRes ?
+         null 
+        : <Button 
+         size="small"
+         type="primary"
+         shape='circle'
+         icon={<SyncOutlined />}
+         onClick={() => queryClient.setQueryData('userAirs', () => sync.serverData)}
+        />
       }
     />
   },[tick])

@@ -4,14 +4,16 @@ import SubMenu from 'antd/lib/menu/SubMenu'
 import {MenuInfo} from 'rc-menu/lib/interface'
 import {DownOutlined} from '@ant-design/icons'
 import {adminStore, getAdminStoreActions} from '../hooks/admin_store'
-import {getQueryObjFromEP} from '../util'
-import {Const} from '../const'
+import {getQueryObjFromEP} from '../utils/util'
+import {Const} from '../utils/const'
 
 const as = getAdminStoreActions()
 
 export const AdminNav = () => {
   const ep = adminStore((s) => s.ep)
   const air = adminStore.getState().air
+
+  console.log(air)
 
   const onClick = (menuInfo: MenuInfo) => {
     as.setEp(String(menuInfo.key))

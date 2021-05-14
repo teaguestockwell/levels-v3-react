@@ -1,8 +1,8 @@
 import {Const} from './const'
 import * as util from './util'
-import {mockAircraftsDeep} from './testUtils/mock_aircrafts_deep'
-import {Cargo, Category} from './types/aircraftDeep'
-import {CargoString, ChartCCargoString} from './types/cargoString'
+import {mockAircraftsDeep} from '../testUtils/mock_aircrafts_deep'
+import {Cargo, Category} from '../types/aircraftDeep'
+import {CargoString, ChartCCargoString} from '../types/cargoString'
 import {v4} from 'uuid'
 import {
   getCargoStringFromTank,

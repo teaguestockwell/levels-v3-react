@@ -1,9 +1,10 @@
 /* eslint-disable react/display-name */
 import {Col, Empty, Result, Row, Skeleton, Table} from 'antd'
 import {useMemo} from 'react'
-import {capitalizeFirst} from '../util'
+import {capitalizeFirst} from '../utils/util'
 import {DeleteOutlined, EditOutlined} from '@ant-design/icons'
-import {usePolling, adminActions} from '../hooks/use_admin_polling'
+import {usePolling} from '../hooks/query'
+import {adminActions} from '../utils/admin_actions'
 import {adminStore} from '../hooks/admin_store'
 import {v4} from 'uuid'
 import {AdminAddNew} from './admin_add_new'
@@ -21,16 +22,17 @@ export const JsonTable = () => {
       )
     }
 
-    if (data.data.msg) {
+
+    if (data.msg) {
       return (
         <Result
           status="error"
-          title={`${data.data.msg}` ? `${data.data.msg}` : 'Failed to load'}
+          title={`${data.msg}` ? `${data.msg}` : 'Failed to load'}
         />
       )
     }
 
-    if (data.data.length === 0) {
+    if (data.length === 0) {
       return (
         <>
           <AdminAddNew />
@@ -41,10 +43,10 @@ export const JsonTable = () => {
 
     const displayKeys = [
       'name',
-      ...Object.keys((data.data as Record<string, unknown>[])[0])
+      ...Object.keys((data as Record<string, unknown>[])[0])
         .filter(
           (k) =>
-            typeof (data.data as Record<string, unknown>[])[0][k] !== 'object'
+            typeof (data as Record<string, unknown>[])[0][k] !== 'object'
         )
         .filter((k) => !k.includes('Id'))
         .filter((k) => k !== 'name')
@@ -89,14 +91,14 @@ export const JsonTable = () => {
           pagination={{pageSize: 1000}}
           scroll={{x: 500}}
           columns={columns}
-          dataSource={data.data}
+          dataSource={data}
           //rowKey="name"
           //sticky
         />
       </>
     )
     // we dont need to dif data.key because the sw does not cache admin ep
-  }, [data?.data, ep])
+  }, [data, ep])
 
   return table
 }

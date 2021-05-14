@@ -8,10 +8,10 @@ import {
   Config,
   getYupModelSchemas,
   Tank,
-} from './types/aircraftDeep'
-import {CargoString, ChartCCargoString} from './types/cargoString'
+} from '../types/aircraftDeep'
+import {CargoString, ChartCCargoString} from '../types/cargoString'
 import {v4} from 'uuid'
-import {CargoCalculated, PerMac} from './types/perMac'
+import {CargoCalculated, PerMac} from '../types/perMac'
 import {debounce} from 'lodash'
 import queryString from 'query-string'
 /** if string is > max length cut it and add ... */

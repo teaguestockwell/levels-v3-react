@@ -12,7 +12,7 @@ const endPoints = [
     (req, res, ctx) => {
       const ret = JSON.stringify({
         airs: mockAircraftsDeep,
-        lastUpdated: Date.now(),
+        serverEpoch: Date.now(),
       })
       return res(ctx.status(200), ctx.body(ret))
     }

@@ -4,7 +4,7 @@ import {QueryClientProvider} from 'react-query'
 import {InitLoaded} from './nav/init_loaded'
 import 'antd/dist/antd.css'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
-import {queryClient} from './const'
+import {queryClient} from './utils/const'
 
 ReactDOM.render(
   <React.StrictMode>

@@ -3,8 +3,8 @@ import {Col, Row} from 'antd'
 import {useEffect, useState} from 'react'
 import {Typography} from 'antd'
 import {format} from 'date-fns'
-import {getUTCDate} from '../util'
-import {Const} from '../const'
+import {getUTCDate} from '../utils/util'
+import {Const} from '../utils/const'
 
 const {Text} = Typography
 

@@ -1,15 +1,16 @@
 import {QueryClientProvider} from 'react-query'
-import {queryClient} from '../const'
+import {queryClient} from '../utils/const'
 import {render} from '@testing-library/react'
-import {useUserAirs} from '../hooks/use_user_airs'
-import {getCargoSchema} from '../util'
+import {useUserAirs} from '../hooks/query'
+import {getCargoSchema} from '../utils/util'
 import {AirStore} from '../hooks/air_store'
 import React from 'react'
 
 const IsLoaded = ({children}: {children: React.ReactNode}) => {
-  const {data, hasRoles} = useUserAirs()
+  const {data} = useUserAirs()
+  const isResEmpty = data?.data.length > 0
 
-  if (data && hasRoles) {
+  if (data && isResEmpty) {
     AirStore.getState().setSelectedAir(data.airs[0])
     AirStore.getState().setCargoSchema(getCargoSchema(data.airs[0]))
 

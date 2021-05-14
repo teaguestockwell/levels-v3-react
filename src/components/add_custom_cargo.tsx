@@ -1,6 +1,6 @@
 import {Button} from 'antd'
 import {getActionsCS} from '../hooks/cargo_store'
-import {getCargoString} from '../util'
+import {getCargoString} from '../utils/util'
 
 const cs = getActionsCS()
 

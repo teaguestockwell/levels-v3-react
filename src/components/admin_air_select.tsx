@@ -1,10 +1,10 @@
 import {Alert, Select, Spin} from 'antd'
 import {useMemo} from 'react'
-import {usePolling} from '../hooks/use_admin_polling'
+import {usePolling} from '../hooks/query'
 import {AircraftDeep} from '../types/aircraftDeep'
 import {getAdminStoreActions, useAir} from '../hooks/admin_store'
 import isEqual from 'lodash/isEqual'
-import {Const} from '../const'
+import {Const} from '../utils/const'
 import {initAirCargos} from '../hooks/air_store'
 import {v4} from 'uuid'
 
@@ -22,7 +22,7 @@ export const AdminAirSelect = () => {
   // use the key of the client state to find new data in server state,
   // then set client state
   const onAirChange = (newName: string) => {
-    const serverAir = data?.data.find((x: any) => x.name === newName)
+    const serverAir = data.find((x: any) => x.name === newName)
     as.setAir(serverAir)
     initAirCargos(serverAir)
   }
@@ -35,30 +35,30 @@ export const AdminAirSelect = () => {
     }
 
     // while !res contains error
-    if (data.data.msg) {
+    if (data.msg) {
       return <Alert message="Error" type="error" showIcon />
     }
 
     // while no data within res
-    if (data.data.length === 0) {
+    if (data.length === 0) {
       return <Alert message="No Aircraft" type="warning" showIcon />
     }
 
     // while no client state for selection,
     // set client aircraft selection to first aircraft from res
     if (!air) {
-      as.setAir(data.data[0])
+      as.setAir(data[0])
     }
 
     // try to find server aircraft for client selected aircraft
-    const serverStateOfSelectedAir = data.data.find(
+    const serverStateOfSelectedAir = data.find(
       (a: any) => a.aircraftId === air?.aircraftId
     )
 
     // while client air is not in server res,
     // set client air selection to first air from res
     if (!serverStateOfSelectedAir) {
-      as.setAir(data.data[0])
+      as.setAir(data[0])
       return <Spin />
     }
 
@@ -78,12 +78,12 @@ export const AdminAirSelect = () => {
         style={{width: Const.SELECT_WIDTH, textAlign: 'center'}}
         dropdownStyle={{textAlign: 'center'}}
       >
-        {data.data.map((a: AircraftDeep) => (
+        {data.map((a: AircraftDeep) => (
           <Option key={a.aircraftId} value={a.name}>
             {a.name}
           </Option>
         ))}
       </Select>
     )
-  }, [data, air])
+  }, [data?.data, air])
 }

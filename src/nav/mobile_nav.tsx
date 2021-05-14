@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {Const} from '../const'
+import {Const} from '../utils/const'
 import {Button, Col, Row, Typography} from 'antd'
 import {navIcons, pageNames, getNavItemStyle, getAppBar, persistentComponents} from './dynamic_main_nav'
 import { getActionsCS, usePageName } from '../hooks/cargo_store'

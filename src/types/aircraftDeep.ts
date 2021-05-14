@@ -1,4 +1,4 @@
-import {Const} from '../const'
+import {Const} from '../utils/const'
 import * as yup from 'yup'
 
 export enum Category {
