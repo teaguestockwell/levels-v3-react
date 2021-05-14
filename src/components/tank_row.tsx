@@ -4,11 +4,10 @@ import {getActionsCS, useCargo} from '../hooks/cargo_store'
 import {CargoString} from '../types/cargoString'
 import {getCargoStringFromTank} from '../utils/util'
 import {getAir} from '../hooks/air_store'
-import {Row, Select, Space} from 'antd'
-import {Const} from '../utils/const'
+import {Row, Select } from 'antd'
 import {Liquid} from '@ant-design/charts'
 import {Typography} from 'antd'
-import {useMemo} from 'react'
+import {useMemo } from 'react'
 
 const {Text} = Typography
 const {Option} = Select
@@ -21,8 +20,8 @@ export const TankRow = ({
   tank: Tank
   cargoString: CargoString
 }) => {
-  const weights = tank.weightsCSV.split(',')
   const currentWeight = useCargo(cargoString?.uuid)?.weightEA ?? 0
+  const weights = tank.weightsCSV.split(',')
   const maxWeight = weights[weights.length - 1]
   const liquidConfig = {
     renderer: 'svg',
@@ -88,23 +87,23 @@ export const TankRow = ({
     cs.putCargos([newCargoString])
   }
 
-  const select = useMemo(() => {
-    return (
-      <Select
-        onChange={onChange}
-        defaultValue={currentWeight}
-        style={{width: 100, textAlign: 'center'}}
-        dropdownStyle={{textAlign: 'center'}}
-        showSearch
-      >
-        {weights.map((w) => (
-          <Option value={w} key={w}>
-            {w}
-          </Option>
-        ))}
-      </Select>
-    )
-  }, [])
+  const options = useMemo(() => {
+    return weights.map((w) => (
+      <Option value={w} key={w}>
+        {w}
+      </Option>
+    ))
+  },[weights])
+
+  const select = (
+    <Select
+      onChange={onChange}
+      defaultValue={currentWeight}
+      style={{width: 100, textAlign: 'center'}}
+      dropdownStyle={{textAlign: 'center'}}
+      showSearch
+    >{options}</Select>
+  )
 
   const name = (
     <Text
