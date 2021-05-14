@@ -7,9 +7,11 @@ import {useMemo} from 'react'
 import {formatDistanceToNowStrict} from 'date-fns'
 import TextLoop from 'react-text-loop'
 import {queryClient} from '../utils/const'
+import { useTick } from '../hooks/use_tick'
 
 export const ClientServerSync = () => {
   const sync = useClientServerSync()
+  const tick = useTick(9000)
 
   return useMemo(() => {
     // factor in that the text loop will display 6 secs late
@@ -68,5 +70,5 @@ export const ClientServerSync = () => {
         }
       />
     )
-  }, [sync.swRes?.clientReqKey])
+  }, [tick])
 }
