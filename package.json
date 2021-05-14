@@ -2,11 +2,22 @@
   "name": "frontend-react",
   "version": "0.1.0",
   "private": true,
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!<rootDir>/node_modules/",
+      "!<rootDir>/src/testUtils/",
+      "!<rootDir>/src/service-worker.ts",
+      "!<rootDir>/src/serviceWorkerRegistration.ts",
+      "!<rootDir>/src/index.ts"
+    ]
+  },
   "scripts": {
     "preinstall": "npx npm-force-resolutions",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test:unit": "react-scripts test --coverage",
+    "test": "react-scripts test",
+    "test:unit": "react-scripts test --coverage --watchAll=false",
     "lint": "eslint . --ext js,jsx,ts,tsx",
     "coverage": "npm test -- --coverage",
     "pretty": "npx prettier --write ."

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {Layout, Menu} from 'antd'
 import {Const} from '../utils/const'
-import {navIcons, pageNames, getNavItemStyle, persistentComponents, getAppBar} from './dynamic_main_nav'
+import {navIcons, pageNames, getNavItemStyle, persistentPages, getAppBar} from './dynamic_main_nav'
 import {useState} from 'react'
 import './desktop_nav.css'
 
@@ -60,7 +60,7 @@ export const DesktopNav = () => {
           ))}
         </Menu>
       </Sider>
-      <div style={{paddingLeft: collapsed ? '80px' : '150px'}}>{persistentComponents[pageName]}</div>
+      <div style={{paddingLeft: collapsed ? '80px' : '150px'}}>{persistentPages[pageName]}</div>
     </Layout>
     </>
   )

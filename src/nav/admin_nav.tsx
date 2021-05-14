@@ -13,8 +13,6 @@ export const AdminNav = () => {
   const ep = adminStore((s) => s.ep)
   const air = adminStore.getState().air
 
-  console.log(air)
-
   const onClick = (menuInfo: MenuInfo) => {
     as.setEp(String(menuInfo.key))
   }

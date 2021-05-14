@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {Const} from '../utils/const'
 import {Button, Col, Row, Typography} from 'antd'
-import {navIcons, pageNames, getNavItemStyle, getAppBar, persistentComponents} from './dynamic_main_nav'
+import {navIcons, pageNames, getNavItemStyle, getAppBar, persistentPages} from './dynamic_main_nav'
 import { getActionsCS, usePageName } from '../hooks/cargo_store'
 
 const cs = getActionsCS()
@@ -38,7 +38,7 @@ export const MobileNav = () => {
     // since bottom nav bar sits on top, add padding to make viewport scroll to uncover
     <div style={{paddingBottom: Const.HEIGHT.BOTTOM_NAV_BAR}}>
       {getAppBar(pageName)}
-      {persistentComponents[pageName]}
+      {persistentPages[pageName]}
       <div
         style={{
           position: 'fixed',

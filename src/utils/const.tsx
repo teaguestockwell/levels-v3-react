@@ -42,25 +42,25 @@ export const Const = {
 
     categorySchema: yup.mixed().oneOf(['Emergency', 'Extra', 'Steward']),
 
-    numPositiveCSV: yup
-      .string()
-      .required()
-      .test('is this csv', 'must be comma separated numbers', (x) => {
-        // TODO: validate that array length of weights == moments
-        if (!x) {
-          return false
-        }
+    // numPositiveCSV: yup
+    //   .string()
+    //   .required()
+    //   .test('is this csv', 'must be comma separated numbers', (x) => {
+    //     // TODO: validate that array length of weights == moments
+    //     if (!x) {
+    //       return false
+    //     }
 
-        const isNumber = (num: any) => {
-          yup.number().required().positive().validateSync(num)
-        }
+    //     const isNumber = (num: any) => {
+    //       yup.number().required().positive().validateSync(num)
+    //     }
 
-        try {
-          x.split(',').map((y) => isNumber(y))
-          return true
-        } catch (e) {
-          return false
-        }
-      }),
+    //     try {
+    //       x.split(',').map((y) => isNumber(y))
+    //       return true
+    //     } catch (e) {
+    //       return false
+    //     }
+    //   }),
   },
 }

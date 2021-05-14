@@ -53,26 +53,24 @@ export const getNavItemStyle = (x: string, y: string) =>
 }
 
 /** globally scoped components that persist between layouts */
-export const persistentComponents: {[key: string]: JSX.Element} = {
+export const persistentPages: {[key: string]: JSX.Element} = {
   '%MAC': <Mac />,
   Glossary: <GlossaryList />,
   Admin: <Admin />,
   Help: <Help />,
-  AdminAppBar: <AppBar select={<AdminAirSelect/>} sync={<AdminServerSync/>} />,
-  UserAppBar: <AppBar select={<UserAirSelect/>} sync={<ClientServerSync/>} />,
-  MobileNav: <MobileNav/>,
-  DesktopNav: <DesktopNav/>
 }
-
-export const getAppBar = (pageName:string) => pageName !== 'Admin' ? persistentComponents['UserAppBar'] : persistentComponents['AdminAppBar']
-
+export const mobileNav = <MobileNav/>
+export const desktopNav = <DesktopNav/>
+const adminAppBar =  <AppBar select={<AdminAirSelect/>} sync={<AdminServerSync/>} />
+const userAppBar =  <AppBar select={<UserAirSelect/>} sync={<ClientServerSync/>} />
+export const getAppBar = (pageName:string) => pageName !== 'Admin' ? userAppBar : adminAppBar
 
 export const DynamicMainNav = () => {
   const {isWidthGT} = useIsWidthGT()
 
   // width > 1200: side nav with drawer init open
-  if (!isWidthGT) {return persistentComponents.MobileNav}
+  if (!isWidthGT) {return mobileNav}
 
   // bottom nav bar
-  return persistentComponents.DesktopNav
+  return desktopNav
 }

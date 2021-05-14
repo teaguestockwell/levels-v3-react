@@ -9,18 +9,12 @@ describe('DesktopNav', () => {
 
   it('will render', async () => {
     const ct = renderWrapped(
-      <DesktopNav
-        page={<div>hi</div>}
-        pageName={'%MAC'}
-        appBar={<div>appbar</div>}
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        setPage={() => {}}
-      />
+      <DesktopNav/>
     )
 
     await waitFor(() =>
       expect(ct.queryAllByText('Loading Test').length).toBe(0)
     )
-    expect(ct.queryAllByText('hi').length).toBe(1)
+    expect(ct.queryAllByText('Atlas').length).toBe(1)
   })
 })

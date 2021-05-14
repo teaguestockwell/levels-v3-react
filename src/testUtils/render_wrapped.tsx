@@ -2,17 +2,25 @@ import {QueryClientProvider} from 'react-query'
 import {queryClient} from '../utils/const'
 import {render} from '@testing-library/react'
 import {useUserAirs} from '../hooks/query'
-import {getCargoSchema} from '../utils/util'
-import {AirStore} from '../hooks/air_store'
+
+import {AirStore } from '../hooks/air_store'
 import React from 'react'
+import { ClientServerSyncStore } from '../hooks/use_client_server_sync'
+import { getCargoSchema } from '../utils/util'
+
+const ss = ClientServerSyncStore.getState()
 
 const IsLoaded = ({children}: {children: React.ReactNode}) => {
-  const {data} = useUserAirs()
-  const isResEmpty = data?.data.length > 0
+  const {data} = useUserAirs() 
 
-  if (data && isResEmpty) {
-    AirStore.getState().setSelectedAir(data.airs[0])
-    AirStore.getState().setCargoSchema(getCargoSchema(data.airs[0]))
+  if (data?.data && data?.data.length > 0) {
+    //init state of selected aircraft
+    AirStore.getState().setSelectedAir(data.data[0])
+    AirStore.getState().setCargoSchema(getCargoSchema(data.data[0]))
+
+    // init state of server client sync
+    ss.setLastSyncEpoch(data.serverEpoch)
+    ss.setIsClientCacheEqualToSwRes(true)
 
     return <>{children}</>
   }

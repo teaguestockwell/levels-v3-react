@@ -10,9 +10,8 @@ const ss = ClientServerSyncStore.getState()
 
 export const InitLoaded = () => {
   const {status, data} = useUserAirs()
-  const isResEmpty = data?.data.length > 0
 
-  if (data?.data && isResEmpty) {
+  if (data?.data && data?.data.length > 0) {
     // try to preserve selection of last selected aircraft 
     const oldId = AirStore.getState().selectedAir?.aircraftId
     const newIdx = data.data.findIndex((a:any) => a.aircraftId === oldId)
@@ -29,7 +28,7 @@ export const InitLoaded = () => {
     return <DynamicMainNav key={v4()} />
   }
 
-  if (data && !isResEmpty) {
+  if (data && !(data?.data.length > 0)) {
     return <Result title="You have no assigned aircraft" />
   }
 
