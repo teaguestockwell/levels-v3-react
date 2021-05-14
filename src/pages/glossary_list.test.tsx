@@ -8,7 +8,7 @@ describe('GlossaryList', () => {
   beforeAll(() => (matchMedia = new MatchMediaMock()))
 
   it('renders', async () => {
-    const ct = renderWrapped(<GlossaryList/>)
+    const ct = renderWrapped(<GlossaryList />)
     await waitFor(() =>
       expect(ct.queryAllByText('Loading Test').length).toBe(0)
     )

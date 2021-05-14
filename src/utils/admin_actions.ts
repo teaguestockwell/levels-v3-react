@@ -1,13 +1,8 @@
 import {message} from 'antd'
 import {v4} from 'uuid'
 import {adminStore} from '../hooks/admin_store'
-import {
-  getModelFromEP,
-  getNewModelFromEP,
-  getQueryString,
-} from './util'
-import { delete1, put1 } from '../hooks/query'
-
+import {getModelFromEP, getNewModelFromEP, getQueryString} from './util'
+import {delete1, put1} from '../hooks/query'
 
 const toastWrap = async (
   apiRes: Promise<number>,

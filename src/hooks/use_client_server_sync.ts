@@ -1,6 +1,6 @@
-import { isEqual } from "lodash"
-import { useEffect } from "react"
-import { usePolling, useUserAirs } from './query'
+import {isEqual} from 'lodash'
+import {useEffect} from 'react'
+import {usePolling, useUserAirs} from './query'
 import create, {State} from 'zustand'
 
 interface IClientServerSyncStore extends State {
@@ -8,19 +8,28 @@ interface IClientServerSyncStore extends State {
   isClientCacheEqualToSwRes: boolean
   isClientOnline: boolean
 
-  setLastSyncEpoch: (x:number) => void
+  setLastSyncEpoch: (x: number) => void
   setIsClientCacheEqualToSwRes: (x: boolean) => void
   setIsClientOnline: (x: boolean) => void
 }
 
-export const ClientServerSyncStore = create<IClientServerSyncStore>(set => ({
+export const ClientServerSyncStore = create<IClientServerSyncStore>((set) => ({
   lastSyncEpoch: undefined,
   isClientCacheEqualToSwRes: true,
   isClientOnline: false,
 
-  setLastSyncEpoch: (x) => set(s => {s.lastSyncEpoch = x}),
-  setIsClientCacheEqualToSwRes: (x) => set(s => {s.isClientCacheEqualToSwRes = x}),
-  setIsClientOnline: (x) => set(s => {s.isClientOnline = x})
+  setLastSyncEpoch: (x) =>
+    set((s) => {
+      s.lastSyncEpoch = x
+    }),
+  setIsClientCacheEqualToSwRes: (x) =>
+    set((s) => {
+      s.isClientCacheEqualToSwRes = x
+    }),
+  setIsClientOnline: (x) =>
+    set((s) => {
+      s.isClientOnline = x
+    }),
 }))
 
 // use this for stateless updating functions
@@ -29,13 +38,12 @@ const ss = ClientServerSyncStore.getState()
 export const useClientServerSync = () => {
   const pollingFreq = 9000
   // the data that the client has loaded on init state
-  const { data: clientCache } = useUserAirs()
+  const {data: clientCache} = useUserAirs()
 
-  // poll the server | service worker 
-  const { data: swRes } = usePolling('aircraft/lastUpdated',pollingFreq, true)
+  // poll the server | service worker
+  const {data: swRes} = usePolling('aircraft/lastUpdated', pollingFreq, true)
 
   useEffect(() => {
-
     // fallback if service worker does not return cache
     if (!swRes) {
       ss.setIsClientCacheEqualToSwRes(true)
@@ -49,12 +57,15 @@ export const useClientServerSync = () => {
       const isClientCacheEqualToSwRes = isEqual(clientCache.data, swRes.data)
 
       // if serverEpoch is more than x secs
-      const isClientOnline = (Date.now() - swRes.serverEpoch) < 20000
+      const isClientOnline = Date.now() - swRes.serverEpoch < 20000
 
-      // client res equality does not mean client is synced with server because the res could have been cached 
-      const isClientSyncedWithServer = isClientCacheEqualToSwRes && isClientOnline
+      // client res equality does not mean client is synced with server because the res could have been cached
+      const isClientSyncedWithServer =
+        isClientCacheEqualToSwRes && isClientOnline
 
-      ss.setLastSyncEpoch(isClientSyncedWithServer ? swRes.serverEpoch : gs.lastSyncEpoch)
+      ss.setLastSyncEpoch(
+        isClientSyncedWithServer ? swRes.serverEpoch : gs.lastSyncEpoch
+      )
       ss.setIsClientCacheEqualToSwRes(isClientCacheEqualToSwRes)
       ss.setIsClientOnline(isClientOnline)
     }
@@ -72,7 +83,7 @@ export const useClientServerSync = () => {
     // was the client synced with the server over 48 hours ago?
     isClientStale: Date.now() - (gs.lastSyncEpoch as number) > 172800000,
 
-    // client res equality does not mean client is synced with server because the res could have been cached 
+    // client res equality does not mean client is synced with server because the res could have been cached
     isClientSyncedWithServer: gs.isClientCacheEqualToSwRes && gs.isClientOnline,
   }
 }

@@ -3,15 +3,15 @@ import {queryClient} from '../utils/const'
 import {render} from '@testing-library/react'
 import {useUserAirs} from '../hooks/query'
 
-import {AirStore } from '../hooks/air_store'
+import {AirStore} from '../hooks/air_store'
 import React from 'react'
-import { ClientServerSyncStore } from '../hooks/use_client_server_sync'
-import { getCargoSchema } from '../utils/util'
+import {ClientServerSyncStore} from '../hooks/use_client_server_sync'
+import {getCargoSchema} from '../utils/util'
 
 const ss = ClientServerSyncStore.getState()
 
 const IsLoaded = ({children}: {children: React.ReactNode}) => {
-  const {data} = useUserAirs() 
+  const {data} = useUserAirs()
 
   if (data?.data && data?.data.length > 0) {
     //init state of selected aircraft

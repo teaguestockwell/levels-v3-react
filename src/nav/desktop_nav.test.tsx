@@ -8,9 +8,7 @@ describe('DesktopNav', () => {
   beforeAll(() => (matchMedia = new MatchMediaMock()))
 
   it('will render', async () => {
-    const ct = renderWrapped(
-      <DesktopNav/>
-    )
+    const ct = renderWrapped(<DesktopNav />)
 
     await waitFor(() =>
       expect(ct.queryAllByText('Loading Test').length).toBe(0)

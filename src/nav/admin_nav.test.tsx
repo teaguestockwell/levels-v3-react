@@ -27,8 +27,6 @@ describe('AdminNav', () => {
     await waitFor(() =>
       expect(ct.queryAllByText('Loading Test').length).toBe(0)
     )
-    await waitFor(() =>
-      expect(ct.getByText('My Aircraft')).toBeInTheDocument()
-    )
+    await waitFor(() => expect(ct.getByText('My Aircraft')).toBeInTheDocument())
   })
 })

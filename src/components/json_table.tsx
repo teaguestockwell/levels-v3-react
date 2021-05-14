@@ -22,7 +22,6 @@ export const JsonTable = () => {
       )
     }
 
-
     if (data.msg) {
       return (
         <Result
@@ -45,8 +44,7 @@ export const JsonTable = () => {
       'name',
       ...Object.keys((data as Record<string, unknown>[])[0])
         .filter(
-          (k) =>
-            typeof (data as Record<string, unknown>[])[0][k] !== 'object'
+          (k) => typeof (data as Record<string, unknown>[])[0][k] !== 'object'
         )
         .filter((k) => !k.includes('Id'))
         .filter((k) => k !== 'name')

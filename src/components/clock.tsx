@@ -5,7 +5,7 @@ import {Typography} from 'antd'
 import {format} from 'date-fns'
 import {getUTCDate} from '../utils/util'
 import {Const} from '../utils/const'
-import { useTick } from '../hooks/use_tick'
+import {useTick} from '../hooks/use_tick'
 
 const {Text} = Typography
 

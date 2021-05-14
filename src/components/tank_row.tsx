@@ -4,10 +4,10 @@ import {getActionsCS, useCargo} from '../hooks/cargo_store'
 import {CargoString} from '../types/cargoString'
 import {getCargoStringFromTank} from '../utils/util'
 import {getAir} from '../hooks/air_store'
-import {Row, Select } from 'antd'
+import {Row, Select} from 'antd'
 import {Liquid} from '@ant-design/charts'
 import {Typography} from 'antd'
-import {useMemo } from 'react'
+import {useMemo} from 'react'
 
 const {Text} = Typography
 const {Option} = Select
@@ -93,7 +93,7 @@ export const TankRow = ({
         {w}
       </Option>
     ))
-  },[weights])
+  }, [weights])
 
   const select = (
     <Select
@@ -102,7 +102,9 @@ export const TankRow = ({
       style={{width: 100, textAlign: 'center'}}
       dropdownStyle={{textAlign: 'center'}}
       showSearch
-    >{options}</Select>
+    >
+      {options}
+    </Select>
   )
 
   const name = (

@@ -2,7 +2,11 @@ import {isEqual} from 'lodash'
 import {v4} from 'uuid'
 import create, {State} from 'zustand'
 import {AircraftDeep, Category} from '../types/aircraftDeep'
-import {CargoSchema, getCargoSchema, getCargoStringsFromAirTanks} from '../utils/util'
+import {
+  CargoSchema,
+  getCargoSchema,
+  getCargoStringsFromAirTanks,
+} from '../utils/util'
 import {getActionsCS} from './cargo_store'
 export interface AirStoreState extends State {
   selectedAir: AircraftDeep | undefined

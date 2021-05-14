@@ -31,7 +31,6 @@ export interface CargoStoreState extends State {
 }
 
 export const CargoStore = create<CargoStoreState>((set) => ({
-
   // read
   pageName: '%MAC',
   cargoValidMap: new Map(),
@@ -41,7 +40,10 @@ export const CargoStore = create<CargoStoreState>((set) => ({
   editUuid: undefined,
   chartC: {weight: '', mom: ''},
 
-  putPageName: (pageName) => set(s => {s.pageName = pageName}),
+  putPageName: (pageName) =>
+    set((s) => {
+      s.pageName = pageName
+    }),
 
   putChartC: (chartC) =>
     set((s) => {
@@ -106,7 +108,7 @@ export const getCargoAtUuid = (uuid: string) =>
   CargoStore.getState().cargoMap.get(uuid) as CargoString
 export const getConfig = () => CargoStore.getState().config
 
-export const usePageName = () => CargoStore(s => s.pageName)
+export const usePageName = () => CargoStore((s) => s.pageName)
 
 export const getActionsCS = () => {
   const state = CargoStore.getState()

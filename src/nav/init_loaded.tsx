@@ -2,8 +2,8 @@ import {useUserAirs} from '../hooks/query'
 import {AirStore, getActionsAS, initAirCargos} from '../hooks/air_store'
 import {Result, Skeleton} from 'antd'
 import {DynamicMainNav} from './dynamic_main_nav'
-import { v4 } from 'uuid'
-import { ClientServerSyncStore } from '../hooks/use_client_server_sync'
+import {v4} from 'uuid'
+import {ClientServerSyncStore} from '../hooks/use_client_server_sync'
 
 const as = getActionsAS()
 const ss = ClientServerSyncStore.getState()
@@ -12,9 +12,9 @@ export const InitLoaded = () => {
   const {status, data} = useUserAirs()
 
   if (data?.data && data?.data.length > 0) {
-    // try to preserve selection of last selected aircraft 
+    // try to preserve selection of last selected aircraft
     const oldId = AirStore.getState().selectedAir?.aircraftId
-    const newIdx = data.data.findIndex((a:any) => a.aircraftId === oldId)
+    const newIdx = data.data.findIndex((a: any) => a.aircraftId === oldId)
     const airIdx = newIdx === -1 ? 0 : newIdx
 
     //init state of selected aircraft

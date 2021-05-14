@@ -20,7 +20,7 @@ export const adminStore = create<AdminStoreState>((set, get) => ({
   editObj: {},
 
   setAir: (air) => {
-    set((s) => {
+    set(s => {
       (s.ep = sanitizeNewAirEP(s.ep, air.aircraftId)), (s.air = air)
     })
   },

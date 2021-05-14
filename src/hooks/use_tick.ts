@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react"
+import {useEffect, useState} from 'react'
 
-export const useTick = (durationMs:number) => {
-  const [ tick, setTick ] = useState(Date.now())
+export const useTick = (durationMs: number) => {
+  const [tick, setTick] = useState(Date.now())
 
   useEffect(() => {
     const ticker = setTimeout(() => setTick(() => Date.now()), durationMs)
