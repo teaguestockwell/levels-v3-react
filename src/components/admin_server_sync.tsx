@@ -29,7 +29,7 @@ export const AdminServerSync = () => {
           border: '1px solid #d9d9d9',
           borderRadius: '2px',
           height: '32px',
-          width: window.innerWidth < 750 ? '100%' : '300px',
+          width: '100%',
         }}
       />
     )
