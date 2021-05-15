@@ -2,7 +2,7 @@ import {Alert, Select, Spin} from 'antd'
 import {useMemo} from 'react'
 import {usePolling} from '../hooks/query'
 import {AircraftDeep} from '../types/aircraftDeep'
-import {getAdminStoreActions, useAir} from '../hooks/admin_store'
+import {getAdminStoreActions, useAdminAir} from '../hooks/admin_store'
 import isEqual from 'lodash/isEqual'
 import {Const} from '../utils/const'
 import {initAirCargos} from '../hooks/air_store'
@@ -17,7 +17,7 @@ const {Option} = Select
  */
 export const AdminAirSelect = () => {
   const {data} = usePolling('aircraft', 5000)
-  const air = useAir()
+  const air = useAdminAir()
 
   // use the key of the client state to find new data in server state,
   // then set client state

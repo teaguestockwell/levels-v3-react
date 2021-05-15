@@ -1,11 +1,11 @@
 import {fireEvent, waitFor} from '@testing-library/react'
 import {AdminAirSelect} from './admin_air_select'
 import {renderWrapped} from '../testUtils/render_wrapped'
-import {adminStore, useAir} from '../hooks/admin_store'
+import {adminStore, useAdminAir} from '../hooks/admin_store'
 import {v4} from 'uuid'
 
 const SelectedAirStateWrapper = () => {
-  useAir()
+  useAdminAir()
   return <AdminAirSelect key={v4()} />
 }
 

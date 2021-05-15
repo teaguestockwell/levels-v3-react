@@ -2,7 +2,7 @@
 import create, {State} from 'zustand'
 import {AircraftDeep} from '../types/aircraftDeep'
 import isEqual from 'lodash/isEqual'
-import {getParamsFromEp, sanitizeNewAirEP} from '../utils/util'
+import {sanitizeNewAirEP} from '../utils/util'
 
 export interface AdminStoreState extends State {
   air: AircraftDeep | undefined
@@ -42,7 +42,7 @@ export const getAdminStoreActions = () => {
     setEditObj: s.setEditObj,
   }
 }
-export const useAir = () =>
+export const useAdminAir = () =>
   adminStore(
     (s) => s.air,
     (a0, a1) => isEqual(a0, a1)
