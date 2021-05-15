@@ -21,7 +21,7 @@ export const UserAirSelect = () => {
     <Select
       defaultValue={getAir().name}
       onChange={onAirChange}
-      style={{width: Const.SELECT_WIDTH, textAlign: 'center'}}
+      style={{ textAlign: 'center' ,marginRight: '12px'}}
       dropdownStyle={{textAlign: 'center'}}
       showSearch
     >

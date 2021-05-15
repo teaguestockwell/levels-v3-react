@@ -25,7 +25,6 @@ export const AdminServerSync = () => {
         type={data ? 'success' : 'info'}
         message={data ? `synced ${getDif()}s ago` : 'Offline'}
         style={{
-          marginTop: '-1px',
           backgroundColor: '#fff',
           border: '1px solid #d9d9d9',
           borderRadius: '2px',

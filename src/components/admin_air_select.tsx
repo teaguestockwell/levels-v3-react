@@ -4,7 +4,6 @@ import {usePolling} from '../hooks/query'
 import {AircraftDeep} from '../types/aircraftDeep'
 import {getAdminStoreActions, useAir} from '../hooks/admin_store'
 import isEqual from 'lodash/isEqual'
-import {Const} from '../utils/const'
 import {initAirCargos} from '../hooks/air_store'
 import {v4} from 'uuid'
 
@@ -75,7 +74,7 @@ export const AdminAirSelect = () => {
         defaultValue={air?.name}
         onChange={onAirChange}
         showSearch
-        style={{width: Const.SELECT_WIDTH, textAlign: 'center'}}
+        style={{textAlign: 'center' ,marginRight: '12px'}}
         dropdownStyle={{textAlign: 'center'}}
       >
         {data.map((a: AircraftDeep) => (

@@ -38,7 +38,6 @@ export const ClientServerSync = () => {
       <Alert
         key={v4()}
         style={{
-          marginTop: '-1px',
           backgroundColor: '#fff',
           border: '1px solid #d9d9d9',
           borderRadius: '2px',

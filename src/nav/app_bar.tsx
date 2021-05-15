@@ -31,7 +31,7 @@ export const AppBar = ({
         }}
       >
         <Row justify="center" style={{paddingTop: '8px'}}>
-          <Col span={7}>
+          <Col span={4}>
             {window.innerWidth > 750 ? (
               <img
                 src={icon}
@@ -55,17 +55,10 @@ export const AppBar = ({
               Atlas
             </Typography.Text>
           </Col>
-          <Col
-            span={10}
-            style={{
-              display: 'inline-flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
+          <Col span={13}>
             {sync}
           </Col>
-          <Col span={7} style={{textAlign: 'end', paddingRight: '12px'}}>
+          <Col span={7} style={{textAlign: 'end'}}>
             {select}
           </Col>
         </Row>
