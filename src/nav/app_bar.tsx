@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {Affix, Row, Col, Typography} from 'antd'
 import {Const} from '../utils/const'
 import icon from '../imgs/icon_round_512.png'
@@ -15,13 +16,18 @@ export const AppBar = ({
   // the cache is updated by the ClientServerSync. if initState !== currentState the users may opt in to refresh
 
   const isMobile = window.innerWidth > 750 ? false : true
+  // <Affix style={{zIndex: 1}} offsetTop={0}>
 
   return (
-    <Affix style={{zIndex: 1}}>
       <div
         style={{
+          zIndex: 2,
           height: Const.HEIGHT.APP_BAR,
           backgroundColor: '#383838',
+          position: 'fixed',
+          left: '0px' ,
+          top: '0px',
+          right: '0px' 
         }}
       >
         <Row justify="center" style={{paddingTop: '8px'}}>
@@ -64,6 +70,5 @@ export const AppBar = ({
           </Col>
         </Row>
       </div>
-    </Affix>
   )
 }

@@ -28,6 +28,7 @@ export const DesktopNav = () => {
         <Sider
           style={{
             zIndex: 1,
+            paddingTop: Const.HEIGHT.APP_BAR,
             backgroundColor: '#383838',
             minHeight: '100%',
             background: '#383838',
