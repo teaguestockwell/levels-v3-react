@@ -67,7 +67,7 @@ export const DesktopNav = () => {
             ))}
           </Menu>
         </Sider>
-        <div style={{paddingLeft: collapsed ? '80px' : '150px'}}>
+        <div style={{paddingLeft: collapsed ? '80px' : '150px', paddingTop: Const.HEIGHT.APP_BAR}}>
           {persistentPages[pageName]}
         </div>
       </Layout>

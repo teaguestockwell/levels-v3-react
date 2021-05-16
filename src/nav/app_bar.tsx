@@ -27,7 +27,7 @@ export const AppBar = ({
           position: 'fixed',
           left: '0px' ,
           top: '0px',
-          right: '0px' 
+          right: '0px',
         }}
       >
         <Row justify="center" style={{paddingTop: '8px'}}>
