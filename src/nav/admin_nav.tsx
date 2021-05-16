@@ -30,7 +30,15 @@ export const AdminNav = () => {
   }
 
   return air ? (
-    <Affix offsetTop={Const.HEIGHT.APP_BAR_NUM}>
+    <div
+        style={{
+          zIndex: 1,
+          position: 'sticky',
+          left: '0px' ,
+          top: Const.HEIGHT.APP_BAR,
+          right: '0px',
+        }}
+      >
       <Menu
         mode="horizontal"
         onClick={onClick}
@@ -63,6 +71,6 @@ export const AdminNav = () => {
           ))}
         </SubMenu>
       </Menu>
-    </Affix>
+    </div>
   ) : null
 }

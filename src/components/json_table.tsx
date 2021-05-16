@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import {Col, Empty, Result, Row, Skeleton, Table} from 'antd'
+import {Col, Empty, Popconfirm, Result, Row, Skeleton, Table} from 'antd'
 import {useMemo} from 'react'
 import {capitalizeFirst} from '../utils/util'
 import {DeleteOutlined, EditOutlined} from '@ant-design/icons'
@@ -65,10 +65,11 @@ export const JsonTable = () => {
         render: (_: any, row: any) => (
           <Row>
             <Col span={8}>
+            <Popconfirm placement="left" title={'Are you sure?'} onConfirm={() => adminActions().deleteRow(row)} okText="Yes" cancelText="No">
               <DeleteOutlined
                 style={{fontSize: '24px'}}
-                onClick={() => adminActions().deleteRow(row)}
               />
+            </Popconfirm>
             </Col>
             <Col span={8} offset={8}>
               <EditOutlined

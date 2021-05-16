@@ -30,7 +30,7 @@ export const AdminAirSelect = () => {
   return useMemo(() => {
     // while !res from server
     if (!data) {
-      return <Spin />
+      return <Spin style={{paddingRight: '12px', paddingTop: '6px'}}/>
     }
 
     // while !res contains error
