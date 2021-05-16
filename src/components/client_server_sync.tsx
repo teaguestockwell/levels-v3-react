@@ -1,73 +1,74 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {Alert, Button} from 'antd'
-import {v4} from 'uuid'
+import {Button, Modal} from 'antd'
 import {SyncOutlined} from '@ant-design/icons'
 import {useClientServerSync} from '../hooks/use_client_server_sync'
-import {useMemo} from 'react'
-import {formatDistanceToNowStrict} from 'date-fns'
-import TextLoop from 'react-text-loop'
+import {useMemo, useState} from 'react'
 import {queryClient} from '../utils/const'
 import { useTick } from '../hooks/use_tick'
+import { formatDistanceToNowStrict } from 'date-fns'
+import { v4 } from 'uuid'
 
 export const ClientServerSync = () => {
+  const [isOpen, setIsOpen] = useState(false)
   const sync = useClientServerSync()
-  const tick = useTick(9000)
-
+  const tick = useTick(1000)
+  
+  const onSync = () => {
+    if(sync.isClientCacheEqualToSwRes){return}
+    queryClient.setQueryData('userAirs', () => sync.swRes)
+  }
+  
+  const getSyncStateColor = () => {
+    if (sync.isClientSyncedWithServer) {
+      return '#52C419'
+    } // online synced
+    if (sync.isClientCacheEqualToSwRes) {
+      return '#1890FF'
+    } // offline
+    if (!sync.isClientStale) {
+      return '#F9AD14'
+    } // online && !isClientSyncedWithServer || lastSync > 48hrs ago
+    return '#FF4D50'
+  }
+  
+  const syncColor = getSyncStateColor()
+  
+  
+  const modalButton = useMemo(() => {
+    return <Button
+    style={{marginRight: '12px', backgroundColor: syncColor, borderColor: syncColor}}
+    type="primary"
+    shape="circle"
+    icon={<SyncOutlined />}
+    onClick={() => setIsOpen(true)}
+    />
+  },[syncColor])
+  
+  
   return useMemo(() => {
-    // factor in that the text loop will display 6 secs late
-    const lastSyncedFormatted = formatDistanceToNowStrict(
-      new Date((sync.lastSyncEpoch as number) - 6000)
-    )
-
-    const getAlertType = () => {
-      if (sync.isClientSyncedWithServer) {
-        return 'success'
-      } // online synced
-      if (!sync.isClientCacheEqualToSwRes) {
-        return 'warning'
-      } // offline
-      if (!sync.isClientStale) {
-        return 'info'
-      } // online && !isClientSyncedWithServer || lastSync > 48hrs ago
-      return 'error'
+    const lastSyncedFromNow = formatDistanceToNowStrict(new Date(sync.lastSyncEpoch as number))
+    return <>
+    {
+      isOpen ? 
+        <Modal
+          visible={true}
+          footer={null}
+          onCancel={() => setIsOpen(false)}
+          closable={false}
+          centered
+        >
+          <div key={v4()}>
+            <p>{`${sync.isClientOnline ? 'Online' : 'Offline'}, last synced ${lastSyncedFromNow} ago`}</p>
+            {
+              sync.isClientCacheEqualToSwRes ? null : <Button onClick={onSync}>Sync Now</Button>
+            }
+          </div>
+        </Modal>
+        : null
     }
-
-    const loopLength = 3000
-
-    return (
-      <Alert
-        key={v4()}
-        style={{
-          backgroundColor: '#fff',
-          border: '1px solid #d9d9d9',
-          borderRadius: '2px',
-          height: '32px',
-          width: '100%',
-        }}
-        showIcon
-        banner
-        type={getAlertType()}
-        message={
-          <TextLoop mask interval={[loopLength, loopLength, loopLength]}>
-            {sync.isClientOnline ? 'Online' : 'Offline'}
-            {'last synced'}
-            {`${lastSyncedFormatted} ago`}
-          </TextLoop>
-        }
-        action={
-          sync.isClientCacheEqualToSwRes ? null : (
-            <Button
-              size="small"
-              type="primary"
-              shape="circle"
-              icon={<SyncOutlined />}
-              onClick={() =>
-                queryClient.setQueryData('userAirs', () => sync.swRes)
-              }
-            />
-          )
-        }
-      />
-    )
-  }, [tick])
+    {
+      modalButton
+    }
+  </>
+  },[tick,isOpen])
 }

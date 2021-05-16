@@ -1,37 +1,53 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import {Alert} from 'antd'
-import {useEffect, useMemo, useState} from 'react'
+import {Button, Modal} from 'antd'
+import {useMemo, useState} from 'react'
 import {v4} from 'uuid'
 import {adminStore} from '../hooks/admin_store'
 import {usePolling} from '../hooks/query'
 import {useTick} from '../hooks/use_tick'
+import {SyncOutlined} from '@ant-design/icons'
 
 // this component dose not sync anything, it is used only for display
 export const AdminServerSync = () => {
   const ep = adminStore((s) => s.ep)
   const {data, dataUpdatedAt} = usePolling(ep)
-  const now = useTick(500)
+  const tick = useTick(500)
+  const [isOpen, setIsOpen] = useState(false)
 
-  const getDif = () => {
-    return ((Date.now() - dataUpdatedAt) / 1000).toFixed(1)
-  }
+  const syncColor = data ? '#52C419' : '#1890FF'
+  const isData = data ? true : false
+
+  const modalButton = useMemo(() => {
+    return <Button
+    style={{marginRight: '12px', backgroundColor: syncColor, borderColor: syncColor}}
+    type="primary"
+    shape="circle"
+    icon={<SyncOutlined />}
+    onClick={() => setIsOpen(true)}
+    />
+  },[syncColor])
+
 
   return useMemo(() => {
-    return (
-      <Alert
-        banner
-        showIcon
-        key={v4()}
-        type={data ? 'success' : 'info'}
-        message={data ? `synced ${getDif()}s ago` : 'Offline'}
-        style={{
-          backgroundColor: '#fff',
-          border: '1px solid #d9d9d9',
-          borderRadius: '2px',
-          height: '32px',
-          width: '100%',
-        }}
-      />
-    )
-  }, [now])
+    const diff = ((Date.now() - dataUpdatedAt) / 1000).toFixed(1)
+    return <>
+    {
+      isOpen ? 
+        <Modal
+          visible={true}
+          footer={null}
+          onCancel={() => setIsOpen(false)}
+          closable={false}
+          centered
+        >
+          <div key={v4()}>
+            <p>{`${isData ? 'Online' : 'Offline'}, last synced ${diff} ago`}</p>
+          </div>
+        </Modal>
+        : null
+    }
+    {
+      modalButton
+    }
+  </>
+  },[tick,isOpen])
 }
