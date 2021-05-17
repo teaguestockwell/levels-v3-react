@@ -69,14 +69,12 @@ const userAppBar = (
 export const getAppBar = (pageName: string) =>
   pageName !== 'Admin' ? userAppBar : adminAppBar
 
+
 export const DynamicMainNav = () => {
   const {isWidthGT} = useIsWidthGT()
 
-  // width > 1200: side nav with drawer init open
-  if (!isWidthGT) {
-    return mobileNav
-  }
 
-  // bottom nav bar
-  return desktopNav
+  return <div >
+    {isWidthGT ? desktopNav : mobileNav}
+  </div>
 }
