@@ -33,7 +33,6 @@ export interface CargoStoreState extends State {
 export const CargoStore = create<CargoStoreState>((set) => ({
   // read
   pageName: '%MAC',
-  cargoValidMap: new Map(),
   cargoMap: new Map(),
   config: Const.NO_CONFIG,
   configUuids: [],
@@ -101,8 +100,6 @@ export const useCargos = () =>
   )
 
 export const useValidation = () => CargoStore((s) => isCargoValid(s))
-
-export const getCargoValidMap = () => CargoStore.getState().cargoValidMap
 export const getCargoMap = () => CargoStore.getState().cargoMap
 export const getCargoAtUuid = (uuid: string) =>
   CargoStore.getState().cargoMap.get(uuid) as CargoString
@@ -114,11 +111,8 @@ export const getActionsCS = () => {
   const state = CargoStore.getState()
   return {
     putPageName: state.putPageName,
-    putBasicWeight: state.putBasicWeight,
-    putBasicMom: state.putBasicMom,
     putEditUuid: state.putEditUuid,
     putConfig: state.putConfig,
-    putConfigUuids: state.putConfigUuids,
     putCargos: state.putCargos,
     putChartC: state.putChartC,
     deleteCargos: state.deleteCargos,
