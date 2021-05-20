@@ -19,12 +19,17 @@
     "test:unit": "react-scripts test --coverage --watchAll=false",
     "lint": "eslint . --ext js,jsx,ts,tsx",
     "coverage": "npm test -- --coverage",
-    "pretty": "npx prettier --write ."
+    "pretty": "npx prettier --write .",
+    "test:e2e-ci": "cypress ",
+    "compose": "docker-compose -p fl-e2e up --build --force-recreate --no-deps",
+    "test:e2e": "npx cypress run --env CYPRESS_BASE_URL=http://localhost:8080",
+    "open:e2e": "npx cypress open --env CYPRESS_BASE_URL=http://localhost:8080"
   },
   "dependencies": {
     "@ant-design/charts": "^1.1.4",
     "antd": "^4.15.5",
     "axios": "^0.21.1",
+    "cypress": "^7.3.0",
     "date-fns": "^2.21.3",
     "lodash": "^4.17.21",
     "query-string": "^7.0.0",

@@ -1,0 +1,36 @@
+version: '3.3'
+
+services:
+
+  PG_DATABASE:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: PG_USER
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: PG_DATABASE
+
+  fl-api:
+    build:
+      context: ../api
+      dockerfile: ../api/Dockerfile
+    environment: 
+      PG_USER: PG_USER
+      APP_DB_ADMIN_PASSWORD: password
+      PHPORT: 5432
+      PGHOST: PG_DATABASE
+      IS_LOCAL: 'true' # runtime var => node to use cors: '*'
+
+  fl-ui:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args: 
+        IS_LOCAL: 'true' # build time arg => NODE_ENV=development react-scripts build => use localhost as api url
+    
+  proxy:
+    image: nginx
+    ports:
+      - 8080:80
+    volumes:
+      - ./proxy.conf:/etc/nginx/nginx.conf
