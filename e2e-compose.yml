@@ -3,7 +3,7 @@ version: '3.3'
 services:
 
   PG_DATABASE:
-    image: postgres
+    image: 'postgres'
     restart: always
     environment:
       POSTGRES_USER: PG_USER
@@ -20,6 +20,8 @@ services:
       PHPORT: 5432
       PGHOST: PG_DATABASE
       IS_LOCAL: 'true' # runtime var => node to use cors: '*'
+    depends_on:
+      - "PG_DATABASE"
 
   fl-ui:
     build:
@@ -27,10 +29,25 @@ services:
       dockerfile: ./Dockerfile
       args: 
         IS_LOCAL: 'true' # build time arg => NODE_ENV=development react-scripts build => use localhost as api url
-    
+    depends_on:
+      - "fl-api"
+
   proxy:
-    image: nginx
+    image: 'nginx'
     ports:
       - 8080:80
     volumes:
       - ./proxy.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - "fl-ui"
+
+  cypress:
+    image: 'cypress/included:7.3.0'
+    command: npx cypress run
+    environment: 
+      CYPRESS_BASE_URL: http://fl-ui:8080
+    working_dir: /e2e
+    volumes:
+      - ./:/e2e
+    depends_on:
+      - "proxy" # this may fail if cypress start to quickly, just restart the container once api is ready

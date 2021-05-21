@@ -20,16 +20,14 @@
     "lint": "eslint . --ext js,jsx,ts,tsx",
     "coverage": "npm test -- --coverage",
     "pretty": "npx prettier --write .",
-    "test:e2e-ci": "cypress ",
-    "compose": "docker-compose -p fl-e2e up --build --force-recreate --no-deps",
-    "test:e2e": "npx cypress run --env CYPRESS_BASE_URL=http://localhost:8080",
-    "open:e2e": "npx cypress open --env CYPRESS_BASE_URL=http://localhost:8080"
+    "build:e2e": "docker-compose -f e2e-compose.yml build --parallel",
+    "start:e2e": "docker-compose -f e2e-compose.yml -p fl-e2e up",
+    "e2e:local": "npx cypress run --env CYPRESS_BASE_URL=http://localhost:8080"
   },
   "dependencies": {
     "@ant-design/charts": "^1.1.4",
     "antd": "^4.15.5",
     "axios": "^0.21.1",
-    "cypress": "^7.3.0",
     "date-fns": "^2.21.3",
     "lodash": "^4.17.21",
     "query-string": "^7.0.0",
@@ -55,6 +53,8 @@
     "zustand": "^3.5.1"
   },
   "devDependencies": {
+    "cypress": "^7.3.0",
+    "@cypress/code-coverage": "^3.9.5",
     "@testing-library/dom": "^7.31.0",
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.7",
@@ -71,11 +71,14 @@
     "@types/yup": "^0.29.11",
     "eslint": "^7.26.0",
     "eslint-import-resolver-babel-module": "^5.3.1",
+    "eslint-plugin-cypress": "^2.11.3",
     "eslint-plugin-import": "^2.23.2",
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "istanbul-lib-coverage": "^3.0.0",
     "jest-matchmedia-mock": "^1.1.0",
-    "msw": "^0.28.2"
+    "msw": "^0.28.2",
+    "nyc": "^15.1.0"
   },
   "browserslist": {
     "production": [
