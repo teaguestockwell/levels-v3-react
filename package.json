@@ -20,7 +20,8 @@
     "lint": "eslint . --ext js,jsx,ts,tsx",
     "coverage": "npm test -- --coverage",
     "pretty": "npx prettier --write .",
-    "compose": "docker-compose -f e2e-compose.yml -p fl-e2e up --build --force-recreate --no-cache",
+    "docker:build": "docker-compose -f e2e-compose.yml -p fl-e2e build --no-cache --parallel",
+    "docker:up": "docker-compose -f e2e-compose.yml -p fl-e2e up --force-recreate",
     "e2e": "npm install &&  npx cypress run -b chrome --no-exit"
   },
   "dependencies": {
