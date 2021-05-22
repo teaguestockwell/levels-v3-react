@@ -10,6 +10,7 @@ const {Option} = Select
 
 export const UserAirSelect = () => {
   const {data} = useUserAirs()
+  const airName = getAir().name
 
   const onAirChange = (newName: string) => {
     const newAir = data.data.find((a: AircraftDeep) => a.name === newName)
@@ -19,14 +20,15 @@ export const UserAirSelect = () => {
 
   return (
     <Select
-      defaultValue={getAir().name}
+      data-testid={`user air select`}
+      defaultValue={airName}
       onChange={onAirChange}
-      style={{ textAlign: 'center' ,marginRight: '12px'}}
+      style={{ textAlign: 'center' ,marginRight: '12px', width: 150}}
       dropdownStyle={{textAlign: 'center'}}
       showSearch
     >
       {data.data.map((a: AircraftDeep) => (
-        <Option key={a.aircraftId} value={a.name}>
+        <Option key={a.name} value={a.name}>
           {a.name}
         </Option>
       ))}

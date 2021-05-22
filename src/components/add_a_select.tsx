@@ -48,7 +48,7 @@ export const AddASelect = () => {
 
   return (
     <Dropdown overlay={menu} trigger={['click']}>
-      <Button>Add AddA</Button>
+      <Button data-testid='user add adda'>Add AddA</Button>
     </Dropdown>
   )
 }

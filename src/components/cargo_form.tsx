@@ -62,7 +62,7 @@ export const CargoForm = ({uuid}: {uuid: string}) => {
             </Form.Item>
           ))}
       </Form>
-      <Button danger onClick={onDelete} block>
+      <Button danger onClick={onDelete} block data-testid='user cargo delete'>
         Delete
       </Button>
     </>

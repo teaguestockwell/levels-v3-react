@@ -20,9 +20,8 @@
     "lint": "eslint . --ext js,jsx,ts,tsx",
     "coverage": "npm test -- --coverage",
     "pretty": "npx prettier --write .",
-    "build:e2e": "docker-compose -f e2e-compose.yml build --parallel",
-    "start:e2e": "docker-compose -f e2e-compose.yml -p fl-e2e up",
-    "e2e": "npx cypress open -e CYPRESS_BASE_URL=http://localhost:8080 -p 8081 -b chrome"
+    "e2e:docker": "docker-compose -f e2e-compose.yml -p fl-e2e up --build --force-recreate --no-cache",
+    "e2e": "npx cypress run -e CYPRESS_BASE_URL=http://localhost:8080 -p 8081 -b chrome --no-exit"
   },
   "dependencies": {
     "@ant-design/charts": "^1.1.4",

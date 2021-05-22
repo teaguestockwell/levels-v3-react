@@ -35,7 +35,7 @@ services:
   proxy:
     image: 'nginx'
     ports:
-      - 8080:80 # map host:8080 to ngix:80
+      - 8080:80 # map host:8080 to proxy:80
     expose:
       - 80 # expose nginx:80 to other container at nginx:80
     volumes:

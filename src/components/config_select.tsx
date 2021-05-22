@@ -43,6 +43,7 @@ export const ConfigSelect = () => {
 
   return (
     <Select
+      data-testid={`user config select`}
       onChange={onChange}
       defaultValue={CargoStore.getState().config.name}
       style={{width: Const.SELECT_WIDTH, textAlign: 'center'}}

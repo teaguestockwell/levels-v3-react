@@ -97,6 +97,7 @@ export const TankRow = ({
 
   const select = (
     <Select
+      data-testid={`${tank.name} select`}
       onChange={onChange}
       defaultValue={currentWeight}
       style={{width: 100, textAlign: 'center'}}

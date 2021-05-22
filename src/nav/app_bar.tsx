@@ -55,7 +55,7 @@ export const AppBar = ({
               Atlas
             </Typography.Text>
           </Col>
-          <Col span={16} style={{textAlign: 'end'}}>
+          <Col span={16} style={{textAlign: 'end',}}>
             {sync}
             {select}
           </Col>
