@@ -42,12 +42,3 @@ services:
       - ./proxy.conf:/etc/nginx/nginx.conf
     depends_on:
       - "fl-ui"
-
-  cypress:
-    image: 'cypress/included:7.3.0'
-    command: npx cypress run -b chrome -p 8081 -e CYPRESS_BASE_URL=http://proxy:80
-    working_dir: /e2e
-    volumes:
-      - ./:/e2e
-    depends_on:
-      - "proxy" # this may fail if cypress start to quickly, just restart the container once api is ready
