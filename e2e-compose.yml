@@ -35,7 +35,9 @@ services:
   proxy:
     image: 'nginx'
     ports:
-      - 8080:80
+      - 8080:80 # map host:8080 to ngix:80
+    expose:
+      - 80 # expose nginx:80 to other container at nginx:80
     volumes:
       - ./proxy.conf:/etc/nginx/nginx.conf
     depends_on:
@@ -43,9 +45,7 @@ services:
 
   cypress:
     image: 'cypress/included:7.3.0'
-    command: npx cypress run
-    environment: 
-      CYPRESS_BASE_URL: http://fl-ui:8080
+    command: npx cypress run -b chrome -p 8081 -e CYPRESS_BASE_URL=http://proxy:80
     working_dir: /e2e
     volumes:
       - ./:/e2e

@@ -22,7 +22,7 @@
     "pretty": "npx prettier --write .",
     "build:e2e": "docker-compose -f e2e-compose.yml build --parallel",
     "start:e2e": "docker-compose -f e2e-compose.yml -p fl-e2e up",
-    "e2e:local": "npx cypress run --env CYPRESS_BASE_URL=http://localhost:8080"
+    "e2e": "npx cypress open -e CYPRESS_BASE_URL=http://localhost:8080 -p 8081 -b chrome"
   },
   "dependencies": {
     "@ant-design/charts": "^1.1.4",

@@ -2,12 +2,10 @@
 
 const host = Cypress.env('CYPRESS_BASE_URL');
 
-describe('Sample test', () => {
+describe('mac page', () => {
     // eslint-disable-next-line cypress/no-async-tests
-    it('Visit home', async () => {
-        // await setTimeout(() =>{
-            cy.visit(host);
-            expect(true).to.equal(true)
-        // },5000)
+    it('visits home', () => {
+        cy.visit(host);
+        //expect(true).to.equal(true);
     })
 })
