@@ -70,7 +70,7 @@ export const AdminAirSelect = () => {
     // while client air selection and server state are synced
     return (
       <Select
-        data-testid='admin-air-select'
+        data-testid='admin air select'
         key={v4()}
         defaultValue={air?.name}
         onChange={onAirChange}

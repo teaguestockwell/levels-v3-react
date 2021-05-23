@@ -38,16 +38,16 @@ export const pageNames = ['%MAC', 'Glossary', 'Help', 'Admin']
 /** lookup map for at 'active' || 'inactive' navigation icons styles */
 export const navIcons: {[key: string]: any} = {
   inactive: {
-    '%MAC': <LayoutFilled style={darkIconStyle} />,
-    Glossary: <ContainerFilled style={darkIconStyle} />,
-    Admin: <ToolFilled style={darkIconStyle} />,
-    Help: <QuestionCircleFilled style={darkIconStyle} />,
+    '%MAC': <LayoutFilled style={darkIconStyle} data-testid='%MAC nav icon' />,
+    Glossary: <ContainerFilled style={darkIconStyle} data-testid='glossary nav icon'/>,
+    Admin: <ToolFilled style={darkIconStyle} data-testid='admin nav icon'/>,
+    Help: <QuestionCircleFilled style={darkIconStyle} data-testid='help nav icon'/>,
   },
   active: {
-    '%MAC': <LayoutFilled style={lightIconStyle} />,
-    Glossary: <ContainerFilled style={lightIconStyle} />,
-    Admin: <ToolFilled style={lightIconStyle} />,
-    Help: <QuestionCircleFilled style={lightIconStyle} />,
+    '%MAC': <LayoutFilled style={lightIconStyle} data-testid='%MAC nav icon'/>,
+    Glossary: <ContainerFilled style={lightIconStyle} data-testid='glossary nav icon'/>,
+    Admin: <ToolFilled style={lightIconStyle} data-testid='admin nav icon'/>,
+    Help: <QuestionCircleFilled style={lightIconStyle} data-testid='help nav icon'/>,
   },
 }
 

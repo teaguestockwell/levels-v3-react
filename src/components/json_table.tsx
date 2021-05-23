@@ -67,12 +67,14 @@ export const JsonTable = () => {
             <Col span={8}>
             <Popconfirm placement="left" title={'Are you sure?'} onConfirm={() => adminActions().deleteRow(row)} okText="Yes" cancelText="No">
               <DeleteOutlined
+                data-testid={row.name + ' admin delete'}
                 style={{fontSize: '24px'}}
               />
             </Popconfirm>
             </Col>
             <Col span={8} offset={8}>
               <EditOutlined
+                data-testid={row.name + ' admin edit'}
                 style={{fontSize: '24px'}}
                 onClick={() => adminActions().openEditModal(row)}
               />

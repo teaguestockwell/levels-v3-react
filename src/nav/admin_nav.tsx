@@ -46,7 +46,7 @@ export const AdminNav = () => {
         style={{boxShadow: Const.BOX_SHADOW}}
       >
         <Menu.Item key={`aircraft`}>{'My Aircraft'}</Menu.Item>
-        <Menu.Item key={`cargo?aircraftId=${air.aircraftId}`}>
+        <Menu.Item key={`cargo?aircraftId=${air.aircraftId}`} data-testid='admin cargos'>
           {'Cargos'}
         </Menu.Item>
         <Menu.Item key={`glossary?aircraftId=${air.aircraftId}`}>

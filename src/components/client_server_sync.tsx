@@ -36,6 +36,7 @@ export const ClientServerSync = () => {
   
   const modalButton = useMemo(() => {
     return <Button
+    data-testid={syncColor}
     style={{marginRight: '12px', backgroundColor: syncColor, borderColor: syncColor}}
     type="primary"
     shape="circle"
@@ -60,7 +61,7 @@ export const ClientServerSync = () => {
           <div key={v4()}>
             <p>{`${sync.isClientOnline ? 'Online' : 'Offline'}, last synced ${lastSyncedFromNow} ago`}</p>
             {
-              sync.isClientCacheEqualToSwRes ? null : <Button onClick={onSync}>Sync Now</Button>
+              sync.isClientCacheEqualToSwRes ? null : <Button data-testid='client sync but' onClick={onSync}>Sync Now</Button>
             }
           </div>
         </Modal>
