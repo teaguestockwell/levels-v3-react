@@ -14,7 +14,7 @@ export const CargoEditButton = ({uuid}: {uuid: string}) => {
   )
 
   return (
-    <Button icon={icon} onClick={() => cs.putEditUuid(uuid)}>
+    <Button icon={icon} onClick={() => cs.setEditUuid(uuid)}>
       {`${cargo.qty} EA ${cargo.name}`}
     </Button>
   )

@@ -1,4 +1,4 @@
-import {getAir, getSchema} from '../hooks/user_store'
+import {getUserAir, getUserSchema} from '../hooks/user_store'
 import {userStore, getUserActions} from '../hooks/user_store'
 import {Category, Config} from '../types/aircraftDeep'
 import {getCargoStringsFromConfig} from '../utils/util'
@@ -9,8 +9,8 @@ const {Option} = Select
 
 export const ConfigSelect = () => {
   const cs = getUserActions()
-  const air = getAir()
-  const objSchema = getSchema().fullObjSchema
+  const air = getUserAir()
+  const objSchema = getUserSchema().fullObjSchema
   const configEnums = [Category.Emergency, Category.Extra, Category.Steward]
 
   const onChange = async (newName: string) => {
@@ -38,7 +38,7 @@ export const ConfigSelect = () => {
     cs.putCargos(newCargos)
 
     // update selected
-    cs.putConfig(newConfig)
+    cs.setConfig(newConfig)
   }
 
   return (

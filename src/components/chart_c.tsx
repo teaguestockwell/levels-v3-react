@@ -1,5 +1,5 @@
 import {Form, Input, Typography} from 'antd'
-import {getAir} from '../hooks/user_store'
+import {getUserAir} from '../hooks/user_store'
 import {useEffect, useRef} from 'react'
 import {
   getCargoStringFromChartC,
@@ -15,8 +15,8 @@ const {Text} = Typography
 
 export const ChartC = () => {
   const [form] = Form.useForm()
-  const schema = useRef(getChartCSchema(getAir())).current
-  const air = useRef(getAir()).current
+  const schema = useRef(getChartCSchema(getUserAir())).current
+  const air = useRef(getUserAir()).current
   const initCargo = useRef(
     Array.from(userStore.getState().cargoMap.values()).filter(
       (c) => c.category === Category.BasicAircraft
@@ -41,7 +41,7 @@ export const ChartC = () => {
       {...newChartC, isValid},
       initCargo.uuid
     )
-    cs.putChartC(newChartC)
+    cs.setChartC(newChartC)
     cs.putCargos([cargo])
   }
 

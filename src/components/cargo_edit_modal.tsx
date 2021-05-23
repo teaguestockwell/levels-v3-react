@@ -11,7 +11,7 @@ export const CargoEditModal = () => {
     <Modal
       visible={uuid ? true : false}
       footer={null}
-      onCancel={() => cs.putEditUuid(undefined)}
+      onCancel={() => cs.setEditUuid(undefined)}
       closable={false}
       centered
     >

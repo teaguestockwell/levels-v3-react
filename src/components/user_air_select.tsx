@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {getUserActions, getAir, initAirCargos} from '../hooks/user_store'
+import {getUserActions, getUserAir} from '../hooks/user_store'
 import {useUserAirs} from '../hooks/query'
 import {AircraftDeep} from '../types/aircraftDeep'
 import {Select} from 'antd'
@@ -10,12 +10,11 @@ const {Option} = Select
 
 export const UserAirSelect = () => {
   const {data} = useUserAirs()
-  const airName = getAir().name
+  const airName = getUserAir().name
 
   const onAirChange = (newName: string) => {
     const newAir = data.data.find((a: AircraftDeep) => a.name === newName)
-    initAirCargos(newAir)
-    cs.putSelectedAir(newAir)
+    cs.setAir(newAir)
   }
 
   return (

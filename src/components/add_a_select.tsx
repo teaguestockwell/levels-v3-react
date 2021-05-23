@@ -1,14 +1,14 @@
 import {Button, Dropdown, Menu} from 'antd'
 import {getUserActions} from '../hooks/user_store'
 import {Cargo, Category} from '../types/aircraftDeep'
-import {getAir, getSchema} from '../hooks/user_store'
+import {getUserAir, getUserSchema} from '../hooks/user_store'
 import {MenuInfo} from 'rc-menu/lib/interface'
 import {getCargoStringFromCargo} from '../utils/util'
 
 const cs = getUserActions()
 
 export const AddASelect = () => {
-  const air = getAir()
+  const air = getUserAir()
 
   const stewardCargo = air.cargos.filter((x) => x.category === Category.Steward)
   const emergencyCargo = air.cargos.filter(
@@ -16,7 +16,7 @@ export const AddASelect = () => {
   )
   const extraCargo = air.cargos.filter((x) => x.category === Category.Extra)
 
-  const schema = getSchema().fullObjSchema
+  const schema = getUserSchema().fullObjSchema
 
   const onAddAddACargoClick = (menuInfo: MenuInfo) => {
     const selectedId = Number(menuInfo.key)

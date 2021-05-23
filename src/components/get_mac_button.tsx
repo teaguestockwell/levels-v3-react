@@ -1,12 +1,12 @@
 import {Button} from 'antd'
-import {getAir} from '../hooks/user_store'
-import {userStore, useValidation} from '../hooks/user_store'
+import {getUserAir} from '../hooks/user_store'
+import {userStore, useCargosAreValid} from '../hooks/user_store'
 import {getPerMac} from '../utils/util'
 
 export const GetMacButton = () => {
-  const isCargoValid = useValidation()
+  const isCargoValid = useCargosAreValid()
   const onClick = () => {
-    const air = getAir()
+    const air = getUserAir()
     const cargos = Array.from(userStore.getState().cargoMap.values())
 
     const calculation = getPerMac(air, cargos)

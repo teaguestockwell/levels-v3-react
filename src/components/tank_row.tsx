@@ -3,7 +3,7 @@ import {Tank} from '../types/aircraftDeep'
 import {getUserActions, useCargo} from '../hooks/user_store'
 import {CargoString} from '../types/cargoString'
 import {getCargoStringFromTank} from '../utils/util'
-import {getAir} from '../hooks/user_store'
+import {getUserAir} from '../hooks/user_store'
 import {Row, Select} from 'antd'
 import {Liquid} from '@ant-design/charts'
 import {Typography} from 'antd'
@@ -79,7 +79,7 @@ export const TankRow = ({
       ...getCargoStringFromTank({
         idx: newIdx,
         tank,
-        momMultiplyer: getAir().momMultiplyer,
+        momMultiplyer: getUserAir().momMultiplyer,
       }),
       uuid: cargoString.uuid,
     }

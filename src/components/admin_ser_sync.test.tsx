@@ -12,7 +12,6 @@ describe('AdminServerSync', () => {
       expect(ct.queryAllByText('Loading Test').length).toBe(0)
     )
 
-    ct.debug()
     expect(ct.queryAllByTestId('admin-sync-button').length).toBe(1)
   })
 }) 

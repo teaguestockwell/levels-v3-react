@@ -1,5 +1,5 @@
 import { isEqual } from 'lodash'
-import {getAir, userStore} from '../hooks/user_store'
+import {getUserAir, userStore} from '../hooks/user_store'
 import {getPerMac} from '../utils/util'
 
 export const PerMac = () => {
@@ -9,7 +9,7 @@ export const PerMac = () => {
   )
 
   if (cargos.every((c) => c.isValid)) {
-    return <h1>{getPerMac(getAir(), cargos).percentMacPercent}</h1>
+    return <h1>{getPerMac(getUserAir(), cargos).percentMacPercent}</h1>
   }
 
   return <h1>Invalid</h1>

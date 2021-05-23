@@ -6,7 +6,6 @@ import {useUserAirs} from '../hooks/query'
 import {userStore} from '../hooks/user_store'
 import React from 'react'
 import {ClientServerSyncStore} from '../hooks/use_client_server_sync'
-import {getCargoSchema} from '../utils/util'
 
 const ss = ClientServerSyncStore.getState()
 
@@ -15,8 +14,8 @@ const IsLoaded = ({children}: {children: React.ReactNode}) => {
 
   if (data?.data && data?.data.length > 0) {
     //init state of selected aircraft
-    userStore.getState().setAir(data.data[0])
-    userStore.getState().setCargoSchema(getCargoSchema(data.data[0]))
+    userStore.getState().setAir(data.data[0], false)
+    //userStore.getState().clearCargoMap()
 
     // init state of server client sync
     ss.setLastSyncEpoch(data.serverEpoch)

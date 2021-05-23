@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {useEffect, useRef} from 'react'
 import {Form, Input, Button} from 'antd'
-import {getSchema} from '../hooks/user_store'
-import {getUserActions, getCargoAtUuid} from '../hooks/user_store'
+import {getUserSchema, userStore} from '../hooks/user_store'
+import {getUserActions, getUserCargo} from '../hooks/user_store'
 import {capitalizeFirst, rulesYupWrapper} from '../utils/util'
 import debounce from 'lodash/debounce'
+import { CargoString } from '../types/cargoString'
 
 const cs = getUserActions()
 
@@ -12,8 +13,8 @@ export const CargoForm = ({uuid}: {uuid: string}) => {
   const [form] = Form.useForm()
 
   // grab constant values from initial cargo => uuid, category, ok to use ref because form hook state overrides other vals
-  const cargo = useRef(getCargoAtUuid(uuid)).current
-  const schema = useRef(getSchema()).current as any
+  const cargo = useRef(getUserCargo(uuid)).current
+  const schema = useRef(getUserSchema()).current as any
 
   // set init values and errors.
   // init value and validation inside store is handled in the methods that expose this form
@@ -34,7 +35,7 @@ export const CargoForm = ({uuid}: {uuid: string}) => {
 
   const onDelete = () => {
     cs.deleteCargos([cargo.uuid])
-    cs.putEditUuid(undefined)
+    cs.setEditUuid(undefined)
   }
 
   const filterKeys: string[] = ['uuid', 'category', 'isValid']

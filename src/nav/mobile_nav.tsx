@@ -60,7 +60,7 @@ export const MobileNav = () => {
             <Col {...colProps} key={x}>
               <Button
                 type="text"
-                onClick={() => cs.putPageName(x)}
+                onClick={() => cs.setPageName(x)}
                 icon={navIcons[getNavItemStyle(x, pageName)][x]}
               />
             </Col>

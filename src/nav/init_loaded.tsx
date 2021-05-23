@@ -1,5 +1,5 @@
 import {useUserAirs} from '../hooks/query'
-import {userStore, getUserActions, initAirCargos} from '../hooks/user_store'
+import {userStore, getUserActions} from '../hooks/user_store'
 import {Result, Skeleton} from 'antd'
 import {DynamicMainNav} from './dynamic_main_nav'
 import {v4} from 'uuid'
@@ -18,8 +18,7 @@ export const InitLoaded = () => {
     const airIdx = newIdx === -1 ? 0 : newIdx
 
     //init state of selected aircraft
-    initAirCargos(data.data[airIdx])
-    as.putSelectedAir(data.data[airIdx])
+    as.setAir(data.data[airIdx])
 
     // init state of server client sync
     ss.setLastSyncEpoch(data.serverEpoch)

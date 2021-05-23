@@ -51,7 +51,7 @@ export const DesktopNav = () => {
             }}
             mode="inline"
             defaultSelectedKeys={[pageName]}
-            onClick={(x: any) => cs.putPageName(String(x.key))}
+            onClick={(x: any) => cs.setPageName(String(x.key))}
           >
             {pageNames.map((name) => (
               <Menu.Item

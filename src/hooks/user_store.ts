@@ -17,8 +17,6 @@ export interface UserStoreState extends State {
   cargoSchema: CargoSchema | undefined
   
   // update 1
-  setCargoSchema: (cargoSchema: CargoSchema) => void
-  setAir: (air: AircraftDeep) => void
   setPageName: (pageName: string) => void
   setChartC: (chartC: {weight: string; mom: string}) => void
   setConfig: (config: Config) => void
@@ -31,7 +29,10 @@ export interface UserStoreState extends State {
   deleteCargos: (cargoIds: string[]) => void
 
   // when a new air is selected, reset all state
-  resetCargoStore: () => void
+  setAir: (air:AircraftDeep, resetCargo?:boolean) => void
+
+  // testing only
+  clearCargoMap: () => void
 }
 
 export const userStore = create<UserStoreState>((set) => ({
@@ -46,17 +47,6 @@ export const userStore = create<UserStoreState>((set) => ({
   cargoSchema: undefined,
 
   // update 1
-  setCargoSchema: (cargoSchema) =>
-    set((state) => {
-      state.cargoSchema = cargoSchema
-    }),
-
-  setAir: (air) => {
-    set((state) => {
-      state.air = air
-    })
-  },
-
   setPageName: (pageName) =>
     set((s) => {
       s.pageName = pageName
@@ -73,101 +63,99 @@ export const userStore = create<UserStoreState>((set) => ({
     }),
 
   setConfig: (config) =>
-    set((state) => {
-      state.config = config
+    set((s) => {
+      s.config = config
     }),
 
   // create | update n
   putCargos: (cargos) =>
-    set((state) => {
-      cargos.forEach((c) => state.cargoMap.set(c.uuid, c))
+    set((s) => {
+      cargos.forEach((c) => s.cargoMap.set(c.uuid, c))
     }),
 
   // delete n
   deleteCargos: (cargoIds) =>
-    set((state) => {
-      cargoIds.forEach((id) => state.cargoMap.delete(id))
+    set((s) => {
+      cargoIds.forEach((id) => s.cargoMap.delete(id))
     }),
 
+  // testing only
+  clearCargoMap: () => set(s => {s.cargoMap = new Map<string,CargoString>()}),
+
   // when a new air is selected, reset all state
-  resetCargoStore: () =>
-    set((state) => {
-      state.cargoMap.clear()
-      state.config = Const.NO_CONFIG
-      state.chartC = {weight: '', mom: ''}
-    }),
+  setAir: (air:AircraftDeep, resetCargo = true) => {
+    const id = v4()
+    const chartC: [string,CargoString] = [
+      id,
+      {
+        name: 'Basic Aircraft',
+        weightEA: '0',
+        fs: '0',
+        qty: '1',
+        isValid: false,
+        uuid: id,
+        category: Category.BasicAircraft,
+      }
+    ]
+    const tanks = getCargoStringsFromAirTanks(air).map<[string, CargoString]>(cs => [cs.uuid,cs])
+
+    return set((s) => {
+      s.air = air
+      // during tests, we need to setup cargo map state to test
+      s.cargoMap = resetCargo ? new Map<string, CargoString>([chartC, ...tanks]) : s.cargoMap
+      s.config = Const.NO_CONFIG
+      s.chartC = {weight: '', mom: ''}
+      s.cargoSchema = getCargoSchema(air)
+    })
+  },
 }))
 
 export const getUserActions = () => {
-  const state = userStore.getState()
+  const s = userStore.getState()
   return {
-    putPageName: state.setPageName,
-    putEditUuid: state.setEditUuid,
-    putConfig: state.setConfig,
-    putCargos: state.putCargos,
-    putChartC: state.setChartC,
-    deleteCargos: state.deleteCargos,
-    resetCargoStore: state.resetCargoStore,
-    putCargoSchema: state.setCargoSchema,
-    putSelectedAir: state.setAir,
+    setPageName: s.setPageName,
+    setEditUuid: s.setEditUuid,
+    setConfig: s.setConfig,
+    setChartC: s.setChartC,
+    putCargos: s.putCargos,
+    deleteCargos: s.deleteCargos,
+    setAir: s.setAir,
   }
 }
 
 // hooks that subscribe components to derived state of the store
+// anytime an action is used to update state, 
+// if state1.prop !== state2.prop subscriptions using custom hooks will re render
+// because {foo: "bar"} !== {foo: "bar"} objects would be notified on every action
+// to prevent this we pass in a custom equality function as the second argument
+// isEqual({foo: "bar"},{foo: "bar"}) === true
+export const usePageName = () => userStore((s) => s.pageName)
 
-export const useCargoMapSize = () => userStore((state) => state.cargoMap.size)
+export const useCargoMapSize = () => userStore((s) => s.cargoMap.size)
 
-export const useConfigName = () => userStore((state) => state.config.name)
+export const useConfigName = () => userStore((s) => s.config.name)
+
+export const useCargosAreValid = () => {
+  return userStore((s) => Array.from(s.cargoMap.values()).every((c) => c.isValid))
+}
 
 export const useCargo = (uuid: string) => {
   return userStore(
     (s) => s.cargoMap.get(uuid),
-    (s1, s2) => isEqual(s1, s2) // custom equality because {} !== {}, but isEqual({},{})
+    (s1, s2) => isEqual(s1, s2) 
   ) as CargoString
 }
   
-
-export const useValidation = () => userStore((s) => Array.from(s.cargoMap.values()).every((c) => c.isValid))
-
-
-export const getCargoAtUuid = (uuid: string) =>
-  userStore.getState().cargoMap.get(uuid) as CargoString
-export const getConfig = () => userStore.getState().config
-
-export const usePageName = () => userStore((s) => s.pageName)
-export const getAir = () => userStore.getState().air as AircraftDeep
-export const getSchema = () => userStore.getState().cargoSchema as CargoSchema
-export const useAirId = () => userStore((x) => x.air?.aircraftId)
-
-export const initAirCargos = (air: AircraftDeep) => {
-  const cs = getUserActions()
-
-  cs.resetCargoStore()
-
-  // set cargo validation schema to schema from new aircraft
-  cs.putCargoSchema(getCargoSchema(air))
-
-  // init cargo state from the new aircraft into cargo store
-  cs.putCargos([
-    // chart c
-    {
-      name: 'Basic Aircraft',
-      weightEA: '0',
-      fs: '0',
-      qty: '1',
-      isValid: false,
-      uuid: v4(),
-      category: Category.BasicAircraft,
-    },
-    // n tanks
-    ...getCargoStringsFromAirTanks(air),
-  ])
-}
-
 export const useUserAir = () =>
   userStore(
     (s) => s.air,
     (s1, s2) => isEqual(s1, s2)
   )
 
+// helper functions to access state
 
+export const getUserCargo = (uuid: string) => userStore.getState().cargoMap.get(uuid) as CargoString
+
+export const getUserAir = () => userStore.getState().air as AircraftDeep
+
+export const getUserSchema = () => userStore.getState().cargoSchema as CargoSchema
