@@ -1,7 +1,7 @@
 import {fireEvent, waitFor} from '@testing-library/react'
 import {TankRow} from './tank_row'
 import {renderWrapped} from '../testUtils/render_wrapped'
-import {CargoStore} from '../hooks/cargo_store'
+import {userStore} from '../hooks/user_store'
 import {mockAircraftsDeep} from '../testUtils/mock_aircrafts_deep'
 import {Category} from '../types/aircraftDeep'
 import {CargoString} from '../types/cargoString'
@@ -19,7 +19,7 @@ const cargoString: CargoString = {
 }
 
 const setup = () => {
-  CargoStore.getState().putCargos([cargoString])
+  userStore.getState().putCargos([cargoString])
 }
 
 describe('TankRow', () => {
@@ -46,8 +46,8 @@ describe('TankRow', () => {
     )
     await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
 
-    CargoStore.getState().putCargos([cargoString])
-    expect(CargoStore.getState().cargoMap.get('0')).toStrictEqual(cargoString)
+    userStore.getState().putCargos([cargoString])
+    expect(userStore.getState().cargoMap.get('0')).toStrictEqual(cargoString)
 
     // when tank weight is changed
     fireEvent.mouseDown(getByText('250'))
@@ -56,7 +56,7 @@ describe('TankRow', () => {
 
     // cargoMap weight and fs will change for that tanks selected cargoString
     await waitFor(() => {
-      expect(CargoStore.getState().cargoMap.get('0')).toStrictEqual({
+      expect(userStore.getState().cargoMap.get('0')).toStrictEqual({
         ...cargoString,
         weightEA: '500',
         fs: '1120',

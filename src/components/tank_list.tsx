@@ -1,12 +1,12 @@
 import {TankRow} from './tank_row'
-import {getCargoMap} from '../hooks/cargo_store'
+import {userStore} from '../hooks/user_store'
 import {Category} from '../types/aircraftDeep'
-import {getAir} from '../hooks/air_store'
+import {getAir} from '../hooks/user_store'
 import {Col, Row} from 'antd'
 
 export const TankList = () => {
   const air = getAir()
-  const cargoStrings = Array.from(getCargoMap().values()).filter(
+  const cargoStrings = Array.from(userStore.getState().cargoMap.values()).filter(
     (c) => c.category === Category.Tank
   )
 

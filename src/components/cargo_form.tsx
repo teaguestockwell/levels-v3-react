@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {useEffect, useRef} from 'react'
 import {Form, Input, Button} from 'antd'
-import {getSchema} from '../hooks/air_store'
-import {getActionsCS, getCargoAtUuid} from '../hooks/cargo_store'
+import {getSchema} from '../hooks/user_store'
+import {getUserActions, getCargoAtUuid} from '../hooks/user_store'
 import {capitalizeFirst, rulesYupWrapper} from '../utils/util'
 import debounce from 'lodash/debounce'
 
-const cs = getActionsCS()
+const cs = getUserActions()
 
 export const CargoForm = ({uuid}: {uuid: string}) => {
   const [form] = Form.useForm()

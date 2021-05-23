@@ -2,7 +2,7 @@
 import {MobileNav} from './mobile_nav'
 import {renderWrapped, waitFor} from '../testUtils/render_wrapped'
 import MatchMediaMock from 'jest-matchmedia-mock'
-import {CargoStore} from '../hooks/cargo_store'
+import {userStore} from '../hooks/user_store'
 
 describe('MobileNav', () => {
   let matchMedia

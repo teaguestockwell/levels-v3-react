@@ -1,4 +1,4 @@
-import {CargoStore} from '../hooks/cargo_store'
+import {userStore} from '../hooks/user_store'
 import {renderWrapped, waitFor, fireEvent} from '../testUtils/render_wrapped'
 import {ChartC} from './chart_c'
 import MatchMediaMock from 'jest-matchmedia-mock'
@@ -8,7 +8,7 @@ import {Category} from '../types/aircraftDeep'
 let matchMedia
 
 const putChartC = () =>
-  CargoStore.getState().putCargos([
+  userStore.getState().putCargos([
     {
       name: 'Basic Aircraft',
       weightEA: '0',
@@ -57,7 +57,7 @@ describe('ChartC', () => {
     await waitFor(() => {
       expect({
         // get cargo string value where name === Basic Aircraft
-        ...Array.from(CargoStore.getState().cargoMap.entries()).filter(
+        ...Array.from(userStore.getState().cargoMap.entries()).filter(
           (x) => x[1].name === 'Basic Aircraft'
         )[0][1],
         uuid: '0',

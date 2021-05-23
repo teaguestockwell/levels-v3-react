@@ -4,7 +4,7 @@ import {usePolling} from '../hooks/query'
 import {AircraftDeep} from '../types/aircraftDeep'
 import {getAdminStoreActions, useAir} from '../hooks/admin_store'
 import isEqual from 'lodash/isEqual'
-import {initAirCargos} from '../hooks/air_store'
+import {initAirCargos} from '../hooks/user_store'
 import {v4} from 'uuid'
 
 const as = getAdminStoreActions()

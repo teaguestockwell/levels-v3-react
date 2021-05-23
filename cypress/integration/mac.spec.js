@@ -145,7 +145,7 @@ describe('mac page', () => {
         // close modal
         cy.get('.ant-modal-wrap').click(0,0)
 
-        cy.contains('39.95%')
+      cy.contains('39.95%')
 
         // add from addenda a
         cy.get('[data-testid="user add adda"]').click()

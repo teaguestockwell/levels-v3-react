@@ -1,6 +1,6 @@
 import {render, fireEvent} from '@testing-library/react'
 import {AddCustomCargo} from './add_custom_cargo'
-import {CargoStore} from '../hooks/cargo_store'
+import {userStore} from '../hooks/user_store'
 
 describe('AddCustomCargo', () => {
   it('will render', () => {
@@ -9,9 +9,9 @@ describe('AddCustomCargo', () => {
   })
 
   it('will add cargo', () => {
-    expect(CargoStore.getState().cargoMap.size).toBe(0)
+    expect(userStore.getState().cargoMap.size).toBe(0)
     const {getByRole} = render(<AddCustomCargo />)
     fireEvent.click(getByRole('button'))
-    expect(CargoStore.getState().cargoMap.size).toBe(1)
+    expect(userStore.getState().cargoMap.size).toBe(1)
   })
 })

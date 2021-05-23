@@ -3,7 +3,7 @@ import {queryClient} from '../utils/const'
 import {render} from '@testing-library/react'
 import {useUserAirs} from '../hooks/query'
 
-import {AirStore} from '../hooks/air_store'
+import {userStore} from '../hooks/user_store'
 import React from 'react'
 import {ClientServerSyncStore} from '../hooks/use_client_server_sync'
 import {getCargoSchema} from '../utils/util'
@@ -15,8 +15,8 @@ const IsLoaded = ({children}: {children: React.ReactNode}) => {
 
   if (data?.data && data?.data.length > 0) {
     //init state of selected aircraft
-    AirStore.getState().setSelectedAir(data.data[0])
-    AirStore.getState().setCargoSchema(getCargoSchema(data.data[0]))
+    userStore.getState().setAir(data.data[0])
+    userStore.getState().setCargoSchema(getCargoSchema(data.data[0]))
 
     // init state of server client sync
     ss.setLastSyncEpoch(data.serverEpoch)
@@ -41,7 +41,7 @@ const Wrapper: React.FC<WrapperProps> = (props) => {
 
 /** wrap with QueryClientProvider,
  *  init useUser with data from msw,
- *  init AirStore with data from useUser
+ *  init userStore with data from useUser
  */
 export const renderWrapped = (component: JSX.Element, {...options} = {}) => {
   return render(component, {

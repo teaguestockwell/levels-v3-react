@@ -1,11 +1,11 @@
 import {Button, Dropdown, Menu} from 'antd'
-import {getActionsCS} from '../hooks/cargo_store'
+import {getUserActions} from '../hooks/user_store'
 import {Cargo, Category} from '../types/aircraftDeep'
-import {getAir, getSchema} from '../hooks/air_store'
+import {getAir, getSchema} from '../hooks/user_store'
 import {MenuInfo} from 'rc-menu/lib/interface'
 import {getCargoStringFromCargo} from '../utils/util'
 
-const cs = getActionsCS()
+const cs = getUserActions()
 
 export const AddASelect = () => {
   const air = getAir()

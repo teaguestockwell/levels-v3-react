@@ -1,8 +1,8 @@
 import {Button} from 'antd'
-import {getActionsCS} from '../hooks/cargo_store'
+import {getUserActions} from '../hooks/user_store'
 import {getCargoString} from '../utils/util'
 
-const cs = getActionsCS()
+const cs = getUserActions()
 
 export const AddCustomCargo = () => {
   const onAddCustomCargoClick = () => {

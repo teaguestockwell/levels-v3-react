@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {Tank} from '../types/aircraftDeep'
-import {getActionsCS, useCargo} from '../hooks/cargo_store'
+import {getUserActions, useCargo} from '../hooks/user_store'
 import {CargoString} from '../types/cargoString'
 import {getCargoStringFromTank} from '../utils/util'
-import {getAir} from '../hooks/air_store'
+import {getAir} from '../hooks/user_store'
 import {Row, Select} from 'antd'
 import {Liquid} from '@ant-design/charts'
 import {Typography} from 'antd'
@@ -11,7 +11,7 @@ import {useMemo} from 'react'
 
 const {Text} = Typography
 const {Option} = Select
-const cs = getActionsCS()
+const cs = getUserActions()
 
 export const TankRow = ({
   tank,

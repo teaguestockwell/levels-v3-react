@@ -1,5 +1,5 @@
 import {v4} from 'uuid'
-import {CargoStore} from '../hooks/cargo_store'
+import {userStore} from '../hooks/user_store'
 import {renderWrapped, waitFor} from '../testUtils/render_wrapped'
 import {Category} from '../types/aircraftDeep'
 import {CargoString} from '../types/cargoString'
@@ -25,7 +25,7 @@ describe('CargoList', () => {
 
   it('will render', async () => {
     const cargo = getMockCargo('cargo0')
-    CargoStore.getState().putCargos([cargo])
+    userStore.getState().putCargos([cargo])
     const {getByText, queryAllByText} = renderWrapped(
       <CargoList category={Object.values(Category)} />
     )
@@ -36,7 +36,7 @@ describe('CargoList', () => {
 
   it('will only render the given category s', async () => {
     const cargo = getMockCargo('cargo0')
-    CargoStore.getState().putCargos([cargo])
+    userStore.getState().putCargos([cargo])
     const {queryAllByText} = renderWrapped(
       <CargoList category={[Category.Extra]} />
     )

@@ -4,7 +4,7 @@ import {TankList} from './tank_list'
 import {renderWrapped} from '../testUtils/render_wrapped'
 import {Category} from '../types/aircraftDeep'
 import {CargoString} from '../types/cargoString'
-import {CargoStore} from '../hooks/cargo_store'
+import {userStore} from '../hooks/user_store'
 import MatchMediaMock from 'jest-matchmedia-mock'
 
 const cargoString = (uuid: string): CargoString => ({
@@ -18,7 +18,7 @@ const cargoString = (uuid: string): CargoString => ({
 })
 
 const setup = () => {
-  CargoStore.getState().putCargos([
+  userStore.getState().putCargos([
     cargoString('0'),
     cargoString('1'),
     cargoString('2'),

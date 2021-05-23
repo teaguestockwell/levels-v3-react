@@ -1,5 +1,5 @@
-import {getAir, getSchema} from '../hooks/air_store'
-import {CargoStore, getActionsCS} from '../hooks/cargo_store'
+import {getAir, getSchema} from '../hooks/user_store'
+import {userStore, getUserActions} from '../hooks/user_store'
 import {Category, Config} from '../types/aircraftDeep'
 import {getCargoStringsFromConfig} from '../utils/util'
 import {Const} from '../utils/const'
@@ -8,7 +8,7 @@ import {Select} from 'antd'
 const {Option} = Select
 
 export const ConfigSelect = () => {
-  const cs = getActionsCS()
+  const cs = getUserActions()
   const air = getAir()
   const objSchema = getSchema().fullObjSchema
   const configEnums = [Category.Emergency, Category.Extra, Category.Steward]
@@ -29,7 +29,7 @@ export const ConfigSelect = () => {
 
     // remove old config from cargo store
     cs.deleteCargos(
-      Array.from(CargoStore.getState().cargoMap.values())
+      Array.from(userStore.getState().cargoMap.values())
         .filter((c) => configEnums.includes(c.category))
         .map((c) => c.uuid)
     )
@@ -45,7 +45,7 @@ export const ConfigSelect = () => {
     <Select
       data-testid={`user config select`}
       onChange={onChange}
-      defaultValue={CargoStore.getState().config.name}
+      defaultValue={userStore.getState().config.name}
       style={{width: Const.SELECT_WIDTH, textAlign: 'center'}}
       dropdownStyle={{textAlign: 'center'}}
       showSearch

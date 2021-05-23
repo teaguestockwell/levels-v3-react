@@ -1,7 +1,7 @@
 import {fireEvent, waitFor} from '@testing-library/react'
 import {UserAirSelect} from './user_air_select'
 import {renderWrapped} from '../testUtils/render_wrapped'
-import {AirStore} from '../hooks/air_store'
+import {userStore} from '../hooks/user_store'
 
 describe('AirSelect', () => {
   it('will render', async () => {
@@ -11,8 +11,8 @@ describe('AirSelect', () => {
   })
 
   it('will change air and cargo schema', async () => {
-    expect(AirStore.getState().selectedAir?.name).toBe('C-17A-ER')
-    const oldSchema = AirStore.getState().cargoSchema
+    expect(userStore.getState().air?.name).toBe('C-17A-ER')
+    const oldSchema = userStore.getState().cargoSchema
 
     const {getByText, queryAllByText} = renderWrapped(<UserAirSelect />)
     await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
@@ -21,7 +21,7 @@ describe('AirSelect', () => {
     await waitFor(() => expect(queryAllByText('C-17A')[0]).toBeTruthy())
     fireEvent.click(queryAllByText('C-17A')[1])
 
-    expect(oldSchema).not.toEqual(AirStore.getState().cargoSchema)
-    expect(AirStore.getState().selectedAir?.name).toBe('C-17A')
+    expect(oldSchema).not.toEqual(userStore.getState().cargoSchema)
+    expect(userStore.getState().air?.name).toBe('C-17A')
   })
 })

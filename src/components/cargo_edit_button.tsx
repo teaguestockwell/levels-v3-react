@@ -1,8 +1,8 @@
 import {CheckCircleFilled, CloseCircleFilled} from '@ant-design/icons'
-import {getActionsCS, useCargo} from '../hooks/cargo_store'
+import {getUserActions, useCargo} from '../hooks/user_store'
 import {Button} from 'antd'
 
-const cs = getActionsCS()
+const cs = getUserActions()
 
 export const CargoEditButton = ({uuid}: {uuid: string}) => {
   const cargo = useCargo(uuid)

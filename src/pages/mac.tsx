@@ -13,7 +13,7 @@ import {TankList} from '../components/tank_list'
 import {Logger} from '../testUtils/logger'
 import {Category} from '../types/aircraftDeep'
 import {Label} from '../components/label'
-import {useUserAir} from '../hooks/air_store'
+import {useUserAir} from '../hooks/user_store'
 
 export const Mac = () => {
   useUserAir()

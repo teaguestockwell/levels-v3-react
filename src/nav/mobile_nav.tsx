@@ -8,9 +8,9 @@ import {
   getAppBar,
   persistentPages,
 } from './dynamic_main_nav'
-import {getActionsCS, usePageName} from '../hooks/cargo_store'
+import {getUserActions, usePageName} from '../hooks/user_store'
 
-const cs = getActionsCS()
+const cs = getUserActions()
 /** 
 @param page page component to be rendered
 @param pageName pageName

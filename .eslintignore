@@ -3,3 +3,5 @@
 ./.next/*
 ./.vscode/*
 ./eslintrc
+./build/*
+./cypress/*

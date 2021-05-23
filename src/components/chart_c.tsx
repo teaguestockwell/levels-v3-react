@@ -1,16 +1,16 @@
 import {Form, Input, Typography} from 'antd'
-import {getAir} from '../hooks/air_store'
+import {getAir} from '../hooks/user_store'
 import {useEffect, useRef} from 'react'
 import {
   getCargoStringFromChartC,
   getChartCSchema,
   rulesYupWrapper,
 } from '../utils/util'
-import {CargoStore, getActionsCS, getCargoMap} from '../hooks/cargo_store'
+import {userStore, getUserActions} from '../hooks/user_store'
 import {Category} from '../types/aircraftDeep'
 import {debounce} from 'lodash'
 import {Row, Col} from 'antd'
-const cs = getActionsCS()
+const cs = getUserActions()
 const {Text} = Typography
 
 export const ChartC = () => {
@@ -18,13 +18,13 @@ export const ChartC = () => {
   const schema = useRef(getChartCSchema(getAir())).current
   const air = useRef(getAir()).current
   const initCargo = useRef(
-    Array.from(getCargoMap().values()).filter(
+    Array.from(userStore.getState().cargoMap.values()).filter(
       (c) => c.category === Category.BasicAircraft
     )
   ).current[0]
 
   useEffect(() => {
-    form.setFieldsValue(CargoStore.getState().chartC)
+    form.setFieldsValue(userStore.getState().chartC)
     const time = setTimeout(() => form.validateFields(), 1)
     return () => clearTimeout(time)
   }, [])

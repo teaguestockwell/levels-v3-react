@@ -1,6 +1,6 @@
 import {act, waitFor} from '@testing-library/react'
 import {renderWrapped} from '../testUtils/render_wrapped'
-import {CargoStore} from '../hooks/cargo_store'
+import {userStore} from '../hooks/user_store'
 import {Category} from '../types/aircraftDeep'
 import {CargoString} from '../types/cargoString'
 import MatchMediaMock from 'jest-matchmedia-mock'
@@ -25,8 +25,8 @@ describe('CargoEditButton', () => {
   })
 
   it('will render the button', async () => {
-    CargoStore.getState().putCargos([cargo])
-    CargoStore.getState().putEditUuid(cargo.uuid)
+    userStore.getState().putCargos([cargo])
+    userStore.getState().setEditUuid(cargo.uuid)
     const {getByText, queryAllByText} = renderWrapped(
       <CargoEditButton uuid={'0'} />
     )
@@ -36,8 +36,8 @@ describe('CargoEditButton', () => {
 
   it('will update button text on state change', async () => {
     // given
-    CargoStore.getState().putCargos([cargo])
-    CargoStore.getState().putEditUuid(cargo.uuid)
+    userStore.getState().putCargos([cargo])
+    userStore.getState().setEditUuid(cargo.uuid)
     const ct = renderWrapped(<CargoEditButton uuid={'0'} />)
     await waitFor(() =>
       expect(ct.queryAllByText('Loading Test').length).toBe(0)
@@ -49,7 +49,7 @@ describe('CargoEditButton', () => {
 
     // when form is changed
     act(() =>
-      CargoStore.getState().putCargos([
+      userStore.getState().putCargos([
         {...cargo, name: 'new name', qty: '0', isValid: false},
       ])
     )

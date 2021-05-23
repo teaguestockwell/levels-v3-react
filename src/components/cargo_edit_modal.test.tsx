@@ -1,6 +1,6 @@
 import {act, waitFor} from '@testing-library/react'
 import {renderWrapped} from '../testUtils/render_wrapped'
-import {CargoStore} from '../hooks/cargo_store'
+import {userStore} from '../hooks/user_store'
 import {Category} from '../types/aircraftDeep'
 import {CargoString} from '../types/cargoString'
 import MatchMediaMock from 'jest-matchmedia-mock'
@@ -25,7 +25,7 @@ describe('CargoEditModal', () => {
   })
 
   it('will render closed', async () => {
-    CargoStore.getState().putCargos([cargo])
+    userStore.getState().putCargos([cargo])
     //CargoStore.getState().putEditUuid(cargo.uuid)
     const {queryAllByText} = renderWrapped(<CargoEditModal />)
     await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
@@ -33,13 +33,13 @@ describe('CargoEditModal', () => {
   })
 
   it('will open', async () => {
-    CargoStore.getState().putCargos([cargo])
+    userStore.getState().putCargos([cargo])
     //CargoStore.getState().putEditUuid(cargo.uuid)
     const {queryAllByText} = renderWrapped(<CargoEditModal />)
     await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
     expect(queryAllByText('Name').length).toBe(0)
 
-    act(() => CargoStore.getState().putEditUuid('0'))
+    act(() => userStore.getState().setEditUuid('0'))
 
     await waitFor(() => expect(queryAllByText('Name').length).toBe(1))
   })

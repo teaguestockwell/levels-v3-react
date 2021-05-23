@@ -1,5 +1,5 @@
 import {v4} from 'uuid'
-import {CargoStore} from '../hooks/cargo_store'
+import {userStore} from '../hooks/user_store'
 import {renderWrapped, waitFor, fireEvent} from '../testUtils/render_wrapped'
 import {Category} from '../types/aircraftDeep'
 import {CargoString} from '../types/cargoString'
@@ -28,7 +28,7 @@ describe('CargoForm', () => {
 
   it('will render', async () => {
     const cargo = getMockCargo('cargo0')
-    CargoStore.getState().putCargos([cargo])
+    userStore.getState().putCargos([cargo])
     const {getByText, queryAllByText} = renderWrapped(
       <CargoForm uuid={cargo.uuid} />
     )
@@ -41,7 +41,7 @@ describe('CargoForm', () => {
     // given
     const cargo = getMockCargo('cargo0')
 
-    CargoStore.getState().putCargos([cargo])
+    userStore.getState().putCargos([cargo])
     const ct = renderWrapped(<CargoForm uuid={cargo.uuid} />)
     await waitFor(() =>
       expect(ct.queryAllByText('Loading Test').length).toBe(0)
@@ -55,7 +55,7 @@ describe('CargoForm', () => {
 
     // then
     await waitFor(() => {
-      expect(CargoStore.getState().cargoMap.get(cargo.uuid)).toStrictEqual({
+      expect(userStore.getState().cargoMap.get(cargo.uuid)).toStrictEqual({
         ...cargo,
         name: 'new name',
         weightEA: '100',
@@ -65,7 +65,7 @@ describe('CargoForm', () => {
       })
 
       expect(
-        (CargoStore.getState().cargoMap.get(cargo.uuid) as CargoString).isValid
+        (userStore.getState().cargoMap.get(cargo.uuid) as CargoString).isValid
       ).toBe(true)
     })
   })

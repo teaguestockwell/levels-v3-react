@@ -1,11 +1,11 @@
 import {Modal} from 'antd'
-import {CargoStore, getActionsCS} from '../hooks/cargo_store'
+import {userStore, getUserActions} from '../hooks/user_store'
 import {CargoForm} from './cargo_form'
 
-const cs = getActionsCS()
+const cs = getUserActions()
 
 export const CargoEditModal = () => {
-  const uuid = CargoStore((s) => s.editUuid)
+  const uuid = userStore((s) => s.editUuid)
 
   return (
     <Modal

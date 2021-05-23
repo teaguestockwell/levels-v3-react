@@ -12,10 +12,10 @@ import {useState} from 'react'
 import './desktop_nav.css'
 
 import Sider from 'antd/lib/layout/Sider'
-import {getActionsCS, usePageName} from '../hooks/cargo_store'
+import {getUserActions, usePageName} from '../hooks/user_store'
 // dont use this slider, it will break layout V
 //const {Sider} = Layout
-const cs = getActionsCS()
+const cs = getUserActions()
 
 export const DesktopNav = () => {
   const [collapsed, setCollapsed] = useState(true)
