@@ -9,7 +9,7 @@
       "!<rootDir>/src/testUtils/",
       "!<rootDir>/src/service-worker.ts",
       "!<rootDir>/src/serviceWorkerRegistration.ts",
-      "!<rootDir>/src/index.ts"
+      "!<rootDir>/src/index.tsx"
     ]
   },
   "scripts": {
