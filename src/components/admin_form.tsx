@@ -8,6 +8,7 @@ import {getYupModelSchemas} from '../types/aircraftDeep'
 import {adminActions} from '../utils/admin_actions'
 import {adminStore, getAdminStoreActions} from '../hooks/admin_store'
 import {AdminCargoSelect} from './admin_cargo_select'
+import { validateIsTanksCSVSameLen } from '../utils/util'
 
 const as = getAdminStoreActions()
 
@@ -53,7 +54,7 @@ export const AdminForm = () => {
   }, [])
 
   const onChange = () => {
-    const newValid = validateAll()
+    let newValid = validateAll()
 
     if (newValid) {
       const globalState = adminStore.getState().editObj
@@ -64,9 +65,12 @@ export const AdminForm = () => {
         ...formFieldState,
       })
 
+      // if this is a tank, validate csv
+      newValid = validateIsTanksCSVSameLen(newStateMergedAndCast)
+      
       as.setEditObj(newStateMergedAndCast)
     }
-
+    
     setIsValidWrapper(newValid)
   }
 

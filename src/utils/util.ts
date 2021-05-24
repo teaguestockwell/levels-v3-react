@@ -14,6 +14,7 @@ import {v4} from 'uuid'
 import {CargoCalculated, PerMac} from '../types/perMac'
 import {debounce} from 'lodash'
 import queryString from 'query-string'
+import { message } from 'antd'
 /** if string is > max length cut it and add ... */
 export const cut = (x: any): string => {
   return x.toString().length > Const.MAX_FORM_LENGTH
@@ -404,4 +405,19 @@ export const getQueryObjFromEP = (ep: string): Record<string, any> => {
   const params = getParamsFromEp(ep) ?? ''
   const queryObj = queryString.parse(params, {parseNumbers: true})
   return {...queryObj, model}
+}
+
+export const validateIsTanksCSVSameLen = (obj:any) => {
+  try{
+    // is this a tank?
+    if(!obj.weightsCSV){return true}
+
+    const weightLen = obj.weightsCSV.split(',').length
+    const momLen = obj.simpleMomsCSV.split(',').length
+
+    if(weightLen === momLen){return true}
+  // eslint-disable-next-line no-empty
+  } catch(e){}
+  message.error({content: `Weight and moment must have the same length`, key:'k', duration: 3})
+  return false
 }

@@ -3,6 +3,10 @@ import * as yup from 'yup'
 
 export const queryClient = new QueryClient()
 
+const validateNumPositive = (num: any) => {
+  return yup.number().required().positive().validateSync(num)
+}
+
 export const Const = {
   HEIGHT: {
     APP_BAR: '50px',
@@ -42,25 +46,24 @@ export const Const = {
 
     categorySchema: yup.mixed().oneOf(['Emergency', 'Extra', 'Steward']),
 
-    // numPositiveCSV: yup
-    //   .string()
-    //   .required()
-    //   .test('is this csv', 'must be comma separated numbers', (x) => {
-    //     // TODO: validate that array length of weights == moments
-    //     if (!x) {
-    //       return false
-    //     }
+    numPositiveCSV: yup
+      .string()
+      .required()
+      .test('is this csv', 'this must be comma separated numbers of the same length', (x) => {
+        // TODO: validate that array length of weights == moments
+        if (!x) {
+          return false
+        }
 
-    //     const isNumber = (num: any) => {
-    //       yup.number().required().positive().validateSync(num)
-    //     }
-
-    //     try {
-    //       x.split(',').map((y) => isNumber(y))
-    //       return true
-    //     } catch (e) {
-    //       return false
-    //     }
-    //   }),
+        try {
+          const nums = x.split(',')
+          if(!nums.length){return false}
+          nums.map((y) => validateNumPositive(y))
+          return true
+        } catch (e) {
+          return false
+        }
+      }),
   },
+
 }

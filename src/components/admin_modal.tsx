@@ -16,7 +16,6 @@ export const AdminModal = () => {
 
   const isOpen = adminStore(
     (s) => (s.editObj ? true : false),
-    (s0, s1) => s0 && s1
   )
 
   const form = useMemo(() => {

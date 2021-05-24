@@ -138,8 +138,8 @@ export const getYupModelSchemas = (): {[key: string]: any} => {
 
     tank: {
       name: Const.schema.stringSchema,
-      weightsCSV: Const.schema.stringSchema,
-      simpleMomsCSV: Const.schema.stringSchema,
+      weightsCSV: Const.schema.numPositiveCSV,
+      simpleMomsCSV: Const.schema.numPositiveCSV,
       shallowObj: yup.object().shape({
         name: Const.schema.stringSchema,
         weightsCSV: Const.schema.stringSchema,

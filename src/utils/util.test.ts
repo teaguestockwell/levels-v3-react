@@ -363,3 +363,19 @@ describe('getQueryObjFromEP()', () => {
     })
   })
 })
+
+describe('isTankCSVSameLen', () => {
+  it('validates moms.len === weights.len', () => {
+    // given not null, and and array of nums as csv
+    const invalid = {simpleMomsCSV: '1,2,3', weightsCSV: '1   , 3'}
+    expect(util.validateIsTanksCSVSameLen(invalid)).toBe(false)
+  })
+
+  it('validates moms.len === weights.len', () => {
+    // given not null, and and array of nums as csv
+    const valid = {simpleMomsCSV: '1,2,3', weightsCSV: '1   ,2, 3'}
+    const valid1 = {simpleMomsCSV: '1', weightsCSV: '1  '}
+    expect(util.validateIsTanksCSVSameLen(valid)).toBe(true)
+    expect(util.validateIsTanksCSVSameLen(valid1)).toBe(true)
+  })
+})
