@@ -40,7 +40,10 @@ export const useClientServerSync = () => {
   // the data that the client has loaded on init state
   const {data: clientCache} = useUserAirs()
 
-  // poll the server | service worker
+  // poll the server | service worker,
+  // NOTE: due to workbox caching strategy: stale while revalidate,
+  // a "fresh" request will becoming from cache
+  // the res will be at the least 10 seconds old
   const {data: swRes} = usePolling('aircraft/lastUpdated', pollingFreq, true)
 
   useEffect(() => {
@@ -57,7 +60,7 @@ export const useClientServerSync = () => {
       const isClientCacheEqualToSwRes = isEqual(clientCache.data, swRes.data)
 
       // if serverEpoch is more than x secs
-      const isClientOnline = Date.now() - swRes.serverEpoch < 20000
+      const isClientOnline = Date.now() - swRes.serverEpoch < 30000
 
       // client res equality does not mean client is synced with server because the res could have been cached
       const isClientSyncedWithServer =

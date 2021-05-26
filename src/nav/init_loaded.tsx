@@ -9,6 +9,11 @@ const as = getUserActions()
 const ss = ClientServerSyncStore.getState()
 
 export const InitLoaded = () => {
+  // req => lastUpdated
+  // SW => cache to client
+  // SW => fetches new data, and updates cache
+  // fast init load, but data is stale
+  
   const {status, data} = useUserAirs()
 
   if (data?.data && data?.data.length > 0) {

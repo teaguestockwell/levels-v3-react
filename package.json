@@ -13,6 +13,7 @@
     ]
   },
   "scripts": {
+    "prune": "docker system prune --filter until=24h -f",
     "preinstall": "npx npm-force-resolutions",
     "start": "react-scripts start",
     "build": "react-scripts build",
