@@ -22,7 +22,7 @@ describe('admin portal', () => {
     cy.get('[data-testid="admin nav icon"]').click()
   })
 
-  it('will edit cargo, then user will recive update to that cargo', () => {
+  it('will edit cargo, then user will receive update to that cargo', () => {
     //setup
     cy.visit(host)
 
