@@ -22,12 +22,14 @@ export const AppBar = ({
       <div
         style={{
           zIndex: 2,
-          height: Const.HEIGHT.APP_BAR,
-          backgroundColor: '#383838',
           position: 'fixed',
-          left: '0px' ,
-          top: '0px',
-          right: '0px',
+          width: 375,
+          height: 130,
+          left: 0,
+          top: 0,
+          background: '#06645E',
+          boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.15)',
+          borderRadius: '0px 0px 20px 20px'
         }}
       >
         <Row justify="center" style={{paddingTop: '8px'}}>
@@ -47,9 +49,10 @@ export const AppBar = ({
               style={{
                 color: 'white',
                 fontWeight: 'normal',
-                fontSize: '32px',
+                fontSize: '24px',
                 lineHeight: '30px',
                 paddingLeft: isMobile ? '12px' : '26px',
+                textShadow: '0px 2px 4px rgba(255, 255, 255, 0.25)'
               }}
             >
               Atlas

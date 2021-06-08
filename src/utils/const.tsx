@@ -9,7 +9,7 @@ const validateNumPositive = (num: any) => {
 
 export const Const = {
   HEIGHT: {
-    APP_BAR: '50px',
+    APP_BAR: '130px',
     APP_BAR_NUM: 50,
     BOTTOM_NAV_BAR: '60px',
   },
