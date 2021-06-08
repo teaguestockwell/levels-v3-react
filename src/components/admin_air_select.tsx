@@ -68,12 +68,14 @@ export const AdminAirSelect = () => {
     // while client air selection and server state are synced
     return (
       <Select
+        bordered={false}
+        className='selectBoi'
         data-testid='admin air select'
         key={v4()}
-        defaultValue={air?.name}
+        defaultValue={air?.name as string}
         onChange={onAirChange}
         showSearch
-        style={{textAlign: 'center' ,marginRight: '12px', width: 150}}
+        style={{textAlign: 'right', width: 150, fontSize: 18}}
         dropdownStyle={{textAlign: 'center'}}
       >
         {data.map((a: AircraftDeep) => (

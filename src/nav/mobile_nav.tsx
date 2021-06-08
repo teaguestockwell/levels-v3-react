@@ -52,7 +52,8 @@ export const MobileNav = () => {
           width: '100%',
           zIndex: 1,
           height: Const.HEIGHT.BOTTOM_NAV_BAR,
-          backgroundColor: '#383838',
+          backgroundColor: '#06645E',
+          boxShadow: '0px -3px 10px rgba(0, 0, 0, 0.15)'
         }}
       >
         <Row justify="center" style={{padding: '15px 0px 0px 0px'}}>

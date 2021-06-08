@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {Row, Col, Typography} from 'antd'
 import {Const} from '../utils/const'
-import icon from '../imgs/icon_round_512.png'
+//import icon from '../imgs/icon_round_512.png'
 import { useTick } from '../hooks/use_tick'
 import { getUTCDate } from '../utils/util'
 import {format} from 'date-fns'

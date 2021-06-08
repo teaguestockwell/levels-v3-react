@@ -19,7 +19,8 @@ export const AdminServerSync = () => {
   const modalButton = useMemo(() => {
     return <Button
     data-testid='admin-sync-button'
-    style={{marginRight: '12px', backgroundColor: syncColor, borderColor: syncColor}}
+    style={{backgroundColor: syncColor, borderColor: syncColor}}
+    size={'small'}
     type="primary"
     shape="circle"
     icon={<SyncOutlined />}

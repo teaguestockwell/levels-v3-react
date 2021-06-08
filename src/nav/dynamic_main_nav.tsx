@@ -16,9 +16,10 @@ import {
   QuestionCircleFilled,
 } from '@ant-design/icons'
 import {AdminServerSync} from '../components/admin_server_sync'
+import { Const } from '../utils/const'
 
 const darkIconStyle = {
-  color: '#737373',
+  color: Const.COLORS.TXT_DISABLED,
   height: '30px',
   fontSize: '175%',
 }
