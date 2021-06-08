@@ -37,7 +37,8 @@ export const ClientServerSync = () => {
   const modalButton = useMemo(() => {
     return <Button
     data-testid={syncColor}
-    style={{marginRight: '12px', backgroundColor: syncColor, borderColor: syncColor}}
+    style={{backgroundColor: syncColor, borderColor: syncColor}}
+    size={'small'}
     type="primary"
     shape="circle"
     icon={<SyncOutlined />}

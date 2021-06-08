@@ -9,7 +9,6 @@ import {
   getAppBar,
 } from './dynamic_main_nav'
 import {useState} from 'react'
-import './desktop_nav.css'
 
 import Sider from 'antd/lib/layout/Sider'
 import {getUserActions, usePageName} from '../hooks/user_store'

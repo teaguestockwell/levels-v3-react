@@ -19,10 +19,12 @@ export const UserAirSelect = () => {
 
   return (
     <Select
+      className='selectBoi'
+      bordered={false}
       data-testid={`user air select`}
       defaultValue={airName}
       onChange={onAirChange}
-      style={{ textAlign: 'center' ,marginRight: '12px', width: 150}}
+      style={{ textAlign: 'right' ,width: 150, fontSize: 18}}
       dropdownStyle={{textAlign: 'center'}}
       showSearch
     >

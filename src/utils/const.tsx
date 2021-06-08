@@ -14,7 +14,7 @@ export const Const = {
     BOTTOM_NAV_BAR: '60px',
   },
   COLORS: {
-    TXT_DISABLED: '#8A8A8A',
+    TXT_DISABLED: '#C5C5C5',
     TXT_RED: '#A40606',
   },
   BOX_SHADOW: '0px 2px 8px rgba(0, 0, 0, 0.1',

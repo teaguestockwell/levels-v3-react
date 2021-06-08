@@ -1,3 +1,15 @@
+@import 'antd/dist/antd.css';
+
+@font-face {
+  font-family: 'Revalia';
+  src: local('Revalia'), url(./fonts/Revalia-Regular.ttf) format('truetype');
+  font-weight: normal;
+}
+
+.selectBoi span{
+  color: white;
+}
+
 div.ant-layout-sider-trigger {
   position: fixed;
   bottom: 0;

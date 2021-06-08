@@ -4,7 +4,6 @@ import {AddASelect} from '../components/add_a_select'
 import {AddCustomCargo} from '../components/add_custom_cargo'
 import {CargoList} from '../components/cargo_list'
 import {ChartC} from '../components/chart_c'
-import {Clock} from '../components/clock'
 import {ConfigSelect} from '../components/config_select'
 import {CargoEditModal} from '../components/cargo_edit_modal'
 import {GetMacButton} from '../components/get_mac_button'
@@ -20,7 +19,6 @@ export const Mac = () => {
 
   return (
     <>
-      <Clock />
       <Label text={'Tanks'} />
       <TankList key={v4()} />
       <Label text={'Chart C'} />

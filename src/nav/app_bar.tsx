@@ -1,7 +1,51 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {Affix, Row, Col, Typography} from 'antd'
+import {Row, Col, Typography} from 'antd'
 import {Const} from '../utils/const'
 import icon from '../imgs/icon_round_512.png'
+import { useTick } from '../hooks/use_tick'
+import { getUTCDate } from '../utils/util'
+import {format} from 'date-fns'
+const {Text} = Typography
+
+const getCol = (
+  str: string,
+  color = '#fff',
+  align = 'center'
+) => (
+  <Col span={6} style={{display: 'inline-flex', justifyContent: align}}>
+    <Text
+      style={{
+        color,
+        fontWeight: 'normal',
+        fontSize: '14px',
+        lineHeight: '18px',
+      }}
+    >
+      {str}
+    </Text>
+  </Col>
+)
+
+const getClock = () => {
+  const lnow = new Date()
+  const znow = getUTCDate(lnow)
+
+  return {
+    lHMS: format(lnow, 'HH:mm:ss'),
+    lJJJ: format(lnow, 'DDD'),
+    lYMD: format(lnow, 'yyyy/LL/dd'),
+
+    zHMS: format(znow, 'HH:mm:ss'),
+    zJJJ: format(znow, 'DDD'),
+    zYMD: format(znow, 'yyyy/LL/dd'),
+  }
+}
+
+const rowProps = {
+  justify: 'center',
+  type: 'flex',
+  style: {padding: '0px 12px 8px 12px'}
+} as any
 
 export const AppBar = ({
   sync,
@@ -10,58 +54,80 @@ export const AppBar = ({
   sync: JSX.Element | null
   select: JSX.Element
 }) => {
-  // admin app bars contain AdminAirSelects that sync client and server state automatically
+  useTick(1000)
+  const clock = getClock()
 
+
+  // admin app bars contain AdminAirSelects that sync client and server state automatically
   // user app bars contain UserAirSelects that use init state of service worker cache.
   // the cache is updated by the ClientServerSync. if initState !== currentState the users may opt in to refresh
-
   const isMobile = window.innerWidth > 750 ? false : true
-  // <Affix style={{zIndex: 1}} offsetTop={0}>
 
   return (
       <div
         style={{
           zIndex: 2,
           position: 'fixed',
-          width: 375,
           height: 130,
           left: 0,
+          right: 0,
           top: 0,
           background: '#06645E',
           boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.15)',
           borderRadius: '0px 0px 20px 20px'
         }}
       >
-        <Row justify="center" style={{paddingTop: '8px'}}>
-          <Col span={8}>
-            {window.innerWidth > 750 ? (
+        <Row justify="center" style={{
+         height: 44,
+         padding: '4px 12px 10px 12px'
+        }}>
+          <Col span={8} style={{justifyContent: 'flex-start'}}>
+            {/* {window.innerWidth > 750 ? (
               <img
                 src={icon}
                 style={{
-                  marginLeft: '18px',
                   marginTop: -14,
                   width: Const.HEIGHT.APP_BAR_NUM - 16,
                   height: Const.HEIGHT.APP_BAR_NUM - 16,
                 }}
               />
-            ) : null}
-            <Typography.Text
-              style={{
-                color: 'white',
-                fontWeight: 'normal',
-                fontSize: '24px',
-                lineHeight: '30px',
-                paddingLeft: isMobile ? '12px' : '26px',
-                textShadow: '0px 2px 4px rgba(255, 255, 255, 0.25)'
-              }}
-            >
-              Atlas
-            </Typography.Text>
+            ) : null} */}
+              <div
+                style={{
+                  //paddingLeft: isMobile ? '0px' : '14px',
+                  textShadow: '0px 2px 4px rgba(255, 255, 255, 0.25)',
+                  fontFamily: 'Revalia',
+                  fontStyle: 'normal',
+                  fontWeight: 'normal',
+                  fontSize: 24,
+                  textAlign: 'left',
+                  color: 'white'
+                }}
+              >Atlas</div>
           </Col>
-          <Col span={16} style={{textAlign: 'end',}}>
-            {sync}
-            {select}
+          <Col span={16} style={{textAlign: 'end'}}>
+              {select}
+              {sync}
           </Col>
+        </Row>
+          
+        <Row {...rowProps}>
+          {getCol('Zone', Const.COLORS.TXT_DISABLED, 'flex-start')}
+          {getCol('hh:mm:ss', Const.COLORS.TXT_DISABLED)}
+          {getCol('JJJ', Const.COLORS.TXT_DISABLED)}
+          {getCol('yyyy/mm/dd', Const.COLORS.TXT_DISABLED, 'flex-end')}
+        </Row>
+        <Row {...rowProps}>
+          {getCol('Local', Const.COLORS.TXT_DISABLED, 'flex-start')}
+          {getCol(clock.lHMS)}
+          {getCol(clock.lJJJ)}
+          {getCol(clock.lYMD, '#fff', 'flex-end')}
+        </Row>
+        <Row {...rowProps}>
+          {getCol('Zulu', Const.COLORS.TXT_DISABLED, 'flex-start')}
+          {getCol(clock.zHMS)}
+          {getCol(clock.zJJJ)}
+          {getCol(clock.zYMD, '#fff', 'flex-end')}
         </Row>
       </div>
   )
