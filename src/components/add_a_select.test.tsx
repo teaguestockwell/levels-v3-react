@@ -7,7 +7,7 @@ describe('AddASelect', () => {
   it('will render', async () => {
     const {getByText, queryAllByText} = renderWrapped(<AddASelect />)
     await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
-    expect(getByText('Add Custom Cargo')).toBeInTheDocument()
+    expect(getByText('Custom Cargo')).toBeInTheDocument()
   })
 
   it('will add cargo', async () => {

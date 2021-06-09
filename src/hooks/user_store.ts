@@ -135,15 +135,18 @@ export const useCargoMapSize = () => userStore((s) => s.cargoMap.size)
 
 export const useConfigName = () => userStore((s) => s.config.name)
 
-export const useCargosAreValid = () => {
-  return userStore((s) => Array.from(s.cargoMap.values()).every((c) => c.isValid))
-}
-
 export const useCargo = (uuid: string) => {
   return userStore(
     (s) => s.cargoMap.get(uuid),
     (s1, s2) => isEqual(s1, s2) 
   ) as CargoString
+}
+
+export const useCargos = () => {
+  return userStore(
+    (s) => Array.from(s.cargoMap.values()),
+    (s1, s2) => isEqual(s1, s2)
+  )
 }
   
 export const useUserAir = () =>
@@ -153,7 +156,6 @@ export const useUserAir = () =>
   )
 
 // helper functions to access state
-
 export const getUserCargo = (uuid: string) => userStore.getState().cargoMap.get(uuid) as CargoString
 
 export const getUserAir = () => userStore.getState().air as AircraftDeep
