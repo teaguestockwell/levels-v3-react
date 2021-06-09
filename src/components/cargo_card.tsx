@@ -25,7 +25,9 @@ export const CargoCard = () => {
   const cargos = getUserCargos()
   
   const getCargosAtCat = (cat: Category) => {
-    return cargos.filter(x => x.category === cat)
+    return cargos
+    .filter(c => c.category === cat)
+    .sort((a,b) => a.name.localeCompare(b.name))
     .map(c => <CargoEditRow key={c.uuid} uuid={c.uuid}/>)
   }
 
@@ -41,7 +43,8 @@ export const CargoCard = () => {
 
     <Collapse expandIconPosition={'right'} accordion bordered={false} style={{padding: '0px 4px'}}>
 
-      <Panel key={'1'} header={`${configName} Cargos`}>
+      { configName !== 'No Config' &&
+        <Panel key={'1'} header={`${configName} Cargos`}>
         <Collapse expandIconPosition={'right'} accordion bordered={false}>
 
           <Panel key={'2'} header={`Steward Cargo`}>
@@ -58,6 +61,7 @@ export const CargoCard = () => {
 
         </Collapse>
       </Panel>
+      }
 
       <Panel key={'5'} header={`Custom Cargo`}>
         {getCargosAtCat(Category.User)}
