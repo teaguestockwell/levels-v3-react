@@ -33,7 +33,7 @@ export const AdminNav = () => {
     <div
         style={{
           zIndex: 1,
-          position: 'sticky',
+          position: 'fixed',
           left: '0px' ,
           top: Const.HEIGHT.APP_BAR,
           right: '0px',
