@@ -4,7 +4,7 @@ import {userStore} from '../hooks/user_store'
 import {Category} from '../types/aircraftDeep'
 import {CargoString} from '../types/cargoString'
 import MatchMediaMock from 'jest-matchmedia-mock'
-import {CargoEditButton} from './cargo_edit_button'
+import {CargoEditRow} from './cargo_edit_button'
 
 const cargo: CargoString = {
   name: 'cargo',
@@ -28,24 +28,22 @@ describe('CargoEditButton', () => {
     userStore.getState().putCargos([cargo])
     userStore.getState().setEditUuid(cargo.uuid)
     const {getByText, queryAllByText} = renderWrapped(
-      <CargoEditButton uuid={'0'} />
+      <CargoEditRow uuid={'0'} />
     )
     await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
-    expect(getByText('1 EA cargo')).toBeInTheDocument()
+    expect(getByText('cargo')).toBeInTheDocument()
   })
 
   it('will update button text on state change', async () => {
     // given
     userStore.getState().putCargos([cargo])
     userStore.getState().setEditUuid(cargo.uuid)
-    const ct = renderWrapped(<CargoEditButton uuid={'0'} />)
+    const ct = renderWrapped(<CargoEditRow uuid={'0'} />)
     await waitFor(() =>
       expect(ct.queryAllByText('Loading Test').length).toBe(0)
     )
     // valid icon on button
-    expect(ct.queryAllByLabelText('check-circle').length).toBe(1)
-    // invalid icon ! on button
-    expect(ct.queryAllByLabelText('close-circle').length).toBe(0)
+    expect(ct.queryAllByText('cargo').length).toBe(1)
 
     // when form is changed
     act(() =>
@@ -56,13 +54,8 @@ describe('CargoEditButton', () => {
 
     // then
     await waitFor(() => {
-      // name and qty will update on button
-      expect(ct.queryAllByText('0 EA new name').length).toBe(1)
-
-      // valid icon ! on button
-      expect(ct.queryAllByLabelText('check-circle').length).toBe(0)
-      // invalid icon on button
-      expect(ct.queryAllByLabelText('close-circle').length).toBe(1)
+      expect(ct.queryAllByText('name').length).toBe(0)
+      expect(ct.queryAllByText('new name').length).toBe(1)
     })
   })
 })

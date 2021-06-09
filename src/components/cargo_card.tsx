@@ -3,7 +3,7 @@ import {Row, Col, Collapse, Divider} from 'antd'
 import { ConfigSelect } from "./config_select"
 import { AddASelect } from "./add_a_select"
 import { Category } from "../types/aircraftDeep"
-import { CargoEditButton } from "./cargo_edit_button"
+import { CargoEditRow } from "./cargo_edit_button"
 
 const {Panel} = Collapse
 
@@ -26,7 +26,7 @@ export const CargoCard = () => {
   
   const getCargosAtCat = (cat: Category) => {
     return cargos.filter(x => x.category === cat)
-    .map(c => <CargoEditButton uuid={c.uuid} key={c.uuid}/>)
+    .map(c => <CargoEditRow key={c.uuid} uuid={c.uuid}/>)
   }
 
   return <div

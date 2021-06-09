@@ -1,21 +1,65 @@
-import {CheckCircleFilled, CloseCircleFilled} from '@ant-design/icons'
 import {getUserActions, useCargo} from '../hooks/user_store'
-import {Button} from 'antd'
+import {Row, Col} from 'antd'
 
 const cs = getUserActions()
 
-export const CargoEditButton = ({uuid}: {uuid: string}) => {
+export const CargoEditRow = ({uuid,style}: {uuid: string, style?:any}) => {
   const cargo = useCargo(uuid)
 
-  const icon = cargo.isValid ? (
-    <CheckCircleFilled style={{color: '#52C41B'}} />
-  ) : (
-    <CloseCircleFilled style={{color: '#FF4D4F'}} />
-  )
+  const getText = (text:string) => <div
+    style={{
+      fontSize: 12,
+      display: 'flex',
+      textAlign: 'left',
+      color: '#C4C4C4'
+    }}>{text}</div>
 
-  return (
-    <Button icon={icon} onClick={() => cs.setEditUuid(uuid)}>
-      {`${cargo.qty} EA ${cargo.name}`}
-    </Button>
-  )
+  return <div
+    onClick={() => cs.setEditUuid(uuid)}
+    style={{
+      cursor: 'pointer',
+      paddingTop: 10,
+      ...style
+    }}
+  >
+    <Row justify="start">
+        <Col span={40}>
+          <div
+            style={{
+              fontSize: 12,
+              display: 'flex',
+              textAlign: 'left',
+              color: cargo.isValid ? '#383838' : '#FF4D4F'
+            }}
+          >{cargo.name}</div>
+        </Col>
+    </Row>
+
+    <Row justify="center" style={{paddingTop: 10}}>
+      <Col span={8} style={{display: 'inline-flex', justifyContent: 'center'}}>
+        <div
+          style={{justifyContent: 'space-between'}}
+        >
+          {getText('Weight Ea')}
+          {getText(cargo.weightEA)}
+        </div>
+      </Col>
+      <Col span={8} style={{display: 'inline-flex', justifyContent: 'center'}}>
+        <div
+          style={{justifyContent: 'space-between'}}
+        >
+          {getText('FS')}
+          {getText(cargo.fs)}
+        </div>
+      </Col>
+      <Col span={8} style={{display: 'inline-flex', justifyContent: 'center'}}>
+        <div
+          style={{justifyContent: 'space-between'}}
+        >
+          {getText('Qty')}
+          {getText(cargo.qty)}
+        </div>
+      </Col>
+    </Row>
+  </div>
 }

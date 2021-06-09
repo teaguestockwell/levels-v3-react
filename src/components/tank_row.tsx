@@ -30,8 +30,6 @@ export const TankRow = ({
     indicator: null,
   } as any
 
-  console.log(isEditing)
-
   const liquid = (
     <div
       onClick={() => setIsEditing(!isEditing)}

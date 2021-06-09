@@ -2,7 +2,7 @@ import {Button, Row} from 'antd'
 import {getUserAir, useCargos} from '../hooks/user_store'
 import {getPerMac} from '../utils/util'
 
-export const GetMacButton = ({style}: {style:any}) => {
+export const GetMacButton = ({style}: {style?:any}) => {
   const cargos = useCargos()
   const isCargoValid = cargos.every((c) => c.isValid)
   const air = getUserAir()
