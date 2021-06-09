@@ -55,6 +55,7 @@ li.ant-menu-item.ant-menu-item-selected::after {
 }
 
 .ant-btn{
+  border-color: transparent !important;
   border-radius: 5px !important;
 }
 
