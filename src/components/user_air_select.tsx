@@ -24,9 +24,10 @@ export const UserAirSelect = () => {
       data-testid={`user air select`}
       defaultValue={airName}
       onChange={onAirChange}
-      style={{ textAlign: 'right' ,width: 150, fontSize: 18}}
+      style={{ textAlign: 'right', fontSize: 18}}
       dropdownStyle={{textAlign: 'center'}}
       showSearch
+      dropdownMatchSelectWidth={false}
     >
       {data.data.map((a: AircraftDeep) => (
         <Option key={a.name} value={a.name}>

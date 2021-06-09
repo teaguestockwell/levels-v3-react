@@ -13,16 +13,21 @@ import {Logger} from '../testUtils/logger'
 import {Category} from '../types/aircraftDeep'
 import {Label} from '../components/label'
 import {useUserAir} from '../hooks/user_store'
+import { CardShadow } from '../components/card_shadow'
+import {BarChartOutlined} from '@ant-design/icons'
 
 export const Mac = () => {
   useUserAir()
 
   return (
     <>
-      <Label text={'Tanks'} />
-      <TankList key={v4()} />
-      <Label text={'Chart C'} />
-      <ChartC key={v4()} />
+      <CardShadow style={{marginTop: 15}} child={<TankList key={v4()}/>}/>
+      <CardShadow style={{marginTop: 15}} child={
+        <>
+        <Label text={'Chart C'} icon={<BarChartOutlined style={{color: '#06645E',}}/>}/>
+        <ChartC key={v4()} />
+        </>
+      }/>
       <Logger />
       <PerMac />
       <AddASelect key={v4()} />

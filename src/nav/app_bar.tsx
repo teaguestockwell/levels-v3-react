@@ -17,8 +17,7 @@ const getCol = (
       style={{
         color,
         fontWeight: 'normal',
-        fontSize: '14px',
-        lineHeight: '18px',
+        fontSize: '12px',
       }}
     >
       {str}
@@ -105,7 +104,7 @@ export const AppBar = ({
                 }}
               >Atlas</div>
           </Col>
-          <Col span={16} style={{textAlign: 'end'}}>
+          <Col span={16} style={{textAlign: 'end', paddingTop:4}}>
               {select}
               {sync}
           </Col>

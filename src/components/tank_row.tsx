@@ -5,9 +5,9 @@ import {CargoString} from '../types/cargoString'
 import {getCargoStringFromTank} from '../utils/util'
 import {getUserAir} from '../hooks/user_store'
 import {Row, Select} from 'antd'
-import {Liquid} from '@ant-design/charts'
+import { Gauge } from '@ant-design/charts'
 import {Typography} from 'antd'
-import {useMemo} from 'react'
+import {useMemo, useState} from 'react'
 
 const {Text} = Typography
 const {Option} = Select
@@ -20,43 +20,21 @@ export const TankRow = ({
   tank: Tank
   cargoString: CargoString
 }) => {
+  const [isEditing, setIsEditing] = useState(false)
   const currentWeight = useCargo(cargoString?.uuid)?.weightEA ?? 0
   const weights = tank.weightsCSV.split(',')
   const maxWeight = weights[weights.length - 1]
   const liquidConfig = {
-    renderer: 'svg',
-    autoFit: false,
-    width: 100,
-    height: 100,
-    shape: 'rect',
     percent: Number(currentWeight) / Number(maxWeight),
-    wave: {
-      length: 128,
-    },
-    outline: {
-      distance: 2,
-      border: 2,
-    },
-    liquidStyle: {
-      fill: '#736ADB',
-      stroke: '#C4C4C4',
-    },
-    statistic: {
-      content: '', //{
-      //   customHtml: <Text style={{
-      //     textAlign: 'center',
-      //     color: 'black',
-      //     //fontFamily: 'DM Sans',
-      //     fontWeight: 'normal',
-      //     fontSize: '12px',
-      //     //lineHeight: '18px',
-      //   }}>{`${tank.name}`}</Text>
-      // }
-    },
+    range: { color: 'l(0) 0:#bde8ff 1:#9ec9ff' },
+    indicator: null,
   } as any
+
+  console.log(isEditing)
 
   const liquid = (
     <div
+      onClick={() => setIsEditing(!isEditing)}
       style={{
         width: 100,
         height: 100,
@@ -65,7 +43,7 @@ export const TankRow = ({
       {process.env.IS_TEST ? (
         <div>chart</div>
       ) : (
-        <Liquid {...liquidConfig}></Liquid>
+        <Gauge {...liquidConfig}></Gauge>
       )}
     </div>
   )
@@ -100,9 +78,16 @@ export const TankRow = ({
       data-testid={`${tank.name} select`}
       onChange={onChange}
       defaultValue={currentWeight}
-      style={{width: 100, textAlign: 'center'}}
+      style={{textAlign: 'center', fontSize: 12, width: 60}}
       dropdownStyle={{textAlign: 'center'}}
       showSearch
+      size='small'
+      showArrow={false}
+      bordered={isEditing}
+      onDropdownVisibleChange={open => setIsEditing(open)}
+      open={isEditing}
+      showAction={['focus']}
+      dropdownMatchSelectWidth={false}
     >
       {options}
     </Select>
@@ -112,26 +97,21 @@ export const TankRow = ({
     <Text
       style={{
         textAlign: 'center',
-        color: '#7F7F7F',
-        //fontFamily: 'DM Sans',
+        color: '#383838',
         fontWeight: 'normal',
-        fontSize: '18px',
-        lineHeight: '18px',
+        fontSize: '12px',
       }}
     >
       {tank.name}
     </Text>
   )
 
+
   return (
-    <div>
-      <Row justify="center">{liquid}</Row>
-      <div style={{paddingTop: '15px'}}>
-        <Row justify="center">{select}</Row>
-      </div>
-      <div style={{paddingTop: '9px'}}>
-        <Row justify="center">{name}</Row>
-      </div>
+    <div style={{paddingTop:10, cursor: 'pointer'}}>
+      <Row justify="center">{name}</Row>
+      <Row justify="center" style={{marginTop: -5}}>{liquid}</Row>
+      <Row justify="center" style={{marginTop: -36}}>{select}</Row>
     </div>
   )
 }

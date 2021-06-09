@@ -44,7 +44,6 @@ export const ChartC = () => {
     cs.setChartC(newChartC)
     cs.putCargos([cargo])
   }
-
   const getLabel = (text: string) => (
     <Text
       style={{
@@ -57,7 +56,6 @@ export const ChartC = () => {
       {text}
     </Text>
   )
-
   return (
     <div
       style={{
@@ -77,7 +75,7 @@ export const ChartC = () => {
             >
               <Input
                 size="large"
-                //placeholder={`Please input basic weight`}
+                placeholder={`Basic Weight`}
                 onChange={debounce(onChange, 500)}
               />
             </Form.Item>
@@ -90,12 +88,12 @@ export const ChartC = () => {
               rules={rulesYupWrapper(schema.mom)}
               hasFeedback
               labelCol={{span: 24}}
-            >
+              >
               <Input
                 size="large"
-                //placeholder={`Please input basic simple moment`}
                 onChange={debounce(onChange, 500)}
-              />
+                placeholder={`Basic Moment`}
+                />
             </Form.Item>
           </Col>
         </Row>

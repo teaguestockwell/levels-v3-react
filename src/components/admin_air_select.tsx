@@ -75,8 +75,9 @@ export const AdminAirSelect = () => {
         defaultValue={air?.name as string}
         onChange={onAirChange}
         showSearch
-        style={{textAlign: 'right', width: 150, fontSize: 18}}
+        style={{textAlign: 'right',fontSize: 18}}
         dropdownStyle={{textAlign: 'center'}}
+        dropdownMatchSelectWidth={false}
       >
         {data.map((a: AircraftDeep) => (
           <Option key={a.aircraftId} value={a.name}>

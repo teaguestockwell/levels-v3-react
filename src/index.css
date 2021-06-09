@@ -41,3 +41,23 @@ li.ant-menu-item.ant-menu-item-selected::after {
     -webkit-transform 0.15s cubic-bezier(0.215, 0.61, 0.355, 1);
   content: '';
 }
+
+.ant-input {
+  border-radius: 5px !important;
+}
+
+.ant-select-selector{
+  border-radius: 5px !important;
+}
+
+.ant-modal-content {
+  border-radius: 20px !important;
+}
+
+.ant-btn{
+  border-radius: 5px !important;
+}
+
+.ant-table {
+  border-radius: 5px !important;
+}
