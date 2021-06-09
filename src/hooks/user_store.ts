@@ -158,6 +158,8 @@ export const useUserAir = () =>
 // helper functions to access state
 export const getUserCargo = (uuid: string) => userStore.getState().cargoMap.get(uuid) as CargoString
 
+export const getUserCargos = () => Array.from(userStore.getState().cargoMap.values())
+
 export const getUserAir = () => userStore.getState().air as AircraftDeep
 
 export const getUserSchema = () => userStore.getState().cargoSchema as CargoSchema

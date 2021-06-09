@@ -19,11 +19,11 @@ export const GetMacButton = ({style}: {style:any}) => {
       color: '#06645E',
       borderColor: '#06645E',
       backgroundColor: 'white',
-      width: 150
+      width: 200
     }}
     >{
       isCargoValid 
-      ? `%MAC: ${calculation?.percentMacPercent}`
+      ? `Show Work: ${calculation?.percentMacPercent}`
       : '%MAC: Invalid'
     }</Button>
   </Row>
