@@ -31,7 +31,7 @@ export const CargoEditRow = ({uuid,style}: {uuid: string, style?:any}) => {
               textAlign: 'left',
               color: cargo.isValid ? '#383838' : '#FF4D4F'
             }}
-          >{cargo.name}</div>
+          >{cargo.name ? cargo.name : '???'}</div>
         </Col>
     </Row>
 
@@ -41,7 +41,7 @@ export const CargoEditRow = ({uuid,style}: {uuid: string, style?:any}) => {
           style={{justifyContent: 'space-between'}}
         >
           {getText('Weight Ea')}
-          {getText(cargo.weightEA)}
+          {getText(cargo.weightEA ? cargo.weightEA : '???')}
         </div>
       </Col>
       <Col span={8} style={{display: 'inline-flex', justifyContent: 'center'}}>
@@ -49,7 +49,7 @@ export const CargoEditRow = ({uuid,style}: {uuid: string, style?:any}) => {
           style={{justifyContent: 'space-between'}}
         >
           {getText('FS')}
-          {getText(cargo.fs)}
+          {getText(cargo.fs ? cargo.fs : '???')}
         </div>
       </Col>
       <Col span={8} style={{display: 'inline-flex', justifyContent: 'center'}}>
@@ -57,7 +57,7 @@ export const CargoEditRow = ({uuid,style}: {uuid: string, style?:any}) => {
           style={{justifyContent: 'space-between'}}
         >
           {getText('Qty')}
-          {getText(cargo.qty)}
+          {getText(cargo.qty ? cargo.qty : '???')}
         </div>
       </Col>
     </Row>

@@ -39,7 +39,7 @@ export const CargoCard = () => {
   >
     {buttons}
 
-    <Divider style={{margin: 10,}}/>
+    <Divider style={{margin: 10}}/>
 
     <Collapse expandIconPosition={'right'} accordion bordered={false} style={{padding: '0px 4px'}}>
 
