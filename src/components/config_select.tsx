@@ -49,6 +49,7 @@ export const ConfigSelect = () => {
       style={{width: '100%', textAlign: 'center'}}
       dropdownStyle={{textAlign: 'center'}}
       showSearch
+      size='large'
     >
       <Option value={'No Config'}>No Config</Option>
       {air.configs.map((c) => (

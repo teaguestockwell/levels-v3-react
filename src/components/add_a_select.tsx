@@ -61,11 +61,13 @@ export const AddASelect = () => {
     <Dropdown overlay={menu} trigger={['click']}>
       <Button 
       icon={<PlusOutlined />}
+      size='large'
       style={{
+        borderColor: 'transparent',
         width: '100%',
         backgroundColor: '#06645E',
         color: 'white',
-        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
       }} 
       data-testid='user add adda'>Add Custom Cargo</Button>
     </Dropdown>

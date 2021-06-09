@@ -15,7 +15,7 @@ describe('Mac', () => {
     await waitFor(() =>
       expect(ct.queryAllByText('Loading Test').length).toBe(0)
     )
-    expect(ct.queryAllByText('Tanks').length).toBe(1)
+    expect(ct.queryAllByText('Cargo').length).toBe(1)
   })
 
   // it('will init state on first render', async () => {
