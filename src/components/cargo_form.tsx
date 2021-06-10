@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {useEffect, useRef} from 'react'
 import {Form, Input, Button} from 'antd'
-import {getUserSchema, userStore} from '../hooks/user_store'
+import {getUserAir, getUserSchema } from '../hooks/user_store'
 import {getUserActions, getUserCargo} from '../hooks/user_store'
 import {capitalizeFirst, rulesYupWrapper} from '../utils/util'
 import debounce from 'lodash/debounce'
-import { CargoString } from '../types/cargoString'
 
 const cs = getUserActions()
 
@@ -15,6 +14,7 @@ export const CargoForm = ({uuid}: {uuid: string}) => {
   // grab constant values from initial cargo => uuid, category, ok to use ref because form hook state overrides other vals
   const cargo = useRef(getUserCargo(uuid)).current
   const schema = useRef(getUserSchema()).current as any
+  const air = useRef(getUserAir()).current
 
   // set init values and errors.
   // init value and validation inside store is handled in the methods that expose this form
@@ -38,26 +38,30 @@ export const CargoForm = ({uuid}: {uuid: string}) => {
     cs.setEditUuid(undefined)
   }
 
-  const filterKeys: string[] = ['uuid', 'category', 'isValid']
+  // k: k, v: placeholderText
+  const editableEntriesOfCargoString = {
+    name: 'Please input cargo name',
+    weightEA: 'Please input cargo weight',
+    fs: `${air.fs0}-${air.fs1}`,
+    qty: `Please input cargo qty`
+  }
 
   return (
     <>
       <Form key={cargo.uuid + '_form'} form={form}>
-        {Object.keys(cargo)
-          .filter((k) => !filterKeys.includes(k))
-          .map((k) => (
+        {Object.entries(editableEntriesOfCargoString).map((e) => (
             <Form.Item
-              key={cargo.uuid + k + 'form_item'}
-              name={`${k}`}
-              label={`${capitalizeFirst(k)}`}
+              key={cargo.uuid + e[0] + 'form_item'}
+              name={`${e[0]}`}
+              label={`${capitalizeFirst(e[0])}`}
               colon={false}
-              rules={rulesYupWrapper(schema[k])}
+              rules={rulesYupWrapper(schema[e[0]])}
               hasFeedback
               labelCol={{span: 24}}
             >
               <Input
                 size="large"
-                placeholder={`Please input cargo ${k}`}
+                placeholder={e[1]}
                 onChange={debounce(onChange, 500)}
               />
             </Form.Item>

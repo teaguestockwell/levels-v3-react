@@ -44,6 +44,11 @@ li.ant-menu-item.ant-menu-item-selected::after {
 
 .ant-input {
   border-radius: 5px !important;
+  text-align: center !important;
+}
+
+.ant-form-item-has-success .anticon-check-circle svg {
+  display: none;
 }
 
 .ant-select-selector{

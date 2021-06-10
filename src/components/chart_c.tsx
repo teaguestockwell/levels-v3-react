@@ -75,7 +75,7 @@ export const ChartC = () => {
             >
               <Input
                 size="large"
-                placeholder={`Basic Weight`}
+                placeholder={`${Math.ceil(air.weight0/1000)}k-${Math.floor(air.weight1/1000)}k`}
                 onChange={debounce(onChange, 500)}
               />
             </Form.Item>
@@ -92,7 +92,7 @@ export const ChartC = () => {
               <Input
                 size="large"
                 onChange={debounce(onChange, 500)}
-                placeholder={`Basic Moment`}
+                placeholder={`${Math.ceil(air.mom0/1000)}k-${Math.floor(air.mom1/1000)}k`}
                 />
             </Form.Item>
           </Col>
