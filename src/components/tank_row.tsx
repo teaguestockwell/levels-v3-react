@@ -26,7 +26,7 @@ export const TankRow = ({
   const maxWeight = weights[weights.length - 1]
   const liquidConfig = {
     percent: Number(currentWeight) / Number(maxWeight),
-    range: { color: 'l(0) 0:#bde8ff 1:#9ec9ff' },
+    range: { color: 'l(0) 0:#B7D9D7 1:#037C75'},
     indicator: null,
   } as any
 

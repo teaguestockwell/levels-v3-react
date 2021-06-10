@@ -4,7 +4,6 @@ import {Cargo, Category} from '../types/aircraftDeep'
 import {getUserAir, getUserSchema} from '../hooks/user_store'
 import {MenuInfo} from 'rc-menu/lib/interface'
 import {getCargoString, getCargoStringFromCargo} from '../utils/util'
-import {PlusOutlined} from '@ant-design/icons'
 
 const cs = getUserActions()
 
@@ -60,7 +59,6 @@ export const AddASelect = () => {
   return (
     <Dropdown overlay={menu} trigger={['click']}>
       <Button 
-      icon={<PlusOutlined />}
       size='large'
       style={{
         borderColor: 'transparent',
@@ -69,7 +67,7 @@ export const AddASelect = () => {
         color: 'white',
         boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
       }} 
-      data-testid='user add adda'>Custom Cargo</Button>
+      data-testid='user add adda'>Custom Cargo +</Button>
     </Dropdown>
   )
 }

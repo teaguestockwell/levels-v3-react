@@ -19,7 +19,8 @@ export const GetMacButton = ({style}: {style?:any}) => {
       color: '#06645E',
       borderColor: '#06645E',
       backgroundColor: 'white',
-      width: 200
+      width: 200,
+      boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25'
     }}
     >{
       isCargoValid 

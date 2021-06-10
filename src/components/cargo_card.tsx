@@ -23,6 +23,9 @@ export const CargoCard = () => {
   const configName = useConfigName()
   useCargoMapSize()
   const cargos = getUserCargos()
+  const cargoContainsCustomCargo = cargos.some(c => c.category === Category.User)
+  const configIsEmpty = configName === 'No Config' ? true : false
+
   
   const getCargosAtCat = (cat: Category) => {
     return cargos
@@ -39,12 +42,14 @@ export const CargoCard = () => {
   >
     {buttons}
 
-    <Divider style={{margin: 10}}/>
+    { (!configIsEmpty || cargoContainsCustomCargo)  &&
+      <Divider style={{margin: 10}}/>
+    }
 
     <Collapse expandIconPosition={'right'} accordion bordered={false} style={{padding: '0px 4px'}}>
 
-      { configName !== 'No Config' &&
-        <Panel key={'1'} header={`${configName} Cargos`}>
+      { !configIsEmpty &&
+        <Panel key={'1'} header={`${configName} Cargo`}>
         <Collapse expandIconPosition={'right'} accordion bordered={false}>
 
           <Panel key={'2'} header={`Steward Cargo`}>
@@ -63,9 +68,11 @@ export const CargoCard = () => {
       </Panel>
       }
 
-      <Panel key={'5'} header={`Custom Cargo`}>
-        {getCargosAtCat(Category.User)}
-      </Panel> 
+      { cargoContainsCustomCargo  && // is there more than tanks and chart c?
+        <Panel key={'5'} header={`Custom Cargo`}>
+          {getCargosAtCat(Category.User)}
+        </Panel> 
+      }
 
     </Collapse>
   </div>
