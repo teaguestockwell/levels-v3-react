@@ -18,7 +18,7 @@ describe('mac page', () => {
     // eslint-disable-next-line cypress/no-async-tests
     it('loads the page', () => {
         cy.visit(host);
-        cy.contains('Atlas')
+        cy.contains('Levels')
     })
 
     it('caculates %mac for c-17a-er with 130k fuel', () => {

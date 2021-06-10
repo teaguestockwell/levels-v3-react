@@ -15,6 +15,6 @@ describe('MobileNav', () => {
     await waitFor(() =>
       expect(ct.queryAllByText('Loading Test').length).toBe(0)
     )
-    expect(ct.queryAllByText('Atlas').length).toBe(1)
+    expect(ct.queryAllByText('Levels').length).toBe(1)
   })
 })

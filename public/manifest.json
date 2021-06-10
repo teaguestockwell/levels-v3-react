@@ -1,6 +1,6 @@
 {
-  "name": "Atlas",
-  "short_name": "Atlas",
+  "name": "Levels",
+  "short_name": "Levels",
   "description": "Aircraft weight and balance",
   "start_url": ".",
   "display": "standalone",

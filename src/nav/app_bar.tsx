@@ -102,7 +102,7 @@ export const AppBar = ({
                   textAlign: 'left',
                   color: 'white'
                 }}
-              >Atlas</div>
+              >Levels</div>
           </Col>
           <Col span={16} style={{textAlign: 'end', paddingTop:4}}>
               {select}

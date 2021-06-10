@@ -26,7 +26,7 @@ export const Mac = () => {
 
       <CardShadow style={{marginTop: 15}} child={
         <>
-        <Label style={{marginLeft: 8}} text={'Cargo'} icon={<svg width="30" height="20" viewBox="0 0 30 20"><path d={Const.PATH.CAR_FILL} fill="#06645E"/></svg>}/>
+        <Label style={{marginLeft: 8, paddingBottom: 4}} text={'Cargo'} icon={<svg width="30" height="20" viewBox="0 0 30 20"><path d={Const.PATH.CAR_FILL} fill="#06645E"/></svg>}/>
         <CargoCard key={v4()}/>
         </>
       }/>

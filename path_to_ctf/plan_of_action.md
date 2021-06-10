@@ -1,5 +1,5 @@
-# Plan of Action for Atlas
-## Atlas, MVP and Beyond
+# Plan of Action for Levels
+## Levels, MVP and Beyond
 
 * **Kick-off Date:**
 2021-02-21
@@ -10,7 +10,7 @@
 #### Vision
 Make aircraft cargo loading / weight and balance extensible for mission needs
 #### Strategy
-While methods exist for loadmasters, they are not maintainable, require extensive training to implement and are not suited for all aircraft or use cases. Atlas's strategy is to deliver an extensible platform for weight and balance / cargo loading.
+While methods exist for loadmasters, they are not maintainable, require extensive training to implement and are not suited for all aircraft or use cases. Levels's strategy is to deliver an extensible platform for weight and balance / cargo loading.
 #### Summary
 Calculating %MAC for the most basic config takes a qualified maintenance technician an average of 12 minutes per attempt, and 1.5 attempts for the correct answer. When we encounter a math problem in our day to day lives we use a calculator to solve it. Our goal is to create an app that serves as a weight and balance calculator for the C-17 loadmaster, and maintainer that is maintainable and extensible to other aircraft.
 ### Goals and Metrics

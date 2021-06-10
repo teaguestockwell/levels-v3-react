@@ -9,6 +9,6 @@ describe('AppBar', () => {
 
   it('should render', () => {
     const ct = render(<AppBar select={<div>select</div>} />)
-    expect(ct.queryAllByText('Atlas').length).toBe(1)
+    expect(ct.queryAllByText('Levels').length).toBe(1)
   })
 })
