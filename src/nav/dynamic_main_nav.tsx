@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 //import {useIsWidthGT} from '../hooks/use_is_width_gt'
 import {DesktopNav} from './desktop_nav'
 import {MobileNav} from './mobile_nav'
@@ -9,26 +10,8 @@ import {AppBar} from './app_bar'
 import {AdminAirSelect} from '../components/admin_air_select'
 import {ClientServerSync} from '../components/client_server_sync'
 import {UserAirSelect} from '../components/user_air_select'
-import {
-  ContainerFilled,
-  LayoutFilled,
-  ToolFilled,
-  QuestionCircleFilled,
-} from '@ant-design/icons'
 import {AdminServerSync} from '../components/admin_server_sync'
 import { Const } from '../utils/const'
-
-const darkIconStyle = {
-  color: Const.COLORS.TXT_DISABLED,
-  height: '30px',
-  fontSize: '175%',
-}
-
-const lightIconStyle = {
-  color: 'white',
-  height: '30px',
-  fontSize: '175%',
-}
 
 /** if x===y return 'active' else return 'inactive' */
 export const getNavItemStyle = (x: string, y: string) =>
@@ -36,19 +19,33 @@ export const getNavItemStyle = (x: string, y: string) =>
 
 export const pageNames = ['%MAC', 'Glossary', 'Help', 'Admin']
 
+const svgPropsSelected = {
+  width: 33,
+  height: 33,
+  viewBox: "0 0 33 33",
+  webkitFilter: 'drop-shadow( 0px 2px 4px rgba(255, 255, 255, .25))',
+  filter: 'drop-shadow( 0px 2px 4px rgba(255, 255, 255, .25))'
+} as any
+
+const svgProps = {
+  width: 33,
+  height: 33,
+  viewBox: "0 0 33 33",
+} as any
+
 /** lookup map for at 'active' || 'inactive' navigation icons styles */
 export const navIcons: {[key: string]: any} = {
   inactive: {
-    '%MAC': <LayoutFilled style={darkIconStyle} data-testid='%MAC nav icon' />,
-    Glossary: <ContainerFilled style={darkIconStyle} data-testid='glossary nav icon'/>,
-    Admin: <ToolFilled style={darkIconStyle} data-testid='admin nav icon'/>,
-    Help: <QuestionCircleFilled style={darkIconStyle} data-testid='help nav icon'/>,
+    '%MAC': <svg {...svgProps}><path d={Const.PATH.MAC_OUTLINE} fill={Const.COLORS.TXT_DISABLED}/></svg>,
+    Glossary: <svg {...svgProps}><path d={Const.PATH.GLOSSARY_OUTLINE} fill={Const.COLORS.TXT_DISABLED}/></svg>,
+    Admin: <svg {...svgProps}><path d={Const.PATH.ADMIN_OUTLINE} fill={Const.COLORS.TXT_DISABLED}/></svg>,
+    Help: <svg {...svgProps}><path d={Const.PATH.HELP_OUTLINE} fill={Const.COLORS.TXT_DISABLED}/></svg>,
   },
   active: {
-    '%MAC': <LayoutFilled style={lightIconStyle} data-testid='%MAC nav icon'/>,
-    Glossary: <ContainerFilled style={lightIconStyle} data-testid='glossary nav icon'/>,
-    Admin: <ToolFilled style={lightIconStyle} data-testid='admin nav icon'/>,
-    Help: <QuestionCircleFilled style={lightIconStyle} data-testid='help nav icon'/>,
+    '%MAC': <svg {...svgPropsSelected}><path d={Const.PATH.MAC_OUTLINE} fill="white"/></svg>,
+    Glossary: <svg {...svgPropsSelected}><path d={Const.PATH.GLOSSARY_OUTLINE} fill="white"/></svg>,
+    Admin: <svg {...svgPropsSelected}><path d={Const.PATH.ADMIN_OUTLINE} fill="white"/></svg>,
+    Help: <svg {...svgPropsSelected}><path d={Const.PATH.HELP_OUTLINE} fill="white"/></svg>,
   },
 }
 
