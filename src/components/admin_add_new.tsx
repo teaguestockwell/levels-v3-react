@@ -10,7 +10,11 @@ export const AdminAddNew = () => {
   return (
     <Row
       justify="end"
-      style={{padding: '12px 12px 12px 12px', textAlign: 'center'}}
+      style={{
+        padding: '12px 12px 12px 12px',
+        textAlign: 'center',
+        marginTop: 50
+      }}
     >
       <Button onClick={() => adminActions().addNewRow()} data-testid='admin add new'>
         {`Add ${model}`}

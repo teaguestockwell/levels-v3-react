@@ -22,7 +22,7 @@ export const GlossaryList = () => {
       <Col {...breakPoints}>
         <List
           itemLayout="horizontal"
-          dataSource={air?.glossarys}
+          dataSource={air?.glossarys ?? []}
           pagination={{pageSize: 1000}}
           renderItem={(g) => (
             <List.Item style={{maxWidth: '800px'}}>

@@ -15,7 +15,7 @@ const as = getAdminStoreActions()
 export const AdminCargoSelect = ({validate}: {validate: () => void}) => {
   const store = adminStore.getState()
   const cargos = store.air?.cargos ?? []
-  const selectedId = store.editObj?.cargoId
+  const selectedId = store.editObj?.cargoId as any
 
   if (!store.ep.includes('configCargo')) {
     return null
