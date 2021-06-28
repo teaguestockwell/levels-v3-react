@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-props-no-spreading */
-//import {useIsWidthGT} from '../hooks/use_is_width_gt'
 import {DesktopNav} from './desktop_nav'
 import {MobileNav} from './mobile_nav'
 import {Mac} from '../pages/mac'
@@ -68,8 +67,5 @@ export const getAppBar = (pageName: string) =>
   pageName !== 'Admin' ? userAppBar : adminAppBar
 
 
-export const DynamicMainNav = () => {
-  //const {isWidthGT} = useIsWidthGT()
+export const DynamicMainNav = () => mobileNav
 
-  return mobileNav
-}

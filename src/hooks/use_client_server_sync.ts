@@ -54,7 +54,7 @@ export const useClientServerSync = () => {
     }
 
     if (swRes) {
-      const gs = ClientServerSyncStore.getState()
+      const gs0 = ClientServerSyncStore.getState()
 
       // are the preloaded aircraft stale?
       const isClientCacheEqualToSwRes = isEqual(clientCache.data, swRes.data)
@@ -67,7 +67,7 @@ export const useClientServerSync = () => {
         isClientCacheEqualToSwRes && isClientOnline
 
       ss.setLastSyncEpoch(
-        isClientSyncedWithServer ? swRes.serverEpoch : gs.lastSyncEpoch
+        isClientSyncedWithServer ? swRes.serverEpoch : gs0.lastSyncEpoch
       )
       ss.setIsClientCacheEqualToSwRes(isClientCacheEqualToSwRes)
       ss.setIsClientOnline(isClientOnline)
@@ -75,18 +75,18 @@ export const useClientServerSync = () => {
     // key is unique to each res regardless is it is from service worker cache
   }, [swRes?.clientReqKey])
 
-  const gs = ClientServerSyncStore.getState()
+  const gs1 = ClientServerSyncStore.getState()
 
   return {
-    isClientOnline: gs.isClientOnline,
-    isClientCacheEqualToSwRes: gs.isClientCacheEqualToSwRes,
-    lastSyncEpoch: gs.lastSyncEpoch,
+    isClientOnline: gs1.isClientOnline,
+    isClientCacheEqualToSwRes: gs1.isClientCacheEqualToSwRes,
+    lastSyncEpoch: gs1.lastSyncEpoch,
     swRes,
     pollingFreq,
     // was the client synced with the server over 48 hours ago?
-    isClientStale: Date.now() - (gs.lastSyncEpoch as number) > 172800000,
+    isClientStale: Date.now() - (gs1.lastSyncEpoch as number) > 172800000,
 
     // client res equality does not mean client is synced with server because the res could have been cached
-    isClientSyncedWithServer: gs.isClientCacheEqualToSwRes && gs.isClientOnline,
+    isClientSyncedWithServer: gs1.isClientCacheEqualToSwRes && gs1.isClientOnline,
   }
 }

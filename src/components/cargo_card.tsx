@@ -7,17 +7,24 @@ import { CargoEditRow } from "./cargo_edit_button"
 
 const {Panel} = Collapse
 
-const buttons = <Row justify="center" style={{
+const buttons = <>
+<Row justify="center" style={{
   padding: '0px 4px 0px 4px',
   textAlign: 'center',
 }}>
-  <Col span={12} style={{paddingRight: '10px'}}>
+  <Col span={24} style={{}}>
     <ConfigSelect/>
   </Col>
-  <Col span={12} style={{paddingLeft: '10px', textAlign: 'center'}}>
+</Row>
+<Row justify="center" style={{
+  padding: '0px 4px 0px 4px',
+  textAlign: 'center',
+}}>
+  <Col span={24} style={{paddingLeft: '10px', textAlign: 'center'}}>
     <AddASelect/>
   </Col>
 </Row>
+</>
 
 export const CargoCard = () => {
   const configName = useConfigName()

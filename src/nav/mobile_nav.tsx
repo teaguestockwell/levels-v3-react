@@ -19,21 +19,6 @@ const cs = getUserActions()
 */
 export const MobileNav = () => {
   const pageName = usePageName()
-  // /** lookup map for at 'active' || 'inactive' navigation text styles */
-  // const navTextStyle: {[key:string]: any} = {
-  //   'active':   {
-  //     color: 'white',
-  //     fontWeight: 'normal',
-  //     fontSize: '14px',
-  //     lineHeight: '18px'
-  //   },
-  //   'inactive': {
-  //     color: '#737373',
-  //     fontWeight: 'normal',
-  //     fontSize: '14px',
-  //     lineHeight: '18px'
-  //   }
-  // }
 
   const colProps = {
     span: 6,

@@ -1,4 +1,3 @@
-//import { v4 } from 'uuv4()'
 import {v4} from 'uuid'
 import {ChartC} from '../components/chart_c'
 import {CargoEditModal} from '../components/cargo_edit_modal'

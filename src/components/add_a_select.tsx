@@ -22,8 +22,8 @@ export const AddASelect = () => {
     const selectedId = Number(menuInfo.key)
 
     if(selectedId === 0){
-      const newCargo = getCargoString()
-      cs.putCargos([newCargo])
+      const newEmptyCargo = getCargoString()
+      cs.putCargos([newEmptyCargo])
       return
     }
 

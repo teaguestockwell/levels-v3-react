@@ -93,8 +93,6 @@ export const JsonTable = () => {
           scroll={{x: 500}}
           columns={columns}
           dataSource={data}
-          //rowKey="name"
-          //sticky
         />
       </>
     )

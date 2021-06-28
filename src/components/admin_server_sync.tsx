@@ -15,6 +15,7 @@ export const AdminServerSync = () => {
 
   const syncColor = data ? '#52C419' : '#1890FF'
   const isData = data ? true : false
+  const connectedStateString = isData ? 'Online' : 'Offline'
 
   const modalButton = useMemo(() => {
     return <Button
@@ -42,7 +43,7 @@ export const AdminServerSync = () => {
           centered
         >
           <div key={v4()}>
-            <p>{`${isData ? 'Online' : 'Offline'}, last synced ${diff} ago`}</p>
+            <p>{`${connectedStateString}, last synced ${diff} ago`}</p>
           </div>
         </Modal>
         : null

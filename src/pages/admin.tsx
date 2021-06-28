@@ -1,4 +1,3 @@
-//import {AdminAddNew} from '../components/admin_add_new'
 import {v4} from 'uuid'
 import {AdminModal} from '../components/admin_modal'
 import {JsonTable} from '../components/json_table'

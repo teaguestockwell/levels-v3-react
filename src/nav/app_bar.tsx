@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {Row, Col, Typography} from 'antd'
 import {Const} from '../utils/const'
-//import icon from '../imgs/icon_round_512.png'
 import { useTick } from '../hooks/use_tick'
 import { getUTCDate } from '../utils/util'
 import {format} from 'date-fns'
@@ -60,8 +59,6 @@ export const AppBar = ({
   // admin app bars contain AdminAirSelects that sync client and server state automatically
   // user app bars contain UserAirSelects that use init state of service worker cache.
   // the cache is updated by the ClientServerSync. if initState !== currentState the users may opt in to refresh
-  const isMobile = window.innerWidth > 750 ? false : true
-
   return (
       <div
         style={{
@@ -81,19 +78,8 @@ export const AppBar = ({
          padding: '4px 12px 10px 12px'
         }}>
           <Col span={8} style={{justifyContent: 'flex-start'}}>
-            {/* {window.innerWidth > 750 ? (
-              <img
-                src={icon}
-                style={{
-                  marginTop: -14,
-                  width: Const.HEIGHT.APP_BAR_NUM - 16,
-                  height: Const.HEIGHT.APP_BAR_NUM - 16,
-                }}
-              />
-            ) : null} */}
               <div
                 style={{
-                  //paddingLeft: isMobile ? '0px' : '14px',
                   textShadow: '0px 2px 4px rgba(255, 255, 255, 0.25)',
                   fontFamily: 'Revalia',
                   fontStyle: 'normal',

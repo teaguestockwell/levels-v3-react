@@ -12,11 +12,11 @@ export const ClientServerSync = () => {
   const [isOpen, setIsOpen] = useState(false)
   const sync = useClientServerSync()
   const tick = useTick(1000)
-  
-  const onSync = () => {
+  const onlineStateString = sync.isClientOnline ? 'Online' : 'Offline'
+  const syncButton = sync.isClientCacheEqualToSwRes ? null : <Button data-testid='client sync but' onClick={() => {
     if(sync.isClientCacheEqualToSwRes){return}
     queryClient.setQueryData('userAirs', () => sync.swRes)
-  }
+  }}>Sync Now</Button>
   
   const getSyncStateColor = () => {
     if (sync.isClientSyncedWithServer) {
@@ -60,10 +60,8 @@ export const ClientServerSync = () => {
           centered
         >
           <div key={v4()}>
-            <p>{`${sync.isClientOnline ? 'Online' : 'Offline'}, last synced ${lastSyncedFromNow} ago`}</p>
-            {
-              sync.isClientCacheEqualToSwRes ? null : <Button data-testid='client sync but' onClick={onSync}>Sync Now</Button>
-            }
+            <p>{`${onlineStateString}, last synced ${lastSyncedFromNow} ago`}</p>
+            {syncButton}
           </div>
         </Modal>
         : null

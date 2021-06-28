@@ -50,7 +50,7 @@ export const ChartC = () => {
         textAlign: 'center',
         color: 'black',
         fontWeight: 'normal',
-        fontSize: '16px',
+        fontSize: '12px',
       }}
     >
       {text}
