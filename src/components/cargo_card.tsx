@@ -4,6 +4,7 @@ import { ConfigSelect } from "./config_select"
 import { AddASelect } from "./add_a_select"
 import { Category } from "../types/aircraftDeep"
 import { CargoEditRow } from "./cargo_edit_button"
+import { v4 } from "uuid"
 
 const {Panel} = Collapse
 
@@ -56,18 +57,18 @@ export const CargoCard = () => {
     <Collapse expandIconPosition={'right'} accordion bordered={false} style={{padding: '0px 4px'}}>
 
       { !configIsEmpty &&
-        <Panel key={'1'} header={`${configName} Cargo`}>
+        <Panel key={v4()} header={`${configName} Cargo`}>
         <Collapse expandIconPosition={'right'} accordion bordered={false}>
 
-          <Panel key={'2'} header={`Steward Cargo`}>
+          <Panel key={v4()} header={`Steward Cargo`}>
             {getCargosAtCat(Category.Steward)}
           </Panel>  
 
-          <Panel key={'3'} header={`Emergency Cargo`}>
+          <Panel key={v4()} header={`Emergency Cargo`}>
           {getCargosAtCat(Category.Emergency)}
           </Panel> 
 
-          <Panel key={'4'} header={`Extra Cargo`}>
+          <Panel key={v4()} header={`Extra Cargo`}>
           {getCargosAtCat(Category.Extra)}
           </Panel>  
 
@@ -76,7 +77,7 @@ export const CargoCard = () => {
       }
 
       { cargoContainsCustomCargo  && // is there more than tanks and chart c?
-        <Panel key={'5'} header={`Custom Cargo`}>
+        <Panel key={v4()} header={`Custom Cargo`}>
           {getCargosAtCat(Category.User)}
         </Panel> 
       }
