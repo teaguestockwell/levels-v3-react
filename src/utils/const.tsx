@@ -58,7 +58,6 @@ export const Const = {
       .string()
       .required()
       .test('is this csv', 'this must be comma separated numbers of the same length', (x) => {
-        // TODO: validate that array length of weights == moments
         if (!x) {
           return false
         }

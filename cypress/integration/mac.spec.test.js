@@ -109,8 +109,11 @@ describe('mac page', () => {
         cy.get('[data-testid="user config select"]').type('C-2{enter}')
         cy.contains('38.85%')
 
+        cy.get('.ant-collapse-header').click()
+        cy.get('.ant-collapse-content-box > .ant-collapse > :nth-child(1) > .ant-collapse-header').click()
+
         // open modal to modify cargo
-        cy.contains('1 EA Hot Cup').click()
+        cy.contains('Hot Cup').click()
 
         // edit item to be invalid
         cy.get('#name').type('hello') //valid
@@ -122,20 +125,24 @@ describe('mac page', () => {
         cy.get('.ant-modal-wrap').click(0,0)
 
         // should no longer be valid %mac
-        cy.contains('%').should('not.exist')
+        cy.contains('%MAC: Invalid')
 
         // delete the hot cup
-        cy.contains('1hello EA Hot Cuphello').click()
+        cy.contains('Hot Cuphello').click()
         cy.get('[data-testid="user cargo delete"]').click()
         cy.contains('1hello EA Hot Cuphello').should('not.exist')
 
         cy.contains('38.85%')
 
         // add new cargo
-        cy.get('[data-testid="user add new"]').click()
+        cy.get('[data-testid="user add adda"]').click()
 
         // open modal to modify cargo
-        cy.contains('1 EA custom cargo').click()
+        cy.contains('New Custom Cargo').click()
+
+        cy.get(':nth-child(2) > .ant-collapse-header').click()
+
+        cy.contains('custom cargo').click()
 
         // edit item to be valid
         cy.get('#name').type(' truck')
@@ -151,8 +158,10 @@ describe('mac page', () => {
         cy.get('[data-testid="user add adda"]').click()
         cy.contains('SLIP (unoccupied)').click()
 
+        cy.get(':nth-child(2) > .ant-collapse-header').click()
+
         // edit slip
-        cy.contains('1 EA SLIP (unoccupied)').click()
+        cy.contains('SLIP (unoccupied)').click()
         cy.get('#fs').type('{backspace}{backspace}900')
 
         // close modal

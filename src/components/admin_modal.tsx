@@ -17,8 +17,8 @@ export const AdminModal = () => {
     (s) => (s.editObj ? true : false),
   )
 
-  const form = useMemo(() => {
-    return isOpen && (
+  return useMemo(() => {
+    return isOpen ? (
       <Modal
         visible={true}
         footer={null}
@@ -28,8 +28,6 @@ export const AdminModal = () => {
       >
         <AdminForm />
       </Modal>
-    )
+    ) : null
   }, [isOpen])
-
-  return form
 }

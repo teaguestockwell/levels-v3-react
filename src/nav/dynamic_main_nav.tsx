@@ -35,16 +35,16 @@ const svgProps = {
 /** lookup map for at 'active' || 'inactive' navigation icons styles */
 export const navIcons: {[key: string]: any} = {
   inactive: {
-    '%MAC': <svg {...svgProps}><path d={Const.PATH.MAC_OUTLINE} fill={Const.COLORS.TXT_DISABLED}/></svg>,
-    Glossary: <svg {...svgProps}><path d={Const.PATH.GLOSSARY_OUTLINE} fill={Const.COLORS.TXT_DISABLED}/></svg>,
-    Admin: <svg {...svgProps}><path d={Const.PATH.ADMIN_OUTLINE} fill={Const.COLORS.TXT_DISABLED}/></svg>,
-    Help: <svg {...svgProps}><path d={Const.PATH.HELP_OUTLINE} fill={Const.COLORS.TXT_DISABLED}/></svg>,
+    '%MAC': <svg data-testid='%MAC nav icon' {...svgProps}><path d={Const.PATH.MAC_OUTLINE} fill={Const.COLORS.TXT_DISABLED}/></svg>, 
+    Glossary: <svg data-testid='glossary nav icon' {...svgProps}><path d={Const.PATH.GLOSSARY_OUTLINE} fill={Const.COLORS.TXT_DISABLED}/></svg>,
+    Admin: <svg data-testid='admin nav icon' {...svgProps}><path d={Const.PATH.ADMIN_OUTLINE} fill={Const.COLORS.TXT_DISABLED}/></svg>,
+    Help: <svg data-testid='help nav icon' {...svgProps}><path d={Const.PATH.HELP_OUTLINE} fill={Const.COLORS.TXT_DISABLED}/></svg>,
   },
   active: {
-    '%MAC': <svg {...svgPropsSelected}><path d={Const.PATH.MAC_OUTLINE} fill="white"/></svg>,
-    Glossary: <svg {...svgPropsSelected}><path d={Const.PATH.GLOSSARY_OUTLINE} fill="white"/></svg>,
-    Admin: <svg {...svgPropsSelected}><path d={Const.PATH.ADMIN_OUTLINE} fill="white"/></svg>,
-    Help: <svg {...svgPropsSelected}><path d={Const.PATH.HELP_OUTLINE} fill="white"/></svg>,
+    '%MAC': <svg data-testid='%MAC nav icon' {...svgPropsSelected}><path d={Const.PATH.MAC_OUTLINE} fill="white"/></svg>,
+    Glossary: <svg data-testid='glossary nav icon' {...svgPropsSelected}><path d={Const.PATH.GLOSSARY_OUTLINE} fill="white"/></svg>,
+    Admin: <svg data-testid='admin nav icon' {...svgPropsSelected}><path d={Const.PATH.ADMIN_OUTLINE} fill="white"/></svg>,
+    Help: <svg data-testid='help nav icon' {...svgPropsSelected}><path d={Const.PATH.HELP_OUTLINE} fill="white"/></svg>,
   },
 }
 
