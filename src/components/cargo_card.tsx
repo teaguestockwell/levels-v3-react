@@ -13,7 +13,7 @@ const buttons = <>
   padding: '0px 4px 0px 4px',
   textAlign: 'center',
 }}>
-  <Col span={24} style={{}}>
+  <Col span={24} style={{textAlign: 'center'}}>
     <ConfigSelect/>
   </Col>
 </Row>
@@ -21,7 +21,7 @@ const buttons = <>
   padding: '0px 4px 0px 4px',
   textAlign: 'center',
 }}>
-  <Col span={24} style={{paddingLeft: '10px', textAlign: 'center'}}>
+  <Col span={24} style={{paddingTop: 10, textAlign: 'center'}}>
     <AddASelect/>
   </Col>
 </Row>
