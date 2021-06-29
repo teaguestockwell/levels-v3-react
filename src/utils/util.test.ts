@@ -12,6 +12,7 @@ import {
   getCargoStringFromChartC,
   getQueryString,
   getQueryObjFromEP,
+  getNewModelFromEP,
 } from './util'
 
 describe('cut()', () =>
@@ -377,5 +378,32 @@ describe('isTankCSVSameLen', () => {
     const valid1 = {simpleMomsCSV: '1', weightsCSV: '1  '}
     expect(util.validateIsTanksCSVSameLen(valid)).toBe(true)
     expect(util.validateIsTanksCSVSameLen(valid1)).toBe(true)
+  })
+})
+
+describe('Const', ()=>{
+  it('has valid yup tests',()=>{
+    const test = Const.schema.numPositiveCSV
+    expect(test.isValidSync('1,2,3')).toBe(true)
+  }),
+
+  it('has invalid yup tests', () => {
+    const test = Const.schema.numPositiveCSV
+    expect(test.isValidSync('1,s,3')).toBe(false)
+  })
+})
+
+
+describe('getNewModelFromEP', ()=>{
+  it('creates a new cargoString to edit based on the current ep state',()=>{
+    const ep = 'cargo'
+    const test = getNewModelFromEP(ep)
+    expect(test).toStrictEqual({
+      cargoId: 0,
+      category: "",
+      fs: "",
+      name: "",
+      weight: "",
+    })
   })
 })
