@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import {Button, Modal} from 'antd'
 import {SyncOutlined} from '@ant-design/icons'
 import {useClientServerSync} from '../hooks/use_client_server_sync'

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import {Row, Col, Typography} from 'antd'
 import {Const} from '../utils/const'
 import { useTick } from '../hooks/use_tick'

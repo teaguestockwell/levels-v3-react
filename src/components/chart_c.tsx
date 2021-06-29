@@ -1,15 +1,14 @@
-import {Form, Input, Typography} from 'antd'
-import {getUserAir} from '../hooks/user_store'
+import {Form, Input, Typography,Row, Col} from 'antd'
 import {useEffect, useRef} from 'react'
 import {
   getCargoStringFromChartC,
   getChartCSchema,
   rulesYupWrapper,
 } from '../utils/util'
-import {userStore, getUserActions} from '../hooks/user_store'
+import {userStore, getUserActions,getUserAir} from '../hooks/user_store'
 import {Category} from '../types/aircraftDeep'
 import {debounce} from 'lodash'
-import {Row, Col} from 'antd'
+
 const cs = getUserActions()
 const {Text} = Typography
 

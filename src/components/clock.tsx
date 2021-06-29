@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import {Col, Row} from 'antd'
-import {useEffect, useState} from 'react'
-import {Typography} from 'antd'
+
+import {Col, Row,Typography} from 'antd'
 import {format} from 'date-fns'
 import {getUTCDate} from '../utils/util'
 import {Const} from '../utils/const'
@@ -27,7 +25,6 @@ export const Clock = () => {
   const getCol = (
     str: string,
     color = '#000000',
-    textAlign: any = 'center'
   ) => (
     <Col span={6} style={{display: 'inline-flex', justifyContent: 'center'}}>
       <Text
@@ -57,19 +54,19 @@ export const Clock = () => {
       }}
     >
       <Row {...rowProps}>
-        {getCol('Zone', Const.COLORS.TXT_DISABLED, 'left')}
+        {getCol('Zone', Const.COLORS.TXT_DISABLED)}
         {getCol('hh:mm:ss', Const.COLORS.TXT_DISABLED)}
         {getCol('JJJ', Const.COLORS.TXT_DISABLED)}
         {getCol('YYYY-MM-DD', Const.COLORS.TXT_DISABLED)}
       </Row>
       <Row {...rowProps}>
-        {getCol('Local', Const.COLORS.TXT_RED, 'left')}
+        {getCol('Local', Const.COLORS.TXT_RED)}
         {getCol(clock.lHMS)}
         {getCol(clock.lJJJ)}
         {getCol(clock.lYMD)}
       </Row>
       <Row {...rowProps}>
-        {getCol('Zulu', Const.COLORS.TXT_RED, 'left')}
+        {getCol('Zulu', Const.COLORS.TXT_RED)}
         {getCol(clock.zHMS)}
         {getCol(clock.zJJJ)}
         {getCol(clock.zYMD)}

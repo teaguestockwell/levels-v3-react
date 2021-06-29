@@ -32,7 +32,7 @@ export const InitLoaded = () => {
     return <DynamicMainNav key={v4()} />
   }
 
-  if (data && !(data?.data.length > 0)) {
+  if (data && data?.data.length <= 0) {
     return <Result title="You have no assigned aircraft" />
   }
 

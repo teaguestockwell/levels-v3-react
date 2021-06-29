@@ -1,7 +1,6 @@
 import {TankRow} from './tank_row'
-import {userStore} from '../hooks/user_store'
+import {userStore,getUserAir} from '../hooks/user_store'
 import {Category} from '../types/aircraftDeep'
-import {getUserAir} from '../hooks/user_store'
 import {Col, Row} from 'antd'
 
 export const TankList = () => {

@@ -1,7 +1,6 @@
 import {Button, Dropdown, Menu} from 'antd'
-import {getUserActions} from '../hooks/user_store'
 import {Cargo, Category} from '../types/aircraftDeep'
-import {getUserAir, getUserSchema} from '../hooks/user_store'
+import {getUserAir, getUserSchema,getUserActions} from '../hooks/user_store'
 import {MenuInfo} from 'rc-menu/lib/interface'
 import {getCargoString, getCargoStringFromCargo} from '../utils/util'
 

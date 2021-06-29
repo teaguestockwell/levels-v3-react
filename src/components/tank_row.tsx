@@ -1,12 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import {Tank} from '../types/aircraftDeep'
-import {getUserActions, useCargo} from '../hooks/user_store'
+import {getUserActions, useCargo,getUserAir} from '../hooks/user_store'
 import {CargoString} from '../types/cargoString'
 import {getCargoStringFromTank} from '../utils/util'
-import {getUserAir} from '../hooks/user_store'
-import {Row, Select} from 'antd'
+import {Row, Select,Typography} from 'antd'
 import { Gauge } from '@ant-design/charts'
-import {Typography} from 'antd'
 import {useMemo, useState} from 'react'
 
 const {Text} = Typography

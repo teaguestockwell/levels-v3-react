@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import {Const} from '../utils/const'
-import {Button, Col, Row, Typography} from 'antd'
+import {Button, Col, Row } from 'antd'
 import {
   navIcons,
   pageNames,

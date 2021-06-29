@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import {Affix, Menu} from 'antd'
+import {Menu} from 'antd'
 import SubMenu from 'antd/lib/menu/SubMenu'
 import {MenuInfo} from 'rc-menu/lib/interface'
 import {DownOutlined} from '@ant-design/icons'

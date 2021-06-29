@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import {useLayoutEffect, useMemo, useRef, useState} from 'react'
 import {Form, Input, Button} from 'antd'
 import {debounce, throttle} from 'lodash'
@@ -8,7 +8,7 @@ import {getYupModelSchemas} from '../types/aircraftDeep'
 import {adminActions} from '../utils/admin_actions'
 import {adminStore, getAdminStoreActions} from '../hooks/admin_store'
 import {AdminCargoSelect} from './admin_cargo_select'
-import { validateIsTanksCSVSameLen } from '../utils/util'
+
 
 const as = getAdminStoreActions()
 
@@ -66,7 +66,7 @@ export const AdminForm = () => {
       })
 
       // if this is a tank, validate csv
-      newValid = validateIsTanksCSVSameLen(newStateMergedAndCast)
+      newValid = util.validateIsTanksCSVSameLen(newStateMergedAndCast)
       
       as.setEditObj(newStateMergedAndCast)
     }

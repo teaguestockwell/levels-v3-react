@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import {useUserAir} from '../hooks/user_store'
 import {Col, List, Row} from 'antd'
 

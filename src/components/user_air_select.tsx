@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import {getUserActions, getUserAir} from '../hooks/user_store'
 import {useUserAirs} from '../hooks/query'
 import {AircraftDeep} from '../types/aircraftDeep'
 import {Select} from 'antd'
-import {Const} from '../utils/const'
 
 const cs = getUserActions()
 const {Option} = Select

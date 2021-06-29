@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import {Const} from './const'
 import * as yup from 'yup'
 import {
@@ -347,7 +347,6 @@ export const getParamsFromEp = (ep: string): string | null => {
 }
  */
 export const getNewModelFromEP = (ep: string): Record<string, any> => {
-  //TODO: handle cargo id of configcargo
 
   const params = getParamsFromEp(ep)
   const model = getModelFromEP(ep)

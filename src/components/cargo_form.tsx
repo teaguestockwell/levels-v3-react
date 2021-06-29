@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import {useEffect, useRef} from 'react'
 import {Form, Input, Button} from 'antd'
-import {getUserAir, getUserSchema } from '../hooks/user_store'
-import {getUserActions, getUserCargo} from '../hooks/user_store'
+import {getUserActions, getUserCargo,getUserAir, getUserSchema } from '../hooks/user_store'
 import {capitalizeFirst, rulesYupWrapper} from '../utils/util'
 import debounce from 'lodash/debounce'
 

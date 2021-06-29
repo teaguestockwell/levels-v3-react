@@ -13,7 +13,7 @@ export const JsonTable = () => {
   const ep = adminStore((s) => s.ep)
   const {data} = usePolling(ep)
 
-  const table = useMemo(() => {
+  return useMemo(() => {
     if (!data) {
       return (
         <div style={{paddingLeft: '12px', paddingRight: '12px'}}>
@@ -98,6 +98,4 @@ export const JsonTable = () => {
     )
     // we dont need to dif data.key because the sw does not cache admin ep
   }, [data, ep])
-
-  return table
 }

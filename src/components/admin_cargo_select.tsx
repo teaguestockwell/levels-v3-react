@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import {Row, Select} from 'antd'
-import {adminStore, getAdminStoreActions} from '../hooks/admin_store'
-import {Typography} from 'antd'
+
+import {Row, Select,Typography} from 'antd'
+import {adminStore } from '../hooks/admin_store'
 
 const {Text} = Typography
 const {Option} = Select
-const as = getAdminStoreActions()
 
 /**
  a nested select for cargo inside of a configuration
@@ -15,7 +13,7 @@ const as = getAdminStoreActions()
 export const AdminCargoSelect = ({validate}: {validate: () => void}) => {
   const store = adminStore.getState()
   const cargos = store.air?.cargos ?? []
-  const selectedId = store.editObj?.cargoId as any
+  const selectedId = store.editObj?.cargoId
 
   if (!store.ep.includes('configCargo')) {
     return null
@@ -31,7 +29,7 @@ export const AdminCargoSelect = ({validate}: {validate: () => void}) => {
     store.setEditObj({
       ...adminStore.getState().editObj,
       cargoId: newCargoId,
-      name: (cargos.find((c) => c.cargoId === newCargoId) as any).name,
+      name: cargos.find((c) => c.cargoId === newCargoId)?.name,
     })
 
     // callback to form to revalidate with fresh cargoId
