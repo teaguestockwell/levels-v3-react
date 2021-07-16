@@ -32,8 +32,8 @@ export const TankRow = ({
     <div
       onClick={() => setIsEditing(!isEditing)}
       style={{
-        width: 100,
-        height: 100,
+        width: 75,
+        height: 75,
       }}
     >
       {process.env.IS_TEST ? (
@@ -60,6 +60,7 @@ export const TankRow = ({
 
     cs.putCargos([newCargoString])
   }
+  
 
   const options = useMemo(() => {
     return weights.map((w) => (
@@ -79,11 +80,12 @@ export const TankRow = ({
       showSearch
       size='small'
       showArrow={false}
-      bordered={isEditing}
+      bordered={true}
       onDropdownVisibleChange={open => setIsEditing(open)}
       open={isEditing}
       showAction={['focus']}
       dropdownMatchSelectWidth={false}
+      virtual={false}
     >
       {options}
     </Select>
@@ -107,7 +109,7 @@ export const TankRow = ({
     <div style={{paddingTop:10, cursor: 'pointer'}}>
       <Row justify="center">{name}</Row>
       <Row justify="center" style={{marginTop: -5}}>{liquid}</Row>
-      <Row justify="center" style={{marginTop: -36}}>{select}</Row>
+      <Row justify="center" style={{marginTop: -2}}>{select}</Row>
     </div>
   )
 }
