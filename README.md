@@ -11,3 +11,4 @@ This builds the ui, api, db, jwt proxy, and cypress imgs, then starts them up. T
 4. npm run docker:build
 5. npm run docker:up
 5. npm run e2e
+
