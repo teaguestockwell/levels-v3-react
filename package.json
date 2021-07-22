@@ -24,7 +24,8 @@
     "pretty": "npx prettier --write .",
     "docker:build": "docker-compose -f e2e-compose.yml -p fl-e2e build --no-cache --parallel",
     "docker:up": "docker-compose -f e2e-compose.yml -p fl-e2e up --force-recreate",
-    "e2e": "npm install &&  npx cypress run -b chrome"
+    "e2e": "npm install &&  npx cypress run -b chrome",
+    "test:e2e-ci": "echo not implemented in pipeline"
   },
   "dependencies": {
     "@ant-design/charts": "^1.1.4",
