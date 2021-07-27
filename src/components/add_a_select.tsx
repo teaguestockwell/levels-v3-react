@@ -31,10 +31,9 @@ export const AddASelect = () => {
   ]
 
   return <Select
-    showArrow={false}
     data-testid={`user add adda`}
     onChange={onChange}
-    value={'Add Equipment +'}
+    value={'Add Equipment'}
     style={{width: '100%', textAlign: 'center'}}
     dropdownStyle={{textAlign: 'center'}}
     showSearch
