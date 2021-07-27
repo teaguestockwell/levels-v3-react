@@ -9,6 +9,7 @@ import {
   persistentPages,
 } from './dynamic_main_nav'
 import {getUserActions, usePageName} from '../hooks/user_store'
+import { MaxContent } from '../components/max_content'
 
 const cs = getUserActions()
 /** 
@@ -41,6 +42,7 @@ export const MobileNav = () => {
           boxShadow: '0px -3px 10px rgba(0, 0, 0, 0.15)'
         }}
       >
+        <MaxContent>
         <Row justify="center" style={{padding: '15px 0px 0px 0px'}}>
           {pageNames.map((x) => (
             <Col {...colProps} key={x}>
@@ -48,10 +50,11 @@ export const MobileNav = () => {
                 type="text"
                 onClick={() => cs.setPageName(x)}
                 icon={navIcons[getNavItemStyle(x, pageName)][x]}
-              />
+                />
             </Col>
           ))}
         </Row>
+        </MaxContent>
         {/* <Row justify="center" style={{padding: '0px 0px 0px 0px'}}>
           {pageNames.map((x) => (
             <Col {...colProps} key={x}>

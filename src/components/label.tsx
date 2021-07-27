@@ -2,7 +2,7 @@ import {Col, Row} from 'antd'
 
 export const Label = ({text, icon, style}: {text: string, icon: JSX.Element, style?:any}) => {
   return (
-    <Row justify="start" style={{marginLeft: 12, paddingTop:12, ...style}}>
+    <Row justify="start" style={{marginLeft: 10, paddingTop:12, ...style}}>
       <Col span={40} style={style}>
         {icon}
       </Col>

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-children-prop */
 /* eslint-disable react/jsx-props-no-spreading */
 import {DesktopNav} from './desktop_nav'
 import {MobileNav} from './mobile_nav'
@@ -11,6 +12,7 @@ import {ClientServerSync} from '../components/client_server_sync'
 import {UserAirSelect} from '../components/user_air_select'
 import {AdminServerSync} from '../components/admin_server_sync'
 import { Const } from '../utils/const'
+import { MaxContent } from '../components/max_content'
 
 /** if x===y return 'active' else return 'inactive' */
 export const getNavItemStyle = (x: string, y: string) =>
@@ -50,10 +52,10 @@ export const navIcons: {[key: string]: any} = {
 
 /** globally scoped components that persist between layouts */
 export const persistentPages: {[key: string]: JSX.Element} = {
-  '%MAC': <Mac />,
-  Glossary: <GlossaryList />,
+  '%MAC': <MaxContent children={<Mac />}/>,
+  Glossary:<MaxContent children={<GlossaryList />}/>,
   Admin: <Admin />,
-  Help: <Help />,
+  Help: <MaxContent children={<Help/>}/>,
 }
 export const mobileNav = <MobileNav />
 export const desktopNav = <DesktopNav />

@@ -33,9 +33,9 @@ export const AdminNav = () => {
         style={{
           zIndex: 1,
           position: 'fixed',
-          left: '0px' ,
+          left: -1 ,
           top: Const.HEIGHT.APP_BAR,
-          right: '0px',
+          right: 0,
         }}
       >
       <Menu
