@@ -105,13 +105,14 @@ export const AdminForm = () => {
           >
             <Input
               size="large"
-              placeholder={`Please input cargo ${k}`}
+              placeholder={`Please input ${modelName} ${k}`}
               onChange={debounce(onChange, 500)}
             />
           </Form.Item>
         ))}
       </Form>
       <Button
+        size={'large'}
         onClick={throttle(onSave, 500)}
         block
         disabled={!isValid}

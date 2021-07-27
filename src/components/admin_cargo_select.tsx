@@ -46,9 +46,10 @@ export const AdminCargoSelect = ({validate}: {validate: () => void}) => {
       </Row>
       <Row justify="start">
         <Select
+          size={'large'}
           defaultValue={selectedId}
           onChange={onChange}
-          style={{width: 400, textAlign: 'center'}}
+          style={{width: '100%', textAlign: 'center'}}
           dropdownStyle={{textAlign: 'center'}}
         >
           {cargos.map((c) => (

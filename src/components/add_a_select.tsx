@@ -56,7 +56,7 @@ export const AddASelect = () => {
   )
 
   return (
-    <Dropdown overlay={menu} trigger={['click']}>
+    <Dropdown placement='bottomCenter' overlay={menu} trigger={['click']}>
       <Button 
       size='large'
       style={{
