@@ -6,7 +6,7 @@
   font-weight: normal;
 }
 
-.selectBoi span{
+.selectBoi span {
   color: white;
 }
 
@@ -51,7 +51,7 @@ li.ant-menu-item.ant-menu-item-selected::after {
   display: none;
 }
 
-.ant-select-selector{
+.ant-select-selector {
   border-radius: 5px !important;
 }
 
@@ -59,8 +59,7 @@ li.ant-menu-item.ant-menu-item-selected::after {
   border-radius: 20px !important;
 }
 
-.ant-btn{
-  
+.ant-btn {
   border-radius: 5px !important;
 }
 
@@ -75,10 +74,10 @@ li.ant-menu-item.ant-menu-item-selected::after {
 
 .ant-collapse-header {
   border-radius: 5px !important;
-  border: 1px solid #06645E !important;
-  margin: 10px 0px !important
+  border: 1px solid #06645e !important;
+  margin: 10px 0px !important;
 }
 
 .ant-collapse-content-box {
-  padding: 0px 0px 0px 10px !important
+  padding: 0px 0px 0px 10px !important;
 }

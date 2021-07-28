@@ -18,39 +18,38 @@ export const AdminServerSync = () => {
   const connectedStateString = isData ? 'Online' : 'Offline'
 
   const modalButton = useMemo(() => {
-    return <Button
-    data-testid='admin-sync-button'
-    style={{backgroundColor: syncColor, borderColor: syncColor}}
-    size={'small'}
-    type="primary"
-    shape="circle"
-    icon={<SyncOutlined />}
-    onClick={() => setIsOpen(true)}
-    />
-  },[syncColor])
-
+    return (
+      <Button
+        data-testid="admin-sync-button"
+        style={{backgroundColor: syncColor, borderColor: syncColor}}
+        size={'small'}
+        type="primary"
+        shape="circle"
+        icon={<SyncOutlined />}
+        onClick={() => setIsOpen(true)}
+      />
+    )
+  }, [syncColor])
 
   return useMemo(() => {
     const diff = ((Date.now() - dataUpdatedAt) / 1000).toFixed(1)
-    return <>
-    {
-      isOpen ? 
-        <Modal
-          visible={true}
-          footer={null}
-          onCancel={() => setIsOpen(false)}
-          closable={false}
-          centered
-        >
-          <div key={v4()}>
-            <p>{`${connectedStateString}, last synced ${diff} ago`}</p>
-          </div>
-        </Modal>
-        : null
-    }
-    {
-      modalButton
-    }
-  </>
-  },[tick,isOpen])
+    return (
+      <>
+        {isOpen ? (
+          <Modal
+            visible={true}
+            footer={null}
+            onCancel={() => setIsOpen(false)}
+            closable={false}
+            centered
+          >
+            <div key={v4()}>
+              <p>{`${connectedStateString}, last synced ${diff} ago`}</p>
+            </div>
+          </Modal>
+        ) : null}
+        {modalButton}
+      </>
+    )
+  }, [tick, isOpen])
 }

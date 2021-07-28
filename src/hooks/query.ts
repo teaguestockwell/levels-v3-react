@@ -11,8 +11,10 @@ export const getN = async (url: string) => {
     url,
     method: 'get',
   })
-  .then(res => res.data)
-  .catch(() => {return null})
+    .then((res) => res.data)
+    .catch(() => {
+      return null
+    })
 }
 
 export const put1 = async (obj: any, ep: string): Promise<number> => {
@@ -56,7 +58,7 @@ export const usePolling = (
     ep,
     async () => {
       const res = await getN(ep)
-      if(res && clientReqKey){
+      if (res && clientReqKey) {
         res.clientReqKey = v4()
       }
       return res
@@ -69,4 +71,3 @@ export const usePolling = (
       retry: Infinity,
     }
   )
-

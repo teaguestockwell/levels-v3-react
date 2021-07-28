@@ -1,4 +1,3 @@
-
 import {useLayoutEffect, useMemo, useRef, useState} from 'react'
 import {Form, Input, Button} from 'antd'
 import {debounce, throttle} from 'lodash'
@@ -8,7 +7,6 @@ import {getYupModelSchemas} from '../types/aircraftDeep'
 import {adminActions} from '../utils/admin_actions'
 import {adminStore, getAdminStoreActions} from '../hooks/admin_store'
 import {AdminCargoSelect} from './admin_cargo_select'
-
 
 const as = getAdminStoreActions()
 
@@ -67,10 +65,10 @@ export const AdminForm = () => {
 
       // if this is a tank, validate csv
       newValid = util.validateIsTanksCSVSameLen(newStateMergedAndCast)
-      
+
       as.setEditObj(newStateMergedAndCast)
     }
-    
+
     setIsValidWrapper(newValid)
   }
 
@@ -105,13 +103,14 @@ export const AdminForm = () => {
           >
             <Input
               size="large"
-              placeholder={`Please input cargo ${k}`}
+              placeholder={`Please input ${modelName} ${k}`}
               onChange={debounce(onChange, 500)}
             />
           </Form.Item>
         ))}
       </Form>
       <Button
+        size={'large'}
         onClick={throttle(onSave, 500)}
         block
         disabled={!isValid}

@@ -13,9 +13,7 @@ export const AdminModal = () => {
     as.setEditObj(undefined)
   }, [])
 
-  const isOpen = adminStore(
-    (s) => (s.editObj ? true : false),
-  )
+  const isOpen = adminStore((s) => (s.editObj ? true : false))
 
   return useMemo(() => {
     return isOpen ? (

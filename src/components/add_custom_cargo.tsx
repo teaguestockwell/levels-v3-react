@@ -10,5 +10,9 @@ export const AddCustomCargo = () => {
     cs.putCargos([newCargo])
   }
 
-  return <Button onClick={onAddCustomCargoClick} data-testid='user add new'>Add Custom</Button>
+  return (
+    <Button onClick={onAddCustomCargoClick} data-testid="user add new">
+      Add Custom
+    </Button>
+  )
 }

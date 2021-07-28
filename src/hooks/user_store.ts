@@ -3,8 +3,12 @@ import {Const} from '../utils/const'
 import {AircraftDeep, Config, Category} from '../types/aircraftDeep'
 import {CargoString} from '../types/cargoString'
 import isEqual from 'lodash/isEqual'
-import { CargoSchema, getCargoSchema, getCargoStringsFromAirTanks } from '../utils/util'
-import { v4 } from 'uuid'
+import {
+  CargoSchema,
+  getCargoSchema,
+  getCargoStringsFromAirTanks,
+} from '../utils/util'
+import {v4} from 'uuid'
 
 export interface UserStoreState extends State {
   // read
@@ -15,7 +19,7 @@ export interface UserStoreState extends State {
   chartC: {weight: string; mom: string}
   air: AircraftDeep | undefined
   cargoSchema: CargoSchema | undefined
-  
+
   // update 1
   setPageName: (pageName: string) => void
   setChartC: (chartC: {weight: string; mom: string}) => void
@@ -29,7 +33,7 @@ export interface UserStoreState extends State {
   deleteCargos: (cargoIds: string[]) => void
 
   // when a new air is selected, reset all state
-  setAir: (air:AircraftDeep, resetCargo?:boolean) => void
+  setAir: (air: AircraftDeep, resetCargo?: boolean) => void
 
   // testing only
   clearCargoMap: () => void
@@ -80,12 +84,15 @@ export const userStore = create<UserStoreState>((set) => ({
     }),
 
   // testing only
-  clearCargoMap: () => set(s => {s.cargoMap = new Map<string,CargoString>()}),
+  clearCargoMap: () =>
+    set((s) => {
+      s.cargoMap = new Map<string, CargoString>()
+    }),
 
   // when a new air is selected, reset all state
-  setAir: (air:AircraftDeep, resetCargo = true) => {
+  setAir: (air: AircraftDeep, resetCargo = true) => {
     const id = v4()
-    const chartC: [string,CargoString] = [
+    const chartC: [string, CargoString] = [
       id,
       {
         name: 'Basic Aircraft',
@@ -95,14 +102,18 @@ export const userStore = create<UserStoreState>((set) => ({
         isValid: false,
         uuid: id,
         category: Category.BasicAircraft,
-      }
+      },
     ]
-    const tanks = getCargoStringsFromAirTanks(air).map<[string, CargoString]>(cs => [cs.uuid,cs])
+    const tanks = getCargoStringsFromAirTanks(air).map<[string, CargoString]>(
+      (cs) => [cs.uuid, cs]
+    )
 
     return set((s) => {
       s.air = air
       // during tests, we need to setup cargo map state to test
-      s.cargoMap = resetCargo ? new Map<string, CargoString>([chartC, ...tanks]) : s.cargoMap
+      s.cargoMap = resetCargo
+        ? new Map<string, CargoString>([chartC, ...tanks])
+        : s.cargoMap
       s.config = Const.NO_CONFIG
       s.chartC = {weight: '', mom: ''}
       s.cargoSchema = getCargoSchema(air)
@@ -124,7 +135,7 @@ export const getUserActions = () => {
 }
 
 // hooks that subscribe components to derived state of the store
-// anytime an action is used to update state, 
+// anytime an action is used to update state,
 // if state1.prop !== state2.prop subscriptions using custom hooks will re render
 // because {foo: "bar"} !== {foo: "bar"} objects would be notified on every action
 // to prevent this we pass in a custom equality function as the second argument
@@ -138,7 +149,7 @@ export const useConfigName = () => userStore((s) => s.config.name)
 export const useCargo = (uuid: string) => {
   return userStore(
     (s) => s.cargoMap.get(uuid),
-    (s1, s2) => isEqual(s1, s2) 
+    (s1, s2) => isEqual(s1, s2)
   ) as CargoString
 }
 
@@ -148,7 +159,7 @@ export const useCargos = () => {
     (s1, s2) => isEqual(s1, s2)
   )
 }
-  
+
 export const useUserAir = () =>
   userStore(
     (s) => s.air,
@@ -156,10 +167,13 @@ export const useUserAir = () =>
   )
 
 // helper functions to access state
-export const getUserCargo = (uuid: string) => userStore.getState().cargoMap.get(uuid) as CargoString
+export const getUserCargo = (uuid: string) =>
+  userStore.getState().cargoMap.get(uuid) as CargoString
 
-export const getUserCargos = () => Array.from(userStore.getState().cargoMap.values())
+export const getUserCargos = () =>
+  Array.from(userStore.getState().cargoMap.values())
 
 export const getUserAir = () => userStore.getState().air as AircraftDeep
 
-export const getUserSchema = () => userStore.getState().cargoSchema as CargoSchema
+export const getUserSchema = () =>
+  userStore.getState().cargoSchema as CargoSchema

@@ -14,5 +14,4 @@ describe('AdminServerSync', () => {
 
     expect(ct.queryAllByTestId('admin-sync-button').length).toBe(1)
   })
-}) 
-  
+})

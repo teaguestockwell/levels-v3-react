@@ -13,10 +13,13 @@ export const AdminAddNew = () => {
       style={{
         padding: '12px 12px 12px 12px',
         textAlign: 'center',
-        marginTop: 50
+        marginTop: 50,
       }}
     >
-      <Button onClick={() => adminActions().addNewRow()} data-testid='admin add new'>
+      <Button
+        onClick={() => adminActions().addNewRow()}
+        data-testid="admin add new"
+      >
         {`Add ${model}`}
       </Button>
     </Row>

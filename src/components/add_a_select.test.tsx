@@ -7,16 +7,22 @@ describe('AddASelect', () => {
   it('will render', async () => {
     const {getByText, queryAllByText} = renderWrapped(<AddASelect />)
     await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
-    expect(getByText('Custom Cargo +')).toBeInTheDocument()
+    expect(getByText('Add Equipment')).toBeInTheDocument()
   })
 
   it('will add cargo', async () => {
     expect(userStore.getState().cargoMap.size).toBe(0)
-    const {getByRole, getByText, queryAllByText} = renderWrapped(<AddASelect />)
+    const {getByText, queryAllByText} = renderWrapped(<AddASelect />)
     await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
 
-    fireEvent.click(getByRole('button'))
-    fireEvent.click(getByText('Water Container (5 Gallon)'))
+    fireEvent.mouseDown(getByText('Add Equipment'))
+    await waitFor(() =>
+      expect(queryAllByText('Steward: Water Container (5 Gallon)').length).toBe(
+        1
+      )
+    )
+    fireEvent.click(getByText('Steward: Water Container (5 Gallon)'))
+
     expect(userStore.getState().cargoMap.size).toBe(1)
   })
 })

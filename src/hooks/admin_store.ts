@@ -1,4 +1,3 @@
-
 import create, {State} from 'zustand'
 import {AircraftDeep} from '../types/aircraftDeep'
 import isEqual from 'lodash/isEqual'
@@ -14,13 +13,13 @@ export interface AdminStoreState extends State {
   setEditObj: (editObj: Record<string, any> | undefined) => void
 }
 
-export const adminStore = create<AdminStoreState>((set ) => ({
+export const adminStore = create<AdminStoreState>((set) => ({
   air: undefined,
   ep: 'aircraft',
   editObj: {},
 
   setAir: (air) => {
-    set(s => {
+    set((s) => {
       s.ep = sanitizeNewAirEP(s.ep, air.aircraftId)
       s.air = air
     })

@@ -4,6 +4,7 @@ import {Result, Skeleton} from 'antd'
 import {DynamicMainNav} from './dynamic_main_nav'
 import {v4} from 'uuid'
 import {ClientServerSyncStore} from '../hooks/use_client_server_sync'
+import {CenterContactButton} from '../pages/help'
 
 const as = getUserActions()
 const ss = ClientServerSyncStore.getState()
@@ -13,7 +14,7 @@ export const InitLoaded = () => {
   // SW => cache to client
   // SW => fetches new data, and updates cache
   // fast init load, but data is stale
-  
+
   const {status, data} = useUserAirs()
 
   if (data?.data && data?.data.length > 0) {
@@ -33,7 +34,12 @@ export const InitLoaded = () => {
   }
 
   if (data && data?.data.length <= 0) {
-    return <Result title="You have no assigned aircraft" />
+    return (
+      <>
+        <Result title="You have no assigned aircraft" />
+        <CenterContactButton />
+      </>
+    )
   }
 
   if (status === 'loading') {
@@ -45,9 +51,12 @@ export const InitLoaded = () => {
   }
 
   return (
-    <Result
-      status="error"
-      title="Failed to load. Please check your connection"
-    />
+    <>
+      <Result
+        status="error"
+        title="Failed to load. Please check your connection"
+      />
+      <CenterContactButton />
+    </>
   )
 }

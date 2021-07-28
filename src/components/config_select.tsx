@@ -1,4 +1,9 @@
-import {getUserAir, getUserSchema,userStore, getUserActions} from '../hooks/user_store'
+import {
+  getUserAir,
+  getUserSchema,
+  userStore,
+  getUserActions,
+} from '../hooks/user_store'
 import {Category, Config} from '../types/aircraftDeep'
 import {getCargoStringsFromConfig} from '../utils/util'
 import {Const} from '../utils/const'
@@ -48,7 +53,7 @@ export const ConfigSelect = () => {
       style={{width: '100%', textAlign: 'center'}}
       dropdownStyle={{textAlign: 'center'}}
       showSearch
-      size='large'
+      size="large"
     >
       <Option value={'No Config'}>No Config</Option>
       {air.configs.map((c) => (

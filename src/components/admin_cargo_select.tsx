@@ -1,6 +1,5 @@
-
-import {Row, Select,Typography} from 'antd'
-import {adminStore } from '../hooks/admin_store'
+import {Row, Select, Typography} from 'antd'
+import {adminStore} from '../hooks/admin_store'
 
 const {Text} = Typography
 const {Option} = Select
@@ -46,9 +45,10 @@ export const AdminCargoSelect = ({validate}: {validate: () => void}) => {
       </Row>
       <Row justify="start">
         <Select
+          size={'large'}
           defaultValue={selectedId}
           onChange={onChange}
-          style={{width: 400, textAlign: 'center'}}
+          style={{width: '100%', textAlign: 'center'}}
           dropdownStyle={{textAlign: 'center'}}
         >
           {cargos.map((c) => (

@@ -1,4 +1,3 @@
-
 import {getUserActions, getUserAir} from '../hooks/user_store'
 import {useUserAirs} from '../hooks/query'
 import {AircraftDeep} from '../types/aircraftDeep'
@@ -18,12 +17,12 @@ export const UserAirSelect = () => {
 
   return (
     <Select
-      className='selectBoi'
+      className="selectBoi"
       bordered={false}
       data-testid={`user air select`}
       defaultValue={airName}
       onChange={onAirChange}
-      style={{ textAlign: 'right', fontSize: 18}}
+      style={{textAlign: 'right', fontSize: 18}}
       dropdownStyle={{textAlign: 'center'}}
       showSearch
       dropdownMatchSelectWidth={false}

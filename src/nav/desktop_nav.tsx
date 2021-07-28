@@ -1,4 +1,3 @@
-
 import {Layout, Menu} from 'antd'
 import {Const} from '../utils/const'
 import {
@@ -66,7 +65,12 @@ export const DesktopNav = () => {
             ))}
           </Menu>
         </Sider>
-        <div style={{paddingLeft: collapsed ? '80px' : '150px', paddingTop: Const.HEIGHT.APP_BAR}}>
+        <div
+          style={{
+            paddingLeft: collapsed ? '80px' : '150px',
+            paddingTop: Const.HEIGHT.APP_BAR,
+          }}
+        >
           {persistentPages[pageName]}
         </div>
       </Layout>

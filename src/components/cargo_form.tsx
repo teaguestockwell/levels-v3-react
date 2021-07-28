@@ -1,7 +1,11 @@
-
 import {useEffect, useRef} from 'react'
 import {Form, Input, Button} from 'antd'
-import {getUserActions, getUserCargo,getUserAir, getUserSchema } from '../hooks/user_store'
+import {
+  getUserActions,
+  getUserCargo,
+  getUserAir,
+  getUserSchema,
+} from '../hooks/user_store'
 import {capitalizeFirst, rulesYupWrapper} from '../utils/util'
 import debounce from 'lodash/debounce'
 
@@ -42,31 +46,31 @@ export const CargoForm = ({uuid}: {uuid: string}) => {
     name: 'Please input cargo name',
     weightEA: 'Please input cargo weight',
     fs: `${air.fs0}-${air.fs1}`,
-    qty: `Please input cargo qty`
+    qty: `Please input cargo qty`,
   }
 
   return (
     <>
       <Form key={cargo.uuid + '_form'} form={form}>
         {Object.entries(editableEntriesOfCargoString).map((e) => (
-            <Form.Item
-              key={cargo.uuid + e[0] + 'form_item'}
-              name={`${e[0]}`}
-              label={`${capitalizeFirst(e[0])}`}
-              colon={false}
-              rules={rulesYupWrapper(schema[e[0]])}
-              hasFeedback
-              labelCol={{span: 24}}
-            >
-              <Input
-                size="large"
-                placeholder={e[1]}
-                onChange={debounce(onChange, 500)}
-              />
-            </Form.Item>
-          ))}
+          <Form.Item
+            key={cargo.uuid + e[0] + 'form_item'}
+            name={`${e[0]}`}
+            label={`${capitalizeFirst(e[0])}`}
+            colon={false}
+            rules={rulesYupWrapper(schema[e[0]])}
+            hasFeedback
+            labelCol={{span: 24}}
+          >
+            <Input
+              size="large"
+              placeholder={e[1]}
+              onChange={debounce(onChange, 500)}
+            />
+          </Form.Item>
+        ))}
       </Form>
-      <Button danger onClick={onDelete} block data-testid='user cargo delete'>
+      <Button danger onClick={onDelete} block data-testid="user cargo delete">
         Delete
       </Button>
     </>

@@ -1,11 +1,11 @@
-import {Form, Input, Typography,Row, Col} from 'antd'
+import {Form, Input, Typography, Row, Col} from 'antd'
 import {useEffect, useRef} from 'react'
 import {
   getCargoStringFromChartC,
   getChartCSchema,
   rulesYupWrapper,
 } from '../utils/util'
-import {userStore, getUserActions,getUserAir} from '../hooks/user_store'
+import {userStore, getUserActions, getUserAir} from '../hooks/user_store'
 import {Category} from '../types/aircraftDeep'
 import {debounce} from 'lodash'
 
@@ -74,7 +74,9 @@ export const ChartC = () => {
             >
               <Input
                 size="large"
-                placeholder={`${Math.ceil(air.weight0/1000)}k-${Math.floor(air.weight1/1000)}k`}
+                placeholder={`${Math.ceil(air.weight0 / 1000)}k-${Math.floor(
+                  air.weight1 / 1000
+                )}k`}
                 onChange={debounce(onChange, 500)}
               />
             </Form.Item>
@@ -87,12 +89,14 @@ export const ChartC = () => {
               rules={rulesYupWrapper(schema.mom)}
               hasFeedback
               labelCol={{span: 24}}
-              >
+            >
               <Input
                 size="large"
                 onChange={debounce(onChange, 500)}
-                placeholder={`${Math.ceil(air.mom0/1000)}k-${Math.floor(air.mom1/1000)}k`}
-                />
+                placeholder={`${Math.ceil(air.mom0 / 1000)}k-${Math.floor(
+                  air.mom1 / 1000
+                )}k`}
+              />
             </Form.Item>
           </Col>
         </Row>

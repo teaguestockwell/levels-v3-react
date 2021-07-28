@@ -1,173 +1,180 @@
 // <reference types="cypress" />
 
-const host = Cypress.env('CYPRESS_BASE_URL');
+const host = Cypress.env('CYPRESS_BASE_URL')
 
 describe('mac page', () => {
-    // remove sw cache to prevent cyypress from testing an old build
-    beforeEach(() => {
-        if (window.navigator && navigator.serviceWorker) {
-          navigator.serviceWorker.getRegistrations()
-          .then((registrations) => {
-            registrations.forEach((registration) => {
-              registration.unregister()
-            })
-          })
-        }
-    })
+  // remove sw cache to prevent cyypress from testing an old build
+  beforeEach(() => {
+    if (window.navigator && navigator.serviceWorker) {
+      navigator.serviceWorker.getRegistrations().then((registrations) => {
+        registrations.forEach((registration) => {
+          registration.unregister()
+        })
+      })
+    }
+  })
 
-    // eslint-disable-next-line cypress/no-async-tests
-    it('loads the page', () => {
-        cy.visit(host);
-        cy.contains('Levels')
-    })
+  // eslint-disable-next-line cypress/no-async-tests
+  it('loads the page', () => {
+    cy.visit(host)
+    cy.contains('Levels')
+  })
 
-    it('caculates %mac for c-17a-er with 130k fuel', () => {
-        cy.visit(host);
+  it('caculates %mac for c-17a-er with 130k fuel', () => {
+    cy.visit(host)
 
-        // get er plane
-        cy.get('[data-testid="user air select"]').type('C-17')
-        cy.get('.ant-select-item-option').contains(/C-17A-ER$/).click()
-        cy.contains(/C-17A-ER$/)
-        
-        // enter chart c
-        cy.get('#weight').type('282000')
-        cy.get('#mom').type('26000')
-        cy.contains('41.55%')
+    // get er plane
+    cy.get('[data-testid="user air select"]').type('C-17')
+    cy.get('.ant-select-item-option')
+      .contains(/C-17A-ER$/)
+      .click()
+    cy.contains(/C-17A-ER$/)
 
-        // enter 130k fuel
-        cy.get('[data-testid="Tank 1 select"]').type('32500{enter}') // test id are dynamic from tank name
-        cy.contains('43.97%')
+    // enter chart c
+    cy.get('#weight').type('282000')
+    cy.get('#mom').type('26000')
+    cy.contains('41.55%')
 
-        cy.get('[data-testid="Tank 2 ER select"]').type('32500{enter}')
-        cy.contains('40.30%')
+    // enter 130k fuel
+    cy.get('[data-testid="Tank 1 select"]').type('32500{enter}') // test id are dynamic from tank name
+    cy.contains('43.97%')
 
-        cy.get('[data-testid="Tank 3 ER select"]').type('32500{enter}')
-        cy.contains('37.26%')
+    cy.get('[data-testid="Tank 2 ER select"]').type('32500{enter}')
+    cy.contains('40.30%')
 
-        cy.get('[data-testid="Tank 4 select"]').type('32500{enter}')
+    cy.get('[data-testid="Tank 3 ER select"]').type('32500{enter}')
+    cy.contains('37.26%')
 
-        // final %MAC
-        cy.contains('39.44%')
-    })
+    cy.get('[data-testid="Tank 4 select"]').type('32500{enter}')
 
-    it('caculates %mac for c-17a with 130k fuel', () => {
-        cy.visit(host);
+    // final %MAC
+    cy.contains('39.44%')
+  })
 
-        // get non er plane
-        cy.get('[data-testid="user air select"]').type('C-17')
-        cy.get('.ant-select-item-option').contains(/C-17A$/).click()
-        cy.contains(/C-17A$/)
-        
-        // enter chart c
-        cy.get('#weight').type('282000')
-        cy.get('#mom').type('26000')
-        cy.contains('41.55%')
+  it('caculates %mac for c-17a with 130k fuel', () => {
+    cy.visit(host)
 
-        // enter 130k fuel
-        cy.get('[data-testid="Tank 1 select"]').type('32500{enter}') // test id are dynamic from tank name
-        cy.contains('43.97%')
+    // get non er plane
+    cy.get('[data-testid="user air select"]').type('C-17')
+    cy.get('.ant-select-item-option')
+      .contains(/C-17A$/)
+      .click()
+    cy.contains(/C-17A$/)
 
-        cy.get('[data-testid="Tank 2 select"]').type('32500{enter}')
-        cy.contains('40.62%')
+    // enter chart c
+    cy.get('#weight').type('282000')
+    cy.get('#mom').type('26000')
+    cy.contains('41.55%')
 
-        cy.get('[data-testid="Tank 3 select"]').type('32500{enter}')
-        cy.contains('37.84%')
+    // enter 130k fuel
+    cy.get('[data-testid="Tank 1 select"]').type('32500{enter}') // test id are dynamic from tank name
+    cy.contains('43.97%')
 
-        cy.get('[data-testid="Tank 4 select"]').type('32500{enter}')
+    cy.get('[data-testid="Tank 2 select"]').type('32500{enter}')
+    cy.contains('40.62%')
 
-        // final %MAC
-        cy.contains('39.98%')
-    })
+    cy.get('[data-testid="Tank 3 select"]').type('32500{enter}')
+    cy.contains('37.84%')
 
-    it('caculates %mac with all the things', () => {
-        cy.visit(host);
+    cy.get('[data-testid="Tank 4 select"]').type('32500{enter}')
 
-        // get non er plane
-        cy.get('[data-testid="user air select"]').type('C-17')
-        cy.get('.ant-select-item-option').contains(/C-17A$/).click()
-        cy.contains(/C-17A$/)
-        
-        // enter chart c
-        cy.get('#weight').type('282000')
-        cy.get('#mom').type('26000')
-        cy.contains('41.55%')
+    // final %MAC
+    cy.contains('39.98%')
+  })
 
-        // enter 130k fuel
-        cy.get('[data-testid="Tank 1 select"]').type('32500{enter}') // test id are dynamic from tank name
-        cy.contains('43.97%')
+  it('caculates %mac with all the things', () => {
+    cy.visit(host)
 
-        cy.get('[data-testid="Tank 2 select"]').type('32500{enter}')
-        cy.contains('40.62%')
+    // get non er plane
+    cy.get('[data-testid="user air select"]').type('C-17')
+    cy.get('.ant-select-item-option')
+      .contains(/C-17A$/)
+      .click()
+    cy.contains(/C-17A$/)
 
-        cy.get('[data-testid="Tank 3 select"]').type('32500{enter}')
-        cy.contains('37.84%')
+    // enter chart c
+    cy.get('#weight').type('282000')
+    cy.get('#mom').type('26000')
+    cy.contains('41.55%')
 
-        cy.get('[data-testid="Tank 4 select"]').type('32500{enter}')
-        cy.contains('39.98%')
+    // enter 130k fuel
+    cy.get('[data-testid="Tank 1 select"]').type('32500{enter}') // test id are dynamic from tank name
+    cy.contains('43.97%')
 
-        // add c2
-        cy.get('[data-testid="user config select"]').type('C-2{enter}')
-        cy.contains('38.85%')
+    cy.get('[data-testid="Tank 2 select"]').type('32500{enter}')
+    cy.contains('40.62%')
 
-        cy.get('.ant-collapse-header').click()
-        cy.get('.ant-collapse-content-box > .ant-collapse > :nth-child(1) > .ant-collapse-header').click()
+    cy.get('[data-testid="Tank 3 select"]').type('32500{enter}')
+    cy.contains('37.84%')
 
-        // open modal to modify cargo
-        cy.contains('Hot Cup').click()
+    cy.get('[data-testid="Tank 4 select"]').type('32500{enter}')
+    cy.contains('39.98%')
 
-        // edit item to be invalid
-        cy.get('#name').type('hello') //valid
-        cy.get('#weightEA').type('hello') //invalid
-        cy.get('#fs').type('hello')//invalid
-        cy.get('#qty').type('hello')//invalid
+    // add c2
+    cy.get('[data-testid="user config select"]').type('C-2{enter}')
+    cy.contains('38.85%')
 
-        // close modal
-        cy.get('.ant-modal-wrap').click(0,0)
+    cy.get('.ant-collapse-header').click()
+    cy.get(
+      '.ant-collapse-content-box > .ant-collapse > :nth-child(1) > .ant-collapse-header'
+    ).click()
 
-        // should no longer be valid %mac
-        cy.contains('%MAC: Invalid')
+    // open modal to modify cargo
+    cy.contains('Hot Cup').click()
 
-        // delete the hot cup
-        cy.contains('Hot Cuphello').click()
-        cy.get('[data-testid="user cargo delete"]').click()
-        cy.contains('1hello EA Hot Cuphello').should('not.exist')
+    // edit item to be invalid
+    cy.get('#name').type('hello') //valid
+    cy.get('#weightEA').type('hello') //invalid
+    cy.get('#fs').type('hello') //invalid
+    cy.get('#qty').type('hello') //invalid
 
-        cy.contains('38.85%')
+    // close modal
+    cy.get('.ant-modal-wrap').click(0, 0)
 
-        // add new cargo
-        cy.get('[data-testid="user add adda"]').click()
+    // should no longer be valid %mac
+    cy.contains('%MAC: Invalid')
 
-        // open modal to modify cargo
-        cy.contains('New Custom Cargo').click()
+    // delete the hot cup
+    cy.contains('Hot Cuphello').click()
+    cy.get('[data-testid="user cargo delete"]').click()
+    cy.contains('1hello EA Hot Cuphello').should('not.exist')
 
-        cy.get(':nth-child(2) > .ant-collapse-header').click()
+    cy.contains('38.85%')
 
-        cy.contains('custom cargo').click()
+    // add new cargo
+    cy.get('[data-testid="user add adda"]').click()
 
-        // edit item to be valid
-        cy.get('#name').type(' truck')
-        cy.get('#weightEA').type('5000')
-        cy.get('#fs').type('1200')
+    // open modal to modify cargo
+    cy.contains('New Custom Cargo').click()
 
-        // close modal
-        cy.get('.ant-modal-wrap').click(0,0)
+    cy.get(':nth-child(2) > .ant-collapse-header').click()
 
-      cy.contains('39.95%')
+    cy.contains('custom cargo').click()
 
-        // add from addenda a
-        cy.get('[data-testid="user add adda"]').click()
-        cy.contains('SLIP (unoccupied)').click()
+    // edit item to be valid
+    cy.get('#name').type(' truck')
+    cy.get('#weightEA').type('5000')
+    cy.get('#fs').type('1200')
 
-        cy.get(':nth-child(2) > .ant-collapse-header').click()
+    // close modal
+    cy.get('.ant-modal-wrap').click(0, 0)
 
-        // edit slip
-        cy.contains('SLIP (unoccupied)').click()
-        cy.get('#fs').type('{backspace}{backspace}900')
+    cy.contains('39.95%')
 
-        // close modal
-        cy.get('.ant-modal-wrap').click(0,0)
+    // add from addenda a
+    cy.get('[data-testid="user add adda"]').click()
+    cy.contains('SLIP (unoccupied)').click()
 
-        // final %mac
-        cy.contains('39.93%')
-    })
+    cy.get(':nth-child(2) > .ant-collapse-header').click()
+
+    // edit slip
+    cy.contains('SLIP (unoccupied)').click()
+    cy.get('#fs').type('{backspace}{backspace}900')
+
+    // close modal
+    cy.get('.ant-modal-wrap').click(0, 0)
+
+    // final %mac
+    cy.contains('39.93%')
+  })
 })
