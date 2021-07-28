@@ -32,7 +32,7 @@ export const formatDate = (date: Date) => {
   const day = getLeading0(date.getUTCDate())
   const hour = getLeading0(date.getUTCHours())
   const min = getLeading0(date.getUTCMinutes())
-  return `${year}-${month}-${day} ${hour}:${min} Zulu`
+  return `${year}/${month}/${day} ${hour}:${min} Z`
 }
 
 export const getUTCDate = (date: Date) => {

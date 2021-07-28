@@ -8,6 +8,7 @@ import {adminActions} from '../utils/admin_actions'
 import {adminStore} from '../hooks/admin_store'
 import {v4} from 'uuid'
 import {AdminAddNew} from './admin_add_new'
+import { formatDate } from '../utils/util'
 
 export const JsonTable = () => {
   const ep = adminStore((s) => s.ep)
@@ -92,7 +93,13 @@ export const JsonTable = () => {
           pagination={{pageSize: 1000}}
           scroll={{x: 500}}
           columns={columns}
-          dataSource={data}
+          dataSource={
+            // format the date of all rows
+            data.map((obj:any) => ({
+              ...obj,
+              updated: formatDate(new Date(obj.updated))
+            }))
+        }
         />
       </>
     )
