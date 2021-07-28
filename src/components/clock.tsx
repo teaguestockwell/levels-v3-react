@@ -1,10 +1,9 @@
-
-import {Col, Row,Typography} from 'antd'
+import {Col, Row, Typography} from 'antd'
 import {format} from 'date-fns'
 import {getUTCDate} from '../utils/util'
 import {Const} from '../utils/const'
 import {useTick} from '../hooks/use_tick'
-import { MaxContent } from './max_content'
+import {MaxContent} from './max_content'
 
 const {Text} = Typography
 
@@ -23,11 +22,7 @@ const getClock = () => {
   }
 }
 
-const getCol = (
-  str: string,
-  color = '#fff',
-  align = 'center'
-) => (
+const getCol = (str: string, color = '#fff', align = 'center') => (
   <Col span={6} style={{display: 'inline-flex', justifyContent: align}}>
     <Text
       style={{
@@ -41,37 +36,38 @@ const getCol = (
   </Col>
 )
 
-
 const rowProps = {
   justify: 'center',
   type: 'flex',
-  style: {padding: '0px 12px 8px 12px'}
+  style: {padding: '0px 12px 8px 12px'},
 } as any
 
 export const Clock = () => {
   useTick(1000)
   const clock = getClock()
 
-  return <>    
-  <MaxContent>
-  <Row {...rowProps}>
-    {getCol('Zone', Const.COLORS.TXT_DISABLED, 'flex-start')}
-    {getCol('hh:mm:ss', Const.COLORS.TXT_DISABLED)}
-    {getCol('JJJ', Const.COLORS.TXT_DISABLED)}
-    {getCol('yyyy/mm/dd', Const.COLORS.TXT_DISABLED, 'flex-end')}
-  </Row>
-  <Row {...rowProps}>
-    {getCol('Local', Const.COLORS.TXT_DISABLED, 'flex-start')}
-    {getCol(clock.lHMS)}
-    {getCol(clock.lJJJ)}
-    {getCol(clock.lYMD, '#fff', 'flex-end')}
-  </Row>
-  <Row {...rowProps}>
-    {getCol('Zulu', Const.COLORS.TXT_DISABLED, 'flex-start')}
-    {getCol(clock.zHMS)}
-    {getCol(clock.zJJJ)}
-    {getCol(clock.zYMD, '#fff', 'flex-end')}
-  </Row>
-  </MaxContent>  
-</>
+  return (
+    <>
+      <MaxContent>
+        <Row {...rowProps}>
+          {getCol('Zone', Const.COLORS.TXT_DISABLED, 'flex-start')}
+          {getCol('hh:mm:ss', Const.COLORS.TXT_DISABLED)}
+          {getCol('JJJ', Const.COLORS.TXT_DISABLED)}
+          {getCol('yyyy/mm/dd', Const.COLORS.TXT_DISABLED, 'flex-end')}
+        </Row>
+        <Row {...rowProps}>
+          {getCol('Local', Const.COLORS.TXT_DISABLED, 'flex-start')}
+          {getCol(clock.lHMS)}
+          {getCol(clock.lJJJ)}
+          {getCol(clock.lYMD, '#fff', 'flex-end')}
+        </Row>
+        <Row {...rowProps}>
+          {getCol('Zulu', Const.COLORS.TXT_DISABLED, 'flex-start')}
+          {getCol(clock.zHMS)}
+          {getCol(clock.zJJJ)}
+          {getCol(clock.zYMD, '#fff', 'flex-end')}
+        </Row>
+      </MaxContent>
+    </>
+  )
 }

@@ -10,7 +10,7 @@ import './fonts/Revalia-Regular.ttf'
 ReactDOM.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-        <InitLoaded />
+      <InitLoaded />
     </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById('root')

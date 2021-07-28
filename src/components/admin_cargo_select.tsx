@@ -1,6 +1,5 @@
-
-import {Row, Select,Typography} from 'antd'
-import {adminStore } from '../hooks/admin_store'
+import {Row, Select, Typography} from 'antd'
+import {adminStore} from '../hooks/admin_store'
 
 const {Text} = Typography
 const {Option} = Select

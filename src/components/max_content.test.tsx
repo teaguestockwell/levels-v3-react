@@ -8,7 +8,11 @@ describe('MaxContent', () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   beforeAll(() => (matchmedia = new MatchMediaMock()))
   it('render', () => {
-    const ct = render(<MaxContent><div>test</div></MaxContent>)
+    const ct = render(
+      <MaxContent>
+        <div>test</div>
+      </MaxContent>
+    )
     expect(ct.queryAllByText('test').length).toBe(1)
   })
 })

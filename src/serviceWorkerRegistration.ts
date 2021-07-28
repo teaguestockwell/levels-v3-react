@@ -25,8 +25,6 @@ type Config = {
   onUpdate?: (registration: ServiceWorkerRegistration) => void
 }
 
-
-
 function registerValidSW(swUrl: string, config?: Config) {
   navigator.serviceWorker
     .register(swUrl)

@@ -30,14 +30,14 @@ export const AdminNav = () => {
 
   return air ? (
     <div
-        style={{
-          zIndex: 1,
-          position: 'fixed',
-          left: -1 ,
-          top: Const.HEIGHT.APP_BAR,
-          right: 0,
-        }}
-      >
+      style={{
+        zIndex: 1,
+        position: 'fixed',
+        left: -1,
+        top: Const.HEIGHT.APP_BAR,
+        right: 0,
+      }}
+    >
       <Menu
         mode="horizontal"
         onClick={onClick}
@@ -45,7 +45,10 @@ export const AdminNav = () => {
         style={{boxShadow: Const.BOX_SHADOW}}
       >
         <Menu.Item key={`aircraft`}>{'My Aircraft'}</Menu.Item>
-        <Menu.Item key={`cargo?aircraftId=${air.aircraftId}`} data-testid='admin cargos'>
+        <Menu.Item
+          key={`cargo?aircraftId=${air.aircraftId}`}
+          data-testid="admin cargos"
+        >
           {'Cargos'}
         </Menu.Item>
         <Menu.Item key={`glossary?aircraftId=${air.aircraftId}`}>

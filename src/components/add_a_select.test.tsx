@@ -16,7 +16,11 @@ describe('AddASelect', () => {
     await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
 
     fireEvent.mouseDown(getByText('Add Equipment'))
-    await waitFor(() => expect(queryAllByText('Steward: Water Container (5 Gallon)').length).toBe(1))
+    await waitFor(() =>
+      expect(queryAllByText('Steward: Water Container (5 Gallon)').length).toBe(
+        1
+      )
+    )
     fireEvent.click(getByText('Steward: Water Container (5 Gallon)'))
 
     expect(userStore.getState().cargoMap.size).toBe(1)

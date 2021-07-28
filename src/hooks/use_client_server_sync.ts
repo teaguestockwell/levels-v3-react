@@ -87,6 +87,7 @@ export const useClientServerSync = () => {
     isClientStale: Date.now() - (gs1.lastSyncEpoch as number) > 172800000,
 
     // client res equality does not mean client is synced with server because the res could have been cached
-    isClientSyncedWithServer: gs1.isClientCacheEqualToSwRes && gs1.isClientOnline,
+    isClientSyncedWithServer:
+      gs1.isClientCacheEqualToSwRes && gs1.isClientOnline,
   }
 }

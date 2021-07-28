@@ -47,9 +47,9 @@ describe('CargoEditButton', () => {
 
     // when form is changed
     act(() =>
-      userStore.getState().putCargos([
-        {...cargo, name: 'new name', qty: '0', isValid: false},
-      ])
+      userStore
+        .getState()
+        .putCargos([{...cargo, name: 'new name', qty: '0', isValid: false}])
     )
 
     // then

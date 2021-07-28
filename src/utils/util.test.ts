@@ -381,29 +381,27 @@ describe('isTankCSVSameLen', () => {
   })
 })
 
-describe('Const', ()=>{
-  it('has valid yup tests',()=>{
+describe('Const', () => {
+  it('has valid yup tests', () => {
     const test = Const.schema.numPositiveCSV
     expect(test.isValidSync('1,2,3')).toBe(true)
   }),
-
-  it('has invalid yup tests', () => {
-    const test = Const.schema.numPositiveCSV
-    expect(test.isValidSync('1,s,3')).toBe(false)
-  })
+    it('has invalid yup tests', () => {
+      const test = Const.schema.numPositiveCSV
+      expect(test.isValidSync('1,s,3')).toBe(false)
+    })
 })
 
-
-describe('getNewModelFromEP', ()=>{
-  it('creates a new cargoString to edit based on the current ep state',()=>{
+describe('getNewModelFromEP', () => {
+  it('creates a new cargoString to edit based on the current ep state', () => {
     const ep = 'cargo'
     const test = getNewModelFromEP(ep)
     expect(test).toStrictEqual({
       cargoId: 0,
-      category: "",
-      fs: "",
-      name: "",
-      weight: "",
+      category: '',
+      fs: '',
+      name: '',
+      weight: '',
     })
   })
 })

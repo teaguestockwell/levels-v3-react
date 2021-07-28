@@ -3,9 +3,9 @@ import {waitFor} from '@testing-library/react'
 import {GetMacButton} from './get_mac_button'
 import {renderWrapped} from '../testUtils/render_wrapped'
 import MatchMediaMock from 'jest-matchmedia-mock'
-import { userStore } from '../hooks/user_store'
-import { CargoString } from '../types/cargoString'
-import { Category } from '../types/aircraftDeep'
+import {userStore} from '../hooks/user_store'
+import {CargoString} from '../types/cargoString'
+import {Category} from '../types/aircraftDeep'
 
 let matchMedia
 
@@ -14,7 +14,7 @@ describe('GetMacButton', () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     matchMedia = new MatchMediaMock()
   })
-  
+
   it('will render', async () => {
     const ct = renderWrapped(<GetMacButton />)
     const invalidCargo: CargoString = {
@@ -24,7 +24,7 @@ describe('GetMacButton', () => {
       weightEA: '123',
       fs: '123',
       qty: '123',
-      isValid: false
+      isValid: false,
     }
 
     userStore.getState().putCargos([invalidCargo])

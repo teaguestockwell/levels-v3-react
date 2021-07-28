@@ -1,10 +1,9 @@
-
 import {Tank} from '../types/aircraftDeep'
-import {getUserActions, useCargo,getUserAir} from '../hooks/user_store'
+import {getUserActions, useCargo, getUserAir} from '../hooks/user_store'
 import {CargoString} from '../types/cargoString'
 import {getCargoStringFromTank} from '../utils/util'
-import {Row, Select,Typography} from 'antd'
-import { Gauge } from '@ant-design/charts'
+import {Row, Select, Typography} from 'antd'
+import {Gauge} from '@ant-design/charts'
 import {useMemo, useState} from 'react'
 
 const {Text} = Typography
@@ -24,7 +23,7 @@ export const TankRow = ({
   const maxWeight = weights[weights.length - 1]
   const liquidConfig = {
     percent: Number(currentWeight) / Number(maxWeight),
-    range: { color: 'l(0) 0:#B7D9D7 1:#037C75'},
+    range: {color: 'l(0) 0:#B7D9D7 1:#037C75'},
     indicator: null,
   } as any
 
@@ -60,7 +59,6 @@ export const TankRow = ({
 
     cs.putCargos([newCargoString])
   }
-  
 
   const options = useMemo(() => {
     return weights.map((w) => (
@@ -78,10 +76,10 @@ export const TankRow = ({
       style={{textAlign: 'center', fontSize: 12, width: 60}}
       dropdownStyle={{textAlign: 'center'}}
       showSearch
-      size='small'
+      size="small"
       showArrow={false}
       bordered={true}
-      onDropdownVisibleChange={open => setIsEditing(open)}
+      onDropdownVisibleChange={(open) => setIsEditing(open)}
       open={isEditing}
       showAction={['focus']}
       dropdownMatchSelectWidth={false}
@@ -104,12 +102,15 @@ export const TankRow = ({
     </Text>
   )
 
-
   return (
-    <div style={{paddingTop:10, cursor: 'pointer'}}>
+    <div style={{paddingTop: 10, cursor: 'pointer'}}>
       <Row justify="center">{name}</Row>
-      <Row justify="center" style={{marginTop: -5}}>{liquid}</Row>
-      <Row justify="center" style={{marginTop: -2}}>{select}</Row>
+      <Row justify="center" style={{marginTop: -5}}>
+        {liquid}
+      </Row>
+      <Row justify="center" style={{marginTop: -2}}>
+        {select}
+      </Row>
     </div>
   )
 }

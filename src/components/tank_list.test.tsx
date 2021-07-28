@@ -18,12 +18,14 @@ const cargoString = (uuid: string): CargoString => ({
 })
 
 const setup = () => {
-  userStore.getState().putCargos([
-    cargoString('0'),
-    cargoString('1'),
-    cargoString('2'),
-    cargoString('3'),
-  ])
+  userStore
+    .getState()
+    .putCargos([
+      cargoString('0'),
+      cargoString('1'),
+      cargoString('2'),
+      cargoString('3'),
+    ])
 }
 
 describe('TankList', () => {

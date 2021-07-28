@@ -28,17 +28,21 @@ export const AdminAirSelect = () => {
   return useMemo(() => {
     // while !res from server
     if (!data) {
-      return <Spin style={{paddingRight: '12px', paddingTop: '6px'}}/>
+      return <Spin style={{paddingRight: '12px', paddingTop: '6px'}} />
     }
 
     // while !res contains error
     if (data.msg) {
-      return <div style={{color: 'white', fontSize: 24}}>Error refresh page!</div>
+      return (
+        <div style={{color: 'white', fontSize: 24}}>Error refresh page!</div>
+      )
     }
 
     // while no data within res
     if (data.length === 0) {
-      return <div style={{color: 'white', fontSize: 24}}>You have no aircraft!</div>
+      return (
+        <div style={{color: 'white', fontSize: 24}}>You have no aircraft!</div>
+      )
     }
 
     // while no client state for selection,
@@ -69,13 +73,13 @@ export const AdminAirSelect = () => {
     return (
       <Select
         bordered={false}
-        className='selectBoi'
-        data-testid='admin air select'
+        className="selectBoi"
+        data-testid="admin air select"
         key={v4()}
         defaultValue={air?.name as string}
         onChange={onAirChange}
         showSearch
-        style={{textAlign: 'right',fontSize: 18}}
+        style={{textAlign: 'right', fontSize: 18}}
         dropdownStyle={{textAlign: 'center'}}
         dropdownMatchSelectWidth={false}
       >
