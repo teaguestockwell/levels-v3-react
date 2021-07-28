@@ -1,4 +1,4 @@
-import {Alert, Select, Spin} from 'antd'
+import {Select, Spin} from 'antd'
 import {useMemo} from 'react'
 import {usePolling} from '../hooks/query'
 import {AircraftDeep} from '../types/aircraftDeep'
@@ -33,12 +33,12 @@ export const AdminAirSelect = () => {
 
     // while !res contains error
     if (data.msg) {
-      return <Alert message="Error" type="error" showIcon />
+      return <div style={{color: 'white', fontSize: 24}}>Error refresh page!</div>
     }
 
     // while no data within res
     if (data.length === 0) {
-      return <Alert message="No Aircraft" type="warning" showIcon />
+      return <div style={{color: 'white', fontSize: 24}}>You have no aircraft!</div>
     }
 
     // while no client state for selection,

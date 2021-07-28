@@ -7,7 +7,7 @@ describe('AddASelect', () => {
   it('will render', async () => {
     const {getByText, queryAllByText} = renderWrapped(<AddASelect />)
     await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
-    expect(getByText('Add Equipment +')).toBeInTheDocument()
+    expect(getByText('Add Equipment')).toBeInTheDocument()
   })
 
   it('will add cargo', async () => {
@@ -15,7 +15,7 @@ describe('AddASelect', () => {
     const {getByText, queryAllByText} = renderWrapped(<AddASelect />)
     await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
 
-    fireEvent.mouseDown(getByText('Add Equipment +'))
+    fireEvent.mouseDown(getByText('Add Equipment'))
     await waitFor(() => expect(queryAllByText('Steward: Water Container (5 Gallon)').length).toBe(1))
     fireEvent.click(getByText('Steward: Water Container (5 Gallon)'))
 
