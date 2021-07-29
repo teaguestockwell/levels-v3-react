@@ -1,14 +1,13 @@
 /* eslint-disable react/display-name */
 import {Col, Empty, Popconfirm, Result, Row, Skeleton, Table} from 'antd'
 import {useMemo} from 'react'
-import {capitalizeFirst} from '../utils/util'
+import {capitalizeFirst,formatDate} from '../utils/util'
 import {DeleteOutlined, EditOutlined} from '@ant-design/icons'
 import {usePolling} from '../hooks/query'
 import {adminActions} from '../utils/admin_actions'
 import {adminStore} from '../hooks/admin_store'
 import {v4} from 'uuid'
 import {AdminAddNew} from './admin_add_new'
-import {formatDate} from '../utils/util'
 
 export const JsonTable = () => {
   const ep = adminStore((s) => s.ep)
