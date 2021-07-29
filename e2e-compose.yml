@@ -18,7 +18,7 @@ services:
       APP_DB_ADMIN_PASSWORD: password
       PHPORT: 5432
       PGHOST: PG_DATABASE
-      IS_LOCAL: 'true' # runtime var => node to use cors: '*'
+      IS_LOCAL: 'true'
     depends_on:
       - 'PG_DATABASE'
 

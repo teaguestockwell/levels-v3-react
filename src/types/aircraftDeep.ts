@@ -148,10 +148,10 @@ export const getYupModelSchemas = (): {[key: string]: any} => {
     },
 
     user: {
-      name: Const.schema.stringSchema,
+      name: yup.string().required().email().max(50),
       role: Const.schema.intSchema,
       shallowObj: yup.object().shape({
-        name: Const.schema.stringSchema,
+        name: yup.string().required().email().max(50),
         role: Const.schema.intSchema,
       }),
     },
