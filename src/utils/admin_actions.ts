@@ -5,22 +5,27 @@ import {getModelFromEP, getNewModelFromEP, getQueryString} from './util'
 import {delete1, put1} from '../hooks/query'
 
 const toastWrap = async (
-  apiRes: Promise<number>,
+  apiRes: Promise<any>,
   action: string,
   name: string
 ): Promise<boolean> => {
   const key = v4()
-  let success = false
-
   message.loading({content: `${action}ing ${name}...`, key})
+  const duration = 3
   try {
-    await apiRes
-    message.success({content: `${name} ${action}ed`, key, duration: 5})
-    success = true
-  } catch (e) {
-    message.error({content: `${e}`, key, duration: 3})
+    const res = await apiRes
+
+    if(res.status === 200){
+      message.success({content: `${name} ${action}ed`, key, duration})
+      return true
+    }
+    
+    message.error({content: `${res.data.msg}`, key, duration})
+    return false
+  } catch (e){
+    message.error({content: `Error, please refresh the page`, key, duration})
+    return false
   }
-  return success
 }
 
 export const adminActions = () => {

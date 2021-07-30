@@ -17,7 +17,10 @@ export const getN = async (url: string) => {
     })
 }
 
-export const put1 = async (obj: any, ep: string): Promise<number> => {
+// https://github.com/axios/axios/issues/41
+const validateStatus = (status: number) => status >= 200 && status < 500
+
+export const put1 = async (obj: any, ep: string): Promise<any> => {
   // remove all values that are an object
   const shallowObj = removeNestedObj(obj)
 
@@ -27,11 +30,11 @@ export const put1 = async (obj: any, ep: string): Promise<number> => {
     delete shallowObj.name
   }
 
-  return (await axios.put(baseURL + ep, shallowObj)).status
+  return axios.put(baseURL + ep, shallowObj,{validateStatus})
 }
 
-export const delete1 = async (ep: string): Promise<number> => {
-  return (await axios.delete(baseURL + ep)).status
+export const delete1 = async (ep: string): Promise<any> => {
+  return axios.delete(baseURL + ep,{validateStatus})
 }
 
 // the state of all the airs that the user can select from in the drop down
