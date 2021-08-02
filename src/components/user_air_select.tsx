@@ -4,7 +4,6 @@ import {AircraftDeep} from '../types/aircraftDeep'
 import {Select} from 'antd'
 
 const cs = getUserActions()
-const {Option} = Select
 
 export const UserAirSelect = () => {
   const {data} = useUserAirs()
@@ -26,12 +25,13 @@ export const UserAirSelect = () => {
       dropdownStyle={{textAlign: 'center'}}
       showSearch
       dropdownMatchSelectWidth={false}
-    >
-      {data.data.map((a: AircraftDeep) => (
-        <Option key={a.name} value={a.name}>
-          {a.name}
-        </Option>
-      ))}
-    </Select>
+      virtual={true}
+      options={
+        data.data.map((air: any) => ({
+          value: air.name,
+          label: air.name,
+        }))
+      }
+    />
   )
 }

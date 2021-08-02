@@ -1,13 +1,11 @@
 import {Select, Spin} from 'antd'
 import {useMemo} from 'react'
 import {usePolling} from '../hooks/query'
-import {AircraftDeep} from '../types/aircraftDeep'
 import {getAdminStoreActions, useAir} from '../hooks/admin_store'
 import isEqual from 'lodash/isEqual'
 import {v4} from 'uuid'
 
 const as = getAdminStoreActions()
-const {Option} = Select
 
 /**
  used to sync the server state of /aircrafts with selected air
@@ -82,13 +80,15 @@ export const AdminAirSelect = () => {
         style={{textAlign: 'right', fontSize: 18}}
         dropdownStyle={{textAlign: 'center'}}
         dropdownMatchSelectWidth={false}
-      >
-        {data.map((a: AircraftDeep) => (
-          <Option key={a.aircraftId} value={a.name}>
-            {a.name}
-          </Option>
-        ))}
-      </Select>
+        virtual={true}
+        options={
+          data.map((a: any) => ({
+            value: a.name,
+            label: a.name,
+          }))
+        }
+      />
+
     )
   }, [data, air])
 }

@@ -38,6 +38,7 @@ export const AddASelect = () => {
       dropdownStyle={{textAlign: 'center'}}
       showSearch
       size="large"
+      virtual={true}
       options={[
         {
           label: 'Custom',

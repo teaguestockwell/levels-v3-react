@@ -2,12 +2,10 @@ import {Tank} from '../types/aircraftDeep'
 import {getUserActions, useCargo, getUserAir} from '../hooks/user_store'
 import {CargoString} from '../types/cargoString'
 import {getCargoStringFromTank} from '../utils/util'
-import {Row, Select, Typography} from 'antd'
+import {Select} from 'antd'
 import {Gauge} from '@ant-design/charts'
 import {useMemo, useState} from 'react'
 
-const {Text} = Typography
-const {Option} = Select
 const cs = getUserActions()
 
 export const TankRow = ({
@@ -19,29 +17,8 @@ export const TankRow = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false)
   const currentWeight = useCargo(cargoString?.uuid)?.weightEA ?? 0
-  const weights = tank.weightsCSV.split(',')
+  const weights = useMemo(() => tank.weightsCSV.split(','), [tank.weightsCSV])
   const maxWeight = weights[weights.length - 1]
-  const liquidConfig = {
-    percent: Number(currentWeight) / Number(maxWeight),
-    range: {color: 'l(0) 0:#B7D9D7 1:#037C75'},
-    indicator: null,
-  } as any
-
-  const liquid = (
-    <div
-      onClick={() => setIsEditing(!isEditing)}
-      style={{
-        width: 75,
-        height: 75,
-      }}
-    >
-      {process.env.IS_TEST ? (
-        <div>chart</div>
-      ) : (
-        <Gauge {...liquidConfig}></Gauge>
-      )}
-    </div>
-  )
 
   const onChange = (newWeight: string) => {
     // get new cargo string from tank with new index
@@ -60,57 +37,90 @@ export const TankRow = ({
     cs.putCargos([newCargoString])
   }
 
-  const options = useMemo(() => {
-    return weights.map((w) => (
-      <Option value={w} key={w}>
-        {w}
-      </Option>
-    ))
-  }, [weights])
 
-  const select = (
-    <Select
-      data-testid={`${tank.name} select`}
-      onChange={onChange}
-      defaultValue={currentWeight}
-      style={{textAlign: 'center', fontSize: 12, width: 60}}
-      dropdownStyle={{textAlign: 'center'}}
-      showSearch
-      size="small"
-      showArrow={false}
-      bordered={true}
-      onDropdownVisibleChange={(open) => setIsEditing(open)}
-      open={isEditing}
-      showAction={['focus']}
-      dropdownMatchSelectWidth={false}
-      virtual={false}
-    >
-      {options}
-    </Select>
-  )
-
-  const name = (
-    <Text
-      style={{
-        textAlign: 'center',
-        color: '#383838',
-        fontWeight: 'normal',
-        fontSize: '12px',
-      }}
-    >
-      {tank.name}
-    </Text>
+  const options = useMemo(
+    () => weights.map(w => ({
+      label: w,
+      value: w,
+    })),
+    
+    [weights]
   )
 
   return (
     <div style={{paddingTop: 10, cursor: 'pointer'}}>
-      <Row justify="center">{name}</Row>
-      <Row justify="center" style={{marginTop: -5}}>
-        {liquid}
-      </Row>
-      <Row justify="center" style={{marginTop: -2}}>
-        {select}
-      </Row>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <div
+          style={{
+            textAlign: 'center',
+            color: '#383838',
+            fontWeight: 'normal',
+            fontSize: '12px',
+          }}
+        >
+          {tank.name}
+        </div>
+      </div>
+
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginTop: -5,
+        }}
+      >
+        <div
+          onClick={() => setIsEditing(!isEditing)}
+          style={{
+            width: 75,
+            height: 75,
+          }}
+        >
+          {process.env.IS_TEST ? (
+            <div>chart</div>
+          ) : (
+            <Gauge
+              percent={Number(currentWeight) / Number(maxWeight)}
+              range={{color: 'l(0) 0:#B7D9D7 1:#037C75'}}
+              indicator={false}
+            />
+          )}
+        </div>
+      </div>
+
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginTop: -2,
+        }}
+      >
+        <Select
+          data-testid={`${tank.name} select`}
+          onChange={onChange}
+          defaultValue={currentWeight}
+          style={{textAlign: 'center', fontSize: 12, width: 60}}
+          dropdownStyle={{textAlign: 'center'}}
+          showSearch
+          size="small"
+          showArrow={false}
+          bordered={true}
+          onDropdownVisibleChange={(open) => setIsEditing(open)}
+          open={isEditing}
+          showAction={['focus']}
+          dropdownMatchSelectWidth={false}
+          virtual={true}
+          options={options}
+        />
+      </div>
     </div>
   )
 }

@@ -2,7 +2,6 @@ import {Row, Select, Typography} from 'antd'
 import {adminStore} from '../hooks/admin_store'
 
 const {Text} = Typography
-const {Option} = Select
 
 /**
  a nested select for cargo inside of a configuration
@@ -39,10 +38,18 @@ export const AdminCargoSelect = ({validate}: {validate: () => void}) => {
     <>
       <Row justify="start" style={{paddingBottom: '10px'}}>
         <Text>
-          Select cargo in config: weight defaults to cargo weight, fs overrides
-          default cargo fs, cargo must be unique to config
+          When selecting a piece of cargo to insert into a config, the cargo inside of that config has the same weight as the cargo you select.
+        </Text>
+
+        <Text style={{paddingTop: 10}}>
+            The fuselage station selected overrides the default fuselage station of that cargo.
+        </Text>
+
+        <Text style={{paddingTop: 10}}>
+            To prevent duplicates, each cargo inserted into a configuration should be unique to that config. For example, instead of inserting 100 separate EPOS into the same config, you should insert one EPOS, give it a quantity of 100, then set the fuselage station to the average of the 100 EPOSs.`
         </Text>
       </Row>
+
       <Row justify="start">
         <Select
           size={'large'}
@@ -50,13 +57,14 @@ export const AdminCargoSelect = ({validate}: {validate: () => void}) => {
           onChange={onChange}
           style={{width: '100%', textAlign: 'center'}}
           dropdownStyle={{textAlign: 'center'}}
-        >
-          {cargos.map((c) => (
-            <Option key={c.cargoId} value={c.cargoId}>
-              {c.name}
-            </Option>
-          ))}
-        </Select>
+          virtual={true}
+          options={
+            cargos.map(c => ({
+              value: c.cargoId,
+              label: c.name
+            }))
+          }
+        />
       </Row>
     </>
   )
