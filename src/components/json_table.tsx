@@ -1,6 +1,5 @@
 /* eslint-disable react/display-name */
 import {Col, Empty, Popconfirm, Result, Row, Skeleton, Table} from 'antd'
-import {useMemo} from 'react'
 import {capitalizeFirst,formatDate} from '../utils/util'
 import {DeleteOutlined, EditOutlined} from '@ant-design/icons'
 import {usePolling} from '../hooks/query'
@@ -8,12 +7,12 @@ import {adminActions} from '../utils/admin_actions'
 import {adminStore} from '../hooks/admin_store'
 import {v4} from 'uuid'
 import {AdminAddNew} from './admin_add_new'
+import React from 'react'
+import {isEqual} from 'lodash'
 
-export const JsonTable = () => {
-  const ep = adminStore((s) => s.ep)
-  const {data} = usePolling(ep)
+const RenderTable = React.memo(
+  ({data}: {data:any}) => {
 
-  return useMemo(() => {
     if (!data) {
       return (
         <div style={{paddingLeft: '12px', paddingRight: '12px'}}>
@@ -108,6 +107,13 @@ export const JsonTable = () => {
         />
       </>
     )
-    // we dont need to dif data.key because the sw does not cache admin ep
-  }, [data, ep])
+  },
+  (s0:any,s1:any) => isEqual(s0,s1)
+)
+
+export const JsonTable = () => {
+  const ep = adminStore((s) => s.ep)
+  const {data} = usePolling(ep)
+
+  return <RenderTable data={data}/>
 }
