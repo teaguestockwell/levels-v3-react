@@ -76,6 +76,23 @@ export const useClientServerSync = () => {
   }, [swRes?.clientReqKey])
 
   const gs1 = ClientServerSyncStore.getState()
+  // client res equality does not mean client is synced with server because the res could have been cached
+  const  isClientSyncedWithServer = gs1.isClientCacheEqualToSwRes && gs1.isClientOnline
+  // was the client synced with the server over 48 hours ago?
+  const isClientStale = Date.now() - (gs1.lastSyncEpoch as number) > 172800000
+  
+  const color = (() => {
+    if (isClientSyncedWithServer) {
+      return '#52C419'
+    } // online synced
+    if (gs1.isClientCacheEqualToSwRes) {
+      return '#1890FF'
+    } // offline
+    if (!isClientStale) {
+      return '#F9AD14'
+    } // online && !isClientSyncedWithServer || lastSync > 48hrs ago
+    return '#FF4D50'
+  })()
 
   return {
     isClientOnline: gs1.isClientOnline,
@@ -83,11 +100,8 @@ export const useClientServerSync = () => {
     lastSyncEpoch: gs1.lastSyncEpoch,
     swRes,
     pollingFreq,
-    // was the client synced with the server over 48 hours ago?
-    isClientStale: Date.now() - (gs1.lastSyncEpoch as number) > 172800000,
-
-    // client res equality does not mean client is synced with server because the res could have been cached
-    isClientSyncedWithServer:
-      gs1.isClientCacheEqualToSwRes && gs1.isClientOnline,
+    isClientStale,
+    isClientSyncedWithServer,
+    color,
   }
 }

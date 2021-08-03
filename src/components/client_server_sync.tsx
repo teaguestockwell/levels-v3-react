@@ -26,26 +26,12 @@ export const ClientServerSync = () => {
     </Button>
   )
 
-  const getSyncStateColor = () => {
-    if (sync.isClientSyncedWithServer) {
-      return '#52C419'
-    } // online synced
-    if (sync.isClientCacheEqualToSwRes) {
-      return '#1890FF'
-    } // offline
-    if (!sync.isClientStale) {
-      return '#F9AD14'
-    } // online && !isClientSyncedWithServer || lastSync > 48hrs ago
-    return '#FF4D50'
-  }
-
-  const syncColor = getSyncStateColor()
 
   const modalButton = useMemo(() => {
     return (
       <Button
-        data-testid={syncColor}
-        style={{backgroundColor: syncColor, borderColor: syncColor}}
+        data-testid={sync.color}
+        style={{backgroundColor: sync.color, borderColor: sync.color}}
         size={'small'}
         type="primary"
         shape="circle"
@@ -53,7 +39,7 @@ export const ClientServerSync = () => {
         onClick={() => setIsOpen(true)}
       />
     )
-  }, [syncColor])
+  }, [sync.color])
 
   return useMemo(() => {
     const lastSyncedFromNow = formatDistanceToNowStrict(
