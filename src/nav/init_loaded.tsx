@@ -4,7 +4,7 @@ import {Result, Skeleton} from 'antd'
 import {DynamicMainNav} from './dynamic_main_nav'
 import {v4} from 'uuid'
 import {ClientServerSyncStore} from '../hooks/use_client_server_sync'
-import {CenterContactButton} from '../pages/help'
+import {Help} from '../pages/help'
 
 const as = getUserActions()
 const ss = ClientServerSyncStore.getState()
@@ -37,7 +37,7 @@ export const InitLoaded = () => {
     return (
       <>
         <Result title="You have no assigned aircraft" />
-        <CenterContactButton />
+        <Help />
       </>
     )
   }
@@ -56,7 +56,7 @@ export const InitLoaded = () => {
         status="error"
         title="Failed to load. Please check your connection"
       />
-      <CenterContactButton />
+      <Help />
     </>
   )
 }

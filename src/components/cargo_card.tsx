@@ -3,7 +3,7 @@ import {
   useCargoMapSize,
   useConfigName,
 } from '../hooks/user_store'
-import {Row, Col, Collapse, Divider} from 'antd'
+import {Collapse, Divider} from 'antd'
 import {ConfigSelect} from './config_select'
 import {AddASelect} from './add_a_select'
 import {Category} from '../types/aircraftDeep'
@@ -11,33 +11,6 @@ import {CargoEditRow} from './cargo_edit_button'
 import {v4} from 'uuid'
 
 const {Panel} = Collapse
-
-const buttons = (
-  <>
-    <Row
-      justify="center"
-      style={{
-        padding: '0px 4px 0px 4px',
-        textAlign: 'center',
-      }}
-    >
-      <Col span={24} style={{textAlign: 'center'}}>
-        <ConfigSelect />
-      </Col>
-    </Row>
-    <Row
-      justify="center"
-      style={{
-        padding: '0px 4px 0px 4px',
-        textAlign: 'center',
-      }}
-    >
-      <Col span={24} style={{paddingTop: 10, textAlign: 'center'}}>
-        <AddASelect />
-      </Col>
-    </Row>
-  </>
-)
 
 export const CargoCard = () => {
   const configName = useConfigName()
@@ -58,11 +31,12 @@ export const CargoCard = () => {
   return (
     <div
       style={{
-        margin: '0px 10px 0px 10px',
-        paddingBottom: 15,
+        margin: '0px 16px',
+        paddingBottom: 16,
       }}
     >
-      {buttons}
+      <ConfigSelect />
+      <AddASelect />
 
       {(!configIsEmpty || cargoContainsCustomCargo) && (
         <Divider style={{margin: 10}} />

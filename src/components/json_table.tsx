@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import {Col, Empty, Popconfirm, Result, Row, Skeleton, Table} from 'antd'
+import {Empty, Popconfirm, Result, Skeleton, Table} from 'antd'
 import {capitalizeFirst,formatDate} from '../utils/util'
 import {DeleteOutlined, EditOutlined} from '@ant-design/icons'
 import {usePolling} from '../hooks/query'
@@ -62,29 +62,25 @@ const RenderTable = React.memo(
         key: v4(),
         width: 124,
         render: (_: any, row: any) => (
-          <Row>
-            <Col span={8}>
-              <Popconfirm
-                placement="left"
-                title={'Are you sure?'}
-                onConfirm={() => adminActions().deleteRow(row)}
-                okText="Yes"
-                cancelText="No"
-              >
-                <DeleteOutlined
-                  data-testid={row.name + ' admin delete'}
-                  style={{fontSize: '24px'}}
-                />
-              </Popconfirm>
-            </Col>
-            <Col span={8} offset={8}>
-              <EditOutlined
-                data-testid={row.name + ' admin edit'}
+          <div style={{display: 'flex',justifyContent: 'space-around'}}>
+            <Popconfirm
+              placement="left"
+              title={'Are you sure?'}
+              onConfirm={() => adminActions().deleteRow(row)}
+              okText="Yes"
+              cancelText="No"
+            >
+              <DeleteOutlined
+                data-testid={row.name + ' admin delete'}
                 style={{fontSize: '24px'}}
-                onClick={() => adminActions().openEditModal(row)}
               />
-            </Col>
-          </Row>
+            </Popconfirm>
+            <EditOutlined
+              data-testid={row.name + ' admin edit'}
+              style={{fontSize: '24px'}}
+              onClick={() => adminActions().openEditModal(row)}
+            />
+          </div>
         ),
       },
     ]

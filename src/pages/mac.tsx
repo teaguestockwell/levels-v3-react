@@ -51,7 +51,7 @@ export const Mac = () => {
         }
       />
 
-      <GetMacButton key={v4()} style={{marginTop: 50, marginBottom: 20}} />
+      <GetMacButton key={v4()}/>
       <CargoEditModal />
     </>
   )

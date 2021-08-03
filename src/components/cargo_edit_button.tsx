@@ -1,23 +1,42 @@
+/* eslint-disable react/display-name */
 import {getUserActions, useCargo} from '../hooks/user_store'
-import {Row, Col} from 'antd'
+import React from 'react'
 
 const cs = getUserActions()
 
-export const CargoEditRow = ({uuid, style}: {uuid: string; style?: any}) => {
-  const cargo = useCargo(uuid)
-
-  const getText = (text: string) => (
-    <div
+const TextCol = React.memo(({text}: {text: string}) => {
+  return <div
       style={{
         fontSize: 12,
-        display: 'flex',
         textAlign: 'left',
         color: '#C4C4C4',
+        width: '100%',
+        display: 'flex',
       }}
     >
       {text}
     </div>
-  )
+})
+
+const TextRow = React.memo(({texts}: {texts: string[]}) => {
+  return <div
+    style={{
+      display: 'flex',
+      justifyContent: 'space-between',
+      paddingTop: 6
+    }}
+  >
+    {texts.map(t => <TextCol key={t} text={t} />)}
+  </div>
+})
+
+export const CargoEditRow = React.memo(({uuid}: {uuid: string}) => {
+  const cargo = useCargo(uuid)
+  const weightEa = cargo.weightEA ? cargo.weightEA : '???'
+  const fs = cargo.fs ? cargo.fs : '???'
+  const qty = cargo.qty ? cargo.qty : '???'
+  const name = cargo.name ? cargo.name : '???'
+  const nameColor = cargo.isValid ? '#383838' : '#FF4D4F'
 
   return (
     <div
@@ -25,53 +44,21 @@ export const CargoEditRow = ({uuid, style}: {uuid: string; style?: any}) => {
       style={{
         cursor: 'pointer',
         paddingTop: 10,
-        ...style,
       }}
     >
-      <Row justify="start">
-        <Col span={40}>
-          <div
-            style={{
-              fontSize: 12,
-              display: 'flex',
-              textAlign: 'left',
-              color: cargo.isValid ? '#383838' : '#FF4D4F',
-            }}
-          >
-            {cargo.name ? cargo.name : '???'}
-          </div>
-        </Col>
-      </Row>
+      <div
+        style={{
+          fontSize: 12,
+          display: 'flex',
+          textAlign: 'left',
+          color: nameColor,
+        }}
+      >
+        {name}
+      </div>
 
-      <Row justify="center" style={{paddingTop: 10}}>
-        <Col
-          span={8}
-          style={{display: 'inline-flex', justifyContent: 'center'}}
-        >
-          <div style={{justifyContent: 'space-between'}}>
-            {getText('Weight Ea')}
-            {getText(cargo.weightEA ? cargo.weightEA : '???')}
-          </div>
-        </Col>
-        <Col
-          span={8}
-          style={{display: 'inline-flex', justifyContent: 'center'}}
-        >
-          <div style={{justifyContent: 'space-between'}}>
-            {getText('FS')}
-            {getText(cargo.fs ? cargo.fs : '???')}
-          </div>
-        </Col>
-        <Col
-          span={8}
-          style={{display: 'inline-flex', justifyContent: 'center'}}
-        >
-          <div style={{justifyContent: 'space-between'}}>
-            {getText('Qty')}
-            {getText(cargo.qty ? cargo.qty : '???')}
-          </div>
-        </Col>
-      </Row>
+      <TextRow texts={['Weight Ea','FS','Qty']}/>
+      <TextRow texts={[weightEa, fs, qty]}/>
     </div>
   )
-}
+})

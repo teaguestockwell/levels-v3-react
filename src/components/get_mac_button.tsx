@@ -1,8 +1,8 @@
-import {Button, Row} from 'antd'
+import {Button} from 'antd'
 import {getUserAir, useCargos} from '../hooks/user_store'
 import {getPerMac} from '../utils/util'
 
-export const GetMacButton = ({style}: {style?: any}) => {
+export const GetMacButton = () => {
   const cargos = useCargos()
   const isCargoValid = cargos.every((c) => c.isValid)
   const air = getUserAir()
@@ -16,7 +16,7 @@ export const GetMacButton = ({style}: {style?: any}) => {
         }
 
   return (
-    <Row justify="center" style={style}>
+    <div style={{marginTop: 50, marginBottom: 20, display: 'flex', alignItems: 'center',justifyContent: 'center'}}>
       <Button
         disabled={!isCargoValid}
         onClick={onClick}
@@ -33,6 +33,6 @@ export const GetMacButton = ({style}: {style?: any}) => {
           ? `Show Work: ${calculation?.percentMacPercent}`
           : '%MAC: Invalid'}
       </Button>
-    </Row>
+    </div>
   )
 }
