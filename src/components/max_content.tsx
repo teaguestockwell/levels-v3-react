@@ -1,5 +1,3 @@
-import {Col, Row} from 'antd'
-import {v4} from 'uuid'
 import {Const} from '../utils/const'
 
 export const MaxContent = ({
@@ -8,8 +6,21 @@ export const MaxContent = ({
   children: JSX.Element[] | JSX.Element
 }) => {
   return (
-    <Row key={v4()} justify={'center'}>
-      <Col style={{maxWidth: Const.MAX_WIDTH, width: '100%'}}>{children}</Col>
-    </Row>
+    <div
+      style={{
+        justifyContent: 'center',
+        alignContent: 'center',
+        display: 'flex',
+      }}
+    >
+      <div
+        style={{
+          maxWidth: Const.MAX_WIDTH,
+          width: '100%',
+        }}
+      >
+        {children}
+      </div>
+    </div>
   )
 }

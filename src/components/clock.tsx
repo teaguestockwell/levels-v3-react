@@ -1,17 +1,48 @@
-import {Col, Row, Typography} from 'antd'
+/* eslint-disable react/display-name */
 import {format} from 'date-fns'
 import {getUTCDate} from '../utils/util'
 import {Const} from '../utils/const'
 import {useTick} from '../hooks/use_tick'
 import {MaxContent} from './max_content'
+import React from 'react'
 
-const {Text} = Typography
+const ClockCol = React.memo(({text, color, textAlign}: {text: string, color:string, textAlign: 'left' | 'right' | 'center'}) => {
+  return <div
+      style={{
+        width: '100%',
+        color,
+        fontWeight: 'normal',
+        fontSize: '12px',
+        textAlign,
+      }}
+    >
+      {text}
+    </div>
+})
 
-const getClock = () => {
+const ClockRow = React.memo(({texts,colors}:{texts: [string,string,string,string], colors:[string,string,string,string]}) => {
+  return <div style={{
+    display: 'flex',
+    justifyContent: 'space-between',
+    height: 26,
+    paddingLeft: 14,
+    paddingRight: 14,
+  }}>
+    <ClockCol text={texts[0]} color={colors[0]} textAlign="left"/>
+    <ClockCol text={texts[1]} color={colors[1]} textAlign="center"/>
+    <ClockCol text={texts[2]} color={colors[2]} textAlign="center"/>
+    <ClockCol text={texts[3]} color={colors[3]} textAlign="right"/>
+</div>
+})
+
+const d = Const.COLORS.TXT_DISABLED
+const e = '#fff'
+
+export const ClockContent = () => {
+  useTick(1000)
   const lnow = new Date()
   const znow = getUTCDate(lnow)
-
-  return {
+  const clock = {
     lHMS: format(lnow, 'HH:mm:ss'),
     lJJJ: format(lnow, 'DDD'),
     lYMD: format(lnow, 'yyyy/LL/dd'),
@@ -20,54 +51,15 @@ const getClock = () => {
     zJJJ: format(znow, 'DDD'),
     zYMD: format(znow, 'yyyy/LL/dd'),
   }
-}
-
-const getCol = (str: string, color = '#fff', align = 'center') => (
-  <Col span={6} style={{display: 'inline-flex', justifyContent: align}}>
-    <Text
-      style={{
-        color,
-        fontWeight: 'normal',
-        fontSize: '12px',
-      }}
-    >
-      {str}
-    </Text>
-  </Col>
-)
-
-const rowProps = {
-  justify: 'center',
-  type: 'flex',
-  style: {padding: '0px 12px 8px 12px'},
-} as any
-
-export const Clock = () => {
-  useTick(1000)
-  const clock = getClock()
+  
 
   return (
     <>
-      <MaxContent>
-        <Row {...rowProps}>
-          {getCol('Zone', Const.COLORS.TXT_DISABLED, 'flex-start')}
-          {getCol('hh:mm:ss', Const.COLORS.TXT_DISABLED)}
-          {getCol('JJJ', Const.COLORS.TXT_DISABLED)}
-          {getCol('yyyy/mm/dd', Const.COLORS.TXT_DISABLED, 'flex-end')}
-        </Row>
-        <Row {...rowProps}>
-          {getCol('Local', Const.COLORS.TXT_DISABLED, 'flex-start')}
-          {getCol(clock.lHMS)}
-          {getCol(clock.lJJJ)}
-          {getCol(clock.lYMD, '#fff', 'flex-end')}
-        </Row>
-        <Row {...rowProps}>
-          {getCol('Zulu', Const.COLORS.TXT_DISABLED, 'flex-start')}
-          {getCol(clock.zHMS)}
-          {getCol(clock.zJJJ)}
-          {getCol(clock.zYMD, '#fff', 'flex-end')}
-        </Row>
-      </MaxContent>
+        <ClockRow texts={['Zone', 'hh:mm:ss', 'JJJ', 'yyyy/mm/dd']} colors={[d,d,d,d]}/>
+        <ClockRow texts={['Local', clock.lHMS, clock.lJJJ, clock.lYMD]} colors={[d,e,e,e]}/>
+        <ClockRow texts={['Zulu', clock.zHMS, clock.zJJJ, clock.zYMD]} colors={[d,e,e,e]}/>
     </>
   )
 }
+
+export const Clock = () => <MaxContent><ClockContent /></MaxContent>
