@@ -51,6 +51,10 @@ li.ant-menu-item.ant-menu-item-selected::after {
   display: none;
 }
 
+.ant-form-item .ant-form-item-label {
+  padding: 0px !important;
+}
+
 .ant-select-selector {
   border-radius: 5px !important;
 }

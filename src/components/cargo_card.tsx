@@ -31,8 +31,9 @@ export const CargoCard = () => {
   return (
     <div
       style={{
-        margin: '0px 16px',
-        paddingBottom: 16,
+        marginLeft: 14,
+        marginRight: 14,
+        paddingBottom: 14,
       }}
     >
       <ConfigSelect />

@@ -1,7 +1,6 @@
 import {TankRow} from './tank_row'
 import {userStore, getUserAir} from '../hooks/user_store'
 import {Category} from '../types/aircraftDeep'
-import {Col, Row} from 'antd'
 
 export const TankList = () => {
   const air = getUserAir()
@@ -10,16 +9,15 @@ export const TankList = () => {
   ).filter((c) => c.category === Category.Tank)
 
   return (
-    <Row justify="center" style={{paddingBottom: '10px'}}>
+    <div style={{paddingBottom: '10px', display: 'flex',flexWrap: 'wrap', justifyContent: 'space-evenly'}}>
       {air.tanks.map((tank, i) => (
-        <Col key={tank.tankId} flex={6}>
           <TankRow
+            style={{flex: '0 0 25%'}}
             tank={tank}
             cargoString={cargoStrings[i]}
             key={tank.tankId}
-          />
-        </Col>
+            />
       ))}
-    </Row>
+    </div>
   )
 }

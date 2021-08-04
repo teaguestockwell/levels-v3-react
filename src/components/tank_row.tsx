@@ -11,9 +11,11 @@ const cs = getUserActions()
 export const TankRow = ({
   tank,
   cargoString,
+  style
 }: {
   tank: Tank
   cargoString: CargoString
+  style?: any
 }) => {
   const [isEditing, setIsEditing] = useState(false)
   const currentWeight = useCargo(cargoString?.uuid)?.weightEA ?? 0
@@ -48,7 +50,7 @@ export const TankRow = ({
   )
 
   return (
-    <div style={{paddingTop: 10, cursor: 'pointer'}}>
+    <div style={{paddingTop: 10, cursor: 'pointer', ...style}}>
       <div
         style={{
           display: 'flex',

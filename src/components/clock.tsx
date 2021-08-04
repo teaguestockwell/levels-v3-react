@@ -3,7 +3,6 @@ import format from 'date-fns/format'
 import {getUTCDate} from '../utils/util'
 import {Const} from '../utils/const'
 import {useTick} from '../hooks/use_tick'
-import {MaxContent} from './max_content'
 import React from 'react'
 
 const ClockCol = React.memo(({text, color, textAlign}: {text: string, color:string, textAlign: 'left' | 'right' | 'center'}) => {
@@ -38,7 +37,7 @@ const ClockRow = React.memo(({texts,colors}:{texts: [string,string,string,string
 const d = Const.COLORS.TXT_DISABLED
 const e = '#fff'
 
-export const ClockContent = () => {
+export const Clock = () => {
   useTick(1000)
   const lnow = new Date()
   const znow = getUTCDate(lnow)
@@ -61,5 +60,3 @@ export const ClockContent = () => {
     </>
   )
 }
-
-export const Clock = () => <MaxContent><ClockContent /></MaxContent>
