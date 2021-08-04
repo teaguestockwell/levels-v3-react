@@ -12,7 +12,6 @@ const baseURL = (() => {
 })()
 
 export const getN = async (url: string) => {
-  console.log(baseURL)
   return axios({
     baseURL,
     url,

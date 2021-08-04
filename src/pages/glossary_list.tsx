@@ -8,8 +8,8 @@ export const GlossaryList = () => {
     {
       air.glossarys.map(g => {
         return <div key={g.glossaryId} style={{paddingTop: 28}}>
-          <div style={{display: 'flex', fontWeight: 'bold',fontSize: '2.5rem'}}>{g.name}</div>
-          <div style={{display: 'flex', textAlign:'left',fontSize: '1.5rem'}}>{g.body}</div>
+          <div style={{display: 'flex', fontWeight: 'bold',fontSize: '2rem'}}>{g.name}</div>
+          <div style={{display: 'flex', textAlign:'left',fontSize: '1rem'}}>{g.body}</div>
           </div>
       })
     }
