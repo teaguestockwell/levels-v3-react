@@ -4,7 +4,7 @@ import {useClientServerSync} from '../hooks/use_client_server_sync'
 import {useMemo, useState} from 'react'
 import {queryClient} from '../utils/const'
 import {useTick} from '../hooks/use_tick'
-import {formatDistanceToNowStrict} from 'date-fns'
+import formatDistanceToNowStrict from 'date-fns/formatDistanceToNowStrict'
 import {v4} from 'uuid'
 
 export const ClientServerSync = () => {

@@ -3,9 +3,16 @@ import {useQuery} from 'react-query'
 import {v4} from 'uuid'
 import {removeNestedObj} from '../utils/util'
 
-const baseURL = process.env.REACT_APP_API_BASE_URL
+
+const baseURL = (() => {
+  const url = window.location.href ?? ''
+  if(url.includes('apps.dso.mil')){return process.env.REACT_APP_API_BASE_URL_PROD}
+  if(url.includes('staging')){return process.env.REACT_APP_API_BASE_URL_STAGING}
+  return process.env.REACT_APP_API_BASE_URL_LOCAL
+})()
 
 export const getN = async (url: string) => {
+  console.log(baseURL)
   return axios({
     baseURL,
     url,

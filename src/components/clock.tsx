@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import {format} from 'date-fns'
+import format from 'date-fns/format'
 import {getUTCDate} from '../utils/util'
 import {Const} from '../utils/const'
 import {useTick} from '../hooks/use_tick'
