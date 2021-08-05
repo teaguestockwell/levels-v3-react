@@ -18,8 +18,8 @@ export const TankRow = ({
   style?: any
 }) => {
   const [isEditing, setIsEditing] = useState(false)
-  const currentWeight = useCargo(cargoString?.uuid)?.weightEA ?? 0
   const weights = useMemo(() => tank.weightsCSV.split(','), [tank.weightsCSV])
+  const currentWeight = useCargo(cargoString?.uuid)?.weightEA ?? weights[0]
   const maxWeight = weights[weights.length - 1]
 
   const onChange = (newWeight: string) => {

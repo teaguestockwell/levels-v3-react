@@ -6,7 +6,6 @@ import {
   rulesYupWrapper,
 } from '../utils/util'
 import {userStore, getUserActions, getUserAir} from '../hooks/user_store'
-import {Category} from '../types/aircraftDeep'
 import {debounce} from 'lodash'
 
 const cs = getUserActions()
@@ -15,11 +14,6 @@ export const ChartC = () => {
   const [form] = Form.useForm()
   const schema = useRef(getChartCSchema(getUserAir())).current
   const air = useRef(getUserAir()).current
-  const initCargo = useRef(
-    Array.from(userStore.getState().cargoMap.values()).filter(
-      (c) => c.category === Category.BasicAircraft
-    )
-  ).current[0]
 
   useEffect(() => {
     form.setFieldsValue(userStore.getState().chartC)
@@ -37,7 +31,7 @@ export const ChartC = () => {
     const cargo = getCargoStringFromChartC(
       air.momMultiplyer,
       {...newChartC, isValid},
-      initCargo.uuid
+      air.aircraftId.toString()
     )
     cs.setChartC(newChartC)
     cs.putCargos([cargo])
