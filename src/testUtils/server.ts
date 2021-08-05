@@ -13,6 +13,10 @@ const endPoints = [
       const ret = JSON.stringify({
         data: mockAircraftsDeep,
         serverEpoch: Date.now(),
+        dataState: {
+          '1': '1',
+          '2': '2'
+        }
       })
       return res(ctx.status(200), ctx.body(ret))
     }

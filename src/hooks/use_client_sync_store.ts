@@ -70,11 +70,11 @@ export const useServerSync = () => {
   const store1 = useClientSyncStore()
 
   useEffect(() => {
-      
-    useClientSyncStore.setState({
-      state: getState(sync ?? {}, clientCache),
-    })
-
+    if(sync){
+      useClientSyncStore.setState({
+        state: getState(sync ?? {}, clientCache),
+      })
+    }
   },[sync?.clientReqKey])
 
   useEffect(() => {
