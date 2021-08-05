@@ -3,11 +3,9 @@ import {userStore, getUserActions} from '../hooks/user_store'
 import {Result, Skeleton} from 'antd'
 import {DynamicMainNav} from './dynamic_main_nav'
 import {v4} from 'uuid'
-import {ClientServerSyncStore} from '../hooks/use_client_server_sync'
 import {Help} from '../pages/help'
 
 const as = getUserActions()
-const ss = ClientServerSyncStore.getState()
 
 export const InitLoaded = () => {
   // req => lastUpdated
@@ -27,8 +25,8 @@ export const InitLoaded = () => {
     as.setAir(data.data[airIdx])
 
     // init state of server client sync
-    ss.setLastSyncEpoch(data.serverEpoch)
-    ss.setIsClientCacheEqualToSwRes(true)
+    localStorage.setItem('lastSynced', `${data.data.serverEpoch}`)
+
 
     return <DynamicMainNav key={v4()} />
   }

@@ -1,37 +1,53 @@
 import {Button, Modal} from 'antd'
 import {SyncOutlined} from '@ant-design/icons'
-import {useClientServerSync} from '../hooks/use_client_server_sync'
 import {useMemo, useState} from 'react'
 import {queryClient} from '../utils/const'
 import {useTick} from '../hooks/use_tick'
 import formatDistanceToNowStrict from 'date-fns/formatDistanceToNowStrict'
 import {v4} from 'uuid'
+import { useServerSync } from '../hooks/use_client_sync_store'
+
+const colorMap = {
+  outdated: '#FF4D50',
+  updateFetching: '#FF4D12',
+  updateNow: '#F9AD14',
+  offline: '#1890FF',
+  synced: '#52C419'
+}
+
+const getLastSyncedFromNowString = () => {
+ try{
+  return formatDistanceToNowStrict(
+    Number(
+      localStorage.getItem('lastSync')
+    )
+  )
+ } catch(e) {
+   console.error(e)
+  return 'an unknown amount of time'
+ }
+}
 
 export const ClientServerSync = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const sync = useClientServerSync()
   const tick = useTick(1000)
-  const onlineStateString = sync.isClientOnline ? 'Online' : 'Offline'
-  const syncButton = sync.isClientCacheEqualToSwRes ? null : (
+  const {state, pendingSync} = useServerSync()
+  const color = colorMap[state]
+
+  const syncButton = state !== 'updateNow' ? null : (
     <Button
       data-testid="client sync but"
-      onClick={() => {
-        if (sync.isClientCacheEqualToSwRes) {
-          return
-        }
-        queryClient.setQueryData('userAirs', () => sync.swRes)
-      }}
+      onClick={() => {queryClient.setQueryData('userAirs', () => pendingSync)}}
     >
       Sync Now
     </Button>
   )
 
-
   const modalButton = useMemo(() => {
     return (
       <Button
-        data-testid={sync.color}
-        style={{backgroundColor: sync.color, borderColor: sync.color}}
+        data-testid={color}
+        style={{backgroundColor: color, borderColor: color}}
         size={'small'}
         type="primary"
         shape="circle"
@@ -39,12 +55,9 @@ export const ClientServerSync = () => {
         onClick={() => setIsOpen(true)}
       />
     )
-  }, [sync.color])
+  }, [color])
 
   return useMemo(() => {
-    const lastSyncedFromNow = formatDistanceToNowStrict(
-      new Date(sync.lastSyncEpoch as number)
-    )
     return (
       <>
         {isOpen ? (
@@ -56,7 +69,7 @@ export const ClientServerSync = () => {
             centered
           >
             <div key={v4()}>
-              <p>{`${onlineStateString}, last synced ${lastSyncedFromNow} ago`}</p>
+              <p>{`${state}, last synced ${getLastSyncedFromNowString()} ago`}</p>
               {syncButton}
             </div>
           </Modal>

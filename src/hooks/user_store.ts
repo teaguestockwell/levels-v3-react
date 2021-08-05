@@ -8,7 +8,6 @@ import {
   getCargoSchema,
   getCargoStringsFromAirTanks,
 } from '../utils/util'
-import {v4} from 'uuid'
 
 export interface UserStoreState extends State {
   // read
@@ -91,16 +90,15 @@ export const userStore = create<UserStoreState>((set) => ({
 
   // when a new air is selected, reset all state
   setAir: (air: AircraftDeep, resetCargo = true) => {
-    const id = v4()
     const chartC: [string, CargoString] = [
-      id,
+      air.aircraftId.toString(),
       {
         name: 'Basic Aircraft',
         weightEA: '0',
         fs: '0',
         qty: '1',
         isValid: false,
-        uuid: id,
+        uuid: air.aircraftId.toString(),
         category: Category.BasicAircraft,
       },
     ]
