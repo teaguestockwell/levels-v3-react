@@ -5,7 +5,7 @@ import {userStore} from '../hooks/user_store'
 import {mockAircraftsDeep} from '../testUtils/mock_aircrafts_deep'
 import {Category} from '../types/aircraftDeep'
 import {CargoString} from '../types/cargoString'
-import MatchMediaMock from 'jest-matchmedia-mock'
+
 
 const tank = mockAircraftsDeep[0].tanks[0]
 const cargoString: CargoString = {
@@ -23,12 +23,8 @@ const setup = () => {
 }
 
 describe('TankRow', () => {
-  let matchMedia
+  
 
-  beforeAll(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    matchMedia = new MatchMediaMock()
-  })
 
   it('will render', async () => {
     setup()

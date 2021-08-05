@@ -5,7 +5,7 @@ import {renderWrapped} from '../testUtils/render_wrapped'
 import {Category} from '../types/aircraftDeep'
 import {CargoString} from '../types/cargoString'
 import {userStore} from '../hooks/user_store'
-import MatchMediaMock from 'jest-matchmedia-mock'
+
 
 const cargoString = (uuid: string): CargoString => ({
   uuid,
@@ -29,12 +29,8 @@ const setup = () => {
 }
 
 describe('TankList', () => {
-  let matchMedia
+  
 
-  beforeAll(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    matchMedia = new MatchMediaMock()
-  })
 
   it('will render', async () => {
     setup()

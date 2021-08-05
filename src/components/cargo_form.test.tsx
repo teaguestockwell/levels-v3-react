@@ -4,9 +4,9 @@ import {renderWrapped, waitFor, fireEvent} from '../testUtils/render_wrapped'
 import {Category} from '../types/aircraftDeep'
 import {CargoString} from '../types/cargoString'
 import {CargoForm} from './cargo_form'
-import MatchMediaMock from 'jest-matchmedia-mock'
 
-let matchMedia
+
+
 
 const getMockCargo = (name: string): CargoString => {
   return {
@@ -21,10 +21,6 @@ const getMockCargo = (name: string): CargoString => {
 }
 
 describe('CargoForm', () => {
-  beforeAll(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    matchMedia = new MatchMediaMock()
-  })
 
   it('will render', async () => {
     const cargo = getMockCargo('cargo0')

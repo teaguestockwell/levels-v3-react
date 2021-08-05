@@ -1,10 +1,10 @@
 import {userStore} from '../hooks/user_store'
 import {renderWrapped, waitFor, fireEvent} from '../testUtils/render_wrapped'
 import {ChartC} from './chart_c'
-import MatchMediaMock from 'jest-matchmedia-mock'
+
 import {Category} from '../types/aircraftDeep'
 
-let matchMedia
+
 
 const putChartC = () =>
   userStore.getState().putCargos([
@@ -20,10 +20,6 @@ const putChartC = () =>
   ])
 
 describe('ChartC', () => {
-  beforeAll(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    matchMedia = new MatchMediaMock()
-  })
 
   it('will render', async () => {
     putChartC()
