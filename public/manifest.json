@@ -3,9 +3,9 @@
   "short_name": "Levels",
   "description": "Aircraft weight and balance",
   "start_url": ".",
-  "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#F1F1F1",
+  "display": "fullscreen",
   "icons": [
     {
       "src": "icons/Icon-192.png",

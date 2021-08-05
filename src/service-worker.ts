@@ -72,7 +72,9 @@ registerRoute(
 )
 
 registerRoute(
-  ({url}) => url.pathname.endsWith('lastUpdated'),
+  ({url}) =>  
+  url.origin === self.location.origin && 
+  url.pathname.endsWith('lastUpdated'),
   new StaleWhileRevalidate({
     cacheName: 'json',
     plugins: [
