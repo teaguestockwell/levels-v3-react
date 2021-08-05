@@ -4,7 +4,7 @@ import {CargoEditModal} from '../components/cargo_edit_modal'
 import {GetMacButton} from '../components/get_mac_button'
 import {TankList} from '../components/tank_list'
 import {Label} from '../components/label'
-import {useUserAir} from '../hooks/user_store'
+import {UserStoreLogger, useUserAir} from '../hooks/user_store'
 import {CardShadow} from '../components/card_shadow'
 import {CargoCard} from '../components/cargo_card'
 import {Const} from '../utils/const'
@@ -14,9 +14,11 @@ export const Mac = () => {
 
   return (
     <>
+      <UserStoreLogger/>
       <CardShadow key={v4()} child={<TankList/>}/>
 
       <CardShadow
+      style={{paddingBottom: 1}}
         child={
           <>
             <Label

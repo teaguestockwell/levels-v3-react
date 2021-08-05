@@ -3,7 +3,7 @@ import {
   useCargoMapSize,
   useConfigName,
 } from '../hooks/user_store'
-import {Collapse, Divider} from 'antd'
+import {Collapse } from 'antd'
 import {ConfigSelect} from './config_select'
 import {AddASelect} from './add_a_select'
 import {Category} from '../types/aircraftDeep'
@@ -38,10 +38,6 @@ export const CargoCard = () => {
     >
       <ConfigSelect />
       <AddASelect />
-
-      {(!configIsEmpty || cargoContainsCustomCargo) && (
-        <Divider style={{margin: 10}} />
-      )}
 
       <Collapse
         expandIconPosition={'right'}
