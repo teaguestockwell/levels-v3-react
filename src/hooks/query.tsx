@@ -1,3 +1,4 @@
+import { message } from 'antd'
 import axios from 'axios'
 import {useQuery} from 'react-query'
 import {v4} from 'uuid'
@@ -17,7 +18,26 @@ export const getN = async (url: string) => {
     url,
     method: 'get',
   })
-    .then((res) => res.data)
+    .then((res) => {
+      if(res.status > 200 && res.status < 400){
+        message.info({
+          key: 'refresh-cookie',
+          duration: 0,
+          icon: <></>,
+          style: {},
+          content: <div>
+            <span onClick={() => {location.reload()}} style={{color: 'blue', cursor: 'pointer'}}>
+              {'Re-login'}
+            </span> 
+            {' to get the latest data and reset.'}
+            <span onClick={() => {message.destroy('refresh-cookie')}} style={{color: 'red', cursor: 'pointer'}}>
+              {' Hide'}
+            </span>
+          </div>,
+        })
+      }
+      return res.data
+    })
     .catch(() => {
       return null
     })
