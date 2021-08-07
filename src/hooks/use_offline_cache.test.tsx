@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
-import { acceptPendingRqCache, useClientSyncStore, CacheState, getLastSyncEpoch, getIsOutdated, getIsCached, getNewLastUpdated, handleFetchLastUpdated, API_ClientServerSync, getState, getStateHandler} from "./use_offline_cache";
+import { acceptPendingRqCache, useClientSyncStore, CacheState, getLastSyncEpoch, getIsOutdated, getIsCached, getNewLastUpdated, handleFetchLastUpdated, ApiClientServerSync, getState, getStateHandler} from "./use_offline_cache";
 import {renderHook} from '@testing-library/react-hooks'
 import { mockAircraftsDeep } from "../testUtils/mock_aircrafts_deep";
 
@@ -196,7 +196,7 @@ it('getStateHandlers', async () => {
 })
 
 it('gets synced state', () =>{
-  const synced: API_ClientServerSync = {
+  const synced: ApiClientServerSync = {
     serverEpoch: Date.now(),
     isClientSyncedWithServer: true,
     dataState: {}
@@ -222,7 +222,7 @@ it('gets outdated state', () =>{
 })
 
 it('gets fetching state', () => {
-  const fetching: API_ClientServerSync = {
+  const fetching: ApiClientServerSync = {
     serverEpoch: Date.now(),
     isClientSyncedWithServer: false,
     dataState: {}

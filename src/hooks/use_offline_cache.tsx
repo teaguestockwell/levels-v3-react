@@ -1,7 +1,6 @@
 import create from 'zustand'
 import {combine} from 'zustand/middleware'
 import {getN, usePolling, useUserAirs} from './query'
-import {useEffect} from 'react'
 import {AircraftDeep} from '../types/aircraftDeep'
 import {stringify} from 'query-string'
 import {queryClient} from '../utils/const'
@@ -35,7 +34,7 @@ export enum CacheState {
 type DataState = Record<number, string>
 
 // the response from get /aircraft/lastUpdated
-interface API_lastUpdated {
+interface ApiLastUpdated {
   serverEpoch: number
   dataState: DataState
   data: AircraftDeep[]
@@ -43,7 +42,7 @@ interface API_lastUpdated {
 
 // when the client is not synced with the server, the /lastUpdated ep should be called
 // the response from that should then be set as pendingAircrafts cache
-export interface API_ClientServerSync {
+export interface ApiClientServerSync {
   isClientSyncedWithServer: boolean
   serverEpoch: number
   dataState: DataState
@@ -55,7 +54,7 @@ export const useClientSyncStore = create(
       //  pendingAircrafts
       // this is a holding area for the aircraft returned from lastUpdated while they are waiting to be applied by the user
       // if pendingAircrafts is defined, the user may choose to apply it to the userAirs cache of react query
-      pendingRqClientCache: null as API_lastUpdated | null,
+      pendingRqClientCache: null as ApiLastUpdated | null,
       state: CacheState.OUTDATED as CacheState,
       // while the getNewLastUpdated method is running, do not re poll /api/aircraft/client-server-sync
       isDebouncing: false as boolean,
@@ -125,7 +124,7 @@ export const getIsCached = (epoch: number) => {
 // this cache is the initial starting point for the app
 // a user that is online may briefly interact with stale data before this file's lifecycle prompts them to update by setting pendingAircrafts
 // to the latest res
-export const getNewLastUpdated = async (): Promise<API_lastUpdated | null> => {
+export const getNewLastUpdated = async (): Promise<ApiLastUpdated | null> => {
   let res
   let numTrys = 0
 
@@ -186,7 +185,7 @@ export const getState = (clientServerSync: any): CacheState => {
 // https://ultimatecourses.com/blog/deprecating-the-switch-statement-for-object-literals
 export const getStateHandler: Record<CacheState, () => Promise<void>> = {
   [CacheState.OUTDATED]: async () => {
-    return await handleFetchLastUpdated()
+    return handleFetchLastUpdated()
   },
   [CacheState.OFFLINE]: async () => {
     // do not get lastUpdated,
@@ -194,7 +193,7 @@ export const getStateHandler: Record<CacheState, () => Promise<void>> = {
     return
   },
   [CacheState.FETCHING]: async () => {
-    return await handleFetchLastUpdated()
+    return handleFetchLastUpdated()
   },
   [CacheState.UPDATABLE]: async () => {
     throw new Error('Poll should not run when there is pending react query cache')
@@ -211,10 +210,10 @@ export const Poll = React.memo(({ep}: {ep:string}) => {
   const {
     data,
   }: {
-    data: (API_ClientServerSync & {clientReqKey: string}) | null | undefined
+    data: (ApiClientServerSync & {clientReqKey: string}) | null | undefined
   } = usePolling(ep, 3000, true)
 
-  useEffect(() => {
+  React.useEffect(() => {
     // data should always be defined because use polling uses the getN axios wrapper
     // this returns an object even if the request timed out
     if(data){
