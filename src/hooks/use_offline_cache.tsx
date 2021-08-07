@@ -6,6 +6,8 @@ import {AircraftDeep} from '../types/aircraftDeep'
 import {stringify} from 'query-string'
 import {queryClient} from '../utils/const'
 import {isEqual} from 'lodash'
+import React from 'react'
+import isNumber from 'is-number'
 
 // these hooks and components handle the lifecycle of updating offline cache
 // and making sure it is in sync with the server
@@ -41,20 +43,20 @@ interface API_lastUpdated {
 
 // when the client is not synced with the server, the /lastUpdated ep should be called
 // the response from that should then be set as pendingAircrafts cache
-interface API_ClientServerSync {
+export interface API_ClientServerSync {
   isClientSyncedWithServer: boolean
   serverEpoch: number
   dataState: DataState
 }
 
-const useClientSyncStore = create(
+export const useClientSyncStore = create(
   combine(
     {
       //  pendingAircrafts
       // this is a holding area for the aircraft returned from lastUpdated while they are waiting to be applied by the user
       // if pendingAircrafts is defined, the user may choose to apply it to the userAirs cache of react query
       pendingRqClientCache: null as API_lastUpdated | null,
-      state: 'outdated' as CacheState,
+      state: CacheState.OUTDATED as CacheState,
       // while the getNewLastUpdated method is running, do not re poll /api/aircraft/client-server-sync
       isDebouncing: false as boolean,
     },
@@ -71,11 +73,7 @@ const useClientSyncStore = create(
 export const acceptPendingRqCache = () => {
   const pendingCache = useClientSyncStore.getState().pendingRqClientCache
 
-  if (!pendingCache) {
-    throw new Error(
-      'cannot apply pending cache because its null. Do not render the sync now button if there is no cache'
-    )
-  }
+  if (!pendingCache) {throw new Error('cannot apply pending cache because its null. Do not render the sync now button if there is no cache')}
 
   // lastSync in local cache will be set inside of initLoaded from the new data epoch
   queryClient.setQueryData('userAirs', () => pendingCache)
@@ -93,20 +91,17 @@ export const acceptPendingRqCache = () => {
 // to prevent this, every time the /client-server-sync is called, the local storage lastSyncedEpoch is set to the serverEpoch
 // it gets the lastSync from local storage as a number
 // it falls back to 0
-const getLastSyncEpoch = () => {
-  const lastSyncString = localStorage.getItem('lastSync')
-  try {
-    return Number(lastSyncString)
-  } catch (e) {
-    return 0
-  }
+export const getLastSyncEpoch = () => {
+  const lastSyncString = localStorage.getItem('lastSync') ?? '0'
+  const num = parseInt(lastSyncString)
+  return isNumber(num) ? num : 0
 }
 
 // given an epoch as a number,
 // when it is 48 hours old
 // then return true, else return false
-const getIsOutdated = (epoch: number) => {
-  if (Date.now() - epoch > 1000 * 60 * 60 * 24 * 2) {
+export const getIsOutdated = (epoch: number) => {
+  if (Date.now() - epoch > (1000 * 60 * 60 * 24 * 2)) {
     return true
   }
 
@@ -116,8 +111,8 @@ const getIsOutdated = (epoch: number) => {
 // given a response is received from the service worker
 // when it's server epoch is older than 5 seconds ago
 // then return true, else return false
-const getIsCached = (epoch: number) => {
-  if (Date.now() - epoch > 1000 * 5) {
+export const getIsCached = (epoch: number) => {
+  if (Date.now() - epoch > (1000 * 5)) {
     return true
   }
 
@@ -130,7 +125,7 @@ const getIsCached = (epoch: number) => {
 // this cache is the initial starting point for the app
 // a user that is online may briefly interact with stale data before this file's lifecycle prompts them to update by setting pendingAircrafts
 // to the latest res
-const getNewLastUpdated = async (): Promise<API_lastUpdated | null> => {
+export const getNewLastUpdated = async (): Promise<API_lastUpdated | null> => {
   let res
   let numTrys = 0
 
@@ -153,7 +148,7 @@ const getNewLastUpdated = async (): Promise<API_lastUpdated | null> => {
   return null
 }
 
-const handleFetchLastUpdated = async (): Promise<void> => {
+export const handleFetchLastUpdated = async (): Promise<void> => {
   useClientSyncStore.setState({isDebouncing: true})
   const newLastUpdated = await getNewLastUpdated()
 
@@ -170,7 +165,7 @@ const handleFetchLastUpdated = async (): Promise<void> => {
   })
 }
 
-const getState = (clientServerSync: any): CacheState => {
+export const getState = (clientServerSync: any): CacheState => {
   if (clientServerSync?.isClientSyncedWithServer) {
     localStorage.setItem('lastSync', `${clientServerSync.serverEpoch}`)
     return CacheState.SYNCED
@@ -189,7 +184,7 @@ const getState = (clientServerSync: any): CacheState => {
 
 // this is a glorified switch statement
 // https://ultimatecourses.com/blog/deprecating-the-switch-statement-for-object-literals
-const getStateHandler: Record<CacheState, () => Promise<void>> = {
+export const getStateHandler: Record<CacheState, () => Promise<void>> = {
   [CacheState.OUTDATED]: async () => {
     return await handleFetchLastUpdated()
   },
@@ -202,9 +197,7 @@ const getStateHandler: Record<CacheState, () => Promise<void>> = {
     return await handleFetchLastUpdated()
   },
   [CacheState.UPDATABLE]: async () => {
-    throw new Error(
-      'Poll should not run when there is pending react query cache'
-    )
+    throw new Error('Poll should not run when there is pending react query cache')
   },
   [CacheState.SYNCED]: async () => {
     // do not get lastUpdated,
@@ -213,10 +206,8 @@ const getStateHandler: Record<CacheState, () => Promise<void>> = {
   },
 }
 
-const Poll = ({rqCache}: {rqCache: any}) => {
-  // api/aircraft/client-server-sync?1=uuid&2=uuid&3=uuid
-  // where 1 is an aircraftId and uuid is the deepHashId that represents the state of that aircraft
-  const ep = 'aircraft/client-server-sync?' + stringify(rqCache.dataState)
+// eslint-disable-next-line react/display-name
+export const Poll = React.memo(({ep}: {ep:string}) => {
   const {
     data,
   }: {
@@ -224,23 +215,32 @@ const Poll = ({rqCache}: {rqCache: any}) => {
   } = usePolling(ep, 3000, true)
 
   useEffect(() => {
-    const state = getState(data)
-    useClientSyncStore.setState({state})
-    getStateHandler[state]()
+    // data should always be defined because use polling uses the getN axios wrapper
+    // this returns an object even if the request timed out
+    if(data){
+      const state = getState(data)
+      useClientSyncStore.setState({state})
+      getStateHandler[state]()
+    }
   }, [data?.clientReqKey])
 
   return null
-}
+})
 
 export const UseOfflineCache = () => {
-  const {data: rqCache} = useUserAirs()
+  const clientDataState = useUserAirs()?.data?.dataState
+
+  // api/aircraft/client-server-sync?1=uuid&2=uuid&3=uuid
+  // where 1 is an aircraftId and uuid is the deepHashId that represents the state of that aircraft
+  const ep = 'aircraft/client-server-sync?' + stringify(clientDataState)
+
   const pendingRqClientCache = useClientSyncStore(
     (s) => s.pendingRqClientCache,
     (s0, s1) => isEqual(s0?.dataState, s1?.dataState)
   )
 
   return {
-    pollComponent: pendingRqClientCache ? null : <Poll rqCache={rqCache} />,
+    pollComponent: pendingRqClientCache ? null : <Poll ep={ep} />,
     stateSelector: () => useClientSyncStore(s => s.state),
     syncNow: acceptPendingRqCache
   }
