@@ -11,7 +11,7 @@ import isNumber from 'is-number'
 
 // these hooks and components handle the lifecycle of updating offline cache
 // and making sure it is in sync with the server
-// here is a diagram: https://jamboard.google.com/d/1f3VnD6dKJcEM5IyNfnAQs940UIbMe4eMGhfKfl8MmZI/edit?usp=sharing
+// here is a diagram: https://fivelevel.page.link/levels-offline-cache
 
 // these map to colors inside of the ui to show the client the state of the offline cache,
 // for example, if the cache is updatable they when they click into the sync modal, the user will be able to
