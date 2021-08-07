@@ -1,7 +1,7 @@
 import {Button, Modal} from 'antd'
 import {SyncOutlined} from '@ant-design/icons'
 import {useMemo, useState} from 'react'
-//import {useTick} from '../hooks/use_tick'
+import {useTick} from '../hooks/use_tick'
 import formatDistanceToNowStrict from 'date-fns/formatDistanceToNowStrict'
 import {v4} from 'uuid'
 import { CacheState, UseOfflineCache } from '../hooks/use_offline_cache'
@@ -22,14 +22,13 @@ const getLastSyncedFromNowString = () => {
     )
   )
  } catch(e) {
-   console.error(e)
   return 'an unknown amount of time'
  }
 }
 
 export const ClientServerSync = () => {
   const [isOpen, setIsOpen] = useState(false)
-  //const tick = useTick(1000)
+  useTick(1000)
   const {stateSelector, pollComponent, syncNow} = UseOfflineCache()
   const state = stateSelector()
   const color = colorMap[state]
