@@ -1,18 +1,17 @@
 import {Button, Modal} from 'antd'
 import {SyncOutlined} from '@ant-design/icons'
 import {useMemo, useState} from 'react'
-import {queryClient} from '../utils/const'
-import {useTick} from '../hooks/use_tick'
+//import {useTick} from '../hooks/use_tick'
 import formatDistanceToNowStrict from 'date-fns/formatDistanceToNowStrict'
 import {v4} from 'uuid'
-import { useServerSync } from '../hooks/use_client_sync_store'
+import { CacheState, UseOfflineCache } from '../hooks/use_offline_cache'
 
-const colorMap = {
-  outdated: '#FF4D50',
-  updateFetching: '#FF4D12',
-  updateNow: '#F9AD14',
-  offline: '#1890FF',
-  synced: '#52C419'
+const colorMap: Record<CacheState ,string> = {
+  [CacheState.OUTDATED]: '#FF4D50',
+  [CacheState.FETCHING]: '#FF6D12',
+  [CacheState.UPDATABLE]: '#F8aD14',
+  [CacheState.OFFLINE]: '#1890FF',
+  [CacheState.SYNCED]: '#52C419'
 }
 
 const getLastSyncedFromNowString = () => {
@@ -30,14 +29,15 @@ const getLastSyncedFromNowString = () => {
 
 export const ClientServerSync = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const tick = useTick(1000)
-  const {state, pendingSync} = useServerSync()
+  //const tick = useTick(1000)
+  const {stateSelector, pollComponent, syncNow} = UseOfflineCache()
+  const state = stateSelector()
   const color = colorMap[state]
 
-  const syncButton = state !== 'updateNow' ? null : (
+  const syncButton = state !== CacheState.UPDATABLE ? null : (
     <Button
       data-testid="client sync but"
-      onClick={() => {queryClient.setQueryData('userAirs', () => pendingSync)}}
+      onClick={syncNow}
     >
       Sync Now
     </Button>
@@ -57,9 +57,9 @@ export const ClientServerSync = () => {
     )
   }, [color])
 
-  return useMemo(() => {
     return (
       <>
+        {pollComponent}
         {isOpen ? (
           <Modal
             visible={true}
@@ -77,5 +77,4 @@ export const ClientServerSync = () => {
         {modalButton}
       </>
     )
-  }, [tick, isOpen])
 }

@@ -17,6 +17,7 @@ export const getN = async (url: string) => {
     baseURL,
     url,
     method: 'get',
+    timeout: 10 * 1000,
   })
     .then((res) => {
       if(res.status > 200 && res.status < 400){
