@@ -158,6 +158,43 @@ it('handleFetchLastUpdated', async ()=>{
   })
 })
 
+it('handleFetchLastUpdated', async ()=>{
+
+  await handleFetchLastUpdated()
+  const serverEpoch = Date.now()
+
+  const test = useClientSyncStore.getState() as any
+  test.set = null
+  test.pendingRqClientCache = {
+    serverEpoch,
+    data: mockAircraftsDeep,
+    dataState: {
+      '1': '1',
+      '2': '2'
+    }
+  }
+
+  expect(test).toEqual({
+    pendingRqClientCache: {
+      serverEpoch,
+      data: mockAircraftsDeep,
+      dataState: {
+        '1': '1',
+        '2': '2'
+      }
+    },
+    set: null,
+    state: CacheState.UPDATABLE,
+    isDebouncing: false,
+  })
+})
+
+it('getStateHandlers', async () => {
+  getStateHandler[CacheState.OFFLINE]()
+  getStateHandler[CacheState.SYNCED]()
+  getStateHandler[CacheState.OUTDATED]()
+})
+
 it('gets synced state', () =>{
   const synced: API_ClientServerSync = {
     serverEpoch: Date.now(),
