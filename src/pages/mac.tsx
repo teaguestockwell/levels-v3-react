@@ -14,16 +14,16 @@ export const Mac = () => {
 
   return (
     <>
-      <CardShadow style={{marginTop: 15}} child={<TankList key={v4()} />} />
+      <CardShadow key={v4()} child={<TankList/>}/>
 
       <CardShadow
-        style={{marginTop: 15}}
+      style={{paddingBottom: 1}}
         child={
           <>
             <Label
               text={'Chart C'}
               icon={
-                <svg width="24" height="23" viewBox="0 0 24 23">
+                <svg width="18" height="30" viewBox="0 0 24 24">
                   <path d={Const.PATH.CHART_FILL} fill="#06645E" />
                 </svg>
               }
@@ -34,14 +34,12 @@ export const Mac = () => {
       />
 
       <CardShadow
-        style={{marginTop: 15}}
         child={
           <>
             <Label
-              style={{marginLeft: 8, paddingBottom: 4}}
               text={'Cargo'}
               icon={
-                <svg width="30" height="20" viewBox="0 0 30 20">
+                <svg width="30" height="100%" viewBox="0 0 30 20">
                   <path d={Const.PATH.CAR_FILL} fill="#06645E" />
                 </svg>
               }
@@ -51,7 +49,7 @@ export const Mac = () => {
         }
       />
 
-      <GetMacButton key={v4()} style={{marginTop: 50, marginBottom: 20}} />
+      <GetMacButton key={v4()}/>
       <CargoEditModal />
     </>
   )

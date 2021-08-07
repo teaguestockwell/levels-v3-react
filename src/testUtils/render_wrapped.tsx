@@ -5,9 +5,6 @@ import {useUserAirs} from '../hooks/query'
 
 import {userStore} from '../hooks/user_store'
 import React from 'react'
-import {ClientServerSyncStore} from '../hooks/use_client_server_sync'
-
-const ss = ClientServerSyncStore.getState()
 
 const IsLoaded = ({children}: {children: React.ReactNode}) => {
   const {data} = useUserAirs()
@@ -18,8 +15,7 @@ const IsLoaded = ({children}: {children: React.ReactNode}) => {
     //userStore.getState().clearCargoMap()
 
     // init state of server client sync
-    ss.setLastSyncEpoch(data.serverEpoch)
-    ss.setIsClientCacheEqualToSwRes(true)
+    localStorage.setItem('lastSync', `${data.serverEpoch}`) 
 
     return <>{children}</>
   }

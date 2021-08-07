@@ -9,15 +9,13 @@ import {getCargoStringsFromConfig} from '../utils/util'
 import {Const} from '../utils/const'
 import {Select} from 'antd'
 
-const {Option} = Select
-
 export const ConfigSelect = () => {
   const cs = getUserActions()
   const air = getUserAir()
   const objSchema = getUserSchema().fullObjSchema
   const configEnums = [Category.Emergency, Category.Extra, Category.Steward]
 
-  const onChange = async (newName: string) => {
+  const onChange = (newName: string) => {
     // get config from selection
     let newConfig: Config
     if (newName === 'No Config') {
@@ -50,17 +48,24 @@ export const ConfigSelect = () => {
       data-testid={`user config select`}
       onChange={onChange}
       defaultValue={userStore.getState().config.name}
-      style={{width: '100%', textAlign: 'center'}}
+      style={{width: '100%', textAlign: 'center', paddingTop: 10, display: 'flex' }}
       dropdownStyle={{textAlign: 'center'}}
       showSearch
       size="large"
-    >
-      <Option value={'No Config'}>No Config</Option>
-      {air.configs.map((c) => (
-        <Option value={c.name} key={c.configId}>
-          {c.name}
-        </Option>
-      ))}
-    </Select>
+      virtual={true}
+      options={
+        [
+          {
+            value: 'No Config',
+            label: 'No Config'
+          },
+
+          ...air.configs.map(c => ({
+            value: c.name,
+            label: c.name,
+          }))
+        ]
+      }
+    />
   )
 }

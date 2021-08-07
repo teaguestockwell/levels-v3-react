@@ -3,7 +3,7 @@ import {renderWrapped} from '../testUtils/render_wrapped'
 import {userStore} from '../hooks/user_store'
 import {Category} from '../types/aircraftDeep'
 import {CargoString} from '../types/cargoString'
-import MatchMediaMock from 'jest-matchmedia-mock'
+
 import {CargoEditRow} from './cargo_edit_button'
 
 const cargo: CargoString = {
@@ -17,12 +17,8 @@ const cargo: CargoString = {
 }
 
 describe('CargoEditButton', () => {
-  let matchMedia
+  
 
-  beforeAll(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    matchMedia = new MatchMediaMock()
-  })
 
   it('will render the button', async () => {
     userStore.getState().putCargos([cargo])

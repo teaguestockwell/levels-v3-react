@@ -1,8 +1,5 @@
-import {Row, Select, Typography} from 'antd'
+import {Select } from 'antd'
 import {adminStore} from '../hooks/admin_store'
-
-const {Text} = Typography
-const {Option} = Select
 
 /**
  a nested select for cargo inside of a configuration
@@ -35,29 +32,38 @@ export const AdminCargoSelect = ({validate}: {validate: () => void}) => {
     validate()
   }
 
+  const pStyle = {display: 'flex'}
+
   return (
     <>
-      <Row justify="start" style={{paddingBottom: '10px'}}>
-        <Text>
-          Select cargo in config: weight defaults to cargo weight, fs overrides
-          default cargo fs, cargo must be unique to config
-        </Text>
-      </Row>
-      <Row justify="start">
+        <p style={pStyle}>
+          When selecting a piece of cargo to insert into a config, the cargo inside of that config has the same weight as the cargo you select.
+        </p>
+
+        <p style={pStyle}>
+            The fuselage station selected overrides the default fuselage station of that cargo.
+        </p>
+
+        <p style={pStyle}>
+            To prevent duplicates, each cargo inserted into a configuration should be unique to that config. For example, instead of inserting 100 separate EPOS into the same config, you should insert one EPOS, give it a quantity of 100, then set the fuselage station to the average of the 100 EPOSs.`
+        </p>
+
+      <div style={{display: 'flex'}}>
         <Select
           size={'large'}
           defaultValue={selectedId}
           onChange={onChange}
           style={{width: '100%', textAlign: 'center'}}
           dropdownStyle={{textAlign: 'center'}}
-        >
-          {cargos.map((c) => (
-            <Option key={c.cargoId} value={c.cargoId}>
-              {c.name}
-            </Option>
-          ))}
-        </Select>
-      </Row>
+          virtual={true}
+          options={
+            cargos.map(c => ({
+              value: c.cargoId,
+              label: c.name
+            }))
+          }
+        />
+      </div>
     </>
   )
 }

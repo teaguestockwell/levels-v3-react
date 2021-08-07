@@ -1,20 +1,13 @@
-import {Col, Row} from 'antd'
-
 export const Label = ({
   text,
   icon,
-  style,
 }: {
   text: string
   icon: JSX.Element
-  style?: any
 }) => {
   return (
-    <Row justify="start" style={{marginLeft: 10, paddingTop: 12, ...style}}>
-      <Col span={40} style={style}>
+    <div style={{display: 'flex',alignItems: 'left', marginLeft: 14, paddingTop: 14}}>
         {icon}
-      </Col>
-      <Col>
         <div
           style={{
             paddingLeft: 6,
@@ -27,7 +20,6 @@ export const Label = ({
         >
           {text}
         </div>
-      </Col>
-    </Row>
+    </div>
   )
 }

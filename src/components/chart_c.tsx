@@ -1,4 +1,4 @@
-import {Form, Input, Typography, Row, Col} from 'antd'
+import {Form, Input} from 'antd'
 import {useEffect, useRef} from 'react'
 import {
   getCargoStringFromChartC,
@@ -6,21 +6,14 @@ import {
   rulesYupWrapper,
 } from '../utils/util'
 import {userStore, getUserActions, getUserAir} from '../hooks/user_store'
-import {Category} from '../types/aircraftDeep'
 import {debounce} from 'lodash'
 
 const cs = getUserActions()
-const {Text} = Typography
 
 export const ChartC = () => {
   const [form] = Form.useForm()
   const schema = useRef(getChartCSchema(getUserAir())).current
   const air = useRef(getUserAir()).current
-  const initCargo = useRef(
-    Array.from(userStore.getState().cargoMap.values()).filter(
-      (c) => c.category === Category.BasicAircraft
-    )
-  ).current[0]
 
   useEffect(() => {
     form.setFieldsValue(userStore.getState().chartC)
@@ -38,13 +31,13 @@ export const ChartC = () => {
     const cargo = getCargoStringFromChartC(
       air.momMultiplyer,
       {...newChartC, isValid},
-      initCargo.uuid
+      air.aircraftId.toString()
     )
     cs.setChartC(newChartC)
     cs.putCargos([cargo])
   }
   const getLabel = (text: string) => (
-    <Text
+    <label
       style={{
         textAlign: 'center',
         color: 'black',
@@ -53,17 +46,11 @@ export const ChartC = () => {
       }}
     >
       {text}
-    </Text>
+    </label>
   )
-  return (
-    <div
-      style={{
-        margin: '0px 10px 0px 10px',
-      }}
-    >
-      <Form key={air.aircraftId + '_chart_c_form'} form={form}>
-        <Row justify="center" style={{paddingLeft: '4px', paddingRight: '4px'}}>
-          <Col span={12} style={{paddingRight: '10px'}}>
+  return ( <Form key={air.aircraftId + '_chart_c_form'} form={form} style={{
+    margin: '0px 14px',
+  }}>
             <Form.Item
               name={`weight`}
               label={getLabel('Basic Weight')}
@@ -74,14 +61,13 @@ export const ChartC = () => {
             >
               <Input
                 size="large"
-                placeholder={`${Math.ceil(air.weight0 / 1000)}k-${Math.floor(
+                placeholder={`Range: ${Math.ceil(air.weight0 / 1000)}k-${Math.floor(
                   air.weight1 / 1000
                 )}k`}
                 onChange={debounce(onChange, 500)}
               />
             </Form.Item>
-          </Col>
-          <Col span={12} style={{paddingLeft: '10px'}}>
+
             <Form.Item
               name={'mom'}
               label={getLabel('Basic Moment')}
@@ -93,14 +79,11 @@ export const ChartC = () => {
               <Input
                 size="large"
                 onChange={debounce(onChange, 500)}
-                placeholder={`${Math.ceil(air.mom0 / 1000)}k-${Math.floor(
+                placeholder={`Range: ${Math.ceil(air.mom0 / 1000)}k-${Math.floor(
                   air.mom1 / 1000
                 )}k`}
               />
             </Form.Item>
-          </Col>
-        </Row>
       </Form>
-    </div>
   )
 }

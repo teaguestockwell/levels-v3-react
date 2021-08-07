@@ -1,13 +1,10 @@
 import {waitFor} from '@testing-library/react'
 import {userStore} from '../hooks/user_store'
 import {renderWrapped} from '../testUtils/render_wrapped'
-import MatchMediaMock from 'jest-matchmedia-mock'
+
 
 describe('RenderWrapped', () => {
-  let matchmedia
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  beforeAll(() => (matchmedia = new MatchMediaMock()))
   it('renders stuff for tests', async () => {
     const initState = userStore.getState()
     expect(initState.air).toBe(undefined)

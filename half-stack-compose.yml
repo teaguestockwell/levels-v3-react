@@ -22,15 +22,6 @@ services:
     depends_on:
       - 'PG_DATABASE'
 
-  fl-ui:
-    build:
-      context: .
-      dockerfile: ./Dockerfile.builder
-      args:
-        IS_LOCAL: 'true' # build time arg => NODE_ENV=development react-scripts build => use localhost as api url
-    depends_on:
-      - 'fl-api'
-
   proxy:
     image: 'nginx'
     ports:
@@ -38,6 +29,6 @@ services:
     expose:
       - 80 # expose nginx:80 to other container at nginx:80
     volumes:
-      - ./proxy.conf:/etc/nginx/nginx.conf
+      - ./proxy-half-stack.conf:/etc/nginx/nginx.conf
     depends_on:
-      - 'fl-ui'
+      - 'fl-api'

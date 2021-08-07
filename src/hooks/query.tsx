@@ -1,17 +1,44 @@
+import { message } from 'antd'
 import axios from 'axios'
 import {useQuery} from 'react-query'
 import {v4} from 'uuid'
 import {removeNestedObj} from '../utils/util'
 
-const baseURL = process.env.REACT_APP_API_BASE_URL
+
+const baseURL = (() => {
+  const url = window.location.href ?? ''
+  if(url.includes('apps.dso.mil')){return process.env.REACT_APP_API_BASE_URL_PROD}
+  if(url.includes('staging')){return process.env.REACT_APP_API_BASE_URL_STAGING}
+  return process.env.REACT_APP_API_BASE_URL_LOCAL
+})()
 
 export const getN = async (url: string) => {
   return axios({
     baseURL,
     url,
     method: 'get',
+    timeout: 10 * 1000,
   })
-    .then((res) => res.data)
+    .then((res) => {
+      if(res.status > 200 && res.status < 400){
+        message.info({
+          key: 'refresh-cookie',
+          duration: 0,
+          icon: <></>,
+          style: {},
+          content: <div>
+            <span onClick={() => {location.reload()}} style={{color: 'blue', cursor: 'pointer'}}>
+              {'Re-login'}
+            </span> 
+            {' to get the latest data and reset.'}
+            <span onClick={() => {message.destroy('refresh-cookie')}} style={{color: 'red', cursor: 'pointer'}}>
+              {' Hide'}
+            </span>
+          </div>,
+        })
+      }
+      return res.data
+    })
     .catch(() => {
       return null
     })

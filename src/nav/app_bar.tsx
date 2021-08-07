@@ -1,5 +1,5 @@
-import {Row, Col} from 'antd'
 import {Clock} from '../components/clock'
+import { MaxContent } from '../components/max_content'
 
 export const AppBar = ({
   sync,
@@ -11,8 +11,7 @@ export const AppBar = ({
   // admin app bars contain AdminAirSelects that sync client and server state automatically
   // user app bars contain UserAirSelects that use init state of service worker cache.
   // the cache is updated by the ClientServerSync. if initState !== currentState the users may opt in to refresh
-  return (
-    <div
+  return <div
       style={{
         zIndex: 2,
         position: 'fixed',
@@ -26,14 +25,16 @@ export const AppBar = ({
         textAlign: 'center',
       }}
     >
-      <Row
-        justify="center"
+      <MaxContent>
+      <div
         style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
           height: 44,
-          padding: '4px 12px 10px 12px',
+          marginRight: 14, marginLeft: 14,
         }}
       >
-        <Col span={8} style={{justifyContent: 'flex-start'}}>
           <div
             style={{
               textShadow: '0px 2px 4px rgba(255, 255, 255, 0.25)',
@@ -47,13 +48,14 @@ export const AppBar = ({
           >
             Levels
           </div>
-        </Col>
-        <Col span={16} style={{textAlign: 'end', paddingTop: 4}}>
+
+        <div style={{display: 'flex', justifyContent: 'right', alignItems: 'center'}}>
           {select}
           {sync}
-        </Col>
-      </Row>
-      <Clock />
+        </div>
+
     </div>
-  )
+    <Clock />
+    </MaxContent>
+  </div>
 }

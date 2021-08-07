@@ -1,5 +1,4 @@
 import {Const} from '../utils/const'
-import {Button, Col, Row} from 'antd'
 import {
   navIcons,
   pageNames,
@@ -20,11 +19,6 @@ const cs = getUserActions()
 export const MobileNav = () => {
   const pageName = usePageName()
 
-  const colProps = {
-    span: 6,
-    style: {display: 'inline-flex', justifyContent: 'center'},
-  }
-
   return (
     // since bottom nav bar sits on top, add padding to make viewport scroll to uncover
     <div
@@ -38,7 +32,7 @@ export const MobileNav = () => {
       <div
         style={{
           position: 'fixed',
-          bottom: '0',
+          bottom: 0,
           width: '100%',
           zIndex: 1,
           height: Const.HEIGHT.BOTTOM_NAV_BAR,
@@ -47,25 +41,17 @@ export const MobileNav = () => {
         }}
       >
         <MaxContent>
-          <Row justify="center" style={{padding: '15px 0px 0px 0px'}}>
+          <div style={{display: 'flex', justifyContent: 'space-between', marginLeft: 14, marginRight: 14}}>
             {pageNames.map((x) => (
-              <Col {...colProps} key={x}>
-                <Button
-                  type="text"
+                <div
+                  key={x}
                   onClick={() => cs.setPageName(x)}
-                  icon={navIcons[getNavItemStyle(x, pageName)][x]}
-                />
-              </Col>
+                >
+                {navIcons[getNavItemStyle(x, pageName)][x]}
+              </div>
             ))}
-          </Row>
+          </div>
         </MaxContent>
-        {/* <Row justify="center" style={{padding: '0px 0px 0px 0px'}}>
-          {pageNames.map((x) => (
-            <Col {...colProps} key={x}>
-              <Typography.Text style={textStyle[getStyle(x,pageName)]}>{x}</Typography.Text>
-            </Col>
-          ))}
-        </Row> */}
       </div>
     </div>
   )

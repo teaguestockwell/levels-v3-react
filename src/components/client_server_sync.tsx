@@ -1,51 +1,52 @@
 import {Button, Modal} from 'antd'
 import {SyncOutlined} from '@ant-design/icons'
-import {useClientServerSync} from '../hooks/use_client_server_sync'
 import {useMemo, useState} from 'react'
-import {queryClient} from '../utils/const'
 import {useTick} from '../hooks/use_tick'
-import {formatDistanceToNowStrict} from 'date-fns'
+import formatDistanceToNowStrict from 'date-fns/formatDistanceToNowStrict'
 import {v4} from 'uuid'
+import { CacheState, UseOfflineCache } from '../hooks/use_offline_cache'
+
+const colorMap: Record<CacheState ,string> = {
+  [CacheState.OUTDATED]: '#FF4D50',
+  [CacheState.FETCHING]: '#FF6D12',
+  [CacheState.UPDATABLE]: '#F8aD14',
+  [CacheState.OFFLINE]: '#1890FF',
+  [CacheState.SYNCED]: '#52C419'
+}
+
+const getLastSyncedFromNowString = () => {
+ try{
+  return formatDistanceToNowStrict(
+    Number(
+      localStorage.getItem('lastSync')
+    )
+  )
+ } catch(e) {
+  return 'an unknown amount of time'
+ }
+}
 
 export const ClientServerSync = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const sync = useClientServerSync()
-  const tick = useTick(1000)
-  const onlineStateString = sync.isClientOnline ? 'Online' : 'Offline'
-  const syncButton = sync.isClientCacheEqualToSwRes ? null : (
+  useTick(1000)
+  const {stateSelector, pollComponent, syncNow} = UseOfflineCache()
+  const state = stateSelector()
+  const color = colorMap[state]
+
+  const syncButton = state !== CacheState.UPDATABLE ? null : (
     <Button
       data-testid="client sync but"
-      onClick={() => {
-        if (sync.isClientCacheEqualToSwRes) {
-          return
-        }
-        queryClient.setQueryData('userAirs', () => sync.swRes)
-      }}
+      onClick={syncNow}
     >
       Sync Now
     </Button>
   )
 
-  const getSyncStateColor = () => {
-    if (sync.isClientSyncedWithServer) {
-      return '#52C419'
-    } // online synced
-    if (sync.isClientCacheEqualToSwRes) {
-      return '#1890FF'
-    } // offline
-    if (!sync.isClientStale) {
-      return '#F9AD14'
-    } // online && !isClientSyncedWithServer || lastSync > 48hrs ago
-    return '#FF4D50'
-  }
-
-  const syncColor = getSyncStateColor()
-
   const modalButton = useMemo(() => {
     return (
       <Button
-        data-testid={syncColor}
-        style={{backgroundColor: syncColor, borderColor: syncColor}}
+        data-testid={color}
+        style={{backgroundColor: color, borderColor: color}}
         size={'small'}
         type="primary"
         shape="circle"
@@ -53,14 +54,11 @@ export const ClientServerSync = () => {
         onClick={() => setIsOpen(true)}
       />
     )
-  }, [syncColor])
+  }, [color])
 
-  return useMemo(() => {
-    const lastSyncedFromNow = formatDistanceToNowStrict(
-      new Date(sync.lastSyncEpoch as number)
-    )
     return (
       <>
+        {pollComponent}
         {isOpen ? (
           <Modal
             visible={true}
@@ -70,7 +68,7 @@ export const ClientServerSync = () => {
             centered
           >
             <div key={v4()}>
-              <p>{`${onlineStateString}, last synced ${lastSyncedFromNow} ago`}</p>
+              <p>{`${state}, last synced ${getLastSyncedFromNowString()} ago`}</p>
               {syncButton}
             </div>
           </Modal>
@@ -78,5 +76,4 @@ export const ClientServerSync = () => {
         {modalButton}
       </>
     )
-  }, [tick, isOpen])
 }

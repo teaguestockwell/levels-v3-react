@@ -22,15 +22,15 @@ export const pageNames = ['%MAC', 'Glossary', 'Help', 'Admin']
 
 const svgPropsSelected = {
   width: 33,
-  height: 33,
+  height: Const.HEIGHT.BOTTOM_NAV_BAR,
   viewBox: '0 0 33 33',
-  webkitFilter: 'drop-shadow( 0px 2px 4px rgba(255, 255, 255, .25))',
+  webkitfilter: 'drop-shadow( 0px 2px 4px rgba(255, 255, 255, .25))',
   filter: 'drop-shadow( 0px 2px 4px rgba(255, 255, 255, .25))',
 } as any
 
 const svgProps = {
   width: 33,
-  height: 33,
+  height: Const.HEIGHT.BOTTOM_NAV_BAR,
   viewBox: '0 0 33 33',
 } as any
 
@@ -51,7 +51,7 @@ export const navIcons: {[key: string]: any} = {
       </svg>
     ),
     Admin: (
-      <svg data-testid="admin nav icon" {...svgProps}>
+      <svg data-testid="admin nav icon" {...{...svgProps, viewBox: '0 0 28 28'}}>
         <path d={Const.PATH.ADMIN_OUTLINE} fill={Const.COLORS.TXT_DISABLED} />
       </svg>
     ),
@@ -73,7 +73,7 @@ export const navIcons: {[key: string]: any} = {
       </svg>
     ),
     Admin: (
-      <svg data-testid="admin nav icon" {...svgPropsSelected}>
+      <svg data-testid="admin nav icon" {...{...svgPropsSelected, viewBox: '0 0 28 28'}}>
         <path d={Const.PATH.ADMIN_OUTLINE} fill="white" />
       </svg>
     ),

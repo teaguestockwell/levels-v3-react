@@ -1,11 +1,10 @@
 import {userStore} from '../hooks/user_store'
 import {renderWrapped, waitFor, fireEvent} from '../testUtils/render_wrapped'
 import {ChartC} from './chart_c'
-import MatchMediaMock from 'jest-matchmedia-mock'
-import {v4} from 'uuid'
+
 import {Category} from '../types/aircraftDeep'
 
-let matchMedia
+
 
 const putChartC = () =>
   userStore.getState().putCargos([
@@ -15,16 +14,12 @@ const putChartC = () =>
       fs: '0',
       qty: '1',
       isValid: false,
-      uuid: v4(),
+      uuid: '1',
       category: Category.BasicAircraft,
     },
   ])
 
 describe('ChartC', () => {
-  beforeAll(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    matchMedia = new MatchMediaMock()
-  })
 
   it('will render', async () => {
     putChartC()
@@ -55,19 +50,13 @@ describe('ChartC', () => {
 
     // then
     await waitFor(() => {
-      expect({
-        // get cargo string value where name === Basic Aircraft
-        ...Array.from(userStore.getState().cargoMap.entries()).filter(
-          (x) => x[1].name === 'Basic Aircraft'
-        )[0][1],
-        uuid: '0',
-      }).toStrictEqual({
+      expect(userStore.getState().cargoMap.get('1')).toStrictEqual({
         category: 'BasicAircraft',
         fs: '921.9858156028369',
         isValid: true,
         name: 'Basic Aircraft',
         qty: '1',
-        uuid: '0',
+        uuid: '1',
         weightEA: '282000',
       })
     })
