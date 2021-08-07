@@ -76,7 +76,7 @@ registerRoute(
   url.origin === self.location.origin && 
   url.pathname.endsWith('lastUpdated'),
   new StaleWhileRevalidate({
-    cacheName: 'json',
+    cacheName: 'lastUpdated',
     plugins: [
       // Ensure that once this runtime cache reaches a maximum size the
       // least-recently used images are removed.
