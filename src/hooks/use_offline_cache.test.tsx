@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
-import { acceptPendingRqCache, useClientSyncStore, CacheState, getLastSyncEpoch, getIsOutdated, getIsCached, getNewLastUpdated, handleFetchLastUpdated, ApiClientServerSync, getState, getStateHandler} from "./use_offline_cache";
+import { acceptPendingRqCache, useClientSyncStore, OfflineCacheState, getLastSyncEpoch, getIsOutdated, getIsCached, getNewLastUpdated, handleFetchLastUpdated, ApiClientServerSync, getState, getStateHandler} from "./use_offline_cache";
 import {renderHook} from '@testing-library/react-hooks'
 import { mockAircraftsDeep } from "../testUtils/mock_aircrafts_deep";
 
 it('creates a global store', () => {
   expect({...useClientSyncStore.getState(), set: undefined}).toStrictEqual({
     isDebouncing:false,
-    state: CacheState.OUTDATED,
+    state: OfflineCacheState.OUTDATED,
     pendingRqClientCache: null,
     set: undefined
   })
@@ -28,7 +28,7 @@ it('acceptPendingRqCache', async ()=>{
 
   useClientSyncStore.setState({
     isDebouncing: false,
-    state: CacheState.OUTDATED,
+    state: OfflineCacheState.OUTDATED,
     pendingRqClientCache,
   })
 
@@ -51,7 +51,7 @@ it('acceptPendingRqCache', async ()=>{
   expect({...useClientSyncStore.getState(), set: undefined}).toStrictEqual({
     set:undefined,
     isDebouncing:false,
-    state: CacheState.SYNCED,
+    state: OfflineCacheState.SYNCED,
     pendingRqClientCache: null
   })
 })
@@ -153,7 +153,7 @@ it('handleFetchLastUpdated', async ()=>{
       }
     },
     set: null,
-    state: CacheState.UPDATABLE,
+    state: OfflineCacheState.UPDATABLE,
     isDebouncing: false,
   })
 })
@@ -184,15 +184,15 @@ it('handleFetchLastUpdated', async ()=>{
       }
     },
     set: null,
-    state: CacheState.UPDATABLE,
+    state: OfflineCacheState.UPDATABLE,
     isDebouncing: false,
   })
 })
 
 it('getStateHandlers', async () => {
-  getStateHandler[CacheState.OFFLINE]()
-  getStateHandler[CacheState.SYNCED]()
-  getStateHandler[CacheState.OUTDATED]()
+  getStateHandler[OfflineCacheState.OFFLINE]()
+  getStateHandler[OfflineCacheState.SYNCED]()
+  getStateHandler[OfflineCacheState.OUTDATED]()
 })
 
 it('gets synced state', () =>{
@@ -202,7 +202,7 @@ it('gets synced state', () =>{
     dataState: {}
   }
 
-  expect(getState(synced)).toBe(CacheState.SYNCED)
+  expect(getState(synced)).toBe(OfflineCacheState.SYNCED)
 })
 
 it('gets outdated state', () =>{
@@ -218,7 +218,7 @@ it('gets outdated state', () =>{
 
   global.Storage.prototype.getItem = jest.fn((key) => store[key])
 
-  expect(getState(outdated)).toBe(CacheState.OUTDATED)
+  expect(getState(outdated)).toBe(OfflineCacheState.OUTDATED)
 })
 
 it('gets fetching state', () => {
@@ -240,7 +240,7 @@ it('gets fetching state', () => {
 
   jest.spyOn(navigator, 'onLine', 'get').mockReturnValueOnce(true)
 
-  expect(getState(fetching)).toBe(CacheState.FETCHING)
+  expect(getState(fetching)).toBe(OfflineCacheState.FETCHING)
 })
 
 it('gets fetching offline state', () => {
@@ -258,7 +258,7 @@ it('gets fetching offline state', () => {
 
   jest.spyOn(navigator, 'onLine', 'get').mockReturnValueOnce(false)
 
-  expect(getState(offline)).toBe(CacheState.OFFLINE)
+  expect(getState(offline)).toBe(OfflineCacheState.OFFLINE)
 })
 
 

@@ -1,8 +1,8 @@
 import {useUserAir} from '../hooks/user_store'
-import { AircraftDeep } from '../types/aircraftDeep'
+import * as Types from '../types'
 
 export const GlossaryList = () => {
-  const air = useUserAir() as AircraftDeep
+  const air = useUserAir() as Types.AircraftDeep
 
   return <div style={{marginLeft: 14,marginRight: 14, textAlign: 'left'}}>
     {

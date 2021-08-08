@@ -4,7 +4,7 @@ import {
   userStore,
   getUserActions,
 } from '../hooks/user_store'
-import {Category, Config} from '../types/aircraftDeep'
+import * as Types from '../types'
 import {getCargoStringsFromConfig} from '../utils/util'
 import {Const} from '../utils/const'
 import {Select} from 'antd'
@@ -13,15 +13,15 @@ export const ConfigSelect = () => {
   const cs = getUserActions()
   const air = getUserAir()
   const objSchema = getUserSchema().fullObjSchema
-  const configEnums = [Category.Emergency, Category.Extra, Category.Steward]
+  const configEnums = [Types.CargoCategory.Emergency, Types.CargoCategory.Extra, Types.CargoCategory.Steward]
 
   const onChange = (newName: string) => {
     // get config from selection
-    let newConfig: Config
+    let newConfig: Types.Config
     if (newName === 'No Config') {
       newConfig = Const.NO_CONFIG
     } else {
-      newConfig = air.configs.find((c) => c.name === newName) as Config
+      newConfig = air.configs.find((c) => c.name === newName) as Types.Config
     }
 
     // get an array of cargoStrings from that config

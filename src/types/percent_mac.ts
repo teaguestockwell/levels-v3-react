@@ -1,6 +1,6 @@
-import {CargoString} from './cargoString'
+import { CargoCalculated, CargoString } from ".";
 
-export interface PerMac {
+export interface PercentMac {
   /** used to build rows of all cargo */
   items: Array<CargoString & CargoCalculated>
   qtyGrandTotal: string
@@ -15,10 +15,3 @@ export interface PerMac {
   percentMacPercent: string
 }
 
-export interface CargoCalculated {
-  momentEach: string
-  simpleMomentEach: string
-  weightTotal: string
-  momentTotal: string
-  simpleMomentTotal: string
-}

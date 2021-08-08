@@ -1,17 +1,16 @@
 import {act, waitFor} from '@testing-library/react'
 import {renderWrapped} from '../testUtils/render_wrapped'
 import {userStore} from '../hooks/user_store'
-import {Category} from '../types/aircraftDeep'
-import {CargoString} from '../types/cargoString'
+import  * as Types from '../types'
 
 import {CargoEditRow} from './cargo_edit_button'
 
-const cargo: CargoString = {
+const cargo: Types.CargoString = {
   name: 'cargo',
   weightEA: '100',
   qty: '1',
   uuid: '0',
-  category: Category.User,
+  category: Types.CargoCategory.User,
   fs: '1120',
   isValid: true,
 }

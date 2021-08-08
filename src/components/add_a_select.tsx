@@ -1,5 +1,5 @@
 import {Select} from 'antd'
-import {Cargo, Category} from '../types/aircraftDeep'
+import  * as Types from '../types'
 import {getUserAir, getUserSchema, getUserActions} from '../hooks/user_store'
 import {getCargoString, getCargoStringFromCargo} from '../utils/util'
 
@@ -16,7 +16,7 @@ export const AddASelect = () => {
       return
     }
 
-    const oldCargo = air.cargos.find((x) => x.name === value) as Cargo
+    const oldCargo = air.cargos.find((x) => x.name === value) as Types.Cargo
     const newCargo = getCargoStringFromCargo(oldCargo, 1)
     const isValid = schema.isValidSync(newCargo)
     cs.putCargos([{...newCargo, isValid}])
@@ -24,9 +24,9 @@ export const AddASelect = () => {
 
   // render in category order
   const cargos = [
-    ...air.cargos.filter((x) => x.category === Category.Steward),
-    ...air.cargos.filter((x) => x.category === Category.Emergency),
-    ...air.cargos.filter((x) => x.category === Category.Extra),
+    ...air.cargos.filter((x) => x.category === Types.CargoCategory.Steward),
+    ...air.cargos.filter((x) => x.category === Types.CargoCategory.Emergency),
+    ...air.cargos.filter((x) => x.category === Types.CargoCategory.Extra),
   ]
 
   return (

@@ -1,7 +1,6 @@
 import create, {State} from 'zustand'
 import {Const} from '../utils/const'
-import {AircraftDeep, Config, Category} from '../types/aircraftDeep'
-import {CargoString} from '../types/cargoString'
+import  * as Types from '../types'
 import isEqual from 'lodash/isEqual'
 import {
   CargoSchema,
@@ -12,27 +11,27 @@ import {
 export interface UserStoreState extends State {
   // read
   pageName: string
-  cargoMap: Map<string, CargoString>
-  config: Config
+  cargoMap: Map<string, Types.CargoString>
+  config: Types.Config
   editUuid: string | undefined
   chartC: {weight: string; mom: string}
-  air: AircraftDeep | undefined
+  air: Types.AircraftDeep | undefined
   cargoSchema: CargoSchema | undefined
 
   // update 1
   setPageName: (pageName: string) => void
   setChartC: (chartC: {weight: string; mom: string}) => void
-  setConfig: (config: Config) => void
+  setConfig: (config: Types.Config) => void
   setEditUuid: (uuid: string | undefined) => void
 
   // create | update n
-  putCargos: (cargos: CargoString[]) => void
+  putCargos: (cargos: Types.CargoString[]) => void
 
   // delete n
   deleteCargos: (cargoIds: string[]) => void
 
   // when a new air is selected, reset all state
-  setAir: (air: AircraftDeep, resetCargo?: boolean) => void
+  setAir: (air: Types.AircraftDeep, resetCargo?: boolean) => void
 
   // testing only
   clearCargoMap: () => void
@@ -85,12 +84,12 @@ export const userStore = create<UserStoreState>((set) => ({
   // testing only
   clearCargoMap: () =>
     set((s) => {
-      s.cargoMap = new Map<string, CargoString>()
+      s.cargoMap = new Map<string, Types.CargoString>()
     }),
 
   // when a new air is selected, reset all state
-  setAir: (air: AircraftDeep, resetCargo = true) => {
-    const chartC: [string, CargoString] = [
+  setAir: (air: Types.AircraftDeep, resetCargo = true) => {
+    const chartC: [string, Types.CargoString] = [
       air.aircraftId.toString(),
       {
         name: 'Basic Aircraft',
@@ -99,18 +98,18 @@ export const userStore = create<UserStoreState>((set) => ({
         qty: '1',
         isValid: false,
         uuid: air.aircraftId.toString(),
-        category: Category.BasicAircraft,
+        category: Types.CargoCategory.BasicAircraft,
       },
     ]
-    const tanks = getCargoStringsFromAirTanks(air).map<[string, CargoString]>(
-      (cs) => [cs.uuid, cs]
+    const tanks = getCargoStringsFromAirTanks(air).map<[string, Types.CargoString]>(
+      (cs: Types.CargoString) => [cs.uuid, cs]
     )
 
     return set((s) => {
       s.air = air
       // during tests, we need to setup cargo map state to test
       s.cargoMap = resetCargo
-        ? new Map<string, CargoString>([chartC, ...tanks])
+        ? new Map<string, Types.CargoString>([chartC, ...tanks])
         : s.cargoMap
       s.config = Const.NO_CONFIG
       s.chartC = {weight: '', mom: ''}
@@ -148,7 +147,7 @@ export const useCargo = (uuid: string) => {
   return userStore(
     (s) => s.cargoMap.get(uuid),
     (s1, s2) => isEqual(s1, s2)
-  ) as CargoString
+  ) as Types.CargoString
 }
 
 export const useCargos = () => {
@@ -166,12 +165,12 @@ export const useUserAir = () =>
 
 // helper functions to access state
 export const getUserCargo = (uuid: string) =>
-  userStore.getState().cargoMap.get(uuid) as CargoString
+  userStore.getState().cargoMap.get(uuid) as Types.CargoString
 
 export const getUserCargos = () =>
   Array.from(userStore.getState().cargoMap.values())
 
-export const getUserAir = () => userStore.getState().air as AircraftDeep
+export const getUserAir = () => userStore.getState().air as Types.AircraftDeep
 
 export const getUserSchema = () =>
   userStore.getState().cargoSchema as CargoSchema

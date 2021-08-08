@@ -1,4 +1,4 @@
-import {Category} from './aircraftDeep'
+import { CargoCategory } from ".";
 
 /** string representation of a cargo configured by user that is possibly invalid */
 export interface CargoString {
@@ -7,12 +7,6 @@ export interface CargoString {
   weightEA: string
   fs: string
   qty: string
-  category: Category
-  isValid: boolean
-}
-
-export interface ChartCCargoString {
-  weight: string
-  mom: string
+  category: CargoCategory
   isValid: boolean
 }

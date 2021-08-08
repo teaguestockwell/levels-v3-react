@@ -1,19 +1,99 @@
 import {Const} from './const'
 import * as yup from 'yup'
-import {
-  AircraftDeep,
-  Cargo,
-  Category,
-  Config,
-  getYupModelSchemas,
-  Tank,
-} from '../types/aircraftDeep'
-import {CargoString, ChartCCargoString} from '../types/cargoString'
 import {v4} from 'uuid'
-import {CargoCalculated, PerMac} from '../types/perMac'
 import {debounce} from 'lodash'
 import queryString from 'query-string'
 import {message} from 'antd'
+import  * as Types from '../types'
+
+export const getYupModelSchemas = (): {[key: string]: any} => {
+  return {
+    aircraft: {
+      name: Const.schema.stringSchema,
+      fs0: Const.schema.numSchema,
+      fs1: Const.schema.numSchema,
+      mom0: Const.schema.numSchema,
+      mom1: Const.schema.numSchema,
+      weight0: Const.schema.numSchema,
+      weight1: Const.schema.numSchema,
+      cargoWeight1: Const.schema.numSchema,
+      lemac: Const.schema.numSchema,
+      mac: Const.schema.numSchema,
+      momMultiplyer: Const.schema.numSchema,
+      shallowObj: yup.object().shape({
+        name: Const.schema.stringSchema,
+        fs0: Const.schema.numSchema,
+        fs1: Const.schema.numSchema,
+        mom0: Const.schema.numSchema,
+        mom1: Const.schema.numSchema,
+        weight0: Const.schema.numSchema,
+        weight1: Const.schema.numSchema,
+        cargoWeight1: Const.schema.numSchema,
+        lemac: Const.schema.numSchema,
+        mac: Const.schema.numSchema,
+        momMultiplyer: Const.schema.numSchema,
+      }),
+    },
+    cargo: {
+      name: Const.schema.stringSchema,
+      weight: Const.schema.numSchema,
+      fs: Const.schema.numSchema,
+      category: Const.schema.categorySchema,
+      shallowObj: yup.object().shape({
+        name: Const.schema.stringSchema,
+        weight: Const.schema.numSchema,
+        fs: Const.schema.numSchema,
+        category: Const.schema.categorySchema,
+      }),
+    },
+
+    config: {
+      name: Const.schema.stringSchema,
+      shallowObj: yup.object().shape({
+        name: Const.schema.stringSchema,
+      }),
+    },
+
+    configCargo: {
+      fs: Const.schema.numSchema,
+      qty: Const.schema.intPositiveSchema,
+      shallowObj: yup.object().shape({
+        fs: Const.schema.numSchema,
+        qty: Const.schema.intPositiveSchema,
+      }),
+    },
+
+    glossary: {
+      name: Const.schema.stringSchema,
+      body: Const.schema.stringSchema,
+      shallowObj: yup.object().shape({
+        name: Const.schema.stringSchema,
+        body: Const.schema.stringSchema,
+      }),
+    },
+
+    tank: {
+      name: Const.schema.stringSchema,
+      weightsCSV: Const.schema.numPositiveCSV,
+      simpleMomsCSV: Const.schema.numPositiveCSV,
+      shallowObj: yup.object().shape({
+        name: Const.schema.stringSchema,
+        weightsCSV: Const.schema.stringSchema,
+        simpleMomsCSV: Const.schema.stringSchema,
+      }),
+    },
+
+    user: {
+      name: yup.string().required().email().max(50),
+      role: Const.schema.intSchema,
+      shallowObj: yup.object().shape({
+        name: yup.string().required().email().max(50),
+        role: Const.schema.intSchema,
+      }),
+    },
+  }
+}
+
 /** if string is > max length cut it and add ... */
 export const cut = (x: any): string => {
   return x.toString().length > Const.MAX_FORM_LENGTH
@@ -56,7 +136,7 @@ export interface CargoSchema {
   fullObjSchema: any
 }
 
-export const getCargoSchema = (air: AircraftDeep): CargoSchema => {
+export const getCargoSchema = (air: Types.AircraftDeep): CargoSchema => {
   const getNameSchema = () => yup.string().required()
   const getWeightSchema = () =>
     yup
@@ -95,7 +175,7 @@ export const getCargoSchema = (air: AircraftDeep): CargoSchema => {
   }
 }
 
-export const getChartCSchema = (air: AircraftDeep) => {
+export const getChartCSchema = (air: Types.AircraftDeep) => {
   const getMom = () =>
     yup
       .number()
@@ -138,21 +218,21 @@ export const rulesYupWrapper = (fieldSchema: any): any[] => {
 }
 
 export const getCargoStringFromCargo = (
-  cargo: Cargo,
+  cargo: Types.Cargo,
   qty: number
-): CargoString => {
+): Types.CargoString => {
   return {
     uuid: v4(),
     name: cargo.name,
     weightEA: cargo.weight.toString(),
     fs: cargo.fs.toString(),
     qty: qty.toString(),
-    category: Category.User,
+    category: Types.CargoCategory.User,
     isValid: false,
   }
 }
 
-export const getCargoStringsFromConfig = (config: Config): CargoString[] => {
+export const getCargoStringsFromConfig = (config: Types.Config): Types.CargoString[] => {
   return config.configCargos.map((cc) => ({
     uuid: v4(),
     name: cc.cargo.name,
@@ -163,14 +243,14 @@ export const getCargoStringsFromConfig = (config: Config): CargoString[] => {
     isValid: false,
   }))
 }
-export const getCargoString = (): CargoString => {
+export const getCargoString = (): Types.CargoString => {
   return {
     uuid: v4(),
     name: `custom cargo`,
     weightEA: '',
     fs: '',
     qty: '1',
-    category: Category.User,
+    category: Types.CargoCategory.User,
     isValid: false,
   }
 }
@@ -187,8 +267,8 @@ export const getFSofSimpleMoment = (props: {
 export const getCargoStringFromTank = (props: {
   momMultiplyer: number
   idx: number
-  tank: Tank
-}): CargoString => {
+  tank: Types.Tank
+}): Types.CargoString => {
   const simpleMom = Number(props.tank.simpleMomsCSV.split(',')[props.idx])
   const weightEA = Number(props.tank.weightsCSV.split(',')[props.idx])
   const fs = getFSofSimpleMoment({
@@ -203,16 +283,16 @@ export const getCargoStringFromTank = (props: {
     weightEA: weightEA.toString(),
     fs: fs.toString(),
     qty: '1',
-    category: Category.Tank,
+    category: Types.CargoCategory.Tank,
     isValid: true,
   }
 }
 
 export const getCargoStringFromChartC = (
   momMultiplier: number,
-  chartC: ChartCCargoString,
+  chartC: Types.ChartcCargoString,
   uuid: string
-): CargoString => {
+): Types.CargoString => {
   let fs: string
 
   if (!chartC.isValid) {
@@ -232,12 +312,12 @@ export const getCargoStringFromChartC = (
     weightEA: chartC.weight,
     fs,
     qty: '1',
-    category: Category.BasicAircraft,
+    category: Types.CargoCategory.BasicAircraft,
     isValid: chartC.isValid,
   }
 }
 
-export const getCargoStringsFromAirTanks = (air: AircraftDeep) =>
+export const getCargoStringsFromAirTanks = (air: Types.AircraftDeep) =>
   air.tanks.map((t) =>
     getCargoStringFromTank({
       momMultiplyer: air.momMultiplyer,
@@ -247,14 +327,14 @@ export const getCargoStringsFromAirTanks = (air: AircraftDeep) =>
   )
 
 export const getPerMac = (
-  air: AircraftDeep,
-  cargoStrings: CargoString[]
-): PerMac => {
+  air: Types.AircraftDeep,
+  cargoStrings: Types.CargoString[]
+): Types.PercentMac => {
   let weightTotalAccum = 0
   let momentTotalAccum = 0
   let qtyAccum = 0
 
-  const items = cargoStrings.map<CargoString & CargoCalculated>((c) => {
+  const items = cargoStrings.map<Types.CargoString & Types.CargoCalculated>((c) => {
     const fs = Number(c.fs)
     const qty = Number(c.qty)
     const weightEach = Number(c.weightEA)

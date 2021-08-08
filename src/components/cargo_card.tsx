@@ -6,7 +6,7 @@ import {
 import {Collapse } from 'antd'
 import {ConfigSelect} from './config_select'
 import {AddASelect} from './add_a_select'
-import {Category} from '../types/aircraftDeep'
+import  * as Types from '../types'
 import {CargoEditRow} from './cargo_edit_button'
 import {v4} from 'uuid'
 
@@ -17,11 +17,11 @@ export const CargoCard = () => {
   useCargoMapSize()
   const cargos = getUserCargos()
   const cargoContainsCustomCargo = cargos.some(
-    (c) => c.category === Category.User
+    (c) => c.category === Types.CargoCategory.User
   )
   const configIsEmpty = configName === 'No Config' ? true : false
 
-  const getCargosAtCat = (cat: Category) => {
+  const getCargosAtCat = (cat: Types.CargoCategory) => {
     return cargos
       .filter((c) => c.category === cat)
       .sort((a, b) => a.name.localeCompare(b.name))
@@ -49,15 +49,15 @@ export const CargoCard = () => {
           <Panel key={v4()} header={`${configName} Cargo`}>
             <Collapse expandIconPosition={'right'} accordion bordered={false}>
               <Panel key={v4()} header={`Steward Cargo`}>
-                {getCargosAtCat(Category.Steward)}
+                {getCargosAtCat(Types.CargoCategory.Steward)}
               </Panel>
 
               <Panel key={v4()} header={`Emergency Cargo`}>
-                {getCargosAtCat(Category.Emergency)}
+                {getCargosAtCat(Types.CargoCategory.Emergency)}
               </Panel>
 
               <Panel key={v4()} header={`Extra Cargo`}>
-                {getCargosAtCat(Category.Extra)}
+                {getCargosAtCat(Types.CargoCategory.Extra)}
               </Panel>
             </Collapse>
           </Panel>
@@ -65,7 +65,7 @@ export const CargoCard = () => {
 
         {cargoContainsCustomCargo && ( // is there more than tanks and chart c?
           <Panel key={v4()} header={`Custom Cargo`}>
-            {getCargosAtCat(Category.User)}
+            {getCargosAtCat(Types.CargoCategory.User)}
           </Panel>
         )}
       </Collapse>

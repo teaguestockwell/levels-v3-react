@@ -1,21 +1,18 @@
 import {v4} from 'uuid'
 import {userStore} from '../hooks/user_store'
 import {renderWrapped, waitFor, fireEvent} from '../testUtils/render_wrapped'
-import {Category} from '../types/aircraftDeep'
-import {CargoString} from '../types/cargoString'
+import  * as Types from '../types'
 import {CargoForm} from './cargo_form'
 
 
-
-
-const getMockCargo = (name: string): CargoString => {
+const getMockCargo = (name: string): Types.CargoString => {
   return {
     uuid: v4(),
     name,
     weightEA: '1',
     fs: '12',
     qty: '1',
-    category: Category.User,
+    category: Types.CargoCategory.User,
     isValid: false,
   }
 }
@@ -62,7 +59,7 @@ describe('CargoForm', () => {
       })
 
       expect(
-        (userStore.getState().cargoMap.get(cargo.uuid) as CargoString).isValid
+        (userStore.getState().cargoMap.get(cargo.uuid) as Types.CargoString).isValid
       ).toBe(true)
     })
   })

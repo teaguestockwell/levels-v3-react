@@ -1,6 +1,6 @@
 import {getUserActions, getUserAir} from '../hooks/user_store'
 import {useUserAirs} from '../hooks/query'
-import {AircraftDeep} from '../types/aircraftDeep'
+import * as Types from '../types'
 import {Select} from 'antd'
 
 const cs = getUserActions()
@@ -10,7 +10,7 @@ export const UserAirSelect = () => {
   const airName = getUserAir().name
 
   const onAirChange = (newName: string) => {
-    const newAir = data.data.find((a: AircraftDeep) => a.name === newName)
+    const newAir = data.aircrafts.find((a: Types.AircraftDeep) => a.name === newName)
     cs.setAir(newAir)
   }
 
@@ -27,7 +27,7 @@ export const UserAirSelect = () => {
       dropdownMatchSelectWidth={false}
       virtual={true}
       options={
-        data.data.map((air: any) => ({
+        data.aircrafts.map((air: any) => ({
           value: air.name,
           label: air.name,
         }))
