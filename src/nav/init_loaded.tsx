@@ -25,7 +25,7 @@ export const InitLoaded = () => {
     as.setAir(data.data[airIdx])
 
     // init state of server client sync
-    localStorage.setItem('lastSynced', `${data.data.serverEpoch}`)
+    localStorage.setItem('lastSync', `${data.data.serverEpoch}`)
 
 
     return <DynamicMainNav key={v4()} />
