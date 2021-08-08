@@ -1,8 +1,7 @@
 import {Const} from './const'
 import * as util from './util'
 import {mockAircraftsDeep} from '../testUtils/mock_aircrafts_deep'
-import {Cargo, Category} from '../types/aircraftDeep'
-import {CargoString, ChartCCargoString} from '../types/cargoString'
+import * as Types from '../types'
 import {v4} from 'uuid'
 import {
   getCargoStringFromTank,
@@ -34,23 +33,23 @@ describe('getCargoSchema()', () =>
   it('will get cargo schema from an aircraft', () => {
     const schema = util.getCargoSchema(mockAircraftsDeep[0])
 
-    const validCargo: CargoString = {
+    const validCargo: Types.CargoString = {
       uuid: v4(),
       name: 'valid cargo',
       weightEA: '100',
       fs: '100',
       qty: '1',
-      category: Category.User,
+      category: Types.CargoCategory.User,
       isValid: true,
     }
 
-    const inValidCargo: CargoString = {
+    const inValidCargo: Types.CargoString = {
       uuid: v4(),
       name: 'valid cargo',
       weightEA: 'one two three four',
       fs: '100',
       qty: '1',
-      category: Category.Emergency,
+      category: Types.CargoCategory.Emergency,
       isValid: false,
     }
 
@@ -88,13 +87,13 @@ describe('getCargoStringFromChartC()', () =>
     const momMultiplyer = 10000
     const uuid = '0'
 
-    const valid: ChartCCargoString = {
+    const valid: Types.ChartcCargoString = {
       weight: '282000',
       mom: '26000',
       isValid: true,
     }
 
-    const inValid: ChartCCargoString = {
+    const inValid: Types.ChartcCargoString = {
       weight: '1',
       mom: '1',
       isValid: false,
@@ -124,7 +123,7 @@ describe('getCargoStringFromChartC()', () =>
 
 describe('getCargoStringFromCargo()', () =>
   it('will construct unique CargoStrings from type Cargo with category.user', () => {
-    const mockCargo: Cargo = {
+    const mockCargo: Types.Cargo = {
       aircraftId: 1,
       cargoId: 1,
       updated: new Date(),
@@ -132,23 +131,23 @@ describe('getCargoStringFromCargo()', () =>
       name: 'Water Container (5 Gallon)',
       weight: 40,
       fs: 358,
-      category: Category.Steward,
+      category: Types.CargoCategory.Steward,
     }
 
     const cargoString0 = util.getCargoStringFromCargo(mockCargo, 1)
     const cargoString1 = util.getCargoStringFromCargo(mockCargo, 1)
 
-    expect(cargoString0.category).toBe(Category.User)
+    expect(cargoString0.category).toBe(Types.CargoCategory.User)
     expect(cargoString0).not.toStrictEqual(cargoString1)
   }))
 
 describe('getCargoStringsFromConfig()', () =>
   it('will construct unique CargoStrings from type config', () => {
-    const cargoStrings: CargoString[] = util.getCargoStringsFromConfig(
+    const cargoStrings: Types.CargoString[] = util.getCargoStringsFromConfig(
       mockAircraftsDeep[0].configs[0]
     )
 
-    expect(cargoStrings.every((c) => c.category === Category.User)).toBe(false)
+    expect(cargoStrings.every((c) => c.category === Types.CargoCategory.User)).toBe(false)
     expect(cargoStrings.length).not.toBe(0)
   }))
 
@@ -186,7 +185,7 @@ describe('getCargoStringFromTank()', () =>
       fs: '1120',
       qty: '1',
       uuid: '0',
-      category: Category.Tank,
+      category: Types.CargoCategory.Tank,
       isValid: true,
     })
   }))
@@ -194,14 +193,14 @@ describe('getCargoStringFromTank()', () =>
 describe('getPerMac', () => {
   it('will calculate and format cargoStrings into a new PerMac', () => {
     const c17aER = mockAircraftsDeep[0]
-    const cargoStrings: CargoString[] = [
+    const cargoStrings: Types.CargoString[] = [
       {
         uuid: '0',
         name: 'Basic Aircraft',
         weightEA: '282000',
         fs: '922',
         qty: '1',
-        category: Category.BasicAircraft,
+        category: Types.CargoCategory.BasicAircraft,
         isValid: true,
       },
       {
@@ -210,7 +209,7 @@ describe('getPerMac', () => {
         weightEA: '250', // 1C-17A-5-2 2-29: tank1: 250lb, 28 simp mom
         fs: '1120', // = 28 simple mom * 10,000 simple moment modifier / 250
         qty: '1',
-        category: Category.Tank,
+        category: Types.CargoCategory.Tank,
         isValid: true,
       },
       {
@@ -219,7 +218,7 @@ describe('getPerMac', () => {
         weightEA: '25750', // 1C-17A-5-2 2-32: tank 2 ER: 25750lb, 2053 simp mom
         fs: '797.281553398', // = 2053 simple mom * 10,000 simple moment modifier / 25750
         qty: '1',
-        category: Category.Tank,
+        category: Types.CargoCategory.Tank,
         isValid: true,
       },
       {
@@ -228,7 +227,7 @@ describe('getPerMac', () => {
         weightEA: '4500', // 1C-17A-5-2 2-29: tank 3 ER: 4500lb, 380 simp mom
         fs: '844.44444444444444', // = 380 simple mom * 10,000 simple moment modifier / 4500
         qty: '1',
-        category: Category.Tank,
+        category: Types.CargoCategory.Tank,
         isValid: true,
       },
       {
@@ -237,7 +236,7 @@ describe('getPerMac', () => {
         weightEA: '36750', // 1C-17A-5-2 2-34: tank 4: 36750lb, 3,636 simp mom
         fs: '989.387755102', // = 3,636 simple mom * 10,000 simple moment modifier / 36750
         qty: '1',
-        category: Category.Tank,
+        category: Types.CargoCategory.Tank,
         isValid: true,
       },
     ]

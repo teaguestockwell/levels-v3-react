@@ -3,7 +3,6 @@ import {Form, Input, Button} from 'antd'
 import {debounce, throttle} from 'lodash'
 import {v4} from 'uuid'
 import * as util from '../utils/util'
-import {getYupModelSchemas} from '../types/aircraftDeep'
 import {adminActions} from '../utils/admin_actions'
 import {adminStore, getAdminStoreActions} from '../hooks/admin_store'
 import {AdminCargoSelect} from './admin_cargo_select'
@@ -16,7 +15,7 @@ export const AdminForm = () => {
   const formKey = useRef(v4()).current
   const ep = useRef(adminStore.getState().ep).current
   const modelName = useRef(util.getModelFromEP(ep)).current
-  const schema = useRef(getYupModelSchemas()[modelName]).current as any
+  const schema = useRef(util.getYupModelSchemas()[modelName]).current as any
 
   const validateAll = () => {
     const isTextInputValid = form

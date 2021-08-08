@@ -9,9 +9,9 @@ import React from 'react'
 const IsLoaded = ({children}: {children: React.ReactNode}) => {
   const {data} = useUserAirs()
 
-  if (data?.data && data?.data.length > 0) {
+  if (data?.aircrafts && data?.aircrafts.length > 0) {
     //init state of selected aircraft
-    userStore.getState().setAir(data.data[0], false)
+    userStore.getState().setAir(data.aircrafts[0], false)
     //userStore.getState().clearCargoMap()
 
     // init state of server client sync

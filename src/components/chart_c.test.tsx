@@ -1,8 +1,7 @@
 import {userStore} from '../hooks/user_store'
 import {renderWrapped, waitFor, fireEvent} from '../testUtils/render_wrapped'
 import {ChartC} from './chart_c'
-
-import {Category} from '../types/aircraftDeep'
+import  * as Types from '../types'
 
 
 
@@ -15,7 +14,7 @@ const putChartC = () =>
       qty: '1',
       isValid: false,
       uuid: '1',
-      category: Category.BasicAircraft,
+      category: Types.CargoCategory.BasicAircraft,
     },
   ])
 

@@ -2,18 +2,17 @@
 import {waitFor} from '@testing-library/react'
 import {TankList} from './tank_list'
 import {renderWrapped} from '../testUtils/render_wrapped'
-import {Category} from '../types/aircraftDeep'
-import {CargoString} from '../types/cargoString'
+import * as Types from '../types'
 import {userStore} from '../hooks/user_store'
 
 
-const cargoString = (uuid: string): CargoString => ({
+const cargoString = (uuid: string): Types.CargoString => ({
   uuid,
   name: 'Tank 1',
   weightEA: '250',
   fs: '900',
   qty: '1',
-  category: Category.Tank,
+  category: Types.CargoCategory.Tank,
   isValid: true,
 })
 

@@ -1,14 +1,14 @@
 import create, {State} from 'zustand'
-import {AircraftDeep} from '../types/aircraftDeep'
+import * as Types from '../types'
 import isEqual from 'lodash/isEqual'
 import {sanitizeNewAirEP} from '../utils/util'
 
 export interface AdminStoreState extends State {
-  air: AircraftDeep | undefined
+  air: Types.AircraftDeep | undefined
   ep: string
   editObj: Record<string, undefined> | undefined
 
-  setAir: (air: AircraftDeep) => void
+  setAir: (air: Types.AircraftDeep) => void
   setEp: (ep: string) => void
   setEditObj: (editObj: Record<string, any> | undefined) => void
 }

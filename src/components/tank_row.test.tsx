@@ -3,18 +3,17 @@ import {TankRow} from './tank_row'
 import {renderWrapped} from '../testUtils/render_wrapped'
 import {userStore} from '../hooks/user_store'
 import {mockAircraftsDeep} from '../testUtils/mock_aircrafts_deep'
-import {Category} from '../types/aircraftDeep'
-import {CargoString} from '../types/cargoString'
+import * as Types from '../types'
 
 
 const tank = mockAircraftsDeep[0].tanks[0]
-const cargoString: CargoString = {
+const cargoString: Types.CargoString = {
   uuid: '0',
   name: 'Tank 1',
   weightEA: '250',
   fs: '900',
   qty: '1',
-  category: Category.Tank,
+  category: Types.CargoCategory.Tank,
   isValid: true,
 }
 

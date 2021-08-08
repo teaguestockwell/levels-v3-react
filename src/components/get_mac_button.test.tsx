@@ -2,10 +2,8 @@
 import {waitFor} from '@testing-library/react'
 import {GetMacButton} from './get_mac_button'
 import {renderWrapped} from '../testUtils/render_wrapped'
-
 import {userStore} from '../hooks/user_store'
-import {CargoString} from '../types/cargoString'
-import {Category} from '../types/aircraftDeep'
+import * as Types from '../types'
 
 
 
@@ -13,9 +11,9 @@ describe('GetMacButton', () => {
 
   it('will render', async () => {
     const ct = renderWrapped(<GetMacButton />)
-    const invalidCargo: CargoString = {
+    const invalidCargo: Types.CargoString = {
       uuid: '123',
-      category: Category.User,
+      category: Types.CargoCategory.User,
       name: 'as',
       weightEA: '123',
       fs: '123',

@@ -1,6 +1,5 @@
-import {Tank} from '../types/aircraftDeep'
+import * as Types from '../types'
 import {getUserActions, useCargo, getUserAir} from '../hooks/user_store'
-import {CargoString} from '../types/cargoString'
 import {getCargoStringFromTank} from '../utils/util'
 import {Select} from 'antd'
 import {Gauge} from '@ant-design/charts'
@@ -13,8 +12,8 @@ export const TankRow = ({
   cargoString,
   style
 }: {
-  tank: Tank
-  cargoString: CargoString
+  tank: Types.Tank
+  cargoString: Types.CargoString
   style?: any
 }) => {
   const [isEditing, setIsEditing] = useState(false)

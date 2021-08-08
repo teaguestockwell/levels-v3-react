@@ -8,30 +8,30 @@ import {Help} from '../pages/help'
 const as = getUserActions()
 
 export const InitLoaded = () => {
-  // req => lastUpdated
+  // req => aircraft/deep
   // SW => cache to client
   // SW => fetches new data, and updates cache
   // fast init load, but data is stale
 
   const {status, data} = useUserAirs()
 
-  if (data?.data && data?.data.length > 0) {
+  if (data?.aircrafts && data?.aircrafts.length > 0) {
     // try to preserve selection of last selected aircraft
     const oldId = userStore.getState().air?.aircraftId
-    const newIdx = data.data.findIndex((a: any) => a.aircraftId === oldId)
+    const newIdx = data.aircrafts.findIndex((a: any) => a.aircraftId === oldId)
     const airIdx = newIdx === -1 ? 0 : newIdx
 
     //init state of selected aircraft
-    as.setAir(data.data[airIdx])
+    as.setAir(data.aircrafts[airIdx])
 
     // init state of server client sync
-    localStorage.setItem('lastSync', `${data.data.serverEpoch}`)
+    localStorage.setItem('lastSync', `${data.serverEpoch}`)
 
 
     return <DynamicMainNav key={v4()} />
   }
 
-  if (data && data?.data.length <= 0) {
+  if (data && data?.aircrafts.length <= 0) {
     return (
       <>
         <Result title="You have no assigned aircraft" />

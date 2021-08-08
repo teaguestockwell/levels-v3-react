@@ -1,62 +1,31 @@
 import create from 'zustand'
 import {combine} from 'zustand/middleware'
 import {getN, usePolling, useUserAirs} from './query'
-import {AircraftDeep} from '../types/aircraftDeep'
 import {stringify} from 'query-string'
 import {queryClient} from '../utils/const'
 import {isEqual} from 'lodash'
 import React from 'react'
 import isNumber from 'is-number'
+import  * as Types from '../types'
 
 // these hooks and components handle the lifecycle of updating offline cache
 // and making sure it is in sync with the server
 // here is a diagram: https://fivelevel.page.link/levels-offline-cache
 
-// these map to colors inside of the ui to show the client the state of the offline cache,
-// for example, if the cache is updatable they when they click into the sync modal, the user will be able to
-// confirm they would like to accept the updated state from the server into the application.
-// the user chooses to accept this because it resets the state of any configurations they have made
-// in exchange for the newest data
-export enum CacheState {
-  OUTDATED = 'outdated',
-  OFFLINE = 'offline',
-  FETCHING = 'fetching',
-  UPDATABLE = 'updatable',
-  SYNCED = 'synced',
-}
 
-// api/aircraft/client-server-sync?1=uuid&2=uuid&3=uuid
-// this endpoint polled with the query string of the current state of the clients active aircraft
-// the query string is built from the dataState prop of react query client cache
-// because the api updated the deepHashId of an aircraft when one of its fk models changes,
-// the api can tell us if we have an outdated query without having to send us a new query to diff
-// key:aircraftId, value:deepHashId
-type DataState = Record<number, string>
 
-// the response from get /aircraft/lastUpdated
-interface ApiLastUpdated {
-  serverEpoch: number
-  dataState: DataState
-  data: AircraftDeep[]
-}
-
-// when the client is not synced with the server, the /lastUpdated ep should be called
+// when the client is not synced with the server, the aircraft/deep ep should be called
 // the response from that should then be set as pendingAircrafts cache
-export interface ApiClientServerSync {
-  isClientSyncedWithServer: boolean
-  serverEpoch: number
-  dataState: DataState
-}
 
 export const useClientSyncStore = create(
   combine(
     {
       //  pendingAircrafts
-      // this is a holding area for the aircraft returned from lastUpdated while they are waiting to be applied by the user
+      // this is a holding area for the aircraft returned from aircraft/deep while they are waiting to be applied by the user
       // if pendingAircrafts is defined, the user may choose to apply it to the userAirs cache of react query
-      pendingRqClientCache: null as ApiLastUpdated | null,
-      state: CacheState.OUTDATED as CacheState,
-      // while the getNewLastUpdated method is running, do not re poll /api/aircraft/client-server-sync
+      pendingRqClientCache: null as Types.EpAircraftDeep | null,
+      state: Types.OfflineCacheState.OUTDATED as Types.OfflineCacheState,
+      // while the getNewNewAircraftDeep method is running, do not re poll /api/aircraft/client-server-sync
       isDebouncing: false as boolean,
     },
     (set) => ({
@@ -78,13 +47,13 @@ export const acceptPendingRqCache = () => {
   queryClient.setQueryData('userAirs', () => pendingCache)
 
   useClientSyncStore.setState({
-    state: CacheState.SYNCED,
+    state: Types.OfflineCacheState.SYNCED,
     pendingRqClientCache: null,
   })
 }
 
 // local storage lastSyncedEpoch
-// the service worker does not refetch /aircraft/lastUpdated if /client-server-sync responds that the current cache is up to date
+// the service worker does not refetch /aircraft/deep if /client-server-sync responds that the current cache is up to date
 // if the application where to reload while the cached response of the service worker has a serverEpoch older than 2 days ago,
 // even if the /client-server-sync reported that it was up to date, the ui will mark this a outdated state
 // to prevent this, every time the /client-server-sync is called, the local storage lastSyncedEpoch is set to the serverEpoch
@@ -119,18 +88,18 @@ export const getIsCached = (epoch: number) => {
 }
 
 // service worker cache
-// registered to api/aircraft/lastUpdated
+// registered to api/aircraft/deep
 // implemented using workbox stale while revalidate https://developers.google.com/web/tools/workbox/modules/workbox-strategies#stale-while-revalidate
 // this cache is the initial starting point for the app
 // a user that is online may briefly interact with stale data before this file's lifecycle prompts them to update by setting pendingAircrafts
 // to the latest res
-export const getNewLastUpdated = async (): Promise<ApiLastUpdated | null> => {
+export const getNewAircraftDeep = async (): Promise<Types.EpAircraftDeep | null> => {
   let res
   let numTrys = 0
 
   while (!res && numTrys < 5) {
     // this will resolve when offline because of sw cache
-    res = await getN('aircraft/lastUpdated')
+    res = await getN('aircraft/deep')
 
     // if it resolves, verify that it is not cached before returning it as new
     if (
@@ -147,59 +116,59 @@ export const getNewLastUpdated = async (): Promise<ApiLastUpdated | null> => {
   return null
 }
 
-export const handleFetchLastUpdated = async (): Promise<void> => {
+export const handleFetchAircraftDeep = async (): Promise<void> => {
   useClientSyncStore.setState({isDebouncing: true})
-  const newLastUpdated = await getNewLastUpdated()
+  const newAircraftsDeep = await getNewAircraftDeep()
 
   // while rqCache is outdated, try to fetch it
-  if (!newLastUpdated) {
+  if (!newAircraftsDeep) {
     useClientSyncStore.setState({isDebouncing: false})
     return
   }
 
   useClientSyncStore.setState({
-    pendingRqClientCache: newLastUpdated,
-    state: CacheState.UPDATABLE,
+    pendingRqClientCache: newAircraftsDeep,
+    state: Types.OfflineCacheState.UPDATABLE,
     isDebouncing: false,
   })
 }
 
-export const getState = (clientServerSync: any): CacheState => {
+export const getState = (clientServerSync: any): Types.OfflineCacheState => {
   if (clientServerSync?.isClientSyncedWithServer) {
     localStorage.setItem('lastSync', `${clientServerSync.serverEpoch}`)
-    return CacheState.SYNCED
+    return Types.OfflineCacheState.SYNCED
   }
 
   if (getIsOutdated(getLastSyncEpoch())) {
-    return CacheState.OUTDATED
+    return Types.OfflineCacheState.OUTDATED
   }
 
   if (navigator.onLine) {
-    return CacheState.FETCHING
+    return Types.OfflineCacheState.FETCHING
   }
 
-  return CacheState.OFFLINE
+  return Types.OfflineCacheState.OFFLINE
 }
 
 // this is a glorified switch statement
 // https://ultimatecourses.com/blog/deprecating-the-switch-statement-for-object-literals
-export const getStateHandler: Record<CacheState, () => Promise<void>> = {
-  [CacheState.OUTDATED]: async () => {
-    return handleFetchLastUpdated()
+export const getStateHandler: Record<Types.OfflineCacheState, () => Promise<void>> = {
+  [Types.OfflineCacheState.OUTDATED]: async () => {
+    return handleFetchAircraftDeep()
   },
-  [CacheState.OFFLINE]: async () => {
-    // do not get lastUpdated,
+  [Types.OfflineCacheState.OFFLINE]: async () => {
+    // do not get aircraft/deep while offline,
     // return to do nothing until back online
     return
   },
-  [CacheState.FETCHING]: async () => {
-    return handleFetchLastUpdated()
+  [Types.OfflineCacheState.FETCHING]: async () => {
+    return handleFetchAircraftDeep()
   },
-  [CacheState.UPDATABLE]: async () => {
+  [Types.OfflineCacheState.UPDATABLE]: async () => {
     throw new Error('Poll should not run when there is pending react query cache')
   },
-  [CacheState.SYNCED]: async () => {
-    // do not get lastUpdated,
+  [Types.OfflineCacheState.SYNCED]: async () => {
+    // do not get aircraft/deep while synced,
     // return to do nothing until state is not synced
     return
   },
@@ -210,7 +179,7 @@ export const Poll = React.memo(({ep}: {ep:string}) => {
   const {
     data,
   }: {
-    data: (ApiClientServerSync & {clientReqKey: string}) | null | undefined
+    data: (Types.EpAircraftClientServerSync & {clientReqKey: string}) | null | undefined
   } = usePolling(ep, 3000, true)
 
   React.useEffect(() => {

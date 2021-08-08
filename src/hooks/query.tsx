@@ -69,7 +69,7 @@ export const useUserAirs = () =>
   useQuery(
     'userAirs',
     async () => {
-      return getN('aircraft/lastUpdated')
+      return getN('aircraft/deep')
     },
     {
       staleTime: Infinity,
