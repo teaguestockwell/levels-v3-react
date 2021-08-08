@@ -25,7 +25,7 @@ services:
   fl-ui:
     build:
       context: .
-      dockerfile: ./Dockerfile.builder
+      dockerfile: ./Dockerfile
       args:
         IS_LOCAL: 'true' # build time arg => NODE_ENV=development react-scripts build => use localhost as api url
     depends_on:
