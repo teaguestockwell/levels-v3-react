@@ -74,13 +74,13 @@ registerRoute(
 registerRoute(
   ({url}) =>  
   url.origin === self.location.origin && 
-  url.pathname.endsWith('lastUpdated'),
+  url.pathname.endsWith('aircraft/deep'),
   new StaleWhileRevalidate({
-    cacheName: 'lastUpdated',
+    cacheName: 'aircraft-deep',
     plugins: [
       // Ensure that once this runtime cache reaches a maximum size the
       // least-recently used images are removed.
-      new ExpirationPlugin({maxEntries: 10}),
+      new ExpirationPlugin({maxEntries: 3}),
     ],
   })
 )

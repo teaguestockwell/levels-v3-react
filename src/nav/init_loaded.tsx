@@ -8,7 +8,7 @@ import {Help} from '../pages/help'
 const as = getUserActions()
 
 export const InitLoaded = () => {
-  // req => lastUpdated
+  // req => aircraft/deep
   // SW => cache to client
   // SW => fetches new data, and updates cache
   // fast init load, but data is stale

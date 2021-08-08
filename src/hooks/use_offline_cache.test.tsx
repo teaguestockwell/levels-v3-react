@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
-import { acceptPendingRqCache, useClientSyncStore, OfflineCacheState, getLastSyncEpoch, getIsOutdated, getIsCached, getNewLastUpdated, handleFetchLastUpdated, ApiClientServerSync, getState, getStateHandler} from "./use_offline_cache";
+import { acceptPendingRqCache, useClientSyncStore, getLastSyncEpoch, getIsOutdated, getIsCached, getNewAircraftDeep, handleFetchAircraftDeep, getState, getStateHandler} from "./use_offline_cache";
 import {renderHook} from '@testing-library/react-hooks'
 import { mockAircraftsDeep } from "../testUtils/mock_aircrafts_deep";
+import * as Types from '../types'
 
 it('creates a global store', () => {
   expect({...useClientSyncStore.getState(), set: undefined}).toStrictEqual({
     isDebouncing:false,
-    state: OfflineCacheState.OUTDATED,
+    state: Types.OfflineCacheState.OUTDATED,
     pendingRqClientCache: null,
     set: undefined
   })
@@ -28,7 +29,7 @@ it('acceptPendingRqCache', async ()=>{
 
   useClientSyncStore.setState({
     isDebouncing: false,
-    state: OfflineCacheState.OUTDATED,
+    state: Types.OfflineCacheState.OUTDATED,
     pendingRqClientCache,
   })
 
@@ -51,7 +52,7 @@ it('acceptPendingRqCache', async ()=>{
   expect({...useClientSyncStore.getState(), set: undefined}).toStrictEqual({
     set:undefined,
     isDebouncing:false,
-    state: OfflineCacheState.SYNCED,
+    state: Types.OfflineCacheState.SYNCED,
     pendingRqClientCache: null
   })
 })
@@ -113,13 +114,13 @@ it('getIsCached', ()=>{
   expect(getIsCached(fiveMinAgo)).toBe(true)
 })
 
-it('getNewLastUpdated', async () => {
-  const test = await getNewLastUpdated() as any
+it('getNewAircraftDeep', async () => {
+  const test = await getNewAircraftDeep() as any
   const serverEpoch = Date.now()
   test.serverEpoch = serverEpoch
 
   expect(test).toStrictEqual({
-    data: mockAircraftsDeep,
+    aircrafts: mockAircraftsDeep,
     serverEpoch,
     dataState: {
       '1': '1',
@@ -128,8 +129,8 @@ it('getNewLastUpdated', async () => {
   })
 })
 
-it('handleFetchLastUpdated', async ()=>{
-  await handleFetchLastUpdated()
+it('handleFetchAircraftDeep', async ()=>{
+  await handleFetchAircraftDeep()
   const serverEpoch = Date.now()
 
   const test = useClientSyncStore.getState() as any
@@ -153,14 +154,14 @@ it('handleFetchLastUpdated', async ()=>{
       }
     },
     set: null,
-    state: OfflineCacheState.UPDATABLE,
+    state: Types.OfflineCacheState.UPDATABLE,
     isDebouncing: false,
   })
 })
 
-it('handleFetchLastUpdated', async ()=>{
+it('handleFetchAircraftDeep', async ()=>{
 
-  await handleFetchLastUpdated()
+  await handleFetchAircraftDeep()
   const serverEpoch = Date.now()
 
   const test = useClientSyncStore.getState() as any
@@ -184,25 +185,25 @@ it('handleFetchLastUpdated', async ()=>{
       }
     },
     set: null,
-    state: OfflineCacheState.UPDATABLE,
+    state: Types.OfflineCacheState.UPDATABLE,
     isDebouncing: false,
   })
 })
 
 it('getStateHandlers', async () => {
-  getStateHandler[OfflineCacheState.OFFLINE]()
-  getStateHandler[OfflineCacheState.SYNCED]()
-  getStateHandler[OfflineCacheState.OUTDATED]()
+  getStateHandler[Types.OfflineCacheState.OFFLINE]()
+  getStateHandler[Types.OfflineCacheState.SYNCED]()
+  getStateHandler[Types.OfflineCacheState.OUTDATED]()
 })
 
 it('gets synced state', () =>{
-  const synced: ApiClientServerSync = {
+  const synced: Types.EpAircraftClientServerSync = {
     serverEpoch: Date.now(),
     isClientSyncedWithServer: true,
     dataState: {}
   }
 
-  expect(getState(synced)).toBe(OfflineCacheState.SYNCED)
+  expect(getState(synced)).toBe(Types.OfflineCacheState.SYNCED)
 })
 
 it('gets outdated state', () =>{
@@ -218,11 +219,11 @@ it('gets outdated state', () =>{
 
   global.Storage.prototype.getItem = jest.fn((key) => store[key])
 
-  expect(getState(outdated)).toBe(OfflineCacheState.OUTDATED)
+  expect(getState(outdated)).toBe(Types.OfflineCacheState.OUTDATED)
 })
 
 it('gets fetching state', () => {
-  const fetching: ApiClientServerSync = {
+  const fetching: Types.EpAircraftClientServerSync = {
     serverEpoch: Date.now(),
     isClientSyncedWithServer: false,
     dataState: {}
@@ -240,7 +241,7 @@ it('gets fetching state', () => {
 
   jest.spyOn(navigator, 'onLine', 'get').mockReturnValueOnce(true)
 
-  expect(getState(fetching)).toBe(OfflineCacheState.FETCHING)
+  expect(getState(fetching)).toBe(Types.OfflineCacheState.FETCHING)
 })
 
 it('gets fetching offline state', () => {
@@ -258,7 +259,7 @@ it('gets fetching offline state', () => {
 
   jest.spyOn(navigator, 'onLine', 'get').mockReturnValueOnce(false)
 
-  expect(getState(offline)).toBe(OfflineCacheState.OFFLINE)
+  expect(getState(offline)).toBe(Types.OfflineCacheState.OFFLINE)
 })
 
 

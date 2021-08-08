@@ -1,6 +1,6 @@
 import { AircraftDeep, DataState } from "../..";
 
-export interface AircraftLastUpdated {
+export interface EpAircraftDeep {
   serverEpoch: number
   dataState: DataState
   data: AircraftDeep[]

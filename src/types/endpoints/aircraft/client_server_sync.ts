@@ -1,6 +1,6 @@
 import { DataState } from "../..";
 
-export interface AircraftClientServerSync {
+export interface EpAircraftClientServerSync {
   isClientSyncedWithServer: boolean
   serverEpoch: number
   dataState: DataState

@@ -8,10 +8,10 @@ const endPoints = [
   }),
 
   rest.get(
-    'http://localhost:8080/fl-api/aircraft/lastUpdated',
+    'http://localhost:8080/fl-api/aircraft/deep',
     (req, res, ctx) => {
       const ret = JSON.stringify({
-        data: mockAircraftsDeep,
+        aircrafts: mockAircraftsDeep,
         serverEpoch: Date.now(),
         dataState: {
           '1': '1',
