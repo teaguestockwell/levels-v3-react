@@ -96,6 +96,8 @@
     ]
   },
   "resolutions": {
-    "dns-packet": "5.2.2"
+    "dns-packet": "5.2.2",
+    "tar": "6.1.2",
+    "url-parse": "1.5.3"
   }
 }
