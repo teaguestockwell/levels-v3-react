@@ -18,6 +18,7 @@ export const getN = async (url: string) => {
     url,
     method: 'get',
     timeout: 10 * 1000,
+    validateStatus: (status) => (status >= 200 && status <= 302)
   })
     .then((res) => {
       if(res.status > 200 && res.status < 400){
@@ -36,6 +37,7 @@ export const getN = async (url: string) => {
             </span>
           </div>,
         })
+        throw new Error('Re direct error because of expired session')
       }
       return res.data
     })
