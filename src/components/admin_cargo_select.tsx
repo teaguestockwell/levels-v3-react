@@ -45,7 +45,7 @@ export const AdminCargoSelect = ({validate}: {validate: () => void}) => {
         </p>
 
         <p style={pStyle}>
-            To prevent duplicates, each cargo inserted into a configuration should be unique to that config. For example, instead of inserting 100 separate EPOS into the same config, you should insert one EPOS, give it a quantity of 100, then set the fuselage station to the average of the 100 EPOSs.`
+            To prevent duplicates, each cargo inserted into a configuration should be unique to that config. For example, instead of inserting 100 separate EPOS into the same config, you should insert one EPOS, give it a quantity of 100, then set the fuselage station to the average of the 100 EPOSs.
         </p>
 
       <div style={{display: 'flex'}}>

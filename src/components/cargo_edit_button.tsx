@@ -1,10 +1,11 @@
 /* eslint-disable react/display-name */
 import {getUserActions, useCargo} from '../hooks/user_store'
 import React from 'react'
+import { v4 } from 'uuid'
 
 const cs = getUserActions()
 
-const TextCol = React.memo(({text}: {text: string}) => {
+const TextCol = ({text}: {text: string}) => {
   return <div
       style={{
         fontSize: 12,
@@ -16,9 +17,9 @@ const TextCol = React.memo(({text}: {text: string}) => {
     >
       {text}
     </div>
-})
+}
 
-const TextRow = React.memo(({texts}: {texts: string[]}) => {
+const TextRow = ({texts}: {texts: string[]}) => {
   return <div
     style={{
       display: 'flex',
@@ -26,9 +27,9 @@ const TextRow = React.memo(({texts}: {texts: string[]}) => {
       paddingTop: 6
     }}
   >
-    {texts.map(t => <TextCol key={t} text={t} />)}
+    {texts.map(t => <TextCol key={v4()} text={t} />)}
   </div>
-})
+}
 
 export const CargoEditRow = React.memo(({uuid}: {uuid: string}) => {
   const cargo = useCargo(uuid)
