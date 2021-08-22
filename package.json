@@ -30,7 +30,7 @@
     "docker:build:halfstack:os": "docker-compose -f half-stack-compose-os.yml -p fl-hs-os build --no-cache --parallel",
     "docker:up:halfstack": "docker-compose -f half-stack-compose.yml -p fl-hs up --force-recreate",
     "docker:up:halfstack:os": "docker-compose -f half-stack-compose-os.yml -p fl-hs-os up --force-recreate",
-    "e2e": "npm install &&  npx cypress run -b chrome",
+    "e2e": "npx cypress run -b chrome",
     "test:e2e-ci": "echo not implemented in pipeline",
     "push": "git push gh && git push gl && git checkout main && git merge - && git push gh"
   },
