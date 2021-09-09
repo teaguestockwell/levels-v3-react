@@ -34,8 +34,17 @@ const promptUserToReload = () => {
     style: {},
     content: <div>
       <span onClick={ async () => {
-        await unRegisterSW()
-        location.reload()
+        // if the user was online when there JWT expired,
+        // they have an option to refresh there token if they reset the page
+        // but in the event that they go offline before clicking this button,
+        // tell them there is a bad connection
+        if(navigator.onLine){
+          await unRegisterSW()
+          location.reload()
+        } else{
+          message.destroy('refresh-cookie')
+          message.error(`Can't re-login, you're offline.`)
+        }
       }} 
         style={{color: 'blue', cursor: 'pointer'}}>
         {'Re-login'}
