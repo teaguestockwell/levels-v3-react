@@ -13,6 +13,7 @@ import {ExpirationPlugin} from 'workbox-expiration'
 import {precacheAndRoute, createHandlerBoundToURL} from 'workbox-precaching'
 import {registerRoute} from 'workbox-routing'
 import {StaleWhileRevalidate} from 'workbox-strategies'
+import {CacheableResponsePlugin} from 'workbox-cacheable-response'
 
 declare const self: ServiceWorkerGlobalScope
 
@@ -78,6 +79,9 @@ registerRoute(
   new StaleWhileRevalidate({
     cacheName: 'aircraft-deep',
     plugins: [
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }) as any,
       // Ensure that once this runtime cache reaches a maximum size the
       // least-recently used images are removed.
       new ExpirationPlugin({maxEntries: 3}),

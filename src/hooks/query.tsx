@@ -12,41 +12,61 @@ const baseURL = (() => {
   return process.env.REACT_APP_API_BASE_URL_LOCAL
 })()
 
+const unRegisterSW = async () => {
+  try{
+    const registrations = await navigator.serviceWorker.getRegistrations()
+
+    for(const registration of registrations) {
+      await registration.unregister()
+    }
+     
+    return
+  }catch (e){
+    throw new Error('Service worker un registration failed')
+  }
+}
+
+const promptUserToReload = () => {
+  message.info({
+    key: 'refresh-cookie',
+    duration: 0,
+    icon: <></>,
+    style: {},
+    content: <div>
+      <span onClick={ async () => {
+        await unRegisterSW()
+        location.reload()
+      }} 
+        style={{color: 'blue', cursor: 'pointer'}}>
+        {'Re-login'}
+      </span> 
+      {' to get the latest data and reset.'}
+      <span onClick={() => {message.destroy('refresh-cookie')}} style={{color: 'red', cursor: 'pointer'}}>
+        {' Hide'}
+      </span>
+    </div>,
+  })
+}
+
 export const getN = async (url: string) => {
   return axios({
     baseURL,
     url,
     method: 'get',
     timeout: 10 * 1000,
-    validateStatus: (status) => (status >= 200 && status <= 302)
+    validateStatus: (status) => (status >= 200 && status < 300)
   })
-    .then((res) => {
-      if(res.status > 200 && res.status < 400){
-        message.info({
-          key: 'refresh-cookie',
-          duration: 0,
-          icon: <></>,
-          style: {},
-          content: <div>
-            <span onClick={() => {location.reload()}} style={{color: 'blue', cursor: 'pointer'}}>
-              {'Re-login'}
-            </span> 
-            {' to get the latest data and reset.'}
-            <span onClick={() => {message.destroy('refresh-cookie')}} style={{color: 'red', cursor: 'pointer'}}>
-              {' Hide'}
-            </span>
-          </div>,
-        })
-        throw new Error('Re direct error because of expired session')
-      }
-      return res.data
-    })
+    .then(res => res.data ?? {})
     .catch(() => {
-      return null
+      if(navigator.onLine){
+        promptUserToReload()
+      }
+      return {}
     })
 }
 
 // https://github.com/axios/axios/issues/41
+// We would like axios to use error responses as valid so we can display the api's error
 const validateStatus = (status: number) => status >= 200 && status < 500
 
 export const put1 = async (obj: any, ep: string): Promise<any> => {

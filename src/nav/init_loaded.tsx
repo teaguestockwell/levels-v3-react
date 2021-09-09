@@ -15,7 +15,7 @@ export const InitLoaded = () => {
 
   const {status, data} = useUserAirs()
 
-  if (data?.aircrafts && data?.aircrafts.length > 0) {
+  if (data?.aircrafts && data.aircrafts?.length > 0) {
     // try to preserve selection of last selected aircraft
     const oldId = userStore.getState().air?.aircraftId
     const newIdx = data.aircrafts.findIndex((a: any) => a.aircraftId === oldId)
@@ -31,7 +31,7 @@ export const InitLoaded = () => {
     return <DynamicMainNav key={v4()} />
   }
 
-  if (data && data?.aircrafts.length <= 0) {
+  if (data && data?.aircrafts?.length <= 0) {
     return (
       <>
         <Result title="You have no assigned aircraft" />
