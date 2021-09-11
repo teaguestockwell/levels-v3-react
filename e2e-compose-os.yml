@@ -21,6 +21,8 @@ services:
       IS_LOCAL: 'true'
     depends_on:
       - 'PG_DATABASE'
+    expose:
+      - 8080
 
   fl-ui:
     build:
@@ -28,6 +30,8 @@ services:
       dockerfile: ./Dockerfile.builder.os
     depends_on:
       - 'fl-api'
+    expose:
+      - 80
 
   proxy:
     image: 'nginx'
@@ -36,6 +40,6 @@ services:
     expose:
       - 80 # expose nginx:80 to other container at nginx:80
     volumes:
-      - ./proxy.conf:/etc/nginx/nginx.conf
+      - ./proxy.config.os:/etc/nginx/nginx.conf
     depends_on:
       - 'fl-ui'
