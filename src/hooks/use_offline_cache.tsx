@@ -134,28 +134,31 @@ export const handleFetchAircraftDeep = async (): Promise<void> => {
   })
 }
 
-// if the aircraft/deep is fetched before the service work is registered
+// if aircraft/deep is fetched before the service work is registered
 // then there would be no offline cache to fallback to without explicity
-// fetching the aircraft/deep again
+// fetching the aircraft/deep again because use_offline_cache does not
+// send another req to aircraft/deep until the global state is out of sync with the server
 let isCached = false
 
+const updateIsCached = async () => {
+  const cache = await caches.open('aircraft-deep')
+  const reqs = await cache.keys() ?? []
+  isCached = reqs.length > 0
+}
+
 const useInitCache = async (): Promise<void> => {
-  if(!isCached){
-
-    const getHasCache = async (): Promise<boolean> => {
-      const cache = await caches.open('aircraft-deep')
-      const reqs = await cache.keys()
-      console.log(reqs)
-      return reqs.length > 0
-    }
-
-    while(!getHasCache){
+  while(!isCached){
+    
+    await updateIsCached()
+    
+    if(isCached){
+      message.success({key: 'offline-toast', content: 'Cached for offline use'})
+    } else{
       await getNewAircraftDeep()
-      await new Promise(resolve => setTimeout(resolve, 6000))
     }
 
-    isCached = true
-    message.success('Cached for offline use')
+    // throttle to once every 3 seconds
+    await new Promise(resolve => setTimeout(resolve, 3000))
   }
 }
 
@@ -210,8 +213,6 @@ export const Poll = React.memo(({ep}: {ep:string}) => {
     data: (Types.EpAircraftClientServerSync & {clientReqKey: string}) | null | undefined
   } = usePolling(ep, 3000, true)
 
-  useInitCache()
-
   React.useEffect(() => {
     // data should always be defined because use polling uses the getN axios wrapper
     // this returns an object even if the request timed out
@@ -235,6 +236,8 @@ export const UseOfflineCache = () => {
     (s) => s.pendingRqClientCache,
     (s0, s1) => isEqual(s0?.dataState, s1?.dataState)
   )
+
+  React.useRef(useInitCache())
 
   return {
     pollComponent: pendingRqClientCache ? null : <Poll ep={ep} />,
