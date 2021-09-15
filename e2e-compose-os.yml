@@ -40,6 +40,6 @@ services:
     expose:
       - 80 # expose nginx:80 to other container at nginx:80
     volumes:
-      - ./proxy.config.os:/etc/nginx/nginx.conf
+      - ./proxy.config:/etc/nginx/nginx.conf
     depends_on:
       - 'fl-ui'
