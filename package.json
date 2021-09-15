@@ -105,6 +105,8 @@
     "tar": "6.1.2",
     "url-parse": "1.5.3",
     "glob-parent": "5.1.2",
-    "path-parse": "1.0.7"
+    "path-parse": "1.0.7",
+    "immer": "9.0.6",
+    "ws": "8.2.2"
   }
 }
