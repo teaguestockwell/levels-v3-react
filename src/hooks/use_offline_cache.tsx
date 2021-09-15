@@ -7,6 +7,7 @@ import {isEqual} from 'lodash'
 import React from 'react'
 import isNumber from 'is-number'
 import  * as Types from '../types'
+import { message } from 'antd'
 
 // these hooks and components handle the lifecycle of updating offline cache
 // and making sure it is in sync with the server
@@ -133,9 +134,35 @@ export const handleFetchAircraftDeep = async (): Promise<void> => {
   })
 }
 
+// if the aircraft/deep is fetched before the service work is registered
+// then there would be no offline cache to fallback to without explicity
+// fetching the aircraft/deep again
+let isCached = false
+
+const useInitCache = async (): Promise<void> => {
+  if(!isCached){
+
+    const getHasCache = async (): Promise<boolean> => {
+      const cache = await caches.open('aircraft-deep')
+      const reqs = await cache.keys()
+      console.log(reqs)
+      return reqs.length > 0
+    }
+
+    while(!getHasCache){
+      await getNewAircraftDeep()
+      await new Promise(resolve => setTimeout(resolve, 6000))
+    }
+
+    isCached = true
+    message.success('Cached for offline use')
+  }
+}
+
 export const getState = (clientServerSync: any): Types.OfflineCacheState => {
   if (clientServerSync?.isClientSyncedWithServer) {
     localStorage.setItem('lastSync', `${clientServerSync.serverEpoch}`)
+    message.destroy('refresh-cookie')
     return Types.OfflineCacheState.SYNCED
   }
 
@@ -147,6 +174,7 @@ export const getState = (clientServerSync: any): Types.OfflineCacheState => {
     return Types.OfflineCacheState.FETCHING
   }
 
+  message.destroy('refresh-cookie')
   return Types.OfflineCacheState.OFFLINE
 }
 
@@ -182,10 +210,12 @@ export const Poll = React.memo(({ep}: {ep:string}) => {
     data: (Types.EpAircraftClientServerSync & {clientReqKey: string}) | null | undefined
   } = usePolling(ep, 3000, true)
 
+  useInitCache()
+
   React.useEffect(() => {
     // data should always be defined because use polling uses the getN axios wrapper
     // this returns an object even if the request timed out
-    if(data){
+    if(data){ 
       const state = getState(data)
       useClientSyncStore.setState({state})
       getStateHandler[state]()
@@ -197,7 +227,6 @@ export const Poll = React.memo(({ep}: {ep:string}) => {
 
 export const UseOfflineCache = () => {
   const clientDataState = useUserAirs()?.data?.dataState
-
   // api/aircraft/client-server-sync?1=uuid&2=uuid&3=uuid
   // where 1 is an aircraftId and uuid is the deepHashId that represents the state of that aircraft
   const ep = 'aircraft/client-server-sync?' + stringify(clientDataState)
