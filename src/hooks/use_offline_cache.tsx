@@ -140,16 +140,13 @@ export const handleFetchAircraftDeep = async (): Promise<void> => {
 // send another req to aircraft/deep until the global state is out of sync with the server
 let isCached = false
 
-const updateIsCached = async () => {
-  const cache = await caches.open('aircraft-deep')
-  const reqs = await cache.keys() ?? []
-  isCached = reqs.length > 0
-}
-
 const useInitCache = async (): Promise<void> => {
-  while(!isCached){
+  while(!process.env.IS_TEST && !isCached){
     
-    await updateIsCached()
+    // is there cache available?
+    const cache = await caches.open('aircraft-deep')
+    const reqs = await cache.keys() ?? []
+    isCached = reqs.length > 0
     
     if(isCached){
       message.success({key: 'offline-toast', content: 'Cached for offline use'})
