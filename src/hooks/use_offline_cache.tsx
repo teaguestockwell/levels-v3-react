@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import create from 'zustand'
 import {combine} from 'zustand/middleware'
 import {getN, usePolling, useUserAirs} from './query'
@@ -141,7 +142,7 @@ export const handleFetchAircraftDeep = async (): Promise<void> => {
 let isCached = false
 
 const useInitCache = async (): Promise<void> => {
-  while(!process.env.IS_TEST && !isCached){
+  while(!process.env.IS_TEST && !isCached && location.protocol === 'https:') {
     
     // is there cache available?
     const cache = await caches.open('aircraft-deep')

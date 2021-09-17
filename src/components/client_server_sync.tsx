@@ -1,6 +1,6 @@
 import {Button, Modal} from 'antd'
 import {SyncOutlined} from '@ant-design/icons'
-import {useMemo, useState} from 'react'
+import {useMemo, useState, useRef} from 'react'
 import {useTick} from '../hooks/use_tick'
 import formatDistanceToNowStrict from 'date-fns/formatDistanceToNowStrict'
 import {v4} from 'uuid'
@@ -30,7 +30,7 @@ const getLastSyncedFromNowString = () => {
 export const ClientServerSync = () => {
   const [isOpen, setIsOpen] = useState(false)
   useTick(1000)
-  const {stateSelector, pollComponent, syncNow} = UseOfflineCache()
+  const {stateSelector, pollComponent, syncNow} = useRef(UseOfflineCache()).current
   const state = stateSelector()
   const color = colorMap[state]
 
