@@ -36,24 +36,24 @@ export const ChartC = () => {
     cs.setChartC(newChartC)
     cs.putCargos([cargo])
   }
-  const getLabel = (text: string) => (
-    <label
-      style={{
-        textAlign: 'center',
-        color: 'black',
-        fontWeight: 'normal',
-        fontSize: '12px',
-      }}
-    >
-      {text}
-    </label>
-  )
+  // const getLabel = (text: string) => (
+  //   <label
+  //     style={{
+  //       textAlign: 'center',
+  //       color: 'black',
+  //       fontWeight: 'normal',
+  //       fontSize: '12px',
+  //     }}
+  //   >
+  //     {text}
+  //   </label>
+  // )
   return ( <Form key={air.aircraftId + '_chart_c_form'} form={form} style={{
-    margin: '0px 14px',
+    margin: '0px 14px'
   }}>
             <Form.Item
               name={`weight`}
-              label={getLabel('Basic Weight')}
+              //label={getLabel('Basic Weight')}
               colon={false}
               rules={rulesYupWrapper(schema.weight)}
               hasFeedback
@@ -61,16 +61,18 @@ export const ChartC = () => {
             >
               <Input
                 size="large"
-                placeholder={`Range: ${Math.ceil(air.weight0 / 1000)}k-${Math.floor(
+                placeholder={`Basic Weight: ${Math.ceil(air.weight0 / 1000)}k-${Math.floor(
                   air.weight1 / 1000
                 )}k`}
                 onChange={debounce(onChange, 500)}
               />
             </Form.Item>
 
+            <div style={{marginTop: 10, marginBottom: 10, borderTop: '1px solid #F1F1F1'}}/>
+
             <Form.Item
               name={'mom'}
-              label={getLabel('Basic Moment')}
+              //label={getLabel('Basic Moment')}
               colon={false}
               rules={rulesYupWrapper(schema.mom)}
               hasFeedback
@@ -79,7 +81,7 @@ export const ChartC = () => {
               <Input
                 size="large"
                 onChange={debounce(onChange, 500)}
-                placeholder={`Range: ${Math.ceil(air.mom0 / 1000)}k-${Math.floor(
+                placeholder={`Basic Moment: ${Math.ceil(air.mom0 / 1000)}k-${Math.floor(
                   air.mom1 / 1000
                 )}k`}
               />

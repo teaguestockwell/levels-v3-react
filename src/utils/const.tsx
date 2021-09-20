@@ -7,6 +7,9 @@ const validateNumPositive = (num: any) => {
   return yup.number().required().positive().validateSync(num)
 }
 
+
+
+
 export const Const = {
   MAX_WIDTH: 700,
   PAD: {

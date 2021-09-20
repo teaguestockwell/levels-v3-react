@@ -5,6 +5,7 @@ import {
   getNavItemStyle,
   getAppBar,
   persistentPages,
+  enabled, disabled
 } from './dynamic_main_nav'
 import {getUserActions, usePageName} from '../hooks/user_store'
 import {MaxContent} from '../components/max_content'
@@ -36,7 +37,7 @@ export const MobileNav = () => {
           width: '100%',
           zIndex: 1,
           height: Const.HEIGHT.BOTTOM_NAV_BAR,
-          backgroundColor: '#06645E',
+          backgroundColor: '#fff',
           boxShadow: '0px -3px 10px rgba(0, 0, 0, 0.15)',
         }}
       >
@@ -44,14 +45,22 @@ export const MobileNav = () => {
           <div style={{display: 'flex', justifyContent: 'space-between', marginLeft: 14, marginRight: 14}}>
             {pageNames.map((x) => (
                 <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  height: 60
+                }}
                   key={x}
                   onClick={() => cs.setPageName(x)}
                 >
                 {navIcons[getNavItemStyle(x, pageName)][x]}
+                <div style={{color: x === pageName ? enabled : disabled}}>{x}</div>
               </div>
             ))}
           </div>
-        </MaxContent>
+          </MaxContent>
       </div>
     </div>
   )

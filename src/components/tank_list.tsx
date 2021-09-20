@@ -9,6 +9,7 @@ export const TankList = () => {
   ).filter((c) => c.category === Types.CargoCategory.Tank)
 
   return (
+    
     <div style={{paddingBottom: '10px', display: 'flex',flexWrap: 'wrap', justifyContent: 'space-evenly'}}>
       {air.tanks.map((tank, i) => (
           <TankRow
@@ -19,5 +20,17 @@ export const TankList = () => {
             />
       ))}
     </div>
+
+  //   <div style={{paddingBottom: '10px', display: 'flex', overflowX: 'auto'}}>
+  //   {air.tanks.map((tank, i) => (
+
+  //     <div style={{marginLeft: 10}} key={tank.tankId}>
+  //       <TankRow
+  //         tank={tank}
+  //         cargoString={cargoStrings[i]}
+  //         />
+  //     </div>
+  //   ))}
+  // </div>
   )
 }

@@ -13,16 +13,20 @@ import {UserAirSelect} from '../components/user_air_select'
 import {AdminServerSync} from '../components/admin_server_sync'
 import {Const} from '../utils/const'
 import {MaxContent} from '../components/max_content'
-
+import {
+  Home,
+  Glossary,
+  Settings
+} from '../components/icons'
 /** if x===y return 'active' else return 'inactive' */
 export const getNavItemStyle = (x: string, y: string) =>
   x === y ? 'active' : 'inactive'
 
-export const pageNames = ['%MAC', 'Glossary', 'Help', 'Admin']
+export const pageNames = ['Home', 'Glossary', 'Help', 'Admin']
 
 const svgPropsSelected = {
   width: 33,
-  height: Const.HEIGHT.BOTTOM_NAV_BAR,
+  height: 33,
   viewBox: '0 0 33 33',
   webkitfilter: 'drop-shadow( 0px 2px 4px rgba(255, 255, 255, .25))',
   filter: 'drop-shadow( 0px 2px 4px rgba(255, 255, 255, .25))',
@@ -30,56 +34,32 @@ const svgPropsSelected = {
 
 const svgProps = {
   width: 33,
-  height: Const.HEIGHT.BOTTOM_NAV_BAR,
+  height: 33,
   viewBox: '0 0 33 33',
 } as any
+
+export const enabled = '#08D290'
+export const disabled = '#000'
 
 /** lookup map for at 'active' || 'inactive' navigation icons styles */
 export const navIcons: {[key: string]: any} = {
   inactive: {
-    '%MAC': (
-      <svg data-testid="%MAC nav icon" {...svgProps}>
-        <path d={Const.PATH.MAC_OUTLINE} fill={Const.COLORS.TXT_DISABLED} />
-      </svg>
-    ),
-    Glossary: (
-      <svg data-testid="glossary nav icon" {...svgProps}>
-        <path
-          d={Const.PATH.GLOSSARY_OUTLINE}
-          fill={Const.COLORS.TXT_DISABLED}
-        />
-      </svg>
-    ),
-    Admin: (
-      <svg data-testid="admin nav icon" {...{...svgProps, viewBox: '0 0 28 28'}}>
-        <path d={Const.PATH.ADMIN_OUTLINE} fill={Const.COLORS.TXT_DISABLED} />
-      </svg>
-    ),
+    'Home': <Home color={disabled}/>,
+    Glossary: <Glossary color={disabled}/>,
+    Admin: <Settings color={disabled}/>,
     Help: (
       <svg data-testid="help nav icon" {...svgProps}>
-        <path d={Const.PATH.HELP_OUTLINE} fill={Const.COLORS.TXT_DISABLED} />
+        <path d={Const.PATH.HELP_OUTLINE} fill={disabled} />
       </svg>
     ),
   },
   active: {
-    '%MAC': (
-      <svg data-testid="%MAC nav icon" {...svgPropsSelected}>
-        <path d={Const.PATH.MAC_OUTLINE} fill="white" />
-      </svg>
-    ),
-    Glossary: (
-      <svg data-testid="glossary nav icon" {...svgPropsSelected}>
-        <path d={Const.PATH.GLOSSARY_OUTLINE} fill="white" />
-      </svg>
-    ),
-    Admin: (
-      <svg data-testid="admin nav icon" {...{...svgPropsSelected, viewBox: '0 0 28 28'}}>
-        <path d={Const.PATH.ADMIN_OUTLINE} fill="white" />
-      </svg>
-    ),
+    'Home': <Home color={enabled}/>,
+    Glossary: <Glossary color={enabled}/>,
+    Admin: <Settings color={enabled}/>,
     Help: (
       <svg data-testid="help nav icon" {...svgPropsSelected}>
-        <path d={Const.PATH.HELP_OUTLINE} fill="white" />
+        <path d={Const.PATH.HELP_OUTLINE} fill={enabled}  />
       </svg>
     ),
   },
@@ -87,7 +67,7 @@ export const navIcons: {[key: string]: any} = {
 
 /** globally scoped components that persist between layouts */
 export const persistentPages: {[key: string]: JSX.Element} = {
-  '%MAC': <MaxContent children={<Mac />} />,
+  'Home': <MaxContent children={<Mac />} />,
   Glossary: <MaxContent children={<GlossaryList />} />,
   Admin: <Admin />,
   Help: <MaxContent children={<Help />} />,

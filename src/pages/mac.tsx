@@ -3,11 +3,9 @@ import {ChartC} from '../components/chart_c'
 import {CargoEditModal} from '../components/cargo_edit_modal'
 import {GetMacButton} from '../components/get_mac_button'
 import {TankList} from '../components/tank_list'
-import {Label} from '../components/label'
 import {useUserAir} from '../hooks/user_store'
 import {CardShadow} from '../components/card_shadow'
 import {CargoCard} from '../components/cargo_card'
-import {Const} from '../utils/const'
 import { Clock } from '../components/clock'
 
 export const Mac = () => {
@@ -16,40 +14,15 @@ export const Mac = () => {
   return (
     <>
       <Clock style={{marginTop: 8}}/>
-      <CardShadow key={v4()} child={<TankList/>}/>
+      <TankList/>
+      <CardShadow style={{borderRadius: 0, paddingTop: 10, paddingBottom: 10}}>
+      <ChartC key={v4()} />
+      </CardShadow>
+    
 
-      <CardShadow
-      style={{paddingBottom: 1}}
-        child={
-          <>
-            <Label
-              text={'Chart C'}
-              icon={
-                <svg width="18" height="30" viewBox="0 0 24 24">
-                  <path d={Const.PATH.CHART_FILL} fill="#06645E" />
-                </svg>
-              }
-            />
-            <ChartC key={v4()} />
-          </>
-        }
-      />
-
-      <CardShadow
-        child={
-          <>
-            <Label
-              text={'Cargo'}
-              icon={
-                <svg width="30" height="100%" viewBox="0 0 30 20">
-                  <path d={Const.PATH.CAR_FILL} fill="#06645E" />
-                </svg>
-              }
-            />
-            <CargoCard key={v4()} />
-          </>
-        }
-      />
+      <CardShadow style={{borderRadius: 0}}>
+        <CargoCard key={v4()} />
+    </CardShadow>
 
       <GetMacButton key={v4()}/>
       <CargoEditModal />

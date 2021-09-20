@@ -4,6 +4,7 @@ import {getCargoStringFromTank} from '../utils/util'
 import {Select} from 'antd'
 import {Gauge} from '@ant-design/charts'
 import {useMemo, useState} from 'react'
+import { CardShadow } from './card_shadow'
 
 const cs = getUserActions()
 
@@ -49,7 +50,9 @@ export const TankRow = ({
   )
 
   return (
-    <div style={{paddingTop: 10, cursor: 'pointer', ...style}}>
+    <CardShadow>
+
+    <div style={{padding: 10, cursor: 'pointer', ...style}}>
       <div
         style={{
           display: 'flex',
@@ -60,11 +63,11 @@ export const TankRow = ({
         <div
           style={{
             textAlign: 'center',
-            color: '#383838',
+            color: '#000',
             fontWeight: 'normal',
             fontSize: '12px',
           }}
-        >
+          >
           {tank.name}
         </div>
       </div>
@@ -76,23 +79,23 @@ export const TankRow = ({
           justifyContent: 'center',
           marginTop: -5,
         }}
-      >
+        >
         <div
           onClick={() => setIsEditing(!isEditing)}
           style={{
             width: 75,
             height: 75,
           }}
-        >
+          >
           {process.env.IS_TEST ? (
             <div>chart</div>
-          ) : (
-            <Gauge
+            ) : (
+              <Gauge
               percent={Number(currentWeight) / Number(maxWeight)}
               range={{color: 'l(0) 0:#B7D9D7 1:#037C75'}}
               indicator={false}
-            />
-          )}
+              />
+              )}
         </div>
       </div>
 
@@ -103,7 +106,7 @@ export const TankRow = ({
           justifyContent: 'center',
           marginTop: -2,
         }}
-      >
+        >
         <Select
           data-testid={`${tank.name} select`}
           onChange={onChange}
@@ -120,8 +123,9 @@ export const TankRow = ({
           dropdownMatchSelectWidth={false}
           virtual={true}
           options={options}
-        />
+          />
       </div>
     </div>
+  </CardShadow>
   )
 }

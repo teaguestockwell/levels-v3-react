@@ -1,8 +1,8 @@
 export const CardShadow = ({
-  child,
+  children,
   style,
 }: {
-  child: JSX.Element
+  children: JSX.Element | JSX.Element[];
   style?: any
 }) => {
   return (
@@ -15,7 +15,7 @@ export const CardShadow = ({
         ...style,
       }}
     >
-      {child}
+      {children}
     </div>
   )
 }
