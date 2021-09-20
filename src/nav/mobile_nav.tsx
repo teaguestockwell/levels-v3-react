@@ -23,8 +23,8 @@ export const MobileNav = () => {
     // since bottom nav bar sits on top, add padding to make viewport scroll to uncover
     <div
       style={{
-        paddingBottom: Const.HEIGHT.BOTTOM_NAV_BAR,
-        paddingTop: Const.HEIGHT.APP_BAR,
+        paddingTop: 40,
+        paddingBottom: 40,
       }}
     >
       {getAppBar(pageName)}

@@ -16,13 +16,13 @@ export const UserAirSelect = () => {
 
   return (
     <Select
-      className="selectBoi"
+      size="large"
       bordered={false}
       data-testid={`user air select`}
       defaultValue={airName}
       onChange={onAirChange}
-      style={{textAlign: 'right', fontSize: 18}}
-      dropdownStyle={{textAlign: 'center'}}
+      style={{width: '100%', textAlign: 'left', display: 'flex', fontWeight: 600}}
+      dropdownStyle={{textAlign: 'left'}}
       showSearch
       dropdownMatchSelectWidth={false}
       virtual={true}

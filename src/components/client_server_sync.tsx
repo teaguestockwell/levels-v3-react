@@ -1,5 +1,5 @@
 import {Button, Modal} from 'antd'
-import {SyncOutlined} from '@ant-design/icons'
+import { svgs } from './icons'
 import {useMemo, useState, useRef} from 'react'
 import {useTick} from '../hooks/use_tick'
 import formatDistanceToNowStrict from 'date-fns/formatDistanceToNowStrict'
@@ -7,12 +7,14 @@ import {v4} from 'uuid'
 import  * as Types from '../types'
 import { UseOfflineCache } from '../hooks/use_offline_cache'
 
-const colorMap: Record<Types.OfflineCacheState ,string> = {
-  [Types.OfflineCacheState.OUTDATED]: '#FF4D50',
-  [Types.OfflineCacheState.FETCHING]: '#FF6D12',
-  [Types.OfflineCacheState.UPDATABLE]: '#F8aD14',
-  [Types.OfflineCacheState.OFFLINE]: '#1890FF',
-  [Types.OfflineCacheState.SYNCED]: '#52C419'
+const w = 24
+const h = 24
+const iconMap: Record<Types.OfflineCacheState ,JSX.Element> = {
+  [Types.OfflineCacheState.OUTDATED]:  <svgs.CloudOff w={w} h={h} color={'#FF4D50'}/>,
+  [Types.OfflineCacheState.FETCHING]: <svgs.CloudDown w={w} h={h} color={'#FF6D12'}/>, 
+  [Types.OfflineCacheState.UPDATABLE]: <svgs.Sync w={w} h={h} color={'#F8aD14'}/>,
+  [Types.OfflineCacheState.OFFLINE]: <svgs.Cloud w={w} h={h} color={'#1890FF'}/>, 
+  [Types.OfflineCacheState.SYNCED]: <svgs.CloudDone w={w} h={h} color={'#52C419'}/>
 }
 
 const getLastSyncedFromNowString = () => {
@@ -32,7 +34,6 @@ export const ClientServerSync = () => {
   useTick(1000)
   const {stateSelector, pollComponent, syncNow} = useRef(UseOfflineCache()).current
   const state = stateSelector()
-  const color = colorMap[state]
 
   const syncButton = state !== Types.OfflineCacheState.UPDATABLE ? null : (
     <Button
@@ -43,19 +44,27 @@ export const ClientServerSync = () => {
     </Button>
   )
 
-  const modalButton = useMemo(() => {
-    return (
-      <Button
-        data-testid={color}
-        style={{backgroundColor: color, borderColor: color}}
-        size={'small'}
-        type="primary"
-        shape="circle"
-        icon={<SyncOutlined />}
-        onClick={() => setIsOpen(true)}
-      />
-    )
-  }, [color])
+  const displayButton = useMemo(() => {
+    return <div
+    onClick={() => setIsOpen(!isOpen)}
+      style={{
+        zIndex: 10,
+        background: '#F1F1F1',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        height: 40,
+        alignItems: 'center',
+        cursor: 'pointer',
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+    >
+      {iconMap[state]}
+      <div style={{marginLeft: 10, textTransform: 'capitalize'}}>{state}</div>
+    </div>
+  }, [state])
 
     return (
       <>
@@ -74,7 +83,7 @@ export const ClientServerSync = () => {
             </div>
           </Modal>
         ) : null}
-        {modalButton}
+        {displayButton}
       </>
     )
 }

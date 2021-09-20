@@ -1,18 +1,21 @@
 /* eslint-disable react/display-name */
 import format from 'date-fns/format'
 import {getUTCDate} from '../utils/util'
-import {Const} from '../utils/const'
+// import {Const} from '../utils/const'
 import {useTick} from '../hooks/use_tick'
 import React from 'react'
+import { MaxContent } from './max_content'
 
 const ClockCol = React.memo(({text, color, textAlign}: {text: string, color:string, textAlign: 'left' | 'right' | 'center'}) => {
   return <div
       style={{
-        width: '100%',
         color,
-        fontWeight: 'normal',
+        fontWeight: 500,
         fontSize: '12px',
         textAlign,
+        display: 'flex',
+        alignItems: 'center',
+        width: 'fit-content'
       }}
     >
       {text}
@@ -34,10 +37,10 @@ const ClockRow = React.memo(({texts,colors}:{texts: [string,string,string,string
 </div>
 })
 
-const d = Const.COLORS.TXT_DISABLED
-const e = '#fff'
+const d = '#9C9C9C'
+const e = '#000'
 
-export const Clock = () => {
+export const Clock = ({style = {}}: {style?: React.CSSProperties}) => {
   useTick(1000)
   const lnow = new Date()
   const znow = getUTCDate(lnow)
@@ -53,10 +56,23 @@ export const Clock = () => {
   
 
   return (
-    <>
-        <ClockRow texts={['Zone', 'hh:mm:ss', 'JJJ', 'yyyy/mm/dd']} colors={[d,d,d,d]}/>
-        <ClockRow texts={['Local', clock.lHMS, clock.lJJJ, clock.lYMD]} colors={[d,e,e,e]}/>
-        <ClockRow texts={['Zulu', clock.zHMS, clock.zJJJ, clock.zYMD]} colors={[d,e,e,e]}/>
-    </>
+    <div
+      style={{
+        background: '#fff',
+        textAlign: 'center',
+        ...style,
+      }}
+    >
+    <MaxContent
+      style={{
+        paddingTop: 20,
+        paddingBottom: 20,
+      }}
+    >
+      <ClockRow texts={['Zone', 'hh:mm:ss', 'JJJ', 'yyyy/mm/dd']} colors={[d,d,d,d]}/>
+        <ClockRow texts={['Local', clock.lHMS, clock.lJJJ, clock.lYMD]} colors={[e,e,e,e]}/>
+        <ClockRow texts={['Zulu', clock.zHMS, clock.zJJJ, clock.zYMD]} colors={[e,e,e,e]}/>
+    </MaxContent>
+  </div>
   )
 }

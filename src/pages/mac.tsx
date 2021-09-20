@@ -8,12 +8,14 @@ import {useUserAir} from '../hooks/user_store'
 import {CardShadow} from '../components/card_shadow'
 import {CargoCard} from '../components/cargo_card'
 import {Const} from '../utils/const'
+import { Clock } from '../components/clock'
 
 export const Mac = () => {
   useUserAir()
 
   return (
     <>
+      <Clock style={{marginTop: 8}}/>
       <CardShadow key={v4()} child={<TankList/>}/>
 
       <CardShadow
