@@ -10,27 +10,27 @@ export const TankList = () => {
 
   return (
     
-    <div style={{paddingBottom: '10px', display: 'flex',flexWrap: 'wrap', justifyContent: 'space-evenly'}}>
-      {air.tanks.map((tank, i) => (
-          <TankRow
-            style={{flex: '0 0 25%'}}
-            tank={tank}
-            cargoString={cargoStrings[i]}
-            key={tank.tankId}
-            />
-      ))}
-    </div>
+    // <div style={{display: 'flex',flexWrap: 'wrap', justifyContent: 'space-evenly'}}>
+    //   {air.tanks.map((tank, i) => (
+    //       <TankRow
+    //         style={{flex: '0 0 25%'}}
+    //         tank={tank}
+    //         cargoString={cargoStrings[i]}
+    //         key={tank.tankId}
+    //         />
+    //   ))}
+    // </div>
 
-  //   <div style={{paddingBottom: '10px', display: 'flex', overflowX: 'auto'}}>
-  //   {air.tanks.map((tank, i) => (
+    <div style={{paddingRight: 10, display: 'flex', overflowX: 'auto'}}>
+    {air.tanks.map((tank, i) => (
 
-  //     <div style={{marginLeft: 10}} key={tank.tankId}>
-  //       <TankRow
-  //         tank={tank}
-  //         cargoString={cargoStrings[i]}
-  //         />
-  //     </div>
-  //   ))}
-  // </div>
+      <div style={{marginLeft: 10}} key={tank.tankId}>
+        <TankRow
+          tank={tank}
+          cargoString={cargoStrings[i]}
+          />
+      </div>
+    ))}
+  </div>
   )
 }

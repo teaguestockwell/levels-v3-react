@@ -39,7 +39,7 @@ export interface UserStoreState extends State {
 
 export const userStore = create<UserStoreState>((set) => ({
   // read
-  pageName: '%MAC',
+  pageName: 'Home',
   cargoMap: new Map(),
   config: Const.NO_CONFIG,
   configUuids: [],

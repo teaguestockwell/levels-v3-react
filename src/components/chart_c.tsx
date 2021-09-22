@@ -66,7 +66,7 @@ export const ChartC = () => {
                 )}k`}
                 onChange={debounce(onChange, 500)}
                 bordered={false}
-                style={{paddingLeft: 0}}
+                style={{paddingLeft: 10}}
               />
             </Form.Item>
 
@@ -88,7 +88,7 @@ export const ChartC = () => {
                 placeholder={`Basic Moment: ${Math.ceil(air.mom0 / 1000)}k-${Math.floor(
                   air.mom1 / 1000
                 )}k`}
-                style={{paddingLeft: 0}}
+                style={{paddingLeft: 10}}
               />
             </Form.Item>
       </Form>

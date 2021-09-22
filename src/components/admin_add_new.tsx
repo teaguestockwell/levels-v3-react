@@ -9,7 +9,7 @@ export const AdminAddNew = () => {
 
   return (
     <div
-      style={{display: 'flex',padding: 12,marginTop: 50,}}
+      style={{display: 'flex',padding: 15}}
     >
       <Button
         onClick={() => adminActions().addNewRow()}

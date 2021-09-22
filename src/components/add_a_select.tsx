@@ -33,7 +33,7 @@ export const AddASelect = () => {
     <Select
       data-testid={`user add adda`}
       onChange={onChange}
-      value={'Add Equipment'}
+      value={'Add Custom Equipment'}
       style={{width: '100%',  display: 'flex', paddingTop: 10}}
       dropdownStyle={{}}
       showSearch
@@ -46,7 +46,7 @@ export const AddASelect = () => {
           value: 'Custom',
         },
         ...cargos.map((c) => ({
-          label: `${c.category}: ${c.name}`,
+          label: `Custom ${c.name}`,
           value: c.name,
         })),
       ]}

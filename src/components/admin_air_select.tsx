@@ -77,8 +77,8 @@ export const AdminAirSelect = () => {
         defaultValue={air?.name as string}
         onChange={onAirChange}
         showSearch
-        style={{textAlign: 'right', fontSize: 18}}
-        dropdownStyle={{textAlign: 'center'}}
+        style={{width: '100%', textAlign: 'left', display: 'flex', fontWeight: 600}}
+        dropdownStyle={{textAlign: 'left'}}
         dropdownMatchSelectWidth={false}
         virtual={true}
         options={

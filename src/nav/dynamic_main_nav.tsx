@@ -26,8 +26,8 @@ const svgPropsSelected = {
 } as any
 
 const svgProps = {
-  width: 33,
-  height: 33,
+  width: 24,
+  height: 24,
   viewBox: '0 0 33 33',
 } as any
 

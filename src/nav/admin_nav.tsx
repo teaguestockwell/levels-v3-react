@@ -31,11 +31,7 @@ export const AdminNav = () => {
   return air ? (
     <div
       style={{
-        zIndex: 1,
-        position: 'fixed',
-        left: -1,
-        top: Const.HEIGHT.APP_BAR,
-        right: 0,
+        marginTop: 15
       }}
     >
       <Menu
