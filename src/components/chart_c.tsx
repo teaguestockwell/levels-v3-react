@@ -36,24 +36,24 @@ export const ChartC = () => {
     cs.setChartC(newChartC)
     cs.putCargos([cargo])
   }
-  // const getLabel = (text: string) => (
-  //   <label
-  //     style={{
-  //       textAlign: 'center',
-  //       color: 'black',
-  //       fontWeight: 'normal',
-  //       fontSize: '12px',
-  //     }}
-  //   >
-  //     {text}
-  //   </label>
-  // )
+  const getLabel = (text: string) => (
+    <label
+      style={{
+        textAlign: 'center',
+        color: 'black',
+        fontWeight: 'normal',
+        fontSize: '12px',
+      }}
+    >
+      {text}
+    </label>
+  )
   return ( <Form key={air.aircraftId + '_chart_c_form'} form={form} style={{
-    margin: '0px 14px'
+    margin: '0px 14px',
   }}>
             <Form.Item
               name={`weight`}
-              //label={getLabel('Basic Weight')}
+              label={getLabel('Basic Weight')}
               colon={false}
               rules={rulesYupWrapper(schema.weight)}
               hasFeedback
@@ -65,6 +65,8 @@ export const ChartC = () => {
                   air.weight1 / 1000
                 )}k`}
                 onChange={debounce(onChange, 500)}
+                bordered={false}
+                style={{paddingLeft: 0}}
               />
             </Form.Item>
 
@@ -72,18 +74,21 @@ export const ChartC = () => {
 
             <Form.Item
               name={'mom'}
-              //label={getLabel('Basic Moment')}
+              label={getLabel('Basic Moment')}
               colon={false}
               rules={rulesYupWrapper(schema.mom)}
               hasFeedback
               labelCol={{span: 24}}
+
             >
               <Input
                 size="large"
                 onChange={debounce(onChange, 500)}
+                bordered={false}
                 placeholder={`Basic Moment: ${Math.ceil(air.mom0 / 1000)}k-${Math.floor(
                   air.mom1 / 1000
                 )}k`}
+                style={{paddingLeft: 0}}
               />
             </Form.Item>
       </Form>

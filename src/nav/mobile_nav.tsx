@@ -3,7 +3,6 @@ import {
   navIcons,
   pageNames,
   getNavItemStyle,
-  getAppBar,
   persistentPages,
   enabled, disabled
 } from './dynamic_main_nav'
@@ -28,7 +27,6 @@ export const MobileNav = () => {
         paddingBottom: 40,
       }}
     >
-      {getAppBar(pageName)}
       {persistentPages[pageName]}
       <div
         style={{

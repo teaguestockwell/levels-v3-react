@@ -48,11 +48,12 @@ export const ConfigSelect = () => {
       data-testid={`user config select`}
       onChange={onChange}
       defaultValue={userStore.getState().config.name}
-      style={{width: '100%', textAlign: 'center', paddingTop: 10, display: 'flex' }}
-      dropdownStyle={{textAlign: 'center'}}
+      style={{width: '100%',paddingTop: 10, display: 'flex' }}
+      dropdownStyle={{}}
       showSearch
       size="large"
       virtual={true}
+      bordered={false}
       options={
         [
           {

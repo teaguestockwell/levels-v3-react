@@ -1,7 +1,7 @@
 import {useUserAirs} from '../hooks/query'
 import {userStore, getUserActions} from '../hooks/user_store'
 import {Result, Skeleton} from 'antd'
-import {DynamicMainNav} from './dynamic_main_nav'
+import { MobileNav } from './mobile_nav'
 import {v4} from 'uuid'
 import {Help} from '../pages/help'
 
@@ -28,7 +28,7 @@ export const InitLoaded = () => {
     localStorage.setItem('lastSync', `${data.serverEpoch}`)
 
 
-    return <DynamicMainNav key={v4()} />
+    return <MobileNav key={v4()} />
   }
 
   if (data && data?.aircrafts?.length <= 0) {

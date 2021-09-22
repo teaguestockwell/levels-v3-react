@@ -65,8 +65,8 @@ export const Clock = ({style = {}}: {style?: React.CSSProperties}) => {
     >
     <MaxContent
       style={{
-        paddingTop: 20,
-        paddingBottom: 20,
+        paddingTop: 16,
+        paddingBottom: 16,
       }}
     >
       <ClockRow texts={['Zone', 'hh:mm:ss', 'JJJ', 'yyyy/mm/dd']} colors={[d,d,d,d]}/>

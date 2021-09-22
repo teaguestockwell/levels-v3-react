@@ -52,7 +52,7 @@ export const TankRow = ({
   return (
     <CardShadow>
 
-    <div style={{padding: 10, cursor: 'pointer', ...style}}>
+    <div style={{padding: 10, cursor: 'pointer', ...style}} onClick={() => setIsEditing(!isEditing)}>
       <div
         style={{
           display: 'flex',
@@ -81,7 +81,6 @@ export const TankRow = ({
         }}
         >
         <div
-          onClick={() => setIsEditing(!isEditing)}
           style={{
             width: 75,
             height: 75,

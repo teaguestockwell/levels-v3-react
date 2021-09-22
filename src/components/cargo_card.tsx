@@ -9,6 +9,7 @@ import {AddASelect} from './add_a_select'
 import  * as Types from '../types'
 import {CargoEditRow} from './cargo_edit_button'
 import {v4} from 'uuid'
+import {CardShadow} from './card_shadow'
 
 const {Panel} = Collapse
 
@@ -31,20 +32,22 @@ export const CargoCard = () => {
   return (
     <div
       style={{
-        marginLeft: 14,
-        marginRight: 14,
         paddingBottom: 14,
       }}
     >
-      <ConfigSelect />
-      <AddASelect />
+      <CardShadow style={{borderRadius: 0, paddingBottom: 10}}>
+        <ConfigSelect />
+        <div style={{marginTop: 10, marginBottom: 0, borderTop: '1px solid #F1F1F1'}}/>
+        <AddASelect />
+      </CardShadow>
 
+      <CardShadow style={{borderRadius: 0, paddingTop: 10}}>
       <Collapse
         expandIconPosition={'right'}
         accordion
         bordered={false}
         style={{padding: '0px 4px'}}
-      >
+        >
         {!configIsEmpty && (
           <Panel key={v4()} header={`${configName} Cargo`}>
             <Collapse expandIconPosition={'right'} accordion bordered={false}>
@@ -69,6 +72,7 @@ export const CargoCard = () => {
           </Panel>
         )}
       </Collapse>
+    </CardShadow>
     </div>
   )
 }

@@ -1,16 +1,9 @@
 /* eslint-disable react/no-children-prop */
 /* eslint-disable react/jsx-props-no-spreading */
-import {DesktopNav} from './desktop_nav'
-import {MobileNav} from './mobile_nav'
 import {Mac} from '../pages/mac'
 import {Admin} from '../pages/admin'
 import {GlossaryList} from '../pages/glossary_list'
 import {Help} from '../pages/help'
-import {AppBar} from './app_bar'
-import {AdminAirSelect} from '../components/admin_air_select'
-import {ClientServerSync} from '../components/client_server_sync'
-import {UserAirSelect} from '../components/user_air_select'
-import {AdminServerSync} from '../components/admin_server_sync'
 import {Const} from '../utils/const'
 import {MaxContent} from '../components/max_content'
 import {
@@ -72,15 +65,3 @@ export const persistentPages: {[key: string]: JSX.Element} = {
   Admin: <Admin />,
   Help: <MaxContent children={<Help />} />,
 }
-export const mobileNav = <MobileNav />
-export const desktopNav = <DesktopNav />
-const adminAppBar = (
-  <AppBar select={<AdminAirSelect />} sync={<AdminServerSync />} />
-)
-const userAppBar = (
-  <AppBar select={<UserAirSelect />} sync={<ClientServerSync />} />
-)
-export const getAppBar = (pageName: string) =>
-  pageName !== 'Admin' ? userAppBar : adminAppBar
-
-export const DynamicMainNav = () => mobileNav

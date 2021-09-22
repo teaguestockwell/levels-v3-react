@@ -34,11 +34,12 @@ export const AddASelect = () => {
       data-testid={`user add adda`}
       onChange={onChange}
       value={'Add Equipment'}
-      style={{width: '100%', textAlign: 'center', display: 'flex', paddingTop: 10}}
-      dropdownStyle={{textAlign: 'center'}}
+      style={{width: '100%',  display: 'flex', paddingTop: 10}}
+      dropdownStyle={{}}
       showSearch
       size="large"
       virtual={true}
+      bordered={false}
       options={[
         {
           label: 'Custom',
