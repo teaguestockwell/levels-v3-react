@@ -4,6 +4,7 @@ import {usePolling} from '../hooks/query'
 import {getAdminStoreActions, useAir} from '../hooks/admin_store'
 import isEqual from 'lodash/isEqual'
 import {v4} from 'uuid'
+import { Aircraft } from './icons'
 
 const as = getAdminStoreActions()
 
@@ -25,8 +26,8 @@ export const AdminAirSelect = () => {
   // do not render on every req, only when res is different
   return useMemo(() => {
     // while !res from server
-    if (!data) {
-      return <Spin style={{paddingRight: '12px', paddingTop: '6px'}} />
+    if (!data || isEqual(data, {})) {
+      return <Spin style={{paddingRight: 20, paddingLeft: 20, paddingTop: '6px'}} />
     }
 
     // while !res contains error
@@ -69,6 +70,16 @@ export const AdminAirSelect = () => {
 
     // while client air selection and server state are synced
     return (
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          paddingRight: 5
+        }}
+      >
+      <Aircraft h={24} w={24} color={'#C4C4C4'} style={{marginLeft: 15}}/>
       <Select
         bordered={false}
         className="selectBoi"
@@ -85,10 +96,11 @@ export const AdminAirSelect = () => {
           data.map((a: any) => ({
             value: a.name,
             label: a.name,
+            className: 'pad20'
           }))
         }
-      />
-
+        />
+      </div>
     )
   }, [data, air])
 }

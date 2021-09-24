@@ -44,10 +44,12 @@ export const AddASelect = () => {
         {
           label: 'Custom',
           value: 'Custom',
+          className: 'pad20'
         },
         ...cargos.map((c) => ({
           label: `Custom ${c.name}`,
           value: c.name,
+          className: 'pad20'
         })),
       ]}
     />

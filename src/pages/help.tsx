@@ -1,7 +1,3 @@
-import {Button} from 'antd'
-import {Const} from '../utils/const'
-
-
 export const Help = () => {
   return (
     <div
@@ -17,21 +13,25 @@ export const Help = () => {
           target="_blank"
           rel="noreferrer"
         >
-          <Button
-            size="large"
-            style={{
-              textAlign: 'center',
-              maxWidth: Const.MAX_WIDTH,
-              borderColor: 'transparent',
-              width: 200,
-              backgroundColor: '#06645E',
-              color: 'white',
-              boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-            }}
-            data-testid="contact button"
-          >
+          <div
+        style={{
+          background: '#06BA7F',
+          color: '#fff',
+          boxShadow: '0px 0px 6px 2px rgba(170, 170, 170, 0.36)',
+          borderRadius: 45,
+          width: 'fit-content',
+          paddingLeft: 10,
+          paddingRight: 10,
+          height: 60,
+          overflowWrap: 'break-word',
+          cursor: 'pointer',
+          textAlign: 'center',
+          lineHeight: '60px',
+        }}
+        data-testid="contact button"
+      >
             Contact Us
-          </Button>
+          </div>
         </a>
     </div>
   )

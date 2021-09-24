@@ -1,4 +1,3 @@
-import {Button} from 'antd'
 import {getUserAir, useCargos} from '../hooks/user_store'
 import {getPerMac} from '../utils/util'
 
@@ -16,23 +15,28 @@ export const GetMacButton = () => {
         }
 
   return (
-    <div style={{marginTop: 50, marginBottom: 20, display: 'flex', alignItems: 'center',justifyContent: 'center'}}>
-      <Button
-        disabled={!isCargoValid}
-        onClick={onClick}
-        size="large"
+    <div style={{marginTop: 50, marginBottom: 60, display: 'flex', alignItems: 'center',justifyContent: 'center'}}>
+      <div
         style={{
-          color: '#06645E',
-          borderColor: '#06645E',
-          backgroundColor: 'white',
-          width: 200,
-          boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25',
+          background: '#06BA7F',
+          color: '#fff',
+          boxShadow: '0px 0px 6px 2px rgba(170, 170, 170, 0.36)',
+          borderRadius: 45,
+          width: 'fit-content',
+          paddingLeft: 10,
+          paddingRight: 10,
+          height: 60,
+          overflowWrap: 'break-word',
+          cursor: isCargoValid ? 'pointer' : 'not-allowed',
+          textAlign: 'center',
+          lineHeight: '60px',
         }}
+        onClick={onClick}
       >
         {isCargoValid
           ? `Show Work: ${calculation?.percentMacPercent}`
           : '%MAC: Invalid'}
-      </Button>
+      </div>
     </div>
   )
 }

@@ -12,8 +12,9 @@ import {isEqual} from 'lodash'
 
 const RenderTable = React.memo(
   ({data}: {data:any}) => {
+    console.log('render table', data)
 
-    if (!data) {
+    if (!data || isEqual(data, {})) {
       return (
         <div style={{paddingLeft: '12px', paddingRight: '12px'}}>
           <Skeleton active paragraph={{rows: 20}} />

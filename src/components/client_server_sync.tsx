@@ -14,7 +14,7 @@ const iconMap: Record<Types.OfflineCacheState ,JSX.Element> = {
   [Types.OfflineCacheState.FETCHING]: <svgs.CloudDown w={w} h={h} color={'#FF6D12'}/>, 
   [Types.OfflineCacheState.UPDATABLE]: <svgs.Sync w={w} h={h} color={'#F8aD14'}/>,
   [Types.OfflineCacheState.OFFLINE]: <svgs.Cloud w={w} h={h} color={'#1890FF'}/>, 
-  [Types.OfflineCacheState.SYNCED]: <svgs.CloudDone w={w} h={h} color={'#52C419'}/>
+  [Types.OfflineCacheState.SYNCED]: <svgs.CloudDone w={w} h={h} color={'#06BA7F'}/>
 }
 
 const getLastSyncedFromNowString = () => {

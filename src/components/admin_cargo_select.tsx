@@ -59,7 +59,8 @@ export const AdminCargoSelect = ({validate}: {validate: () => void}) => {
           options={
             cargos.map(c => ({
               value: c.cargoId,
-              label: c.name
+              label: c.name,
+              className: 'pad20'
             }))
           }
         />

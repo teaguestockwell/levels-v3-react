@@ -58,12 +58,14 @@ export const ConfigSelect = () => {
         [
           {
             value: 'No Config',
-            label: 'No Config'
+            label: 'No Config',
+            className: 'pad20'
           },
 
           ...air.configs.map(c => ({
             value: c.name,
             label: c.name,
+            className: 'pad20'
           }))
         ]
       }

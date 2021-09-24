@@ -11,7 +11,7 @@ import { useState } from 'react'
 
 
 export const CargoCard = () => {
-  const configName = useConfigName()
+  useConfigName()
   useCargoMapSize()
   const cargos = getUserCargos()
   const [cat, setCat] = useState<string>('Steward')
@@ -27,9 +27,16 @@ export const CargoCard = () => {
       }}
     >
       <CardShadow style={{borderRadius: 0, paddingBottom: 10}}>
+        <div
+          style={{
+            marginRight: 5
+          }}
+        >
+
         <ConfigSelect />
-        <div style={{marginTop: 10, marginBottom: 0, borderTop: '1px solid #F1F1F1'}}/>
+        <div style={{margin: '10px 0px 0px 15px', borderTop: '1px solid #F1F1F1'}}/>
         <AddASelect />
+        </div>
       </CardShadow>
 
       <CardShadow style={{borderRadius: 0, paddingTop: 10}}>
@@ -38,7 +45,10 @@ export const CargoCard = () => {
             display: 'flex',
             alignItems: 'center',
             height: 40,
-            paddingRight: 10
+            paddingRight: 10,
+            cursor: 'pointer',
+            justifyContent: 'space-between',
+            textAlign: 'center',
           }}
         >
           {
@@ -52,11 +62,11 @@ export const CargoCard = () => {
                 marginLeft: 10,
                 fontWeight: c === cat ? 600 : 400
               }}>{
-                c !== 'Custom' ? configName + ' ' + c : c
+                c
                 }</div>)
           }
         </div>
-        <div style={{marginTop: 10, marginBottom: 0, borderTop: '1px solid #F1F1F1'}}/>
+        <div style={{margin: '10px 15px 0px 15px', borderTop: '1px solid #F1F1F1'}}/>
         <div style={{paddingLeft: 10, paddingBottom: 20, paddingTop:20}}>
           {
             cargoTab.length === 0 ? <div >{`No ${cat} equipment`}</div> : cargoTab

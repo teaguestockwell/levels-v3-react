@@ -71,10 +71,15 @@ li.ant-menu-item.ant-menu-item-selected::after {
   border-radius: 5px !important;
 }
 .ant-collapse {
-  border-radius: 5px !important;
-  /* border: 1px solid #06645E !important; */
+  border-radius: 0px !important;
   background: #fff !important;
+  border: 0px !important;
 }
+
+.ant-collapse-item {
+  border: 1px solid  #F1F1F1 !important;
+}
+
 
 .ant-collapse * {
   background: #fff !important;
@@ -88,4 +93,8 @@ li.ant-menu-item.ant-menu-item-selected::after {
 
 .ant-collapse-content-box {
   padding: 0px 0px 0px 10px !important;
+}
+
+.pad20 {
+  padding: 20px !important;
 }

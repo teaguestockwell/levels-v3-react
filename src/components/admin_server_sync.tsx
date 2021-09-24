@@ -36,7 +36,7 @@ export const AdminServerSync = () => {
       }}
     >
       {
-        data ? <svgs.CloudDone w={w} h={h} color={'#52C419'}/> :
+        data ? <svgs.CloudDone w={w} h={h} color={'#06BA7F'}/> :
         <svgs.Cloud w={w} h={h} color={'#1890FF'}/>
       }
       <div style={{marginLeft: 10, textTransform: 'capitalize'}}>{data ? 'Online' : 'Offline' }</div>

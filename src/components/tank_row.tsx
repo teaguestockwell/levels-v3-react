@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import * as Types from '../types'
 import {getUserActions, useCargo, getUserAir} from '../hooks/user_store'
 import {getCargoStringFromTank} from '../utils/util'
@@ -5,8 +6,18 @@ import {Select} from 'antd'
 import {Gauge} from '@ant-design/charts'
 import {useMemo, useState} from 'react'
 import { CardShadow } from './card_shadow'
+import { debounce } from 'lodash'
+import React from 'react'
 
 const cs = getUserActions()
+
+const MemoGauge = React.memo(({selected,max}: {selected:string, max:string}) => {
+  return  <Gauge
+  percent={Number(selected) / Number(max)}
+  range={{color: 'l(0) 0:#08d290 1:#08D290'}}
+  indicator={false}
+  />
+})
 
 export const TankRow = ({
   tank,
@@ -21,6 +32,7 @@ export const TankRow = ({
   const weights = useMemo(() => tank.weightsCSV.split(','), [tank.weightsCSV])
   const currentWeight = useCargo(cargoString?.uuid)?.weightEA ?? weights[0]
   const maxWeight = weights[weights.length - 1]
+  const debounceToggle = React.useRef(debounce(() => setIsEditing(s => !s), 100)).current
 
   const onChange = (newWeight: string) => {
     // get new cargo string from tank with new index
@@ -44,15 +56,16 @@ export const TankRow = ({
     () => weights.map(w => ({
       label: w,
       value: w,
+      className: 'pad20'
     })),
     
     [weights]
   )
 
   return (
-    <CardShadow>
+    <CardShadow style={{boxShadow: '0px 0px 3.6095px rgba(0, 0, 0, 0.15)'}}>
 
-    <div style={{padding: 10, cursor: 'pointer', ...style}} onClick={() => setIsEditing(!isEditing)}>
+    <div style={{padding: 10, cursor: 'pointer', ...style, zIndex: 1}} onClick={debounceToggle}>
       <div
         style={{
           display: 'flex',
@@ -86,15 +99,9 @@ export const TankRow = ({
             height: 75,
           }}
           >
-          {process.env.IS_TEST ? (
-            <div>chart</div>
-            ) : (
-              <Gauge
-              percent={Number(currentWeight) / Number(maxWeight)}
-              range={{color: 'l(0) 0:#B7D9D7 1:#037C75'}}
-              indicator={false}
-              />
-              )}
+          {
+            process.env.IS_TEST ? <div>chart</div> : <MemoGauge selected={currentWeight} max={maxWeight} />
+          }
         </div>
       </div>
 
@@ -104,19 +111,21 @@ export const TankRow = ({
           alignItems: 'center',
           justifyContent: 'center',
           marginTop: -2,
+          zIndex: 2,
         }}
         >
         <Select
+          onClick={e => e.stopPropagation()}
           data-testid={`${tank.name} select`}
-          onChange={onChange}
+          onSelect={onChange}
           defaultValue={currentWeight}
-          style={{textAlign: 'center', fontSize: 12, width: 60}}
+          style={{textAlign: 'center', fontSize: 12, padding: 0, width: '100%'}}
           dropdownStyle={{textAlign: 'center'}}
           showSearch
           size="small"
           showArrow={false}
           bordered={true}
-          onDropdownVisibleChange={(open) => setIsEditing(open)}
+          onDropdownVisibleChange={debounceToggle}
           open={isEditing}
           showAction={['focus']}
           dropdownMatchSelectWidth={false}
