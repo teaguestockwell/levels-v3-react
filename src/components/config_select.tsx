@@ -45,6 +45,7 @@ export const ConfigSelect = () => {
 
   return (
     <CustomSelect
+    stateKey="configSelect"
       data-testid={`user config select`}
       onChange={onChange}
       defaultValue={userStore.getState().config.name}

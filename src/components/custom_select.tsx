@@ -1,34 +1,26 @@
 import {Select} from 'antd'
 import {debounce} from 'lodash'
-import React from 'react'
+import create from 'zustand'
+import {combine} from 'zustand/middleware'
 
 export const isMobile = () => /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
 
-// export const useMobileSelectEffect = (open:boolean) =>  React.useEffect(() => {
-//   if (isMobile()) {
-//     if (open)  {
-//       // dont scroll the document when selecting
-//       document.body.style.overflow = 'hidden';
-//       (document.getElementsByClassName('mobile-nav')[0]as any).style.visibility = 'hidden';
-      
-//     } else{
-//       document.body.style.overflow = 'auto';
-//       (document.getElementsByClassName('mobile-nav')[0]as any).style.visibility = 'visible';
-//       // hide the soft keyboard by removing focus
-//       (document.activeElement as any).blur()
-//     }
-//   }
+export const useSelectOpenStore = create(
+  combine(
+    {
+      isOpen: {} as Record<string,boolean>
+    },
+    set => ({set})
+  )
+)
 
-//   return () => {
-//     document.body.style.overflow = 'auto';
-//     (document.getElementsByClassName('mobile-nav')[0]as any).style.visibility = 'visible';
-//   }
-
-// },[open])
+export const dbToggle = debounce((key:string) => {
+  useSelectOpenStore.setState(s => ({isOpen: {...s.isOpen, [key]: !s.isOpen[key]}}))
+},50)
 
 export const CustomSelect = (props: any) => {
-  const [open,setOpen] = React.useState<boolean>(props.open ?? false)
-  const debounceToggle = React.useRef(debounce(() => setOpen(s => !s), 100)).current
+  const key = props.stateKey
+  const open = useSelectOpenStore(state => state.isOpen[props.stateKey] ? true : false)
   const mobile = isMobile()
 
   return <div
@@ -38,22 +30,32 @@ export const CustomSelect = (props: any) => {
     onClickCapture={(e) => {
       if(mobile && !open){
         e.stopPropagation()
-        debounceToggle()
+        dbToggle(key)
       }
     }}
   >
   <Select 
   // on mobile render the menu as bottom modal, on desktop render as inline dropdown
   dropdownRender={!mobile ? undefined : (menu) =>{
-    return <div 
-    style={{backgroundColor: '#fff', zIndex:100, position:'fixed', bottom: 0, left: 0, right: 0, borderTop: '1px solid #000'}}>
+    return <div onClick={(e) => {
+      e.stopPropagation()
+        if(props.toggleOpen){
+          props.toggleOpen()
+        } else{
+          dbToggle(key)
+        }
+      }} style={{position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000, bottom: 0, backgroundColor: 'rgba(0,0,0,0.3)'}}>
+      <div 
+    style={{backgroundColor: '#fff', zIndex:1001, position:'fixed', bottom: 0, left: 0, right: 0, borderTop: '1px solid #F1F1F1'}}>
       {menu}
     </div>
+  </div>
 }}
-type='number'
-  placement={'bottomCenter'}
-  onDropdownVisibleChange={debounceToggle}
-  open={props.open ?? open}
+  onClick={(e) => {
+    e.stopPropagation()
+    dbToggle(key)
+  }}
+  open={open}
   {...props}  />
   </div>
 }

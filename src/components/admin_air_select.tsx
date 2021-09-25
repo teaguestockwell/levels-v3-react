@@ -84,6 +84,7 @@ export const AdminAirSelect = () => {
       <CustomSelect
         bordered={false}
         className="selectBoi"
+        stateKey="adminAirSelect"
         data-testid="admin air select"
         key={v4()}
         defaultValue={air?.name as string}

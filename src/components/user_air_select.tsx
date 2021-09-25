@@ -27,6 +27,7 @@ export const UserAirSelect = () => {
   >
   <Aircraft h={24} w={24} color={'#C4C4C4'} style={{marginLeft: 15}}/>
     <CustomSelect
+      stateKey="userAirSelect"
       size="large"
       bordered={false}
       data-testid={`user air select`}

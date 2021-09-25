@@ -31,6 +31,7 @@ export const AddASelect = () => {
 
   return (
     <CustomSelect
+      stateKey="addaselect"
       data-testid={`user add adda`}
       onChange={onChange}
       value={'Add Custom Equipment'}

@@ -58,10 +58,10 @@ export const CargoCard = () => {
         selectedKeys={[cat]}
         style={{width: '100%'}}
       >
-        <Menu.Item key={'Steward'}>Steward</Menu.Item>
-        <Menu.Item key={'Emergency'}>Emergency</Menu.Item>
-        <Menu.Item key={'Extra'}>Extra</Menu.Item>
-        <Menu.Item key={'Custom'}>Custom</Menu.Item>
+        <Menu.Item role="button" tabIndex={0} key={'Steward'}>Steward</Menu.Item>
+        <Menu.Item role="button" tabIndex={0} key={'Emergency'}>Emergency</Menu.Item>
+        <Menu.Item role="button" tabIndex={0} key={'Extra'}>Extra</Menu.Item>
+        <Menu.Item role="button" tabIndex={0} key={'Custom'}>Custom</Menu.Item>
        
       </Menu>
         </div>

@@ -41,7 +41,10 @@ export const CargoEditRow = React.memo(({uuid}: {uuid: string}) => {
 
   return (
     <div
+      tabIndex={0}
+      role="button"
       onClick={() => cs.setEditUuid(uuid)}
+      onKeyPress={() => cs.setEditUuid(uuid)}
       style={{
         cursor: 'pointer',
         paddingTop: 10,

@@ -3,11 +3,10 @@ import * as Types from '../types'
 import {getUserActions, useCargo, getUserAir} from '../hooks/user_store'
 import {getCargoStringFromTank2} from '../utils/util'
 import {Gauge} from '@ant-design/charts'
-import {useMemo, useState} from 'react'
+import {useMemo } from 'react'
 import { CardShadow } from './card_shadow'
-import { debounce } from 'lodash'
 import React from 'react'
-import { CustomSelect } from './custom_select'
+import { CustomSelect, dbToggle } from './custom_select'
 
 const cs = getUserActions()
 
@@ -19,7 +18,6 @@ const MemoGauge = React.memo(({selected,max}: {selected:string, max:string}) => 
   />
 })
 
-accessibility
 
 export const TankRow = ({
   tank,
@@ -30,13 +28,10 @@ export const TankRow = ({
   cargoString: Types.CargoString
   style?: any
 }) => {
-  const [isEditing, setIsEditing] = useState(false)
   const weights = useMemo(() => tank.weightsCSV.split(','), [tank.weightsCSV])
   const moms = useMemo(() => tank.simpleMomsCSV.split(','), [tank.simpleMomsCSV])
   const currentWeight = useCargo(cargoString?.uuid)?.weightEA ?? weights[0]
   const maxWeight = weights[weights.length - 1]
-  const debounceToggle = React.useRef(debounce(() => setIsEditing(s => !s), 100)).current
-  // useMobileSelectEffect(isEditing)
 
   const onChange = (newWeight: string) => {
     const newIdx = weights.findIndex((w) => w === newWeight)
@@ -69,7 +64,7 @@ export const TankRow = ({
   return (
     <CardShadow style={{boxShadow: '0px 0px 3.6095px rgba(0, 0, 0, 0.15)', marginBottom: 15}}>
 
-    <div style={{padding: 10, cursor: 'pointer', ...style, zIndex: 1}} onClick={debounceToggle}>
+    <div style={{padding: 10, cursor: 'pointer', ...style, zIndex: 1}} onClick={() => dbToggle('tank' + tank.tankId)}>
       <div
         style={{
           display: 'flex',
@@ -119,7 +114,7 @@ export const TankRow = ({
         }}
         >
         <CustomSelect
-          onClick={(e:any) => e.stopPropagation()}
+          stateKey={'tank' + tank.tankId}
           data-testid={`${tank.name} select`}
           onSelect={onChange}
           defaultValue={currentWeight}
@@ -129,8 +124,6 @@ export const TankRow = ({
           size="small"
           showArrow={false}
           bordered={true}
-          onDropdownVisibleChange={debounceToggle}
-          open={isEditing}
           showAction={['focus']}
           dropdownMatchSelectWidth={false}
           virtual={true}

@@ -51,6 +51,7 @@ export const AdminCargoSelect = ({validate}: {validate: () => void}) => {
       <div style={{display: 'flex'}}>
         <CustomSelect
           size={'large'}
+          stateKey="adminCargoSelect"
           defaultValue={selectedId}
           onChange={onChange}
           style={{width: '100%', textAlign: 'center'}}
