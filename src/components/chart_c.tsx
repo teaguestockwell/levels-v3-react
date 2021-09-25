@@ -49,7 +49,8 @@ export const ChartC = () => {
     </label>
   )
   return ( <Form key={air.aircraftId + '_chart_c_form'} form={form} style={{
-    margin: '0px 14px', marginTop: 0
+    margin: '0px 14px', marginTop: 0,
+    paddingTop: 10
   }}>
             <Form.Item
               name={`weight`}

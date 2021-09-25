@@ -1,10 +1,11 @@
-import {Select, Spin} from 'antd'
+import {Spin} from 'antd'
 import {useMemo} from 'react'
 import {usePolling} from '../hooks/query'
 import {getAdminStoreActions, useAir} from '../hooks/admin_store'
 import isEqual from 'lodash/isEqual'
 import {v4} from 'uuid'
 import { Aircraft } from './icons'
+import { CustomSelect } from './custom_select'
 
 const as = getAdminStoreActions()
 
@@ -80,7 +81,7 @@ export const AdminAirSelect = () => {
         }}
       >
       <Aircraft h={24} w={24} color={'#C4C4C4'} style={{marginLeft: 15}}/>
-      <Select
+      <CustomSelect
         bordered={false}
         className="selectBoi"
         data-testid="admin air select"
@@ -88,7 +89,7 @@ export const AdminAirSelect = () => {
         defaultValue={air?.name as string}
         onChange={onAirChange}
         showSearch
-        style={{width: '100%', textAlign: 'left', display: 'flex', fontWeight: 600}}
+        style={{width: '100%', textAlign: 'left', display: 'flex', fontWeight: 600, fontSize: 18}}
         dropdownStyle={{textAlign: 'left'}}
         dropdownMatchSelectWidth={false}
         virtual={true}

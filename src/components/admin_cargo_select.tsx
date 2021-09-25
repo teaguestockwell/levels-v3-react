@@ -1,5 +1,5 @@
-import {Select } from 'antd'
 import {adminStore} from '../hooks/admin_store'
+import { CustomSelect } from './custom_select'
 
 /**
  a nested select for cargo inside of a configuration
@@ -49,7 +49,7 @@ export const AdminCargoSelect = ({validate}: {validate: () => void}) => {
         </p>
 
       <div style={{display: 'flex'}}>
-        <Select
+        <CustomSelect
           size={'large'}
           defaultValue={selectedId}
           onChange={onChange}

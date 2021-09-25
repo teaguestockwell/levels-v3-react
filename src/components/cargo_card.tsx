@@ -8,6 +8,7 @@ import {AddASelect} from './add_a_select'
 import {CargoEditRow} from './cargo_edit_button'
 import {CardShadow} from './card_shadow'
 import { useState } from 'react'
+import { Menu } from 'antd'
 
 
 export const CargoCard = () => {
@@ -51,22 +52,19 @@ export const CargoCard = () => {
             textAlign: 'center',
           }}
         >
-          {
-            ['Steward', 'Emergency', 'Extra', 'Custom']
-            .map(c => <div 
-              key={c} 
-              onClick={() => setCat(c)}
-              style={{
-                textDecoration: c === cat ? 'underline' : undefined,
-                color: '#000',
-                marginLeft: 10,
-                fontWeight: c === cat ? 600 : 400
-              }}>{
-                c
-                }</div>)
-          }
+          <Menu
+        mode="horizontal"
+        onClick={(menuInfo) => setCat(String(menuInfo.key))}
+        selectedKeys={[cat]}
+        style={{width: '100%'}}
+      >
+        <Menu.Item key={'Steward'}>Steward</Menu.Item>
+        <Menu.Item key={'Emergency'}>Emergency</Menu.Item>
+        <Menu.Item key={'Extra'}>Extra</Menu.Item>
+        <Menu.Item key={'Custom'}>Custom</Menu.Item>
+       
+      </Menu>
         </div>
-        <div style={{margin: '10px 15px 0px 15px', borderTop: '1px solid #F1F1F1'}}/>
         <div style={{paddingLeft: 10, paddingBottom: 20, paddingTop:20}}>
           {
             cargoTab.length === 0 ? <div >{`No ${cat} equipment`}</div> : cargoTab

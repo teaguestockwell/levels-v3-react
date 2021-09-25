@@ -29,6 +29,7 @@ export const MobileNav = () => {
     >
       {persistentPages[pageName]}
       <div
+        className='mobile-nav'
         style={{
           position: 'fixed',
           bottom: 0,

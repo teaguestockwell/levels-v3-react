@@ -1,7 +1,7 @@
 import {getUserActions, getUserAir} from '../hooks/user_store'
 import {useUserAirs} from '../hooks/query'
 import * as Types from '../types'
-import {Select} from 'antd'
+import { CustomSelect } from './custom_select'
 import { Aircraft } from './icons'
 
 const cs = getUserActions()
@@ -26,13 +26,13 @@ export const UserAirSelect = () => {
     }}
   >
   <Aircraft h={24} w={24} color={'#C4C4C4'} style={{marginLeft: 15}}/>
-    <Select
+    <CustomSelect
       size="large"
       bordered={false}
       data-testid={`user air select`}
       defaultValue={airName}
       onChange={onAirChange}
-      style={{width: '100%', textAlign: 'left', display: 'flex', fontWeight: 600}}
+      style={{width: '100%', textAlign: 'left', display: 'flex', fontWeight: 600, fontSize: 18}}
       dropdownStyle={{textAlign: 'left'}}
       showSearch
       dropdownMatchSelectWidth={false}

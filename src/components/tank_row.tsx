@@ -1,13 +1,13 @@
 /* eslint-disable react/display-name */
 import * as Types from '../types'
 import {getUserActions, useCargo, getUserAir} from '../hooks/user_store'
-import {getCargoStringFromTank} from '../utils/util'
-import {Select} from 'antd'
+import {getCargoStringFromTank2} from '../utils/util'
 import {Gauge} from '@ant-design/charts'
 import {useMemo, useState} from 'react'
 import { CardShadow } from './card_shadow'
 import { debounce } from 'lodash'
 import React from 'react'
+import { CustomSelect, useMobileSelectEffect } from './custom_select'
 
 const cs = getUserActions()
 
@@ -30,19 +30,22 @@ export const TankRow = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false)
   const weights = useMemo(() => tank.weightsCSV.split(','), [tank.weightsCSV])
+  const moms = useMemo(() => tank.simpleMomsCSV.split(','), [tank.simpleMomsCSV])
   const currentWeight = useCargo(cargoString?.uuid)?.weightEA ?? weights[0]
   const maxWeight = weights[weights.length - 1]
   const debounceToggle = React.useRef(debounce(() => setIsEditing(s => !s), 100)).current
+  useMobileSelectEffect(isEditing)
 
   const onChange = (newWeight: string) => {
-    // get new cargo string from tank with new index
-    // to update fs && weightEA
-    // override uuid
     const newIdx = weights.findIndex((w) => w === newWeight)
+    const newMom = Number(moms[newIdx])
+    const newWeightEA = Number(weights[newIdx])
+
     const newCargoString = {
-      ...getCargoStringFromTank({
-        idx: newIdx,
-        tank,
+      ...getCargoStringFromTank2({
+        tankName: tank.name,
+        weightEA: newWeightEA,
+        simpleMom: newMom,
         momMultiplyer: getUserAir().momMultiplyer,
       }),
       uuid: cargoString.uuid,
@@ -50,7 +53,6 @@ export const TankRow = ({
 
     cs.putCargos([newCargoString])
   }
-
 
   const options = useMemo(
     () => weights.map(w => ({
@@ -63,7 +65,7 @@ export const TankRow = ({
   )
 
   return (
-    <CardShadow style={{boxShadow: '0px 0px 3.6095px rgba(0, 0, 0, 0.15)'}}>
+    <CardShadow style={{boxShadow: '0px 0px 3.6095px rgba(0, 0, 0, 0.15)', marginBottom: 15}}>
 
     <div style={{padding: 10, cursor: 'pointer', ...style, zIndex: 1}} onClick={debounceToggle}>
       <div
@@ -114,8 +116,8 @@ export const TankRow = ({
           zIndex: 2,
         }}
         >
-        <Select
-          onClick={e => e.stopPropagation()}
+        <CustomSelect
+          onClick={(e:any) => e.stopPropagation()}
           data-testid={`${tank.name} select`}
           onSelect={onChange}
           defaultValue={currentWeight}

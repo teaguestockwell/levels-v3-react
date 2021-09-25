@@ -17,7 +17,7 @@ export const Mac = () => {
       <Clock style={{marginTop: 8}}/>
       <AirSyncSelect type='user' style={{marginTop: 15}}/>
       <TankList/>
-      <CardShadow style={{borderRadius: 0, paddingTop: 10, paddingBottom: 10}}>
+      <CardShadow style={{borderRadius: 0,marginTop: 0}}>
       <ChartC key={v4()} />
       </CardShadow>
     

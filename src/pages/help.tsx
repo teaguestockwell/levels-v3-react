@@ -19,7 +19,6 @@ export const Help = () => {
           color: '#fff',
           boxShadow: '0px 0px 6px 2px rgba(170, 170, 170, 0.36)',
           borderRadius: 45,
-          width: 'fit-content',
           paddingLeft: 10,
           paddingRight: 10,
           height: 60,
@@ -27,6 +26,8 @@ export const Help = () => {
           cursor: 'pointer',
           textAlign: 'center',
           lineHeight: '60px',
+          width: 250,
+          fontSize: 20
         }}
         data-testid="contact button"
       >

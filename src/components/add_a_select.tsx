@@ -1,4 +1,4 @@
-import {Select} from 'antd'
+import { CustomSelect } from './custom_select'
 import  * as Types from '../types'
 import {getUserAir, getUserSchema, getUserActions} from '../hooks/user_store'
 import {getCargoString, getCargoStringFromCargo} from '../utils/util'
@@ -30,7 +30,7 @@ export const AddASelect = () => {
   ]
 
   return (
-    <Select
+    <CustomSelect
       data-testid={`user add adda`}
       onChange={onChange}
       value={'Add Custom Equipment'}

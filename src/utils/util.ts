@@ -264,6 +264,29 @@ export const getFSofSimpleMoment = (props: {
   return (props.simpleMom * props.momMultiplier) / (props.weightEA * props.qty)
 }
 
+export const getCargoStringFromTank2 = (props: {
+  momMultiplyer: number
+  simpleMom: number,
+  weightEA: number,
+  tankName: string
+}): Types.CargoString => {
+  const fs = getFSofSimpleMoment({
+    simpleMom: props.simpleMom,
+    weightEA: props.weightEA,
+    momMultiplier: props.momMultiplyer,
+    qty: 1,
+  })
+  return {
+    uuid: v4(),
+    name: props.tankName,
+    weightEA: props.weightEA.toString(),
+    fs: fs.toString(),
+    qty: '1',
+    category: Types.CargoCategory.Tank,
+    isValid: true,
+  }
+}
+
 export const getCargoStringFromTank = (props: {
   momMultiplyer: number
   idx: number

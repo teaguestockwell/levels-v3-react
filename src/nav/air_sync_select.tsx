@@ -1,7 +1,5 @@
 /* eslint-disable react/display-name */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { MaxContent } from '../components/max_content'
-import {Aircraft} from '../components/icons'
 import React from 'react'
 import {AdminAirSelect} from '../components/admin_air_select'
 import {ClientServerSync} from '../components/client_server_sync'

@@ -9,6 +9,7 @@ const baseURL = (() => {
   const url = window.location.href ?? ''
   if(url.includes('apps.dso.mil')){return process.env.REACT_APP_API_BASE_URL_PROD}
   if(url.includes('staging')){return process.env.REACT_APP_API_BASE_URL_STAGING}
+  if(url.includes('192.168')){return process.env.REACT_APP_API_BASE_URL_LAN}
   return process.env.REACT_APP_API_BASE_URL_LOCAL
 })()
 

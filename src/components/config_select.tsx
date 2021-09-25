@@ -7,7 +7,7 @@ import {
 import * as Types from '../types'
 import {getCargoStringsFromConfig} from '../utils/util'
 import {Const} from '../utils/const'
-import {Select} from 'antd'
+import { CustomSelect } from './custom_select'
 
 export const ConfigSelect = () => {
   const cs = getUserActions()
@@ -44,7 +44,7 @@ export const ConfigSelect = () => {
   }
 
   return (
-    <Select
+    <CustomSelect
       data-testid={`user config select`}
       onChange={onChange}
       defaultValue={userStore.getState().config.name}

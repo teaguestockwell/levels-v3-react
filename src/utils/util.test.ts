@@ -190,6 +190,39 @@ describe('getCargoStringFromTank()', () =>
     })
   }))
 
+  describe('getCargoStringFromTank2()', () =>
+  it('will return new CargoString from tank props', () => {
+    const air = mockAircraftsDeep[0]
+    const momMultiplyer = air.momMultiplyer
+    const tank = air.tanks[0]
+    const weights =  tank.weightsCSV.split(',')
+    const moms = tank.simpleMomsCSV.split(',')
+    const idx = 0 // selected 250lbs
+    const newMom = Number(moms[idx])
+    const newWeightEA = Number(weights[idx])
+
+    const test = {
+      ...util.getCargoStringFromTank2({
+        tankName: tank.name,
+        weightEA: newWeightEA,
+        simpleMom: newMom,
+        momMultiplyer,
+      }),
+      uuid: '0',
+    }
+
+    expect({...test, uuid: '0'}).toStrictEqual({
+      name: 'Tank 1',
+      weightEA: '250',
+      fs: '1120',
+      qty: '1',
+      uuid: '0',
+      category: Types.CargoCategory.Tank,
+      isValid: true,
+    })
+
+  }))
+
 describe('getPerMac', () => {
   it('will calculate and format cargoStrings into a new PerMac', () => {
     const c17aER = mockAircraftsDeep[0]

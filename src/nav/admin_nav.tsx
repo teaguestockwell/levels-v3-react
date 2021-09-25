@@ -4,7 +4,6 @@ import {MenuInfo} from 'rc-menu/lib/interface'
 import {DownOutlined} from '@ant-design/icons'
 import {adminStore, getAdminStoreActions} from '../hooks/admin_store'
 import {getQueryObjFromEP} from '../utils/util'
-import {Const} from '../utils/const'
 
 const as = getAdminStoreActions()
 
@@ -31,14 +30,13 @@ export const AdminNav = () => {
   return air ? (
     <div
       style={{
-        marginTop: 15
       }}
     >
       <Menu
         mode="horizontal"
         onClick={onClick}
         selectedKeys={[ep]}
-        style={{boxShadow: Const.BOX_SHADOW}}
+        style={{}}
       >
         <Menu.Item key={`aircraft`}>{'My Aircraft'}</Menu.Item>
         <Menu.Item
