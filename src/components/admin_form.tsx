@@ -6,6 +6,7 @@ import * as util from '../utils/util'
 import {adminActions} from '../utils/admin_actions'
 import {adminStore, getAdminStoreActions} from '../hooks/admin_store'
 import {AdminCargoSelect} from './admin_cargo_select'
+import { Const } from '../utils/const'
 
 const as = getAdminStoreActions()
 
@@ -104,7 +105,7 @@ export const AdminForm = () => {
               size="large"
               placeholder={`Please input ${modelName} ${k}`}
               onChange={debounce(onChange, 500)}
-              type={k === 'name' ? 'text' : 'number'}
+              type={Const.fieldTypes[k] ? Const.fieldTypes[k] : 'text'}
             />
           </Form.Item>
         ))}

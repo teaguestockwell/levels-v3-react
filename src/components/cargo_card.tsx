@@ -58,12 +58,12 @@ export const CargoCard = () => {
         selectedKeys={[cat]}
         style={{width: '100%'}}
       >
-        <Menu.Item role="button" tabIndex={0} key={'Steward'}>Steward</Menu.Item>
-        <Menu.Item role="button" tabIndex={0} key={'Emergency'}>Emergency</Menu.Item>
-        <Menu.Item role="button" tabIndex={0} key={'Extra'}>Extra</Menu.Item>
-        <Menu.Item role="button" tabIndex={0} key={'Custom'}>Custom</Menu.Item>
+        <Menu.Item onKeyPress={() => setCat('Steward')} role="button" tabIndex={0} key={'Steward'}>Steward</Menu.Item>
+        <Menu.Item onKeyPress={() => setCat('Emergency')} role="button" tabIndex={0} key={'Emergency'}>Emergency</Menu.Item>
+        <Menu.Item onKeyPress={() => setCat('Extra')}role="button" tabIndex={0} key={'Extra'}>Extra</Menu.Item>
+        <Menu.Item onKeyPress={() => setCat('Custom')} role="button" tabIndex={0} key={'Custom'}>Custom</Menu.Item>
        
-      </Menu>
+      </Menu> 
         </div>
         <div style={{paddingLeft: 10, paddingBottom: 20, paddingTop:20}}>
           {

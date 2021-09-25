@@ -8,6 +8,7 @@ import {
 } from '../hooks/user_store'
 import {capitalizeFirst, rulesYupWrapper} from '../utils/util'
 import debounce from 'lodash/debounce'
+import { Const } from '../utils/const'
 
 const cs = getUserActions()
 
@@ -66,7 +67,7 @@ export const CargoForm = ({uuid}: {uuid: string}) => {
               size="large"
               placeholder={e[1]}
               onChange={debounce(onChange, 500)}
-              type={e[0] === 'name' ? 'text' : 'number'}
+              type={Const.fieldTypes[e[0]] ? Const.fieldTypes[e[0]] : 'text'}
             />
           </Form.Item>
         ))}

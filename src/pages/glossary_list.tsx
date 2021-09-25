@@ -7,7 +7,7 @@ export const GlossaryList = () => {
   const air = useUserAir() as Types.AircraftDeep
 
   const getItem = (g: Types.Glossary) => {
-    return <Collapse.Panel key={g.glossaryId} header={g.name} style={{fontSize: 20, fontWeight: 600, overflowWrap: 'break-word', paddingTop: 0, paddingBottom: 0}}>
+    return <Collapse.Panel key={g.glossaryId} header={g.name} style={{fontSize: 18, fontWeight: 600, overflowWrap: 'break-word', paddingTop: 0, paddingBottom: 0}}>
       <div style={{fontWeight: 400, padding: 20, textAlign:'left',fontSize: 16,overflowWrap: 'break-word'}}>{g.body}</div>
     </Collapse.Panel>
   }

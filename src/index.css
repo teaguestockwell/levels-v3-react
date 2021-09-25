@@ -2,6 +2,9 @@ canvas {
   cursor:  pointer !important;
 }
 
+body {
+  overflow-y: scroll;
+}
 
 div.ant-layout-sider-trigger {
   position: fixed;

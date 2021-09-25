@@ -14,8 +14,15 @@ export const useSelectOpenStore = create(
   )
 )
 
-export const dbToggle = debounce((key:string) => {
-  useSelectOpenStore.setState(s => ({isOpen: {...s.isOpen, [key]: !s.isOpen[key]}}))
+export const dbToggle = debounce((key:string, open?: boolean) => {
+
+  if(open !== undefined) {
+    useSelectOpenStore.setState({isOpen: {[key]: open}})
+    return
+  }
+
+  // close all other selects
+  useSelectOpenStore.setState(s => ({isOpen: {[key]: !s.isOpen[key]}}))
 },50)
 
 export const CustomSelect = (props: any) => {
@@ -56,6 +63,8 @@ export const CustomSelect = (props: any) => {
     dbToggle(key)
   }}
   open={open}
+  onFocus={() => dbToggle(key)}
+  onBlur={() => dbToggle(key,false)}
   {...props}  />
   </div>
 }
