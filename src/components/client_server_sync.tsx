@@ -49,7 +49,9 @@ export const ClientServerSync = () => {
     onClick={() => setIsOpen(!isOpen)}
       style={{
         zIndex: 10,
-        background: '#F1F1F1',
+        backgroundColor: 'rgba(255,255,255,0.5)',
+        backdropFilter: 'blur(3px)',
+        WebkitBackdropFilter: 'blur(3px)',
         position: 'fixed',
         top: 0,
         left: 0,
@@ -74,7 +76,7 @@ export const ClientServerSync = () => {
             visible={true}
             footer={null}
             onCancel={() => setIsOpen(false)}
-            closable={false}
+            closable={true}
             centered
           >
             <div key={v4()}>

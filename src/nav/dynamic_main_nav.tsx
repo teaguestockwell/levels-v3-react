@@ -18,8 +18,8 @@ export const getNavItemStyle = (x: string, y: string) =>
 export const pageNames = ['Home', 'Glossary', 'Help', 'Admin']
 
 const svgPropsSelected = {
-  width: 33,
-  height: 33,
+  width: 24,
+  height: 24,
   viewBox: '0 0 33 33',
   webkitfilter: 'drop-shadow( 0px 2px 4px rgba(255, 255, 255, .25))',
   filter: 'drop-shadow( 0px 2px 4px rgba(255, 255, 255, .25))',

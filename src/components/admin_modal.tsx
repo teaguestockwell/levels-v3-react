@@ -22,7 +22,7 @@ export const AdminModal = () => {
         footer={null}
         onCancel={() => adminActions().closeEditModal()}
         centered
-        closable={false}
+        closable={true}
       >
         <AdminForm />
       </Modal>
