@@ -7,7 +7,7 @@ import {useMemo, useState} from 'react'
 import { CardShadow } from './card_shadow'
 import { debounce } from 'lodash'
 import React from 'react'
-import { CustomSelect, useMobileSelectEffect } from './custom_select'
+import { CustomSelect } from './custom_select'
 
 const cs = getUserActions()
 
@@ -18,6 +18,8 @@ const MemoGauge = React.memo(({selected,max}: {selected:string, max:string}) => 
   indicator={false}
   />
 })
+
+accessibility
 
 export const TankRow = ({
   tank,
@@ -34,7 +36,7 @@ export const TankRow = ({
   const currentWeight = useCargo(cargoString?.uuid)?.weightEA ?? weights[0]
   const maxWeight = weights[weights.length - 1]
   const debounceToggle = React.useRef(debounce(() => setIsEditing(s => !s), 100)).current
-  useMobileSelectEffect(isEditing)
+  // useMobileSelectEffect(isEditing)
 
   const onChange = (newWeight: string) => {
     const newIdx = weights.findIndex((w) => w === newWeight)

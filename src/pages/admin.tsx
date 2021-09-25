@@ -10,11 +10,11 @@ export const Admin = () => {
   useAir()
 
   return (
-    <>
+    <div style={{paddingBottom: 50}}>
       <AdminNav key={v4()} />
       <AirSyncSelect type='admin' />
       <JsonTable key={v4()} />
       <AdminModal key={v4()} />
-    </>
+    </div>
   )
 }

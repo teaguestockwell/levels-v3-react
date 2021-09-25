@@ -7,6 +7,7 @@ import {
 } from '../utils/util'
 import {userStore, getUserActions, getUserAir} from '../hooks/user_store'
 import {debounce} from 'lodash'
+import React from 'react'
 
 const cs = getUserActions()
 
@@ -14,6 +15,29 @@ export const ChartC = () => {
   const [form] = Form.useForm()
   const schema = useRef(getChartCSchema(getUserAir())).current
   const air = useRef(getUserAir()).current
+  const isFocused0 = useRef(false)
+  const isFocused1 = useRef(false)
+  
+  const showNav = () => {
+    (document.getElementsByClassName('mobile-nav')[0]as any).style.visibility = 'visible';
+  }
+
+  // cleanup
+  React.useEffect(() => {showNav()},[])
+
+  const hideNav = () => {
+    (document.getElementsByClassName('mobile-nav')[0]as any).style.visibility = 'hidden';
+  }
+
+  const handleNavVis = () => {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+      if(isFocused0.current || isFocused1.current) {
+        hideNav()
+      } else{
+        showNav()
+      }
+    }
+  }
 
   useEffect(() => {
     form.setFieldsValue(userStore.getState().chartC)
@@ -51,8 +75,10 @@ export const ChartC = () => {
   return ( <Form key={air.aircraftId + '_chart_c_form'} form={form} style={{
     margin: '0px 14px', marginTop: 0,
     paddingTop: 10,
-    paddingBottom: 10
-  }}>
+    paddingBottom: 10,
+  }}
+  autoComplete="off"
+  >
             <Form.Item
               name={`weight`}
               label={getLabel('Basic Weight')}
@@ -69,6 +95,9 @@ export const ChartC = () => {
                 onChange={debounce(onChange, 500)}
                 bordered={false}
                 style={{paddingLeft: 10}}
+                onFocus={() => {isFocused0.current = true; handleNavVis()}}
+                onBlur={() => {isFocused0.current = false; handleNavVis()}}
+                type="number"
               />
             </Form.Item>
 
@@ -81,9 +110,11 @@ export const ChartC = () => {
               rules={rulesYupWrapper(schema.mom)}
               hasFeedback
               labelCol={{span: 24}}
-
-            >
+              >
               <Input
+onFocus={() => {isFocused1.current = true; handleNavVis()}}
+onBlur={() => {isFocused1.current = false; handleNavVis()}}
+
                 size="large"
                 onChange={debounce(onChange, 500)}
                 bordered={false}
@@ -91,6 +122,7 @@ export const ChartC = () => {
                   air.mom1 / 1000
                 )}k`}
                 style={{paddingLeft: 10}}
+                type="number"
               />
             </Form.Item>
       </Form>

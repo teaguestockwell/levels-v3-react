@@ -51,7 +51,7 @@ export const CargoForm = ({uuid}: {uuid: string}) => {
 
   return (
     <>
-      <Form key={cargo.uuid + '_form'} form={form}>
+      <Form key={cargo.uuid + '_form'} form={form} autoComplete="off">
         {Object.entries(editableEntriesOfCargoString).map((e) => (
           <Form.Item
             key={cargo.uuid + e[0] + 'form_item'}
@@ -66,6 +66,7 @@ export const CargoForm = ({uuid}: {uuid: string}) => {
               size="large"
               placeholder={e[1]}
               onChange={debounce(onChange, 500)}
+              type={e[0] === 'name' ? 'text' : 'number'}
             />
           </Form.Item>
         ))}

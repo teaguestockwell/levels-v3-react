@@ -89,7 +89,7 @@ export const AdminForm = () => {
   return (
     <>
       {cargoSelect}
-      <Form key={formKey + '_form'} form={form}>
+      <Form key={formKey + '_form'} form={form} autoComplete="off">
         {util.getEditableKeysOfModel(modelName).map((k) => (
           <Form.Item
             key={formKey + k + 'form_item'}
@@ -104,6 +104,7 @@ export const AdminForm = () => {
               size="large"
               placeholder={`Please input ${modelName} ${k}`}
               onChange={debounce(onChange, 500)}
+              type={k === 'name' ? 'text' : 'number'}
             />
           </Form.Item>
         ))}

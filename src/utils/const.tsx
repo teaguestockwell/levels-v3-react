@@ -32,7 +32,7 @@ export const Const = {
   },
   HEIGHT: {
     APP_BAR: '130px',
-    APP_BAR_NUM: 50,
+    APP_BAR_NUM: 32,
     BOTTOM_NAV_BAR: '60px',
   },
   COLORS: {
