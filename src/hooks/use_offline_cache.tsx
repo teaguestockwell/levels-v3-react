@@ -123,10 +123,7 @@ export const handleFetchAircraftDeep = async (): Promise<void> => {
   const newAircraftsDeep = await getNewAircraftDeep()
 
   // while rqCache is outdated, try to fetch it
-  if (!newAircraftsDeep) {
-    useClientSyncStore.setState({isDebouncing: false})
-    return
-  }
+  if (!newAircraftsDeep) {useClientSyncStore.setState({isDebouncing: false}); return}
 
   useClientSyncStore.setState({
     pendingRqClientCache: newAircraftsDeep,
@@ -141,8 +138,8 @@ export const handleFetchAircraftDeep = async (): Promise<void> => {
 // send another req to aircraft/deep until the global state is out of sync with the server
 let isCached = false
 
-const useInitCache = async (): Promise<void> => {
-  while(!process.env.IS_TEST && !isCached && location.protocol === 'https:') {
+export const useInitCache = async (): Promise<void> => {
+  while(!isCached && location.protocol === 'https:') {
     
     // is there cache available?
     const cache = await caches.open('aircraft-deep')

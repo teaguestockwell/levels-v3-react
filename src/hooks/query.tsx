@@ -5,23 +5,23 @@ import {v4} from 'uuid'
 import {removeNestedObj} from '../utils/util'
 
 
-const baseURL = (() => {
-  const url = window.location.href ?? ''
-  if(url.includes('apps.dso.mil')){return process.env.REACT_APP_API_BASE_URL_PROD}
-  if(url.includes('staging')){return process.env.REACT_APP_API_BASE_URL_STAGING}
-  if(url.includes('192.168')){return process.env.REACT_APP_API_BASE_URL_LAN}
+export const getBaseURL = (mockHref?: string | null | undefined) => {
+  const url = mockHref ?? window.location.href  ?? ''
+
+  if(url.includes('apps.dso.mil')) return process.env.REACT_APP_API_BASE_URL_PROD
+
+  if(url.includes('staging')) return process.env.REACT_APP_API_BASE_URL_STAGING
+
+  if(url.includes('192.168')) return process.env.REACT_APP_API_BASE_URL_LAN
+  
   return process.env.REACT_APP_API_BASE_URL_LOCAL
-})()
+}
 
-const unRegisterSW = async () => {
+const baseURL = getBaseURL()
+
+export const unRegisterSW = async () => {
   try{
-    const registrations = await navigator.serviceWorker.getRegistrations()
-
-    for(const registration of registrations) {
-      await registration.unregister()
-    }
-     
-    return
+    const registrations = await navigator.serviceWorker.getRegistrations(); for(const registration of registrations) {await registration.unregister()} return
   }catch (e){
     throw new Error('Service worker un registration failed')
   }
@@ -39,13 +39,7 @@ const promptUserToReload = () => {
         // they have an option to refresh there token if they reset the page
         // but in the event that they go offline before clicking this button,
         // tell them there is a bad connection
-        if(navigator.onLine){
-          await unRegisterSW()
-          location.reload()
-        } else{
-          message.destroy('refresh-cookie')
-          message.error(`Can't re-login, you're offline.`)
-        }
+        if(navigator.onLine){ await unRegisterSW(); location.reload()} else{ message.destroy('refresh-cookie'); message.error(`Can't re-login, you're offline.`)}
       }} 
         style={{color: 'blue', cursor: 'pointer'}}>
         {'Re-login'}
@@ -68,10 +62,7 @@ export const getN = async (url: string) => {
   })
     .then(res => res.data ?? {})
     .catch(() => {
-      if(navigator.onLine){
-        promptUserToReload()
-      }
-      return {}
+      if(navigator.onLine){ promptUserToReload()} return {}
     })
 }
 
@@ -120,10 +111,7 @@ export const usePolling = (
     ep,
     async () => {
       const res = await getN(ep)
-      if (res && clientReqKey) {
-        res.clientReqKey = v4()
-      }
-      return res
+      if (res && clientReqKey) res.clientReqKey = v4(); return res
     },
     {
       refetchInterval,

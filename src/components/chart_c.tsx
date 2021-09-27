@@ -1,5 +1,5 @@
 import {Form, Input} from 'antd'
-import {useEffect, useRef} from 'react'
+import React from 'react'
 import {
   getCargoStringFromChartC,
   getChartCSchema,
@@ -7,16 +7,15 @@ import {
 } from '../utils/util'
 import {userStore, getUserActions, getUserAir} from '../hooks/user_store'
 import {debounce} from 'lodash'
-import React from 'react'
 
 const cs = getUserActions()
 
 export const ChartC = () => {
   const [form] = Form.useForm()
-  const schema = useRef(getChartCSchema(getUserAir())).current
-  const air = useRef(getUserAir()).current
-  const isFocused0 = useRef(false)
-  const isFocused1 = useRef(false)
+  const schema = React.useRef(getChartCSchema(getUserAir())).current
+  const air = React.useRef(getUserAir()).current
+  const isFocused0 = React.useRef(false)
+  const isFocused1 =  React.useRef(false)
   
   const showNav = () => {
     if(!process.env.IS_TEST ) (document.getElementsByClassName('mobile-nav')[0]as any).style.visibility = 'visible';
@@ -39,7 +38,7 @@ export const ChartC = () => {
     }
   }
 
-  useEffect(() => {
+  React.useEffect(() => {
     form.setFieldsValue(userStore.getState().chartC)
     const time = setTimeout(() => form.validateFields(), 1)
     return () => clearTimeout(time)

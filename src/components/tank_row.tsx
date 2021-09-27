@@ -3,9 +3,8 @@ import * as Types from '../types'
 import {getUserActions, useCargo, getUserAir} from '../hooks/user_store'
 import {getCargoStringFromTank2} from '../utils/util'
 import {Gauge} from '@ant-design/charts'
-import {useMemo } from 'react'
-import { CardShadow } from './card_shadow'
 import React from 'react'
+import { CardShadow } from './card_shadow'
 import { CustomSelect, dbToggle } from './custom_select'
 
 const cs = getUserActions()
@@ -64,12 +63,12 @@ export const TankRow = ({
   cargoString: Types.CargoString
   style?: any
 }) => {
-  const weights = useMemo(() => tank.weightsCSV.split(','), [tank.weightsCSV])
-  const moms = useMemo(() => tank.simpleMomsCSV.split(','), [tank.simpleMomsCSV])
+  const weights = React.useMemo(() => tank.weightsCSV.split(','), [tank.weightsCSV])
+  const moms = React.useMemo(() => tank.simpleMomsCSV.split(','), [tank.simpleMomsCSV])
   const currentWeight = useCargo(cargoString?.uuid)?.weightEA ?? weights[0]
   const maxWeight = weights[weights.length - 1]
 
-  const options = useMemo(
+  const options = React.useMemo(
     () => weights.map(w => ({
       label: w,
       value: w,

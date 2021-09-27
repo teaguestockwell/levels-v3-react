@@ -1,20 +1,28 @@
-import {QueryClient, QueryClientProvider} from 'react-query'
-import {render, screen} from '@testing-library/react'
+
+import {render, screen, waitFor} from '@testing-library/react'
+import { QueryClient, QueryClientProvider } from 'react-query'
 import {InitLoaded} from './init_loaded'
 
+const queryClient = new QueryClient()
 
-describe('InitLoaded', () => {
+  it('will render the app', async () => {
+    const store = {
+      lastSync: '123'
+    } as any
 
-  it('will render', async () => {
-    const queryClient = new QueryClient()
-    render(
-      <QueryClientProvider client={queryClient}>
-        <InitLoaded />
-      </QueryClientProvider>
-    )
-
-    expect(screen.queryAllByText('Loading Test').length).toBe(0)
-    expect(screen.queryAllByTestId('mobile-nav').length).toBe(0)
-  
+  global.Storage.prototype.setItem = jest.fn((key, value) => {
+    store[key] = value
   })
+
+  global.Storage.prototype.getItem = jest.fn((key) => store[key])
+
+  render(
+    <QueryClientProvider client={queryClient}>
+      <InitLoaded  />
+    </QueryClientProvider>
+  )
+
+    await waitFor(() => expect(screen.queryAllByText('Local').length).toBe(0))
 })
+
+

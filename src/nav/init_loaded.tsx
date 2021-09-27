@@ -27,8 +27,7 @@ export const InitLoaded = () => {
     // init state of server client sync
     localStorage.setItem('lastSync', `${data.serverEpoch}`)
 
-
-    return <MobileNav data-testid="mobile-nav" key={v4()} />
+    return <MobileNav key={v4()} />
   }
 
   if (data && data?.aircrafts?.length <= 0) {

@@ -20,7 +20,3 @@ export const GlossaryList = () => {
   </div>
 }
 
-// return <div key={g.glossaryId} style={{marginTop: 28}}>
-// <div style={{fontWeight: 'bold',fontSize: 20, overflowWrap: 'break-word'}}>{g.name}</div>
-// <div style={{textAlign:'left',fontSize: 14,overflowWrap: 'break-word'}}>{g.body}</div>
-// </div>
