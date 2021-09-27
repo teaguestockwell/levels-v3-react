@@ -18,6 +18,42 @@ const MemoGauge = React.memo(({selected,max}: {selected:string, max:string}) => 
   />
 })
 
+export const onChange = ({
+  weights,
+  newWeight,
+  tank,
+  cargoString,
+  moms
+}
+:
+{
+  weights:string[],
+  newWeight:string,
+  tank: Types.Tank,
+  cargoString:Types.CargoString
+  moms: string[]
+}
+) => {
+  // 1
+  const newIdx = weights.findIndex((w) => w === newWeight)
+  console.log('newIdx', newIdx)
+  // 56
+  const newMom = Number(moms[newIdx])
+  // 500
+  const newWeightEA = Number(weights[newIdx])
+
+  const newCargoString = {
+    ...getCargoStringFromTank2({
+      tankName: tank.name,
+      weightEA: newWeightEA,
+      simpleMom: newMom,
+      momMultiplyer: getUserAir().momMultiplyer,
+    }),
+    uuid: cargoString.uuid,
+  }
+
+  cs.putCargos([newCargoString])
+}
 
 export const TankRow = ({
   tank,
@@ -32,24 +68,6 @@ export const TankRow = ({
   const moms = useMemo(() => tank.simpleMomsCSV.split(','), [tank.simpleMomsCSV])
   const currentWeight = useCargo(cargoString?.uuid)?.weightEA ?? weights[0]
   const maxWeight = weights[weights.length - 1]
-
-  const onChange = (newWeight: string) => {
-    const newIdx = weights.findIndex((w) => w === newWeight)
-    const newMom = Number(moms[newIdx])
-    const newWeightEA = Number(weights[newIdx])
-
-    const newCargoString = {
-      ...getCargoStringFromTank2({
-        tankName: tank.name,
-        weightEA: newWeightEA,
-        simpleMom: newMom,
-        momMultiplyer: getUserAir().momMultiplyer,
-      }),
-      uuid: cargoString.uuid,
-    }
-
-    cs.putCargos([newCargoString])
-  }
 
   const options = useMemo(
     () => weights.map(w => ({
@@ -116,7 +134,13 @@ export const TankRow = ({
         <CustomSelect
           stateKey={'tank' + tank.tankId}
           data-testid={`${tank.name} select`}
-          onSelect={onChange}
+          onChange={(newWeight:string) => onChange({
+            newWeight,
+            moms,
+            weights,
+            cargoString,
+            tank,
+          })}
           defaultValue={currentWeight}
           style={{textAlign: 'center', fontSize: 12, padding: 0, width: '100%'}}
           dropdownStyle={{textAlign: 'center'}}

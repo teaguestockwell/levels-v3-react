@@ -5,7 +5,7 @@
 import '@testing-library/jest-dom'
 import './testUtils/server'
 import MatchMediaMock from 'jest-matchmedia-mock'
-jest.setTimeout(10000)
+jest.setTimeout(100000)
 
 
 let matchMedia

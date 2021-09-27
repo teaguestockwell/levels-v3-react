@@ -6,11 +6,23 @@ import {ClientServerSync} from '../components/client_server_sync'
 import {UserAirSelect} from '../components/user_air_select'
 import {AdminServerSync} from '../components/admin_server_sync'
 
+const sync = {
+  admin: <AdminServerSync />,
+  user: <ClientServerSync />,
+  test: <div></div>
+}
+
+const select = {
+  admin: <AdminAirSelect />,
+  user: <UserAirSelect />,
+  test: <div></div>
+}
+
 export const AirSyncSelect = React.memo(({
   type,
   style = {}
 }: {
-  type: 'user' | 'admin'
+  type: 'user' | 'admin' | 'test'
   style?: React.CSSProperties
 }) => {
   // admin app bars contain AdminAirSelects that sync client and server state automatically
@@ -18,9 +30,10 @@ export const AirSyncSelect = React.memo(({
   // the cache is updated by the ClientServerSync. if initState !== currentState the users may opt in to refresh
   return <>
     {
-      type === 'admin' ? <AdminServerSync /> : <ClientServerSync />
+      sync[type]
     }
       <div
+        data-testid='air-sync-select'
         style={{
           display: 'flex',
           justifyContent: 'start',
@@ -30,9 +43,8 @@ export const AirSyncSelect = React.memo(({
           ...style
         }}
         >
-      {/* <Aircraft h={24} w={24} color={'#C4C4C4'} style={{marginLeft: 10}}/> */}
       {
-        type === 'admin' ? <AdminAirSelect /> : <UserAirSelect />
+        select[type]
       }
 
     </div>

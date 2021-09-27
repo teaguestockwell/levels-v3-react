@@ -5,22 +5,23 @@ import {getCargoString, getCargoStringFromCargo} from '../utils/util'
 
 const cs = getUserActions()
 
+export const onChange = (value: string, air:any, schema: any) => {
+  if (value === 'Custom') {
+    const newEmptyCargo = getCargoString()
+    cs.putCargos([newEmptyCargo])
+    return
+  }
+
+  const oldCargo = air.cargos.find((x:any) => x.name === value) as Types.Cargo
+  const newCargo = getCargoStringFromCargo(oldCargo, 1)
+  const isValid = schema.isValidSync(newCargo)
+  cs.putCargos([{...newCargo, isValid}])
+}
+
 export const AddASelect = () => {
   const air = getUserAir()
   const schema = getUserSchema().fullObjSchema
 
-  const onChange = (value: string) => {
-    if (value === 'Custom') {
-      const newEmptyCargo = getCargoString()
-      cs.putCargos([newEmptyCargo])
-      return
-    }
-
-    const oldCargo = air.cargos.find((x) => x.name === value) as Types.Cargo
-    const newCargo = getCargoStringFromCargo(oldCargo, 1)
-    const isValid = schema.isValidSync(newCargo)
-    cs.putCargos([{...newCargo, isValid}])
-  }
 
   // render in category order
   const cargos = [
@@ -33,7 +34,7 @@ export const AddASelect = () => {
     <CustomSelect
       stateKey="addaselect"
       data-testid={`user add adda`}
-      onChange={onChange}
+      onChange={(value:any) => onChange(value, air, schema)}
       value={'Add Custom Equipment'}
       style={{width: '100%',  display: 'flex', paddingTop: 10}}
       dropdownStyle={{}}

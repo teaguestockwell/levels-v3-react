@@ -270,6 +270,7 @@ export const getCargoStringFromTank2 = (props: {
   weightEA: number,
   tankName: string
 }): Types.CargoString => {
+
   const fs = getFSofSimpleMoment({
     simpleMom: props.simpleMom,
     weightEA: props.weightEA,

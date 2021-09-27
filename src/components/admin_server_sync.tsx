@@ -20,6 +20,7 @@ export const AdminServerSync = () => {
 
   const displayButton = useMemo(() => {
     return <div
+    data-testid='admin-sync-button'
     onClick={() => setIsOpen(!isOpen)}
       style={{
         zIndex: 10,

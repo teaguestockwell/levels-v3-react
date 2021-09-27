@@ -19,14 +19,14 @@ export const ChartC = () => {
   const isFocused1 = useRef(false)
   
   const showNav = () => {
-    (document.getElementsByClassName('mobile-nav')[0]as any).style.visibility = 'visible';
+    if(!process.env.IS_TEST ) (document.getElementsByClassName('mobile-nav')[0]as any).style.visibility = 'visible';
   }
 
   // cleanup
   React.useEffect(() => {showNav()},[])
 
   const hideNav = () => {
-    (document.getElementsByClassName('mobile-nav')[0]as any).style.visibility = 'hidden';
+    if(!process.env.IS_TEST ) (document.getElementsByClassName('mobile-nav')[0]as any).style.visibility = 'hidden';
   }
 
   const handleNavVis = () => {
@@ -72,11 +72,14 @@ export const ChartC = () => {
       {text}
     </label>
   )
-  return ( <Form key={air.aircraftId + '_chart_c_form'} form={form} style={{
+  return (<div   data-testid="chart-c">
+
+  <Form key={air.aircraftId + '_chart_c_form'} form={form} style={{
     margin: '0px 14px', marginTop: 0,
     paddingTop: 10,
     paddingBottom: 10,
   }}
+
   autoComplete="off"
   >
             <Form.Item
@@ -115,16 +118,17 @@ export const ChartC = () => {
 onFocus={() => {isFocused1.current = true; handleNavVis()}}
 onBlur={() => {isFocused1.current = false; handleNavVis()}}
 
-                size="large"
-                onChange={debounce(onChange, 500)}
-                bordered={false}
-                placeholder={`Basic Moment: ${Math.ceil(air.mom0 / 1000)}k-${Math.floor(
-                  air.mom1 / 1000
-                )}k`}
-                style={{paddingLeft: 10}}
-                type="number"
-              />
+size="large"
+onChange={debounce(onChange, 500)}
+bordered={false}
+placeholder={`Basic Moment: ${Math.ceil(air.mom0 / 1000)}k-${Math.floor(
+  air.mom1 / 1000
+  )}k`}
+  style={{paddingLeft: 10}}
+  type="number"
+  />
             </Form.Item>
       </Form>
+  </div> 
   )
 }

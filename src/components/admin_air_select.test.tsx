@@ -1,8 +1,9 @@
-import {fireEvent, waitFor} from '@testing-library/react'
-import {AdminAirSelect} from './admin_air_select'
+import {waitFor} from '@testing-library/react'
+import {AdminAirSelect, onAirChange} from './admin_air_select'
 import {renderWrapped} from '../testUtils/render_wrapped'
 import {adminStore, useAir} from '../hooks/admin_store'
 import {v4} from 'uuid'
+import { mockAircraftsDeep } from '../testUtils/mock_aircrafts_deep'
 
 const SelectedAirStateWrapper = () => {
   useAir()
@@ -32,9 +33,10 @@ describe('AdminAirSelect', () => {
     )
     await waitFor(() => expect(ct.queryAllByText('C-17A-ER').length).toBe(1))
 
-    fireEvent.mouseDown(ct.getByText('C-17A-ER'))
-    await waitFor(() => expect(ct.queryAllByText('C-17A')[0]).toBeTruthy())
-    fireEvent.click(ct.queryAllByText('C-17A')[1])
+    const data = mockAircraftsDeep
+    const newName = 'C-17A'
+
+    onAirChange(newName, data)
 
     await waitFor(() => expect(adminStore.getState().air?.name).toBe('C-17A'))
   })

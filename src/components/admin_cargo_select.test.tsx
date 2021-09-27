@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {fireEvent, waitFor} from '@testing-library/react'
-import {AdminCargoSelect} from './admin_cargo_select'
+import {waitFor} from '@testing-library/react'
+import {AdminCargoSelect, onChange} from './admin_cargo_select'
 import {renderWrapped} from '../testUtils/render_wrapped'
 import {adminStore, getAdminStoreActions} from '../hooks/admin_store'
 import {mockAircraftsDeep} from '../testUtils/mock_aircrafts_deep'
@@ -92,11 +92,16 @@ describe('AdminCargoSelect', () => {
     )
     expect(fn.mock.calls.length).toBe(0)
 
-    fireEvent.mouseDown(ct.getByText('Flare Hazard Placards (Note 1)'))
-    await waitFor(() =>
-      expect(ct.queryAllByText('Water Container (5 Gallon)').length).toBe(1)
-    )
-    fireEvent.click(ct.getByText('Water Container (5 Gallon)')) // cargo id 55
+    const newCargoId = 35
+    const store = adminStore.getState()
+    const cargos = store.air?.cargos ?? []
+
+    onChange({
+      newCargoId,
+      cargos,
+      store,
+      validate: fn
+    })
 
     expect(adminStore.getState()?.editObj?.cargoId).toBe(35)
     expect(fn.mock.calls.length).toBe(1)

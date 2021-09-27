@@ -13,7 +13,7 @@ export const Mac = () => {
   useUserAir()
 
   return (
-    <>
+    <div data-testId="mac-page">
       <Clock/>
       <AirSyncSelect type='user' style={{marginTop: 15}}/>
       <TankList/>
@@ -26,6 +26,6 @@ export const Mac = () => {
 
       <GetMacButton key={v4()}/>
       <CargoEditModal />
-    </>
+    </div>
   )
 }

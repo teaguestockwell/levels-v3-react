@@ -1,5 +1,5 @@
 import {userStore} from '../hooks/user_store'
-import {renderWrapped, waitFor, fireEvent} from '../testUtils/render_wrapped'
+import {renderWrapped, waitFor, fireEvent, screen} from '../testUtils/render_wrapped'
 import {ChartC} from './chart_c'
 import  * as Types from '../types'
 
@@ -23,12 +23,9 @@ describe('ChartC', () => {
   it('will render', async () => {
     putChartC()
 
-    const {getByText, queryAllByText} = renderWrapped(<ChartC />)
-    await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
-
-    await waitFor(() => {
-      expect(getByText('Basic Weight')).toBeInTheDocument()
-    })
+    renderWrapped(<ChartC />) 
+    await waitFor(() => expect(screen.queryAllByText('Loading Test').length).toBe(0))
+    expect(screen.getByTestId('chart-c')).toBeInTheDocument()
   })
 
   it('will update CargoStore', async () => {

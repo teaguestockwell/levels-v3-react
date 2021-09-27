@@ -1,6 +1,32 @@
 import {adminStore} from '../hooks/admin_store'
 import { CustomSelect } from './custom_select'
 
+export const onChange = (
+  {
+    store,
+    newCargoId,
+    cargos,
+    validate
+  }:
+  {
+    store: any,
+    newCargoId: number,
+    cargos: any[]
+    validate: () => void
+  }
+) => {
+  // get fresh state, because this component is memoized, and the
+  // form amy have been edited
+  store.setEditObj({
+    ...adminStore.getState().editObj,
+    cargoId: newCargoId,
+    name: cargos.find((c) => c.cargoId === newCargoId)?.name,
+  })
+
+  // callback to form to revalidate with fresh cargoId
+  validate()
+}
+
 /**
  a nested select for cargo inside of a configuration
  validate param is the function that fires the validation
@@ -19,18 +45,6 @@ export const AdminCargoSelect = ({validate}: {validate: () => void}) => {
     return <div>Please add cargo to insert into config</div>
   }
 
-  const onChange = (newCargoId: number) => {
-    // get fresh state, because this component is memoized, and the
-    // form amy have been edited
-    store.setEditObj({
-      ...adminStore.getState().editObj,
-      cargoId: newCargoId,
-      name: cargos.find((c) => c.cargoId === newCargoId)?.name,
-    })
-
-    // callback to form to revalidate with fresh cargoId
-    validate()
-  }
 
   const pStyle = {display: 'flex'}
 
@@ -53,7 +67,12 @@ export const AdminCargoSelect = ({validate}: {validate: () => void}) => {
           size={'large'}
           stateKey="adminCargoSelect"
           defaultValue={selectedId}
-          onChange={onChange}
+          onChange={(newCargoId:number) => onChange({
+            newCargoId,
+            store,
+            cargos,
+            validate
+          })}
           style={{width: '100%', textAlign: 'center'}}
           dropdownStyle={{textAlign: 'center'}}
           virtual={true}

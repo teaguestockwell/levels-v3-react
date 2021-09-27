@@ -6,14 +6,16 @@ import { Aircraft } from './icons'
 
 const cs = getUserActions()
 
+
+export const onAirChange = ({newName, data}: {newName:string, data:any}) => {
+  const newAir = data.aircrafts.find((a: Types.AircraftDeep) => a.name === newName)
+  cs.setAir(newAir)
+}
+
 export const UserAirSelect = () => {
   const {data} = useUserAirs()
   const airName = getUserAir().name
 
-  const onAirChange = (newName: string) => {
-    const newAir = data.aircrafts.find((a: Types.AircraftDeep) => a.name === newName)
-    cs.setAir(newAir)
-  }
 
   return (
     <div
@@ -32,7 +34,7 @@ export const UserAirSelect = () => {
       bordered={false}
       data-testid={`user air select`}
       defaultValue={airName}
-      onChange={onAirChange}
+      onChange={(newName:string) => onAirChange({newName, data})}
       style={{width: '100%', textAlign: 'left', display: 'flex', fontWeight: 600, fontSize: 18}}
       dropdownStyle={{textAlign: 'left'}}
       showSearch

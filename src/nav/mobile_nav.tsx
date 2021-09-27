@@ -26,6 +26,7 @@ export const MobileNav = () => {
         paddingTop: 40,
         paddingBottom: 40,
       }}
+      data-testid="mobile-nav"
     >
       {persistentPages[pageName]}
       <div

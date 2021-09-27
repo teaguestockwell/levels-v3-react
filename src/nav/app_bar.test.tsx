@@ -1,10 +1,12 @@
 import {AirSyncSelect} from './air_sync_select'
-import {render} from '@testing-library/react'
+import {renderWrapped,screen, waitFor} from '../testUtils/render_wrapped'
 
 
 describe('AppBar', () => {
-  it('should render', () => {
-    const ct = render(<AirSyncSelect select={<div>select</div>} sync={<div>select</div>}/>)
-    expect(ct.queryAllByText('Levels').length).toBe(1)
+  it('should render', async () => {
+    renderWrapped(<AirSyncSelect type="test" />)
+    await waitFor(() => expect(screen.queryAllByText('Loading Test').length).toBe(0))
+    expect(screen.getByTestId('air-sync-select')).toBeInTheDocument()
   })
 })
+ 

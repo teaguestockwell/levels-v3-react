@@ -9,6 +9,12 @@ import { CustomSelect } from './custom_select'
 
 const as = getAdminStoreActions()
 
+// use the key of the client state to find new data in server state,
+// then set client state
+export const onAirChange = (newName: string, data:any) => {
+  const serverAir = data.find((x: any) => x.name === newName)
+  as.setAir(serverAir)
+}
 /**
  used to sync the server state of /aircrafts with selected air
  implemented with short polling, zustand, and lodash equality
@@ -17,12 +23,6 @@ export const AdminAirSelect = () => {
   const {data} = usePolling('aircraft', 5000)
   const air = useAir()
 
-  // use the key of the client state to find new data in server state,
-  // then set client state
-  const onAirChange = (newName: string) => {
-    const serverAir = data.find((x: any) => x.name === newName)
-    as.setAir(serverAir)
-  }
 
   // do not render on every req, only when res is different
   return useMemo(() => {
@@ -88,7 +88,7 @@ export const AdminAirSelect = () => {
         data-testid="admin air select"
         key={v4()}
         defaultValue={air?.name as string}
-        onChange={onAirChange}
+        onChange={(newName:string) => onAirChange(newName, data)}
         showSearch
         style={{width: '100%', textAlign: 'left', display: 'flex', fontWeight: 600, fontSize: 18}}
         dropdownStyle={{textAlign: 'left'}}

@@ -63,6 +63,7 @@ export const CustomSelect = (props: any) => {
     dbToggle(key)
   }}
   open={open}
+  onSelect={props.onSelect}
   onFocus={() => dbToggle(key)}
   onBlur={() => dbToggle(key,false)}
   {...props}  />
