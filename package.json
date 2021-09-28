@@ -83,7 +83,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "istanbul-lib-coverage": "^3.0.0",
     "jest-matchmedia-mock": "^1.1.0",
-    "msw": "^0.28.2",
+    "msw": "^0.35.0",
     "npm-force-resolutions": "0.0.10",
     "nyc": "^15.1.0",
     "react-scripts": "4.0.3",
