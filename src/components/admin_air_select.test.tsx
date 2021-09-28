@@ -1,4 +1,4 @@
-import {waitFor} from '@testing-library/react'
+import {waitFor,screen} from '@testing-library/react'
 import {AdminAirSelect, onAirChange} from './admin_air_select'
 import {renderWrapped} from '../testUtils/render_wrapped'
 import {adminStore, useAir} from '../hooks/admin_store'
@@ -14,6 +14,7 @@ describe('AdminAirSelect', () => {
   it('will render', async () => {
     const {queryAllByText} = renderWrapped(<SelectedAirStateWrapper />)
     await waitFor(() => expect(queryAllByText('Loading Test').length).toBe(0))
+    screen.debug()
     await waitFor(() => expect(queryAllByText('C-17A-ER').length).toBe(1))
   }),
     it('will init select the first aircraft from api res', async () => {

@@ -23,29 +23,22 @@ export const AdminAirSelect = () => {
   const {data} = usePolling('aircraft', 5000)
   const air = useAir()
 
+  console.log({data,air, })
 
   // do not render on every req, only when res is different
   return useMemo(() => {
     // while !res from server
-    if (!data || isEqual(data, {})) {
-      return <Spin style={{paddingRight: 20, paddingLeft: 20, paddingTop: '6px'}} />
-    }
+    if (!data || isEqual(data, {})) return <Spin style={{paddingRight: 20, paddingLeft: 20, paddingTop: '6px'}} />
 
     // while !res contains error
-    if (data.msg) { return (
-        <div style={{color: 'white', fontSize: 24}}>Error refresh page!</div>
-    )}
-
+    if (data.msg) return <div style={{color: 'white', fontSize: 24}}>Error refresh page!</div>
+    
     // while no data within res
-    if (data.length === 0) { return (
-        <div style={{color: 'white', fontSize: 24}}>You have no aircraft!</div>
-    )}
-
+    if (data.length === 0) return <div style={{color: 'white', fontSize: 24}}>You have no aircraft!</div>
+    
     // while no client state for selection,
     // set client aircraft selection to first aircraft from res
-    if (!air) {
-      as.setAir(data[0])
-    }
+    if (!air) as.setAir(data[0])
 
     // try to find server aircraft for client selected aircraft
     const serverStateOfSelectedAir = data.find(
@@ -54,10 +47,7 @@ export const AdminAirSelect = () => {
 
     // while client air is not in server res,
     // set client air selection to first air from res
-    if (!serverStateOfSelectedAir) {
-      as.setAir(data[0])
-      return <Spin />
-    }
+    if (!serverStateOfSelectedAir) {as.setAir(data[0]); return <Spin />}
 
     // while client aircraft !== server server, client air = server air
     if (!isEqual(serverStateOfSelectedAir, air)) { as.setAir(serverStateOfSelectedAir); return <Spin />}
