@@ -12,7 +12,6 @@ const IsLoaded = ({children}: {children: React.ReactNode}) => {
   if (data?.aircrafts && data?.aircrafts.length > 0) {
     //init state of selected aircraft
     userStore.getState().setAir(data.aircrafts[0], false)
-    //userStore.getState().clearCargoMap()
 
     // init state of server client sync
     localStorage.setItem('lastSync', `${data.serverEpoch}`) 

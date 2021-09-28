@@ -32,9 +32,6 @@ export interface UserStoreState extends State {
 
   // when a new air is selected, reset all state
   setAir: (air: Types.AircraftDeep, resetCargo?: boolean) => void
-
-  // testing only
-  clearCargoMap: () => void
 }
 
 export const userStore = create<UserStoreState>((set) => ({
@@ -49,10 +46,7 @@ export const userStore = create<UserStoreState>((set) => ({
   cargoSchema: undefined,
 
   // update 1
-  setPageName: (pageName) =>
-    set((s) => {
-      s.pageName = pageName
-    }),
+  setPageName: (pageName) => set((s) => {s.pageName = pageName}),
 
   setChartC: (chartC) =>
     set((s) => {
@@ -79,12 +73,6 @@ export const userStore = create<UserStoreState>((set) => ({
   deleteCargos: (cargoIds) =>
     set((s) => {
       cargoIds.forEach((id) => s.cargoMap.delete(id))
-    }),
-
-  // testing only
-  clearCargoMap: () =>
-    set((s) => {
-      s.cargoMap = new Map<string, Types.CargoString>()
     }),
 
   // when a new air is selected, reset all state
@@ -150,18 +138,9 @@ export const useCargo = (uuid: string) => {
   ) as Types.CargoString
 }
 
-export const useCargos = () => {
-  return userStore(
-    (s) => Array.from(s.cargoMap.values()),
-    (s1, s2) => isEqual(s1, s2)
-  )
-}
+export const useCargos = () => userStore(s => Array.from(s.cargoMap.values()),isEqual)
 
-export const useUserAir = () =>
-  userStore(
-    (s) => s.air,
-    (s1, s2) => isEqual(s1, s2)
-  )
+export const useUserAir = () => userStore(s => s.air,isEqual)
 
 // helper functions to access state
 export const getUserCargo = (uuid: string) =>

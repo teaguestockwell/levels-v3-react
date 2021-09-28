@@ -17,35 +17,24 @@ export const InitLoaded = () => {
 
   if (data?.aircrafts && data.aircrafts?.length > 0) {
     // try to preserve selection of last selected aircraft
-    const oldId = userStore.getState().air?.aircraftId
-    const newIdx = data.aircrafts.findIndex((a: any) => a.aircraftId === oldId)
-    const airIdx = newIdx === -1 ? 0 : newIdx
+    const oldId = userStore.getState().air?.aircraftId; const newIdx = data.aircrafts.findIndex((a: any) => a.aircraftId === oldId); const airIdx = newIdx === -1 ? 0 : newIdx
 
-    //init state of selected aircraft
-    as.setAir(data.aircrafts[airIdx])
-
-    // init state of server client sync
-    localStorage.setItem('lastSync', `${data.serverEpoch}`)
-
-    return <MobileNav key={v4()} />
+    //init state of selected aircraft,  // init state of server client sync
+    as.setAir(data.aircrafts[airIdx]); localStorage.setItem('lastSync', `${data.serverEpoch}`); return <MobileNav key={v4()} />
   }
 
-  if (data && data?.aircrafts?.length <= 0) {
-    return (
-      <>
-        <Result title="You have no assigned aircraft" />
-        <Help />
-      </>
-    )
-  }
+  if (data && data?.aircrafts?.length <= 0) { return (
+    <>
+      <Result title="You have no assigned aircraft" />
+      <Help />
+    </>
+  )}
 
-  if (status === 'loading') {
-    return (
+  if (status === 'loading') {return (
       <div style={{padding: '12px 12px 12px 12px'}}>
         <Skeleton active paragraph={{rows: 30}} />
       </div>
-    )
-  }
+  )}
 
   return (
     <>

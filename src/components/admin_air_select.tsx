@@ -32,18 +32,14 @@ export const AdminAirSelect = () => {
     }
 
     // while !res contains error
-    if (data.msg) {
-      return (
+    if (data.msg) { return (
         <div style={{color: 'white', fontSize: 24}}>Error refresh page!</div>
-      )
-    }
+    )}
 
     // while no data within res
-    if (data.length === 0) {
-      return (
+    if (data.length === 0) { return (
         <div style={{color: 'white', fontSize: 24}}>You have no aircraft!</div>
-      )
-    }
+    )}
 
     // while no client state for selection,
     // set client aircraft selection to first aircraft from res
@@ -64,10 +60,7 @@ export const AdminAirSelect = () => {
     }
 
     // while client aircraft !== server server, client air = server air
-    if (!isEqual(serverStateOfSelectedAir, air)) {
-      as.setAir(serverStateOfSelectedAir)
-      return <Spin />
-    }
+    if (!isEqual(serverStateOfSelectedAir, air)) { as.setAir(serverStateOfSelectedAir); return <Spin />}
 
     // while client air selection and server state are synced
     return (

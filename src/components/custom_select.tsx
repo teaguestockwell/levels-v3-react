@@ -36,8 +36,7 @@ export const CustomSelect = (props: any) => {
   <Select 
   // on mobile render the menu as bottom modal, on desktop render as inline dropdown
   dropdownRender={!mobile ? undefined : (menu) =>{
-    return <div   
-      onClick={(e) => { e.stopPropagation(); if(props.toggleOpen){props.toggleOpen()} else{dbToggle(key)}}} 
+    return <div onClick={(e) => { e.stopPropagation(); if(props.toggleOpen){props.toggleOpen()} else{dbToggle(key)}}} 
       style={{position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000, bottom: 0, backgroundColor: 'rgba(0,0,0,0.3)'}}>
       <div 
         style={{
@@ -53,11 +52,9 @@ export const CustomSelect = (props: any) => {
     </div>
   </div>
 }}
-  onClick={(e) => {e.stopPropagation(); dbToggle(key)}}
+  onClick={(e) => {e.stopPropagation(); dbToggle(key)}} onFocus={() => dbToggle(key)} onBlur={() => dbToggle(key,false)}
   open={open}
   onSelect={props.onSelect}
-  onFocus={() => dbToggle(key)}
-  onBlur={() => dbToggle(key,false)}
   {...props}  />
   </div>
 }

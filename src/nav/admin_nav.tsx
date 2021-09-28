@@ -7,30 +7,21 @@ import {getQueryObjFromEP} from '../utils/util'
 
 const as = getAdminStoreActions()
 
+export const getSubMenuTitle = (ep:string, air:any) => {
+  if (!ep.includes('configCargo')) return 'Cargos in Config'
+
+  const queryObj = getQueryObjFromEP(ep)
+  const configName = air?.configs.find((c:any) => c.configId === queryObj.configId)?.name ?? 'No Config'
+  return `Cargos in ${configName}`
+}
 export const AdminNav = () => {
   const ep = adminStore((s) => s.ep)
   const air = adminStore.getState().air
-
-  const onClick = (menuInfo: MenuInfo) => {
-    as.setEp(String(menuInfo.key))
-  }
-
-  const getSubMenuTitle = () => {
-    if (!ep.includes('configCargo')) {
-      return 'Cargos in Config'
-    }
-
-    const queryObj = getQueryObjFromEP(ep)
-    const configName =
-      air?.configs.find((c) => c.configId === queryObj.configId)?.name ??
-      'No Config'
-    return `Cargos in ${configName}`
-  }
+  const onClick = (menuInfo: MenuInfo) => as.setEp(String(menuInfo.key))
 
   return air ? (
     <div
-      style={{
-      }}
+      data-testid="admin-nav"
     >
       <Menu
         mode="horizontal"
@@ -57,7 +48,7 @@ export const AdminNav = () => {
         <Menu.Item key={`config?aircraftId=${air.aircraftId}`}>
           {'Configs'}
         </Menu.Item>
-        <SubMenu title={getSubMenuTitle()} icon={<DownOutlined />}>
+        <SubMenu title={getSubMenuTitle(ep,air)} icon={<DownOutlined />}>
           {air.configs.map((c) => (
             <Menu.Item
               key={`configCargo?aircraftId=${air.aircraftId}&configId=${c.configId}`}

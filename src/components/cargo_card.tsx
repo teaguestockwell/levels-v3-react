@@ -16,10 +16,7 @@ export const CargoCard = () => {
   useCargoMapSize()
   const cargos = getUserCargos()
   const [cat, setCat] = useState<string>('Steward')
-  const cargoTab = cargos
-  .filter((c) => c.category.toString() === cat)
-  .sort((a, b) => a.name.localeCompare(b.name))
-  .map((c) => <CargoEditRow key={c.uuid} uuid={c.uuid} />)
+  const cargoTab = cargos.filter((c) => c.category.toString() === cat).sort((a, b) => a.name.localeCompare(b.name)).map((c) => <CargoEditRow key={c.uuid} uuid={c.uuid} />)
 
   return (
     <div
@@ -58,11 +55,9 @@ export const CargoCard = () => {
         selectedKeys={[cat]}
         style={{width: '100%'}}
       >
-        <Menu.Item onKeyPress={() => setCat('Steward')} role="button" tabIndex={0} key={'Steward'}>Steward</Menu.Item>
-        <Menu.Item onKeyPress={() => setCat('Emergency')} role="button" tabIndex={0} key={'Emergency'}>Emergency</Menu.Item>
-        <Menu.Item onKeyPress={() => setCat('Extra')}role="button" tabIndex={0} key={'Extra'}>Extra</Menu.Item>
-        <Menu.Item onKeyPress={() => setCat('Custom')} role="button" tabIndex={0} key={'Custom'}>Custom</Menu.Item>
-       
+        {
+          ['Steward', 'Emergency', 'Extra', 'Custom'].map((k) => <Menu.Item role="button" onKeyPress={() => setCat(k)} tabIndex={0} key={k}>{k}</Menu.Item>)
+        }
       </Menu> 
         </div>
         <div style={{paddingLeft: 10, paddingBottom: 20, paddingTop:20}}>

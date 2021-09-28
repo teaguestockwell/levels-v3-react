@@ -111,7 +111,7 @@ export const usePolling = (
     ep,
     async () => {
       const res = await getN(ep)
-      if (res && clientReqKey) res.clientReqKey = v4(); return res
+      if (res && clientReqKey) {res.clientReqKey = v4(); return res}
     },
     {
       refetchInterval,
