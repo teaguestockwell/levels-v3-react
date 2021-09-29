@@ -105,6 +105,6 @@
   "resolutions": {
     "tar": "6.1.11",
     "tmpl": "1.0.5",
-    "nth-check":"2.0.1"
+    "nth-check": "2.0.1"
   }
 }

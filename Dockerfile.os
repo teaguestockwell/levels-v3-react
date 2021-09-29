@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN GENERATE_SOURCEMAP=false npx react-scripts build
+RUN GENERATE_SOURCEMAP=false npm run build
 
 # Stage 2
 FROM nginx:1.19.2

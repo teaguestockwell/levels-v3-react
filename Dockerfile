@@ -15,7 +15,7 @@ COPY --chown=950:950 . .
 RUN echo $IS_LOCAL
 
 # if IS_LOCAL use localhost api url
-RUN if [ "${IS_LOCAL}" = "true" ]; then REACT_APP_API_BASE_URL=http://localhost:8080/fl-api/ npx react-scripts build; else GENERATE_SOURCEMAP=false npx react-scripts build ; fi
+RUN if [ "${IS_LOCAL}" = "true" ]; then npm run build; else GENERATE_SOURCEMAP=false npm run build ; fi
 
 # Stage 2
 FROM registry.il2.dso.mil/platform-one/devops/pipeline-templates/base-image/harden-nginx-19:1.19.2
