@@ -8,24 +8,27 @@ import {CardShadow} from '../components/card_shadow'
 import {CargoCard} from '../components/cargo_card'
 import { Clock } from '../components/clock'
 import { AirSyncSelect } from '../nav/air_sync_select'
+import { MaxContent } from '../components/max_content'
 
 export const Mac = () => {
   useUserAir()
 
   return (
     <div data-testId="mac-page">
-      <Clock/>
-      <AirSyncSelect type='user' style={{marginTop: 15}}/>
-      <TankList/>
-      <CardShadow style={{borderRadius: 0,marginTop: 0}}>
-      <ChartC key={v4()} />
-      </CardShadow>
-    
+      <AirSyncSelect type='user'/>
+      <MaxContent>
+        <Clock style={{marginTop: 15}}/>
+        <TankList/>
+        <CardShadow style={{borderRadius: 0,marginTop: 0}}>
+        <ChartC key={v4()} />
+        </CardShadow>
+      
 
-      <CargoCard key={v4()} />
+        <CargoCard key={v4()} />
 
-      <GetMacButton key={v4()}/>
-      <CargoEditModal />
+        <GetMacButton key={v4()}/>
+        <CargoEditModal />
+      </MaxContent>
     </div>
   )
 }

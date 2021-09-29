@@ -1,7 +1,6 @@
-import {Menu} from 'antd'
+import {Grid, Menu} from 'antd'
 import SubMenu from 'antd/lib/menu/SubMenu'
 import {MenuInfo} from 'rc-menu/lib/interface'
-import {DownOutlined} from '@ant-design/icons'
 import {adminStore, getAdminStoreActions} from '../hooks/admin_store'
 import {getQueryObjFromEP} from '../utils/util'
 
@@ -18,16 +17,16 @@ export const AdminNav = () => {
   const ep = adminStore((s) => s.ep)
   const air = adminStore.getState().air
   const onClick = (menuInfo: MenuInfo) => as.setEp(String(menuInfo.key))
+  const {md} = Grid.useBreakpoint()
 
   return air ? (
     <div
       data-testid="admin-nav"
     >
       <Menu
-        mode="horizontal"
+        mode={md ? 'horizontal' : 'inline'}
         onClick={onClick}
         selectedKeys={[ep]}
-        style={{}}
       >
         <Menu.Item key={`aircraft`}>{'My Aircraft'}</Menu.Item>
         <Menu.Item
@@ -48,7 +47,7 @@ export const AdminNav = () => {
         <Menu.Item key={`config?aircraftId=${air.aircraftId}`}>
           {'Configs'}
         </Menu.Item>
-        <SubMenu title={getSubMenuTitle(ep,air)} icon={<DownOutlined />}>
+        <SubMenu title={getSubMenuTitle(ep,air)}>
           {air.configs.map((c) => (
             <Menu.Item
               key={`configCargo?aircraftId=${air.aircraftId}&configId=${c.configId}`}

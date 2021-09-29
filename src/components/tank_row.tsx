@@ -35,7 +35,6 @@ export const onChange = ({
 ) => {
   // 1
   const newIdx = weights.findIndex((w) => w === newWeight)
-  console.log('newIdx', newIdx)
   // 56
   const newMom = Number(moms[newIdx])
   // 500
@@ -79,7 +78,12 @@ export const TankRow = ({
   )
 
   return (
-    <CardShadow style={{boxShadow: '0px 0px 3.6095px rgba(0, 0, 0, 0.15)', marginBottom: 15}}>
+    <CardShadow style={{
+      boxShadow: '0px 0px 3.6095px rgba(0, 0, 0, 0.15)', 
+      MozBoxShadow: '0px 0px 3.6095px rgba(0, 0, 0, 0.15)',
+      WebkitBoxShadow: '0px 0px 3.6095px rgba(0, 0, 0, 0.15)',
+      marginBottom: 15
+      }}>
 
     <div style={{padding: 10, cursor: 'pointer', ...style, zIndex: 1}} onClick={() => dbToggle('tank' + tank.tankId)}>
       <div

@@ -11,8 +11,8 @@ export const Admin = () => {
 
   return (
     <div style={{paddingBottom: 50}}>
+      <AirSyncSelect type='admin' style={{borderBottom: '1px solid #F0F0F0'}}/>
       <AdminNav key={v4()} />
-      <AirSyncSelect type='admin' />
       <JsonTable key={v4()} />
       <AdminModal key={v4()} />
     </div>

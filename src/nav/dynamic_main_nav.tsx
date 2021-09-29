@@ -5,7 +5,7 @@ import {Admin} from '../pages/admin'
 import {GlossaryList} from '../pages/glossary_list'
 import {Help} from '../pages/help'
 import {Const} from '../utils/const'
-import {MaxContent} from '../components/max_content'
+
 import {
   Home,
   Glossary,
@@ -60,8 +60,8 @@ export const navIcons: {[key: string]: any} = {
 
 /** globally scoped components that persist between layouts */
 export const persistentPages: {[key: string]: JSX.Element} = {
-  'Home': <MaxContent children={<Mac />} />,
-  Glossary: <MaxContent children={<GlossaryList />} />,
+  'Home': <Mac />,
+  Glossary: <GlossaryList />,
   Admin: <Admin />,
-  Help: <MaxContent children={<Help />} />,
+  Help: <Help />,
 }

@@ -2,6 +2,7 @@ import {useUserAir} from '../hooks/user_store'
 import { AirSyncSelect } from '../nav/air_sync_select'
 import * as Types from '../types'
 import { Collapse } from 'antd'
+import { MaxContent } from '../components/max_content'
 
 export const GlossaryList = () => {
   const air = useUserAir() as Types.AircraftDeep
@@ -14,9 +15,11 @@ export const GlossaryList = () => {
 
   return <div style={{paddingBottom: 100}}>
   <AirSyncSelect type='user' />
-  <Collapse style={{marginTop: 15}}>
-    {air.glossarys.map(g => getItem(g))}
-  </Collapse>
+  <MaxContent>
+    <Collapse style={{marginTop: 15}}>
+      {air.glossarys.map(g => getItem(g))}
+    </Collapse>
+  </MaxContent>
   </div>
 }
 

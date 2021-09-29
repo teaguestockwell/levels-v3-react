@@ -39,6 +39,8 @@ export const MobileNav = () => {
           height: Const.HEIGHT.BOTTOM_NAV_BAR,
           backgroundColor: '#fff',
           boxShadow: '0px -3px 10px rgba(0, 0, 0, 0.15)',
+          MozBoxShadow: '0px -3px 10px rgba(0, 0, 0, 0.15)',
+          WebkitBoxShadow: '0px -3px 10px rgba(0, 0, 0, 0.15)',
         }}
       >
         <MaxContent>
@@ -50,7 +52,8 @@ export const MobileNav = () => {
                   flexDirection: 'column',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  height: 60
+                  height: 60,
+                  cursor: pageName === x ? 'default' : 'pointer',
                 }}
                   key={x}
                   onClick={() => cs.setPageName(x)}

@@ -17,10 +17,10 @@ export const GetMacButton = () => {
   return (
     <div style={{marginTop: 50, marginBottom: 60, display: 'flex', alignItems: 'center',justifyContent: 'center'}}>
       <div
+      className="hover-button"
         style={{
           background: '#06BA7F',
           color: '#fff',
-          boxShadow: '0px 0px 6px 2px rgba(170, 170, 170, 0.36)',
           borderRadius: 45,
           width: 'fit-content',
           paddingLeft: 20,

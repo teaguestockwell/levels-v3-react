@@ -3,7 +3,6 @@ import {useMemo} from 'react'
 import {usePolling} from '../hooks/query'
 import {getAdminStoreActions, useAir} from '../hooks/admin_store'
 import isEqual from 'lodash/isEqual'
-import {v4} from 'uuid'
 import { Aircraft } from './icons'
 import { CustomSelect } from './custom_select'
 
@@ -22,8 +21,6 @@ export const onAirChange = (newName: string, data:any) => {
 export const AdminAirSelect = () => {
   const {data} = usePolling('aircraft', 5000)
   const air = useAir()
-
-  console.log({data,air, })
 
   // do not render on every req, only when res is different
   return useMemo(() => {
@@ -69,7 +66,7 @@ export const AdminAirSelect = () => {
         className="selectBoi"
         stateKey="adminAirSelect"
         data-testid="admin air select"
-        key={v4()}
+        key={data.map((a: any) => a.name).join(',') as string}
         defaultValue={air?.name as string}
         onChange={(newName:string) => onAirChange(newName, data)}
         showSearch

@@ -22,7 +22,6 @@ describe('CargoForm', () => {
   it('will render', async () => {
     const cargo = getMockCargo('cargo0')
     userStore.getState().putCargos([cargo])
-    console.log(userStore.getState().cargoMap.get(cargo.uuid))
     const {getByText, queryAllByText} = renderWrapped(
       <CargoForm uuid={cargo.uuid} />
     )

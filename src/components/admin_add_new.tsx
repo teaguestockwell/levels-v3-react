@@ -12,10 +12,10 @@ export const AdminAddNew = () => {
     >
 
       <div
+        className="hover-button"
         style={{
           background: '#06BA7F',
           color: '#fff',
-          boxShadow: '0px 0px 6px 2px rgba(170, 170, 170, 0.36)',
           borderRadius: 45,
           paddingLeft: 20,
           paddingRight: 20,

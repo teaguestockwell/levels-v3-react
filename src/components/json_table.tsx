@@ -12,7 +12,6 @@ import {isEqual} from 'lodash'
 
 const RenderTable = React.memo(
   ({data}: {data:any}) => {
-    console.log('render table', data)
 
     if (!data || isEqual(data, {})) {
       return (
