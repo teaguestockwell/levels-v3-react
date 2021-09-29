@@ -48,7 +48,7 @@ export const ConfigSelect = () => {
     <CustomSelect
     stateKey="configSelect"
       data-testid={`user config select`}
-      onChange={onChange}
+      onChange={(newName:string) => onChange(newName, air)}
       defaultValue={userStore.getState().config.name}
       style={{width: '100%',paddingTop: 10, display: 'flex' }}
       dropdownStyle={{}}
