@@ -46,6 +46,7 @@ export const Help = () => {
       <Button text="Report a Bug" href="https://forms.gle/Bbqvubn6gwC6fRnc8"/>
       <Button text="Contact Us" href="https://tron.dso.mil/contact/"/>
       <Button text="About Platform One" href="https://software.af.mil/team/platformone"/>
+      <Button text="About Mattermost" href="https://vimeo.com/showcase/8215297/embed" />
       <Button text="About TRON" href="https://tron.dso.mil"/>
       <Button text="About the Developer" href="https://teaguestockwell.com"/>
       <Button text="About the Code" href="https://code.il2.dso.mil/tron/products/five-level-app/frontend-react" />

@@ -17,14 +17,14 @@ export const AdminNav = () => {
   const ep = adminStore((s) => s.ep)
   const air = adminStore.getState().air
   const onClick = (menuInfo: MenuInfo) => as.setEp(String(menuInfo.key))
-  const {md} = Grid.useBreakpoint()
+  const mode = Grid.useBreakpoint().md ? 'horizontal' : 'inline'
 
   return air ? (
     <div
       data-testid="admin-nav"
     >
       <Menu
-        mode={md ? 'horizontal' : 'inline'}
+        mode={mode}
         onClick={onClick}
         selectedKeys={[ep]}
       >
