@@ -11,8 +11,8 @@ services:
 
   fl-api:
     build:
-      context: ../api
-      dockerfile: ../api/Dockerfile.os
+      context: ../levels-v2v3-express
+      dockerfile: ../levels-v2v3-express/Dockerfile.os
     environment:
       PG_USER: PG_USER
       APP_DB_ADMIN_PASSWORD: password
