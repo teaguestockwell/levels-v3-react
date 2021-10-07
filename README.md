@@ -171,7 +171,7 @@ docker login registry.il2.dso.mil -u $gitlab_ci_token -p $gitlab_token_string
 6. Open the frontend repo
 
 ```sh
-cd frontend-react
+cd levels-v3-react
 ```
 ## Compose Prod
 To compose the production app run these commands in the root of the frontend repo. If you would like to use the open source docker images, use :os at the end of these commands, and modify line 18 of ./proxy.conf to use port 80 
