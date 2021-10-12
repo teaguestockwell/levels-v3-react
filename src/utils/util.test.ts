@@ -415,11 +415,11 @@ describe('isTankCSVSameLen', () => {
 
 describe('Const', () => {
   it('has valid yup tests', () => {
-    const test = Const.schema.numPositiveCSV
+    const test = Const.schema.numCSV
     expect(test.isValidSync('1,2,3')).toBe(true)
   }),
     it('has invalid yup tests', () => {
-      const test = Const.schema.numPositiveCSV
+      const test = Const.schema.numCSV
       expect(test.isValidSync('1,s,3')).toBe(false)
     })
 })
