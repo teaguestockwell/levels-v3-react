@@ -3,9 +3,7 @@ import * as yup from 'yup'
 
 export const queryClient = new QueryClient()
 
-const validateNumPositive = (num: any) => {
-  return yup.number().required().positive().validateSync(num)
-}
+const isNum = (num:any) => yup.number().required().validateSync(num)
 
 
 
@@ -89,7 +87,7 @@ export const Const = {
 
     categorySchema: yup.mixed().oneOf(['Emergency', 'Extra', 'Steward']),
 
-    numPositiveCSV: yup
+    numCSV: yup
       .string()
       .required()
       .test(
@@ -105,7 +103,7 @@ export const Const = {
             if (!nums.length) {
               return false
             }
-            nums.map((y) => validateNumPositive(y))
+            nums.map((y) => isNum(y))
             return true
           } catch (e) {
             return false
