@@ -1,4 +1,5 @@
-import create, {State} from 'zustand'
+import { createStoreWithDevtool } from './dev_tools';
+import {State} from 'zustand'
 import * as Types from '../types'
 import isEqual from 'lodash/isEqual'
 import {sanitizeNewAirEP} from '../utils/util'
@@ -13,7 +14,7 @@ export interface AdminStoreState extends State {
   setEditObj: (editObj: Record<string, any> | undefined) => void
 }
 
-export const adminStore = create<AdminStoreState>((set) => ({
+export const adminStore = createStoreWithDevtool<AdminStoreState>((set) => ({
   air: undefined,
   ep: 'aircraft',
   editObj: {},

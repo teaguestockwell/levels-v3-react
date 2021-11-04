@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import create from 'zustand'
-import {combine} from 'zustand/middleware'
+import {combine, devtools} from 'zustand/middleware'
 import {getN, usePolling, useUserAirs} from './query'
 import {stringify} from 'query-string'
 import {queryClient} from '../utils/const'
@@ -20,19 +20,24 @@ import { message } from 'antd'
 // the response from that should then be set as pendingAircrafts cache
 
 export const useClientSyncStore = create(
-  combine(
+  devtools(
+    combine(
+      {
+        //  pendingAircrafts
+        // this is a holding area for the aircraft returned from aircraft/deep while they are waiting to be applied by the user
+        // if pendingAircrafts is defined, the user may choose to apply it to the userAirs cache of react query
+        pendingRqClientCache: null as Types.EpAircraftDeep | null,
+        state: Types.OfflineCacheState.OUTDATED as Types.OfflineCacheState,
+        // while the getNewNewAircraftDeep method is running, do not re poll /api/aircraft/client-server-sync
+        isDebouncing: false as boolean,
+      },
+      (set) => ({
+        set,
+      })
+    ),
     {
-      //  pendingAircrafts
-      // this is a holding area for the aircraft returned from aircraft/deep while they are waiting to be applied by the user
-      // if pendingAircrafts is defined, the user may choose to apply it to the userAirs cache of react query
-      pendingRqClientCache: null as Types.EpAircraftDeep | null,
-      state: Types.OfflineCacheState.OUTDATED as Types.OfflineCacheState,
-      // while the getNewNewAircraftDeep method is running, do not re poll /api/aircraft/client-server-sync
-      isDebouncing: false as boolean,
-    },
-    (set) => ({
-      set,
-    })
+      name: 'client-server-sync'
+    }
   )
 )
 

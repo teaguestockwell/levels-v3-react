@@ -1,4 +1,5 @@
-import create, {State} from 'zustand'
+import {State} from 'zustand'
+import { createStoreWithDevtool } from './dev_tools'
 import {Const} from '../utils/const'
 import  * as Types from '../types'
 import isEqual from 'lodash/isEqual'
@@ -34,7 +35,7 @@ export interface UserStoreState extends State {
   setAir: (air: Types.AircraftDeep, resetCargo?: boolean) => void
 }
 
-export const userStore = create<UserStoreState>((set) => ({
+export const userStore = createStoreWithDevtool<UserStoreState>((set) => ({
   // read
   pageName: 'Home',
   cargoMap: new Map(),

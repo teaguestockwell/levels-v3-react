@@ -1,16 +1,21 @@
 import {Select} from 'antd'
 import {debounce} from 'lodash'
 import create from 'zustand'
-import {combine} from 'zustand/middleware'
+import {combine, devtools} from 'zustand/middleware'
 
 export const isMobile = () => /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
 
 export const useSelectOpenStore = create(
-  combine(
+  devtools(
+    combine(
+      {
+        isOpen: {} as Record<string,boolean>
+      },
+      set => ({set})
+    ),
     {
-      isOpen: {} as Record<string,boolean>
-    },
-    set => ({set})
+      name: 'select-is-open'
+    }
   )
 )
 
