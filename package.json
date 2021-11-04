@@ -53,7 +53,7 @@
     "workbox-routing": "^5.1.4",
     "workbox-strategies": "^5.1.4",
     "yup": "^0.32.9",
-    "zustand": "^3.5.1"
+    "zustand": "^3.6.1"
   },
   "devDependencies": {
     "@craco/craco": "^6.3.0",

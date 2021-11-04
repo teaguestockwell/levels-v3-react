@@ -6,6 +6,7 @@ import formatDistanceToNowStrict from 'date-fns/formatDistanceToNowStrict'
 import {v4} from 'uuid'
 import  * as Types from '../types'
 import { UseOfflineCache } from '../hooks/use_offline_cache'
+import { useClientSyncStore } from '../hooks/use_offline_cache'
 
 const w = 24
 const h = 24
@@ -33,7 +34,11 @@ export const ClientServerSync = () => {
   const [isOpen, setIsOpen] = useState(false)
   useTick(1000)
   const {stateSelector, pollComponent, syncNow} = useRef(UseOfflineCache()).current
-  const state = stateSelector()
+  let state = stateSelector()
+
+  if(useClientSyncStore.getState().pendingRqClientCache){
+    state = Types.OfflineCacheState.UPDATABLE
+  }
 
   const syncButton = state !== Types.OfflineCacheState.UPDATABLE ? null : (
     <Button

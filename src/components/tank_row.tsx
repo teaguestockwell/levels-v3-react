@@ -5,7 +5,7 @@ import {getCargoStringFromTank2} from '../utils/util'
 import {Gauge} from '@ant-design/charts'
 import React from 'react'
 import { CardShadow } from './card_shadow'
-import { CustomSelect, dbToggle } from './custom_select'
+import { CustomSelect } from './custom_select'
 
 const cs = getUserActions()
 
@@ -85,7 +85,7 @@ export const TankRow = ({
       marginBottom: 15
       }}>
 
-    <div style={{padding: 10, cursor: 'pointer', ...style, zIndex: 1}} onClick={() => dbToggle('tank' + tank.tankId)}>
+    <div style={{padding: 10, ...style, zIndex: 1}}>
       <div
         style={{
           display: 'flex',
