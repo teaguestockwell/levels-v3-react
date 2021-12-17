@@ -71,9 +71,9 @@ Levels is a full stack web app that manages aircraft cargo loading and weight an
 
 The first and second iterations were built with tech stacks that could not be accredited and deployed to the Air Force network:
 
-1. [5 Level](https://github.com/tsAppDevelopment/levels-v1-android) Native Android
-2. [Five Level](https://github.com/tsAppDevelopment/levels-v2-flutter) Flutter
-3. Levels - [UI Repo](https://github.com/tsAppDevelopment/levels-v3-react) and [API Repo](https://github.com/tsAppDevelopment/levels-v2v3-express) 
+1. [5 Level](https://github.com/teaguestockwell/levels-v1-android) Native Android
+2. [Five Level](https://github.com/teaguestockwell/levels-v2-flutter) Flutter
+3. Levels - [UI Repo](https://github.com/teaguestockwell/levels-v3-react) and [API Repo](https://github.com/teaguestockwell/levels-v2v3-express) 
 
 Levels, the third iteration, is deployed and accredited under the Department of Defense's DevSecOps initiative: [Platform One](https://software.af.mil/about/) 
 
@@ -166,7 +166,7 @@ Some cloud providers do not allow a shadow DB when Prisma pushes the schema into
 ```sh
 docker login registry.il2.dso.mil -u $gitlab_ci_token -p $gitlab_token_string
 ```
-5. Clone the [UI](https://code.il2.dso.mil/tron/products/five-level-app/frontend-react) and [API](https://code.il2.dso.mil/tron/products/five-level-app/api) from GitLab, or [UI](https://github.com/tsAppDevelopment/levels-v3-react) and [API](https://github.com/tsAppDevelopment/levels-v2v3-express) from GitHub
+5. Clone the [UI](https://code.il2.dso.mil/tron/products/five-level-app/frontend-react) and [API](https://code.il2.dso.mil/tron/products/five-level-app/api) from GitLab, or [UI](https://github.com/teaguestockwell/levels-v3-react) and [API](https://github.com/teaguestockwell/levels-v2v3-express) from GitHub
 
 6. Open the frontend repo
 
